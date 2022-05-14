@@ -1,0 +1,144 @@
+coins:
+   taskCompleted: 3
+   sabotageFix: 5
+   reportedBody: 1
+   calledMeeting: 0
+   ejected: 0
+   completedAllTasks: 25
+   imposterKill: 2
+   murdered: 0
+   winCrewmate: 10
+   loseCrewmate: 0
+   winImposter: 20
+   loseImposter: 0
+
+default_kill_sword: DIAMOND_SWORD
+
+kill_sword:
+   DIAMOND_SWORD:
+      material: DIAMOND_SWORD
+      display_name: '&eDiamond Sword'
+      name: "Diamond Sword"
+      lore: # When item is selected
+         - '&aCurrently selected!'
+      lore2: # When item is owned but not selected
+         - '&aClick to equip'
+      lore3: # When item is not owned
+         - ''
+      price: 0
+      permission: ''
+   STONE_SWORD:
+      material: STONE_SWORD
+      display_name: '&eStone Sword'
+      name: "Stone Sword"
+      lore:
+         - '&aCurrently selected!'
+      lore2:
+         - '&aClick to equip'
+      lore3:
+         - '&7Cost: &65,000 Coins'
+         - ''
+         - '&eClick to purchase!'
+      price: 5000
+      permission: ''
+   STICK:
+      material: STICK
+      display_name: '&eStick'
+      name: "Stick"
+      lore:
+         - '&aCurrently selected!'
+      lore2:
+         - '&aClick to equip'
+      lore3:
+         - '&7Cost: &67,500 Coins'
+         - ''
+         - '&eClick to purchase!'
+      price: 7500
+      permission: ''
+   WOODEN_AXE:
+      material: WOODEN_AXE
+      display_name: '&eWooden Axe'
+      name: "Wooden Axe"
+      lore:
+         - '&aCurrently selected!'
+      lore2:
+         - '&aClick to equip'
+      lore3:
+         - '&7Cost: &610,000 Coins'
+         - ''
+         - '&eClick to purchase!'
+      price: 10000
+      permission: ''
+   BLAZE_ROD:
+      material: BLAZE_ROD
+      display_name: '&eBlaze Rod'
+      name: "Blaze Rod"
+      lore:
+         - '&aCurrently selected!'
+      lore2:
+         - '&aClick to equip'
+      lore3:
+         - '&7Cost: &650,000 Coins'
+         - ''
+         - '&eClick to purchase!'
+      price: 50000
+      permission: ''
+   FEATHER:
+      material: FEATHER
+      display_name: '&eFeather'
+      name: "Feather"
+      lore:
+         - '&aCurrently selected!'
+      lore2:
+         - '&aClick to equip'
+      lore3:
+         - '&7Can only be purchased at'
+         - '&7the server Store!'
+         - ''
+         - '&ehttp://store.server.net/'
+      price: 0
+      permission: amongus.kill_item.feather
+   CARROT_ON_A_STICK:
+      material: CARROT_ON_A_STICK
+      display_name: '&eCarrot on a Stick'
+      name: "Carrot on a stick"
+      lore:
+         - '&aCurrently selected!'
+      lore2:
+         - '&aClick to equip'
+      lore3:
+         - '&7Can only be purchased at'
+         - '&7the server Store!'
+         - ''
+         - '&ehttp://store.server.net/'
+      price: 0
+      permission: amongus.kill_item.carrot_on_a_stick
+   CARROT:
+      material: CARROT
+      display_name: '&eCarrot'
+      name: "Carrot"
+      lore:
+         - '&aCurrently selected!'
+      lore2:
+         - '&aClick to equip'
+      lore3:
+         - '&7Can only be purchased at'
+         - '&7the server Store!'
+         - ''
+         - '&ehttp://store.server.net/'
+      price: 0
+      permission: amongus.kill_item.carrot
+   GOLDEN_SWORD:
+      material: GOLDEN_SWORD
+      display_name: '&eGolden Sword'
+      name: "Golden Sword"
+      lore:
+         - '&aCurrently selected!'
+      lore2:
+         - '&aClick to equip'
+      lore3:
+         - '&7Cost: &6100,000 Coins'
+         - ''
+         - '&eClick to purchase!'
+      price: 100000
+      permission: ''

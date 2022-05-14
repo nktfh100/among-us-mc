@@ -1,0 +1,201 @@
+prefix: '&4&lAmong&c&lUs&9&lMC&7&l► '
+giveLobbyItems: true
+showRunningArenas: true
+ghostsFly: true
+hidePlayersOutSideArena: false
+enableGlassHelmet: true
+tpToLobbyOnJoin: true
+viewGlassMat: BLACK_STAINED_GLASS
+enablePortalJoin: false
+scoreboardUsePackets: true
+# enableDoubleImposterChance: If player has the permission "amongus.perk.double-imposter-chance" they have double the chance to become imposter
+enableDoubleImposterChance: false
+sneakToVent: false
+# damageOnSabotage: Damage the players every 2 seconds while a sabotage is active
+damageOnSabotage: false
+# saveInventory: Give the player the items he had before he joined the game (useful for survival servers)
+saveInventory: false
+
+bungeecord:
+   enabled: false
+   lobby: false
+   lobbyServer: "lobby"
+   gameServers:
+      - "game"
+   serverName: "game"
+
+# enableLobbyScoreboard: Main lobby scoreboard
+enableLobbyScoreboard: true
+
+# gameEndSendToLobby - Send players to lobby after the game ends
+gameEndSendToLobby: true
+particlesOnTasks: true
+# particlesOnTasksType particles: https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/Particle.html
+particlesOnTasksType: VILLAGER_HAPPY
+
+lobbyItemsSlots:
+   arenasSelector: 0
+   cosmeticsSelector: 1
+
+mainLobby:
+   world: 'world'
+   x: 0
+   y: 60
+   z: 0
+
+mysql:
+   enabled: false
+   host: "localhost"
+   port: "3306"
+   database: "test"
+   username: "user"
+   password: "pass"
+
+
+commands: # %player% - Player's name
+   taskCompleted: []
+   sabotageFix: []
+   reportedBody: []
+   calledMeeting: []
+   ejected: []
+   completedAllTasks: []
+   imposterKill: []
+   murdered: []
+   winCrewmate: [] # Win as crewmate
+   loseCrewmate: [] # Lose as crewmate
+   winImposter: []
+   loseImposter: []
+   gameStartImposter: []
+   gameStartCrewmate: []
+
+blockedCommands:
+   - /msg
+   - /r
+   - /whisper
+
+asteroidsParticleColor: 255,0,0 # RGB
+asteroidsParticleMaterial: REDSTONE_BLOCK 
+
+# ChatColors: https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/ChatColor.html
+colors:
+   BLACK:
+      name: "black"
+      chatColor: BLACK # Chat color in chat
+      helmetBlock: BLACK_STAINED_GLASS # Block placed on head
+      woolBlock: BLACK_WOOL # For select color inventory
+      armorColor: "0,0,0"
+      id: "BLAP" # Medbay scan stuff:
+      height: "3'6"
+      weight: "92 lbs"
+      bloodType: "A+"
+   BLUE:
+      name: "blue"
+      chatColor: BLUE
+      helmetBlock: BLUE_STAINED_GLASS
+      woolBlock: BLUE_WOOL
+      armorColor: "0,0,255"
+      id: "BLUP"
+      height: "3'6"
+      weight: "92 lbs"
+      bloodType: "O+"
+   GRAY:
+      name: "gray"
+      chatColor: DARK_GRAY
+      helmetBlock: GRAY_STAINED_GLASS
+      woolBlock: LIGHT_GRAY_WOOL
+      armorColor: "128,128,128"
+      id: "GRAP"
+      height: "3'6"
+      weight: "92"
+      bloodType: ""
+   CYAN:
+      name: "cyan"
+      chatColor: AQUA
+      helmetBlock: CYAN_STAINED_GLASS
+      woolBlock: LIGHT_BLUE_WOOL
+      concreteBlock: LIGHT_BLUE_CONCRETE
+      armorColor: "0,255,255"
+      id: "CYAP"
+      height: "3'6"
+      weight: "92"
+      bloodType: "A+"
+   GREEN:
+      name: "green"
+      chatColor: DARK_GREEN
+      helmetBlock: GREEN_STAINED_GLASS
+      woolBlock: GREEN_WOOL
+      armorColor: "0,128,0"
+      id: "GREP"
+      height: "3'6"
+      weight: "92"
+      bloodType: "O-"
+   LIME:
+      name: "lime"
+      chatColor: GREEN
+      helmetBlock: LIME_STAINED_GLASS
+      woolBlock: LIME_WOOL
+      armorColor: "0,255,0"
+      id: "LIMP"
+      height: "3'6"
+      weight: "92"
+      bloodType: "A-"
+   ORANGE:
+      name: "orange"
+      chatColor: GOLD
+      helmetBlock: ORANGE_STAINED_GLASS
+      woolBlock: ORANGE_WOOL
+      armorColor: "255,165,0"
+      id: "ORAP"
+      height: "3'6"
+      weight: "92"
+      bloodType: "O-"
+   PINK:
+      name: "pink"
+      chatColor: LIGHT_PURPLE
+      helmetBlock: PINK_STAINED_GLASS
+      woolBlock: PINK_WOOL
+      armorColor: "255,0,255"
+      id: "PINP"
+      height: "3'6"
+      weight: "92"
+      bloodType: "B+"
+   PURPLE:
+      name: "purple"
+      chatColor: DARK_PURPLE
+      helmetBlock: PURPLE_STAINED_GLASS
+      woolBlock: PURPLE_WOOL
+      armorColor: "75,0,130"
+      id: "PURP"
+      height: "3'6"
+      weight: "92"
+      bloodType: "B-"
+   RED:
+      name: "red"
+      chatColor: RED
+      helmetBlock: RED_STAINED_GLASS
+      woolBlock: RED_WOOL
+      armorColor: "255,0,0"
+      id: "WHIP"
+      height: "3'6"
+      weight: "92"
+      bloodType: "O-"
+   WHITE:
+      name: "white"
+      chatColor: WHITE
+      helmetBlock: WHITE_STAINED_GLASS
+      woolBlock: WHITE_WOOL
+      armorColor: "255,255,255"
+      id: "WHIP"
+      height: "3'6"
+      weight: "92"
+      bloodType: "AB-"
+   YELLOW:
+      name: "yellow"
+      chatColor: YELLOW
+      helmetBlock: YELLOW_STAINED_GLASS
+      woolBlock: YELLOW_WOOL
+      armorColor: "255,255,0"
+      id: "YELP"
+      height: "3'6"
+      weight: "92"
+      bloodType: "AB+"

@@ -1,0 +1,30 @@
+name: AmongUs
+main: com.nktfh100.AmongUs.main.Main
+author: nktfh100
+version: 3.0
+api-version: 1.13
+depend: [HolographicDisplays, ProtocolLib]
+softdepend: [PlayerPoints, Multiverse, Multiverse-Core, VentureChat, PlaceholderAPI]
+commands:
+   aua:
+      description: Among us admin command
+   au:
+      description: Players command
+
+permissions:
+   amongus.admin.*:
+      description: For everything admin related
+      default: op
+      children:
+         amongus.admin.setup: true
+         amongus.admin.startgame: true
+         amongus.admin.endgame: true
+   amongus.admin.setup:
+      description: Allows to setup arenas
+      default: op
+   amongus.admin.startgame:
+      description: Allows force start game
+      default: op
+   amongus.admin.endgame:
+      description: Allows force end game
+      default: op

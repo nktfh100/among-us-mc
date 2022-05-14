@@ -1,0 +1,103 @@
+# Sounds list: https://hub.spigotmc.org/javadocs/spigot/org/bukkit/Sound.html
+# sound,volume,pitch,delay
+# Delay is in ticks (20 = second)
+# Use @ to get a random number '@num1/num2'
+# If you dont want a sound to be played set value to "none"
+sounds:
+   gameTimerTick: ENTITY_CHICKEN_EGG,40,1,0
+   gameStartedImposter: none
+   gameStartedCrewmate: none
+   playerChangeColor: none
+   playerDeathAttacker: ENTITY_PLAYER_ATTACK_STRONG,40,1,0-ENTITY_PLAYER_HURT,40,1,0
+   playerDeathVictim: ENTITY_PLAYER_ATTACK_STRONG,40,1,0-ENTITY_PLAYER_HURT,40,1,0
+   playerGetInVent: BLOCK_IRON_DOOR_OPEN,50,1,0-BLOCK_IRON_DOOR_CLOSE,50,1,8
+   playerLeaveVent: BLOCK_IRON_DOOR_OPEN,50,1,0-BLOCK_IRON_DOOR_CLOSE,50,1,8
+   playerNextVent: BLOCK_STONE_HIT,40,1,0
+   playerGetInCameras: none
+   playerLeaveCameras: none
+   playerNextCamera: BLOCK_STONE_HIT,50,1,0
+   playerVoted: BLOCK_NOTE_BLOCK_HAT,40,0.65,0
+   imposterCloseDoor: none # Click in inv
+   imposterStartSabotage: none # Click in inv
+   doorOpen: BLOCK_METAL_PLACE,100,1,0
+   doorClose: BLOCK_METAL_PLACE,100,1,0
+   sabotageStarted: none # When sabotage gets called (all players)
+   sabotageFixed: none # When sabotage gets fixed
+   taskCompleted: ENTITY_PLAYER_LEVELUP,30,1,10
+   meetingStarted: none
+   bodyReported: none
+   meetingBtnInvOpen: none
+   votingInvOpen: none
+   taskInvOpen: none
+   sabotageInvOpen: none
+   sabotageLightsClick: BLOCK_LEVER_CLICK,40,@0.07/0.55,0
+   sabotageOxygenNumberClick: none
+   sabotageOxygenAcceptClick: none
+   sabotageOxygenCancelClick: none
+   sabotageReactorClick: none
+   sabotageCommsClick: none
+   taskCleanO2LeafClick: BLOCK_GRASS_BREAK,30,@0.65/0.8,0
+   taskPrimeShieldsClickOn: BLOCK_NOTE_BLOCK_BASS,30,1,0
+   taskPrimeShieldsClickOff: BLOCK_NOTE_BLOCK_BASS,30,2,0
+   taskDataStart: none # Start download / upload
+   taskEmptyGarbageLeverClick: BLOCK_LEVER_CLICK,40,@0.07/0.55,0
+   taskRefuelLeverlClick: none
+   taskFuelLeverlClick: none
+   taskWiringClick: BLOCK_WOOL_BREAK,40,1,0
+   taskWiringConnect: BLOCK_WOOL_BREAK,40,1,0
+   taskWiringDisconnect: BLOCK_WOOL_BREAK,40,1,0
+   taskDivertPower_clickLever: BLOCK_LEVER_CLICK,40,@0.07/0.55,0
+   taskDivertPower_moveLever: BLOCK_LEVER_CLICK,40,@0.07/0.55,0
+   taskAcceptDivertedPower_click: BLOCK_LEVER_CLICK,40,@0.07/0.55,0
+   taskCalibrateDistributorClickGood: none
+   taskCalibrateDistributorClickWrong: none
+   taskInspectSampleStartClick: none
+   taskInspectSampleSelectRight: none
+   taskInspectSampleSelectWrong: none
+   taskClearAsteroidsClick: none
+   taskClearAsteroidsDestroy: BLOCK_STONE_HIT,10,1,0-BLOCK_STONE_BREAK,10,1,0
+   taskStartReactorClickWrong: BLOCK_NOTE_BLOCK_BASS,10,0.1,0-BLOCK_NOTE_BLOCK_BASS,10,0.1,20
+   taskStartReactorSquare1: BLOCK_NOTE_BLOCK_BIT,10,0.2,0
+   taskStartReactorSquare2: BLOCK_NOTE_BLOCK_BIT,10,0.4,0
+   taskStartReactorSquare3: BLOCK_NOTE_BLOCK_BIT,10,0.6,0
+   taskStartReactorSquare4: BLOCK_NOTE_BLOCK_BIT,10,0.8,0
+   taskStartReactorSquare5: BLOCK_NOTE_BLOCK_BIT,10,1,0
+   taskStartReactorSquare6: BLOCK_NOTE_BLOCK_BIT,10,1.2,0
+   taskStartReactorSquare7: BLOCK_NOTE_BLOCK_BIT,10,1.4,0
+   taskStartReactorSquare8: BLOCK_NOTE_BLOCK_BIT,10,1.6,0
+   taskStartReactorSquare9: BLOCK_NOTE_BLOCK_BIT,10,1.8,0
+   taskUnlockManifoldsClickWrong: BLOCK_NOTE_BLOCK_BIT,30,0.1,0
+   taskUnlockManifoldsClick1: BLOCK_NOTE_BLOCK_BIT,30,0.2,0
+   taskUnlockManifoldsClick2: BLOCK_NOTE_BLOCK_BIT,30,0.4,0
+   taskUnlockManifoldsClick3: BLOCK_NOTE_BLOCK_BIT,30,0.6,0
+   taskUnlockManifoldsClick4: BLOCK_NOTE_BLOCK_BIT,30,0.8,0
+   taskUnlockManifoldsClick5: BLOCK_NOTE_BLOCK_BIT,30,1,0
+   taskUnlockManifoldsClick6: BLOCK_NOTE_BLOCK_BIT,30,1.2,0
+   taskUnlockManifoldsClick7: BLOCK_NOTE_BLOCK_BIT,30,1.4,0
+   taskUnlockManifoldsClick8: BLOCK_NOTE_BLOCK_BIT,30,1.6,0
+   taskUnlockManifoldsClick9: BLOCK_NOTE_BLOCK_BIT,30,1.8,0
+   taskUnlockManifoldsClick10: BLOCK_NOTE_BLOCK_BIT,30,2,0
+   taskSwipeCardClick: none
+   taskSwipeCardBoxClick: none
+   # Version 1.2:
+   taskChartCourseShipClick: none
+   taskChartCoursePointClick: none
+   taskStabilizeSteeringClick: none
+   # Version 1.6:
+   sabotageAlarm: none # Runs every 1 second (only for reactor and oxygen)
+   # Version 1.7:
+   taskFillCanistersClick: ENTITY_GENERIC_DRINK,30,1,0
+   taskFillCanistersLoadingDone: none
+   taskFillCanistersLoading: none # Gets called every 1.5 seconds
+   taskInsertKeysClick: none
+   taskReplaceWaterJug_buttonClick: BLOCK_LEVER_CLICK,40,@0.07/0.55,0
+   taskRecordTemperature_click: none
+   taskRepairDrill_click: none
+   taskMonitorTree_barClick: none
+   taskMonitorTree_barClickDone: none
+   taskOpenWaterways_valveClick: none
+   taskFixWeatherNode_click: BLOCK_NOTE_BLOCK_BASS,30,1,0
+   taskScanBoardingPass_cardClick: none
+   taskScanBoardingPass_scannerClick: none
+   taskStoreArtifacts_artifactDone: none
+   

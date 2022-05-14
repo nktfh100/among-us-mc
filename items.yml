@@ -1,0 +1,1371 @@
+# Materials list: https://hub.spigotmc.org/javadocs/spigot/org/bukkit/Material.html
+# For custom heads:
+# @TEXTURE_VALUE@ - Example: '@eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYWViZDg1YjdmOWU2MjIyYjM5NTQ1MWFkYjQ2Yjc2YTYyZjdlOTVkYTZmYmY3ZWZlNzE1Yzc4MzQ1NTE0MCJ9fX0=@'
+items:
+   # Items in players inventory
+   arenasSelector:
+      title: "&a&lAmong-us arenas"
+      mat: CHEST
+   colorSelector:
+      title: "&a&lSelect color"
+      slot: 0
+   leave:
+      title: "&c&lLeave game"
+      mat: RED_BED
+      slot: 8
+   # report bodies item
+   report:
+      slot: 1
+      mat: BARRIER # Can't report
+      title: "&c&lReport" # Can't report
+      # %value% Player's body
+      # %value1% Player's body color name
+      # %value2% Player's body color
+      title2: "&c&lReport %value2%%value%&c&l's body" # Can report
+   map:
+      slot: 8
+      title: "&fMap"
+      # When map is in offhand
+      title2: "&fMap"
+      mat2: PAPER
+   # Use item to use the closest thing around you (tasks, vents..)
+   use:
+      slot: 2
+      mat: BARRIER
+      title: "&c&lUse"
+      # Can use
+      title2: "&a&lUse"
+      mat2: BOOK
+   # kill players item
+   kill:
+      # %value% Kill cooldown
+      slot: 0
+      mat: WOODEN_SWORD # can't kill
+      mat2: DIAMOND_SWORD # Can kill
+      # %value% Kill cooldown
+      # Can't kill
+      title: "&4&lKill"
+      lore:
+         - "&cHit Players to kill them!"
+      # Can kill
+      title2: "&4&lKill"
+      lore2:
+         - "&cHit Players to kill them!"
+   # Sabotage items in imposters inventory
+   sabotage_door:
+      # %value% Door group location name
+      # %value1% Cooldown time
+      mat: BARRIER
+      title: "&c&lDoors: %value%"
+      lore:
+         - '&e&lCan use in: %value1%s'
+      # Can sabotage
+      mat2: IRON_DOOR
+      title2: "&c&lDoors: %value%"
+      lore2:
+         - '&e&lClick to activate'
+   # %value% Sabotage name
+   # %value1% Sabotage cooldown
+   sabotage_reactor:
+      slot: 27
+      # Can't sabotage
+      mat: BARRIER
+      title: "&c&lSabotage: %value%"
+      lore:
+         - '&e&lCan use in: %value1%s'
+      # Can sabotage
+      mat2: GUNPOWDER
+      title2: "&c&lSabotage: %value%"
+      lore2:
+         - '&e&lClick to activate'
+   sabotage_oxygen:
+      slot: 28
+      mat: BARRIER
+      title: "&c&lSabotage: %value%"
+      lore:
+         - '&e&lCan use in: %value1%s'
+      mat2: GLASS_BOTTLE
+      title2: "&c&lSabotage: %value%"
+      lore2:
+         - '&e&lClick to activate'
+   sabotage_comms:
+      slot: 29
+      mat: BARRIER
+      title: "&c&lSabotage: %value%"
+      lore:
+         - '&e&lCan use in: %value1%s'
+      mat2: REPEATER
+      title2: "&c&lSabotage: %value%"
+      lore2:
+         - '&e&lClick to activate'
+   sabotage_lights:
+      slot: 30
+      # Can't sabotage
+      mat: BARRIER
+      title: "&c&lSabotage: %value%"
+      lore:
+         - '&e&lCan use in: %value1%s'
+      # Can sabotage
+      mat2: TORCH
+      title2: "&c&lSabotage: %value%"
+      lore2:
+         - '&e&lClick to activate'
+   # -- Sabotage items end --
+   vent_left:
+      title: "&c&l<--"
+      slot: 3
+      mat: '@eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZWRmNWMyZjg5M2JkM2Y4OWNhNDA3MDNkZWQzZTQyZGQwZmJkYmE2ZjY3NjhjODc4OWFmZGZmMWZhNzhiZjYifX19@'
+   vent_leave:
+      title: "&c&lLeave vent"
+      slot: 4
+      mat: REDSTONE
+   vent_right:
+      title: "&c&l-->"
+      slot: 5
+      mat: '@eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYWJhZTg5ZTkyYWMzNjI2MzViYTNlOWZiN2MxMmI3ZGRkOWIzOGFkYjExZGY4YWExYWZmM2U1MWFjNDI4YTQifX19@'
+   cameras_left:
+      title: "&c&l<--"
+      slot: 3
+      mat: '@eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNzU0YWFhYjM5NzY0NjQxZmY4NjI3OTMyZDJmZTFhNGNjY2VkOTY1Mzc1MDhkNGFiYzZjZDVmYmJiODc5MTMifX19@'
+   cameras_leave:
+      slot: 4
+      title: "&c&lLeave cameras"
+      mat: REDSTONE
+   cameras_right:
+      title: "&c&l-->"
+      slot: 5
+      mat: '@eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNjFkMGY4MmEyYTRjZGQ4NWY3OWY0ZDlkOTc5OGY5YzNhNWJjY2JlOWM3ZjJlMjdjNWZjODM2NjUxYThmM2Y0NSJ9fX0=@'
+   vote: # Open meeting vote gui
+      slot: 0
+      mat: OAK_SIGN
+      title: "&f&lVote"
+   # Items in custom gui
+   arenasSelector_arena:
+      # %value% The arena display name
+      # %value1% Arena current players
+      # %value2% Maximum players
+      # %value3% State color: waiting - green, starting - blue, running - red, finishing - yellow
+      # %value4% Arena current state
+      # Can't join
+      mat: PAPER
+      title: "&6&l%value%"
+      lore:
+         - '&a&lplayers: &f%value1%/%value2%'
+         - '&e'
+         - '%value3%%value4%'
+      # Can join:
+      mat2: PAPER
+      title2: "&6&l%value%"
+      lore2:
+         - '&a&lplayers: &f%value1%/%value2%'
+         - '&e'
+         - '%value3%%value4%'
+         - '&e'
+         - '&e&lClick to join'
+   arenasSelector_border:
+      mat: BLUE_STAINED_GLASS_PANE
+   # Select color inventory
+   colorSelector_color:
+      # %value% Color's name
+      # %value1% Color's chat color
+      title: "&f&l%value%"
+      lore:
+         - "&e[Click to select]"
+   # Emergency meeting button inventory
+   meetingButton_button:
+      # Can't click btn
+      mat: RED_STAINED_GLASS
+      title: "&c&l✘"
+       # Can click btn
+      mat2: RED_CONCRETE
+      title2: "&c&lCall Meeting"
+   meetingButton_info:
+      # %value% Player name
+      # %value1% Player's meetings left
+      # %value2% Emergency meeting cooldown
+      mat: PAPER
+      title: "&fCrewmember %value% has"
+      lore:
+         - "&f%value1%"
+         - "&fEmergency meetings left"
+      # During crises
+      mat2: PAPER
+      title2: "&fEmergency meetings cannot"
+      lore2:
+         - "&fBe called during crises"
+      # Meetings cooldown
+      mat3: PAPER
+      title3: "&fCrewmembers must wait"
+      lore3:
+         - "&f%value2%s"
+         - "&fBefore next emergency"
+   # Vote in meetings inventory
+   voting_calledMeeting: # Shows next to the player who called the meeting
+      # %value% Player who called meeting
+      mat: PAPER
+      title: "%value% Called This Meeting."
+      lore: []
+   voting_player: # When this player can vote
+      # %value% Player's name
+      # %value1% Player's color
+      # %value2% Player's color name eg (blue, red)
+      # %value3% Color red (If this player is an imposter this value will be "&4")
+      title: "%value3%&l%value%"
+      lore:
+         - "&f%value2%"
+         - "&e[Click to vote]"
+      # Player voted
+      title2: "%value3%&l%value%"
+      lore2:
+         - "&f%value2%"
+         - "&f&lVoted"
+         - "&e[Click to vote]"
+      # Player is dead
+      title3: "%value3%&l&m%value%"
+      lore3:
+         - "&f%value2%"
+         - "&7&lDead"
+   voting_player_cantVote: # When this player can't vote or is a ghost
+      # %value% Player's name
+      # %value1% Player's color
+      # %value2% Player's color name eg (blue, red)
+      # %value3% Color red (If this player is an imposter this value will be "&4")
+      title: "%value3%&l%value%"
+      lore:
+         - "&f%value2%"
+      # Player voted
+      title2: "%value3%&l%value%"
+      lore2:
+         - "&f%value2%"
+         - "&f&lVoted"
+      # Player is dead
+      title3: "%value3%&l&m%value%"
+      lore3:
+         - "&f%value2%"
+         - "&7&lDead"
+   voting_player_dead:
+      # Items next to player's head to indicate that this player is dead
+      # %value% Player
+      mat: RED_STAINED_GLASS_PANE
+      title: " "
+      lore: []
+   voting_player_voted:
+      # Items next to player's head to indicate that this player has voted
+      # %value% Player
+      mat: LIME_STAINED_GLASS_PANE
+      title: " "
+      lore: []
+   voting_vote_accept:
+      # %value% Player
+      mat: LIME_STAINED_GLASS_PANE
+      title: "&a&l✔" 
+      lore: []
+      # For skip button
+      mat2: LIME_STAINED_GLASS_PANE
+      title2: "&a&l✔" 
+      lore2: []
+   voting_vote_cancel:
+      # %value% Player
+      mat: RED_STAINED_GLASS_PANE
+      title: "&c&l✘"
+      lore: []
+      # For skip button
+      mat2: RED_STAINED_GLASS_PANE
+      title2: "&c&l✘"
+      lore2: []
+   voting_skip: # Skip button
+      slot: 45
+      mat: BARRIER
+      title: "Skip"
+      lore:
+         - "&e[Click to vote]"
+      # When showing voting results
+      mat2: BARRIER
+      title2: "Skipped"
+      # When player can't vote
+      mat3: BARRIER
+      title3: "Skip"
+   voting_info:
+      slot: 53
+      # %value% Time
+      # %value1% Color red (If timer is smaller than 10 this will be "&c")
+      mat: OAK_SIGN
+      title: "%value1%&lVoting Begins In %value%s"
+      lore: []
+      # Voting ends in...
+      mat2: OAK_SIGN
+      title2: "%value1%&lVoting Ends In %value%s" 
+      lore2: []
+      # Proceeding in...
+      mat3: OAK_SIGN
+      title3: "%value1%&lProceeding In %value%s"
+      lore3: []
+   voting_fill:
+      # Can't vote
+      mat: BLACK_STAINED_GLASS_PANE
+      # Can vote
+      mat2: BLUE_STAINED_GLASS_PANE
+   # Unlock manifolds task inventory
+   unlockManifolds_info:
+      mat: OAK_SIGN
+      title: "&fHow to do:"
+      lore:
+         - "&fClick the squares in the right order"
+   unlockManifolds_square1:
+      mat: '@eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYWViZDg1YjdmOWU2MjIyYjM5NTQ1MWFkYjQ2Yjc2YTYyZjdlOTVkYTZmYmY3ZWZlNzE1Yzc4MzQ1NTE0MCJ9fX0=@'
+      title: "&f&l1"
+      # Square is completed
+      mat2: '@eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvODg5OTE2OTc0Njk2NTNjOWFmODM1MmZkZjE4ZDBjYzljNjc3NjNjZmU2NjE3NWMxNTU2YWVkMzMyNDZjNyJ9fX0=@'
+      title2: "&a&l1"
+      # Player clicked on the wrong square
+      mat3: '@eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvOGQyNDU0ZTRjNjdiMzIzZDViZTk1M2I1YjNkNTQxNzRhYTI3MTQ2MDM3NGVlMjg0MTBjNWFlYWUyYzExZjUifX19@'
+      title3: "&c&l1"
+   unlockManifolds_square2:
+      mat: '@eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNTAyZWJhODNhNmE5NTM5MTdmMWQ5OTFiYjM3OWIzNmU3ZmYwNGE0OTZkMTdmNTQyNGQwNGFhMTJlZmJhYiJ9fX0=@'
+      title: "&f&l2"
+      mat2: '@eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNTQ5NmMxNjJkN2M5ZTFiYzhjZjM2M2YxYmZhNmY0YjJlZTVkZWM2MjI2YzIyOGY1MmViNjVkOTZhNDYzNWMifX19@'
+      title2: "&a&l2"
+      mat3: '@eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYjEzYjc3OGM2ZTUxMjgwMjQyMTRmODU5YjRmYWRjNzczOGM3YmUzNjdlZTRiOWI4ZGJhZDc5NTRjZmYzYSJ9fX0=@'
+      title3: "&c&l2"
+   unlockManifolds_square3:
+      mat: '@eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZTFmZjUyZDE1ZTdhNzc1OGIwM2M2ZmE4NjFhY2JjZTkzYWU1NjYyZjc1NzgyNjE1NDBiMzkyZGU0MTU3YjI5In19fQ==@'
+      title: "&f&l3"
+      mat2: '@eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYzQyMjZmMmViNjRhYmM4NmIzOGI2MWQxNDk3NzY0Y2JhMDNkMTc4YWZjMzNiN2I4MDIzY2Y0OGI0OTMxMSJ9fX0=@'
+      title2: "&a&l3"
+      mat3: '@eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMDMxZjY2YmUwOTUwNTg4NTk4ZmVlZWE3ZTZjNjc3OTM1NWU1N2NjNmRlOGI5MWE0NDM5MWIyZTlmZDcyIn19fQ==@'
+      title3: "&c&l3"
+   unlockManifolds_square4:
+      mat: '@eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvODg0YjYzZDg0OGRjYmNmMDYxZTY0MmY2OTdiNDZkNTk5YTk0MmUzNmU3ODUzNDdlZmVjOTUzNGNjNzZkOGE2NiJ9fX0=@'
+      title: "&f&l4"
+      mat2: '@eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZjkyMGVjY2UxYzhjZGU1ZGJjYTU5MzhjNTM4NGY3MTRlNTViZWU0Y2NhODY2YjcyODNiOTVkNjllZWQzZDJjIn19fQ==@'
+      title2: "&a&l4"
+      mat3: '@eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvOTViYzQyYzY5ODQ2YzNkYTk1MzFhYzdkYmEyYjU1MzYzZjhmOTQ3MjU3NmUxN2Q0MjNiN2E5YjgxYzkxNTEifX19@'
+      title3: "&c&l4"
+   unlockManifolds_square5:
+      mat: '@eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvOWQzYzU0ZTlmMTJjZDk4NDQ5ZGRkYTA2ODliZWMxNzliZDU4ZTM0ZmNmOTFkODU4MDlhOWY5NmM2OGZlIn19fQ==@'
+      title: "&f&l5"
+      mat2: '@eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYTJjMTQyYWY1OWYyOWViMzVhYjI5YzZhNDVlMzM2MzVkY2ZjMmE5NTZkYmQ0ZDJlNTU3MmIwZDM4ODkxYjM1NCJ9fX0=@'
+      title2: "&a&l5"
+      mat3: '@eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZGYzZjU2NWE4ODkyOGVlNWE5ZDY4NDNkOTgyZDc4ZWFlNmI0MWQ5MDc3ZjJhMWU1MjZhZjg2N2Q3OGZiIn19fQ==@'
+      title3: "&c&l5"
+   unlockManifolds_square6:
+      mat: '@eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMzk4NGI5MjVjM2NjMzhjZmFjYWZiYTc1M2ViZDFhMzllYTYzZjkyNzMxMGFlZTM4MGUyNzBmZTJjMjgxOCJ9fX0=@'
+      title: "&f&l6"
+      mat2: '@eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMjRkZGIwM2FhOGM1ODQxNjhjNjNlY2UzMzdhZWZiMjgxNzc0Mzc3ZGI3MjMzNzI5N2RlMjU4YjRjY2E2ZmJhNCJ9fX0=@'
+      title2: "&a&l6"
+      mat3: '@eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYzVkYTFjYjZjNGMyMzcxMDIyNGI0ZjRlOGQ2ZmZjZjhiNGI1NWY3ZmU4OTFjMTIwNGFmNzQ4NWNmMjUyYTFkOCJ9fX0=@'
+      title3: "&c&l6"
+   unlockManifolds_square7:
+      mat: '@eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMmY5YjYzNTYyNDEzNmU0MThhNjM2YjZiZjI4ZTU5ZDE3ZjcxMzc2M2Y4MmRhZjQ1MzY3NjcwNGJlMGU0NjU4MSJ9fX0=@'
+      title: "&f&l7"
+      mat2: '@eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZDdkZTcwYjg4MzY4Y2UyM2ExYWM2ZDFjNGFkOTEzMTQ4MGYyZWUyMDVmZDRhODVhYjI0MTdhZjdmNmJkOTAifX19@'
+      title2: "&a&l7"
+      mat3: '@eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYWY0ZTdhNWNmNWI1YTRkMmZmNGZiMDQzM2IxYTY4NzUxYWExMmU5YTAyMWQzOTE4ZTkyZTIxOWE5NTNiIn19fQ==@'
+      title3: "&c&l7"
+   unlockManifolds_square8:
+      mat: '@eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvY2M0ODU2ZDRmZTVhOTljNzIzNTM3NWQzYjM1OWViMTkxNDI2ODQzNTU1ZTZkYTQ4OGU5ZmQ1ZjgzN2JlNTVhIn19fQ==@'
+      title: "&f&l8"
+      mat2: '@eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNDI2NDdhZTQ3YjZiNTFmNWE0NWViM2RjYWZhOWI4OGYyODhlZGU5Y2ViZGI1MmExNTllMzExMGU2YjgxMThlIn19fQ==@'
+      title2: "&a&l8"
+      mat3: '@eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMTY4MzQ0MGM2NDQ3YzE5NWFhZjc2NGUyN2ExMjU5MjE5ZTkxYzZkOGFiNmJkODlhMTFjYThkMmNjNzk5ZmE4In19fQ==@'
+      title3: "&c&l8"
+   unlockManifolds_square9:
+      mat: '@eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNjU4NzFkZDg4MjdlYTc0ODk2YzcxMmYzODI2ZWZkODA2ZmQxZjQ5ZDE0OTI2ZDA2MzVhM2JlNmI5Y2YzYiJ9fX0=@'
+      title: "&f&l9"
+      mat2: '@eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZGFlNDYxYTQ0MzQxOTZkMzcyOTZhZDVhZGY2ZDlkNTc0NGEwNDE1ZGM2MWM0NzVhNmRmYTYyODU4MTQwNTIifX19@'
+      title2: "&a&l9"
+      mat3: '@eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZjg5NzdhZGVkZmE2YzgxYTY3ZjgyNWVhMzdjNGQ1YWE5MGRmZTNjMmE3MmRkOTg3OTFmNDUyMWUxZGEzNiJ9fX0=@'
+      title3: "&c&l9"
+   unlockManifolds_square10:
+      mat: '@eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYWU4NTIwZjc2ZmZlNmE2YjUwZGE5ZGJmZWFkZTRlNjQyN2M0YzIxZDY0ZTYyNjBlOWE4NWI0M2M2NmM3MiJ9fX0=@'
+      title: "&f&l10"
+      mat2: '@eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvOGJmNjhjNzMxMDg3NTI2N2VlYzJhYzVhYTZjZGIzYTkxZjIyZDU5OThhMzgwYTRjZWM5MmFhZmFmNmQ3MCJ9fX0=@'
+      title2: "&a&l10"
+      mat3: '@eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZjU5ODdmNDNmZjU3ZDRkYWJhYTJkMmNlYjlmMDFmYzZlZTQ2ZGIxNjJhNWUxMmRmZGJiNTdmZDQ2ODEzMmI4In19fQ==@'
+      title3: "&c&l10"
+   # Download data task inventory
+   downloadData_left:
+      # %value% Location downloaded from (Location name)
+      mat: OAK_SIGN
+      title: "&l%value%"
+      lore: []
+   downloadData_progress:
+      # Items in the middle 
+      mat: WHITE_STAINED_GLASS_PANE
+      title: " "
+      # Progress done
+      mat2: LIME_STAINED_GLASS_PANE
+      title2: " "
+   downloadData_right:
+      mat: OAK_SIGN
+      title: "&lMy Tablet"
+      lore: []
+   downloadData_start:
+      mat: REDSTONE
+      title: "&lDownload"
+      lore: []
+      # %value% estimated times from messages.yml
+      mat2: REDSTONE
+      title2: "%value%"
+      lore2: []
+   downloadData_info:
+      mat: BLACK_STAINED_GLASS_PANE 
+      title: " "
+   # Upload data task inventory
+   uploadData_left:
+      mat: OAK_SIGN
+      title: "&lMy Tablet"
+      lore: []
+   uploadData_progress:
+      mat: WHITE_STAINED_GLASS_PANE
+      title: " "
+      mat2: LIME_STAINED_GLASS_PANE
+      title2: " "
+   uploadData_right:
+      mat: OAK_SIGN
+      title: "&lHeadquarters"
+      lore: []
+   uploadData_start:
+      mat: REDSTONE
+      title: "&lUpload"
+      lore: []
+      # %value% estimated times from messages.yml
+      mat2: REDSTONE
+      title2: "%value%"
+      lore2: []
+   uploadData_info:
+      mat: BLACK_STAINED_GLASS_PANE 
+      title: " "
+   # Divert power task inventory
+   divertPower_topLocation:
+      # Location name in the top row
+      # %value% Location name
+      mat: GRAY_CONCRETE
+      title: "%value%"
+   divertPower_lever:
+      mat: TORCH
+      title: " "
+   divertPower_activeLever:
+      mat: REDSTONE_TORCH
+      title: "&c&lClick here"
+      # When lever is clicked
+      mat2: REDSTONE_TORCH
+      title2: " "
+   divertPower_fillBetween:
+      mat: WHITE_STAINED_GLASS_PANE
+      title: " "
+      # When lever is clicked and this is above lever
+      mat2: LIGHT_BLUE_STAINED_GLASS_PANE
+      title2: "&lClick here"
+   divertPower_info:
+      mat: OAK_SIGN
+      title: "&fHow to do:"
+      lore:
+         - "&fMove the redstone torch 1 block up"
+   # Accept diverted power task inventory
+   acceptDivertedPower_line:
+      mat: YELLOW_CONCRETE
+      title: " "
+      mat2: WHITE_CONCRETE
+      title2: " "
+   acceptDivertedPower_switch:
+      mat: LIGHT_GRAY_CONCRETE
+      title: "&f&lClick here"
+      # Middle item
+      mat2: GRAY_CONCRETE
+      title2: "&f&lClick here"
+   acceptDivertedPower_switchActive:
+      mat: LIGHT_GRAY_CONCRETE
+      title: " "
+      # Middle item
+      mat2: GRAY_CONCRETE
+      title2: " "
+   acceptDivertedPower_info:
+      mat: OAK_SIGN
+      title: "&fHow to use:"
+      lore:
+         - "&fClick the switch in the middle"
+   # Prime shields task inventory
+   primeShields_square:
+      mat: WHITE_CONCRETE
+      title: " "
+      lore: []
+      mat2: RED_CONCRETE
+      title2: " "
+      lore2: []
+   primeShields_info:
+      mat: OAK_SIGN
+      title: "&fHow to do:"
+      lore:
+         - "&fClick the red squares"
+   # Calibrate distributor task inventory
+   calibrateDistributor_circle:
+      mat: YELLOW_CONCRETE
+      title: " "
+      mat2: BLUE_CONCRETE
+      title2: " "
+      mat3: LIGHT_BLUE_CONCRETE
+      title3: " "
+   calibrateDistributor_circleMiddle:
+      mat: LIGHT_GRAY_CONCRETE
+      title: " "
+   calibrateDistributor_cursor: # Spining thing
+      mat: RED_CONCRETE
+      title: "&lClick here"
+   calibrateDistributor_middle: # Between circle and button
+      mat: GRAY_CONCRETE
+      title: " "
+   calibrateDistributor_button: 
+      mat: LIGHT_GRAY_CONCRETE
+      title: "&lClick here"
+   calibrateDistributor_bar: # Above button
+      mat: YELLOW_CONCRETE
+      title: " "
+      mat2: BLUE_CONCRETE
+      title2: " "
+      mat3: LIGHT_BLUE_CONCRETE
+      title3: " "
+   calibrateDistributor_info:
+      mat: OAK_SIGN
+      title: "&fHow to use:"
+      lore:
+         - "&fClick the button when the rotating node"
+         - "&fReaches the rightmost point"
+         - "&fThere are 3 stages"
+         - "&fIf you make a mistake you must restart"
+   # Empty garbage task inventory
+   emptyGarbage_garbage:
+      mat: DEAD_BUSH
+      title: " "
+      mat2: AIR
+      title2: " "
+   emptyGarbage_lever:
+      mat: WHITE_CONCRETE
+      title: "&lClick here"
+      mat2: WHITE_CONCRETE
+      title2: "&lRunning..."
+   emptyGarbage_leverTop:
+      mat: RED_CONCRETE
+      title: " "
+      mat2: BLACK_STAINED_GLASS_PANE
+      title2: " "
+   emptyGarbage_leverBottom:
+      mat: RED_CONCRETE
+      title: " "
+      mat2: BLACK_STAINED_GLASS_PANE
+      title2: " "
+   emptyGarbage_info:
+      mat: OAK_SIGN
+      title: "&fHow to do:"
+      lore:
+         - "&fClick the switch"
+         - "&fAnd wait for the garbage to go down"
+   # Refuel task inventory
+   refuel_fuel:
+      mat: YELLOW_CONCRETE
+      title: " "
+      mat2: AIR
+   refuel_button:
+      mat: LIGHT_GRAY_CONCRETE
+      title: "&lClick here"
+      mat2: LIGHT_GRAY_CONCRETE
+      title2: "&lRunning..."
+   refuel_isRunning: # Is running indicator
+      # Not running
+      mat: RED_STAINED_GLASS
+      title: " "
+      # Refuel running
+      mat2: RED_CONCRETE
+      title2: " "
+   refuel_isDone: # Is done indicator
+      # Not done
+      mat: LIME_STAINED_GLASS
+      title: " "
+      # Refuel done
+      mat2: LIME_CONCRETE
+      title2: " "
+   refuel_info:
+      mat: OAK_SIGN
+      title: "&fHow to do:"
+      lore:
+         - "&fClick the button at the right"
+         - "&fAnd wait for the can to fill up"
+   # Fuel task inventory
+   fuel_fuel:
+      mat: YELLOW_CONCRETE
+      title: " "
+      mat2: AIR
+   fuel_button:
+      mat: LIGHT_GRAY_CONCRETE
+      title: "&lClick here"
+      mat2: LIGHT_GRAY_CONCRETE
+      title2: "&lRunning..."
+   fuel_isRunning: # Is running indicator
+      # Not running
+      mat: RED_STAINED_GLASS
+      title: " "
+      # Refuel running
+      mat2: RED_CONCRETE
+      title2: " "
+   fuel_isDone: # Is done indicator
+      # Not done
+      mat: LIME_STAINED_GLASS
+      title: " "
+      # Refuel done
+      mat2: LIME_CONCRETE
+      title2: " "
+   fuel_info:
+      mat: OAK_SIGN
+      title: "&fHow to do:"
+      lore:
+         - "&fClick the button at the right"
+   # Clean o2 filter task inventory
+   cleanO2_leaf:
+      mat: DEAD_BUSH
+      title: "&lLeaf"
+      mat2: AIR
+      title2: " "
+   cleanO2_info:
+      mat: OAK_SIGN
+      title: "&lHow to do:"
+      lore:
+         - "&fClick all the leaves to complete"
+   # Inspect sample task
+   inspectSample_tube:
+      title: "&fTube"
+      # Timer running
+      title2: "&fTube"
+      # This glass is the anomaly
+      title3: "&clAnomaly"
+   inspectSample_selectButton:
+      mat: LIGHT_GRAY_CONCRETE
+      title: " "
+      # Timer running
+      mat2: LIGHT_GRAY_CONCRETE
+      title2: " "
+      # Timer done
+      mat3: LIME_CONCRETE
+      title3: "&lSelect this tube"
+   inspectSample_startButton:
+      mat: LIME_CONCRETE
+      title: "&a&lClick here to start"
+      # Timer running
+      mat2: BLACK_STAINED_GLASS_PANE
+      # Timer done
+      mat3: BLACK_STAINED_GLASS_PANE
+   inspectSample_bottomETA:
+      # %value% Seconds left
+      mat: OAK_SIGN
+      title: "&a&lpress to start -->"
+      # Timer running
+      mat2: OAK_SIGN
+      title2: "&f&lYOU DONT NEED TO WAIT"
+      lore2:
+         - "&e&lETA: %value%"
+      # Timer done
+      mat3: OAK_SIGN
+      title3: "&a&lSelect the anomaly"
+   inspectSample_info:
+      mat: OAK_SIGN
+      title: "How to do:"
+      lore:
+         - "&fClick the green start button"
+         - "&fWait 60 seconds (You can leave the task)"
+         - "&fChoose the RED tube by clicking the"
+         - "&fGreen button below the tube"
+         - "&fIf you choose the wrong tube"
+         - "&fYou have to wait 60 seconds again"
+   # Start reactor task inventory
+   startReactor_square:
+      mat: GRAY_CONCRETE
+      title: " "
+      # When you can't click square
+      mat2: LIGHT_GRAY_CONCRETE
+      title2: " "
+      # When square is played / clicked
+      mat3: LIGHT_BLUE_CONCRETE 
+      title3: " "
+   startReactor_squareWrong:
+      mat: RED_CONCRETE
+      title: " "
+   startReactor_progressIndicator:
+      mat: LIGHT_GRAY_CONCRETE
+      title: " "
+      mat2: LIME_CONCRETE
+      title2: " "
+   startReactor_info:
+      mat: BLACK_STAINED_GLASS_PANE
+      title: " "
+   # Medbay scan task inventory
+   scan_infoId:
+      # %value% Player's id
+      # %value1% (Number varies in the place you joined the game)
+      mat: OAK_SIGN
+      title: "&f&lID: %value%%value1%"
+   scan_infoHeight:
+      # %value% Player's height
+      mat: OAK_SIGN
+      title: "&f&lHEIGHT: %value%"
+   scan_infoWeight:
+      # %value% Player's weight
+      mat: OAK_SIGN
+      title: "&f&lWEIGHT: %value%lb"
+   scan_infoColor:
+      # %value% Player's color name
+      mat: OAK_SIGN
+      title: "&f&lCOLOR: %value%"
+   scan_infoBloodType:
+      # %value% Player's blood type
+      mat: OAK_SIGN
+      title: "&f&lBLOOD TYPE: %value%"
+   scan_progress:
+      mat: BLACK_CONCRETE
+      title: " "
+      mat2: LIME_CONCRETE
+      title2: " "
+   scan_seconds:
+      # %value% Seconds left
+      mat: OAK_SIGN
+      title: "&f&lScan complete in %value%"
+      # Scan done
+      mat2: OAK_SIGN
+      title2: "&f&lScan complete"
+   scan_info:
+      mat: BLACK_STAINED_GLASS_PANE
+      title: " "
+   scan_queue_info:
+      # %value% Player waiting for
+      # %value1% Player waiting for color
+      # %value2% Player waiting for color name
+      mat: OAK_SIGN
+      title: "&f&lWaiting for: %value%"
+   # Clear asteroids task inventory
+   clearAsteroids_asteroid:
+      mat: COBBLESTONE
+      title: " "
+   clearAsteroids_background:
+      mat: GREEN_STAINED_GLASS_PANE
+      title: " "
+   clearAsteroids_destroyed:
+      # %value% Asteroids destroyed
+      mat: PAPER
+      title: "&f&lDESTROYED: %value%"
+   clearAsteroids_info:
+      mat: OAK_SIGN
+      title: "&fHow to do:"
+      lore: 
+         - "&fDestroy 20 asteroids"
+   # Swipe card task inventory
+   swipeCard_card:
+      mat: MUSIC_DISC_STAL
+      title: "&9&lCard"
+      # Card clicked
+      mat2: MUSIC_DISC_STAL
+      title2: "&9&lCard"
+   swipeCard_box:
+      mat: JUKEBOX
+      title: "&9&lCard reader"
+   swipeCard_info:
+      mat: BLACK_STAINED_GLASS_PANE 
+      title: " "
+   # Lights sabotage inventory
+   lightsSabotage_switch:
+      mat: GREEN_CONCRETE
+      title: "&c&l✘"
+      lore: []
+      mat2: LIME_CONCRETE
+      title2: "&a✔"
+      lore2: []
+   lightsSabotage_info:
+      mat: BLACK_STAINED_GLASS_PANE 
+      title: " "
+   # Reactor sabotage inventory
+   reactorSabotage_topItem:
+      mat: PAPER
+      title: "&c&lCLICK TO STOP MELTDOWN"
+      lore: []
+      # Waiting for second user
+      mat2: PAPER
+      title2: "&9&lWAITING FOR SECOND USER"
+      lore2: []
+      # Reactor finished
+      mat3: PAPER
+      title3: "&a&lREACTOR NORMAL"
+      lore3: []  
+   reactorSabotage_hand:
+      mat: RED_CONCRETE
+      title: " "
+      lore: []
+      # Waiting for second user
+      mat2: LIGHT_BLUE_CONCRETE
+      title2: " "
+      lore2: []
+      # Reactor normal
+      mat3: LIGHT_BLUE_CONCRETE
+      title3: " "
+      lore3: []  
+   reactorSabotage_info:
+      mat: OAK_SIGN
+      title: "&fHow to do:"
+      lore:
+         - "&fClick the red concrete"
+         - "&fAnd wait for a second player"
+   # Sabotage communications inventory
+   commsSabotage_insideCube:
+      # Outer circle
+      mat: GRAY_CONCRETE
+      title: " "
+      lore: []
+      # Middle slot inside circle
+      mat2: WHITE_CONCRETE
+      title2: " "
+      lore2: []
+   commsSabotage_handle:
+      mat: REDSTONE
+      title: "&l⬌"
+      lore: []
+      # Handle active
+      mat2: REDSTONE
+      title2: "&l⬌"
+      lore2: []
+   commsSabotage_outerCube:
+      mat: WHITE_STAINED_GLASS_PANE
+      title: " "
+      lore: []
+      # When this item is active
+      # (Handle can move to this position)
+      mat2: BLUE_STAINED_GLASS_PANE
+      title2: " "
+      lore2: []
+   commsSabotage_info:
+      mat: OAK_SIGN
+      title: "How to use:"
+      lore:
+         - "&fClick the redstone item and move it left or right"
+         - "&fUntill you reach the correct location"
+   # Oxygen sabotage inventory
+   oxygenSabotage_cancel: # Cancel button
+      mat: '@eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYmViNTg4YjIxYTZmOThhZDFmZjRlMDg1YzU1MmRjYjA1MGVmYzljYWI0MjdmNDYwNDhmMThmYzgwMzQ3NWY3In19fQ==@'
+      title: "&c&l✘"
+   oxygenSabotage_accept: # Accept button
+      mat: '@eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYTkyZTMxZmZiNTljOTBhYjA4ZmM5ZGMxZmUyNjgwMjAzNWEzYTQ3YzQyZmVlNjM0MjNiY2RiNDI2MmVjYjliNiJ9fX0=@'
+      title: "&a&l✔"
+   oxygenSabotage_info: # Accept button
+      mat: OAK_SIGN
+      title: "&fHow to do:"
+      lore:
+         - "&fType the number shown in the title"
+         - "&fClick ✔  to send"
+         - "&fClick ✘ to clear"
+   oxygenSabotage_code: # Show code typed by the player
+      # %value% Number
+      mat: '@eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvOTc5YTQ2NTE4M2EzYmE2M2ZlNmFlMjcyYmMxYmYxY2QxNWYyYzIwOWViYmZjYzVjNTIxYjk1MTQ2ODJhNDMifX19@'
+      title: "&l%value%"
+   oxygenSabotage_button0:
+      mat: '@eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNmQ2ODM0M2JkMGIxMjlkZTkzY2M4ZDNiYmEzYjk3YTJmYWE3YWRlMzhkOGE2ZTJiODY0Y2Q4NjhjZmFiIn19fQ==@'
+      title: "&l0"
+   oxygenSabotage_button1:
+      mat: '@eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZDJhNmYwZTg0ZGFlZmM4YjIxYWE5OTQxNWIxNmVkNWZkYWE2ZDhkYzBjM2NkNTkxZjQ5Y2E4MzJiNTc1In19fQ==@'
+      title: "&l1"
+   oxygenSabotage_button2:
+      mat: '@eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvOTZmYWI5OTFkMDgzOTkzY2I4M2U0YmNmNDRhMGI2Y2VmYWM2NDdkNDE4OWVlOWNiODIzZTljYzE1NzFlMzgifX19@'
+      title: "&l2"
+   oxygenSabotage_button3:
+      mat: '@eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvY2QzMTliOTM0M2YxN2EzNTYzNmJjYmMyNmI4MTk2MjVhOTMzM2RlMzczNjExMWYyZTkzMjgyN2M4ZTc0OSJ9fX0=@'
+      title: "&l3"
+   oxygenSabotage_button4:
+      mat: '@eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZDE5OGQ1NjIxNjE1NjExNDI2NTk3M2MyNThmNTdmYzc5ZDI0NmJiNjVlM2M3N2JiZTgzMTJlZTM1ZGI2In19fQ==@'
+      title: "&l4"
+   oxygenSabotage_button5:
+      mat: '@eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvN2ZiOTFiYjk3NzQ5ZDZhNmVlZDQ0NDlkMjNhZWEyODRkYzRkZTZjMzgxOGVlYTVjN2UxNDlkZGRhNmY3YzkifX19@'
+      title: "&l5"
+   oxygenSabotage_button6:
+      mat: '@eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvOWM2MTNmODBhNTU0OTE4YzdhYjJjZDRhMjc4NzUyZjE1MTQxMmE0NGE3M2Q3YTI4NmQ2MWQ0NWJlNGVhYWUxIn19fQ==@'
+      title: "&l6"
+   oxygenSabotage_button7:
+      mat: '@eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvOWUxOThmZDgzMWNiNjFmMzkyN2YyMWNmOGE3NDYzYWY1ZWEzYzdlNDNiZDNlOGVjN2QyOTQ4NjMxY2NlODc5In19fQ==@'
+      title: "&l7"
+   oxygenSabotage_button8:
+      mat: '@eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvODRhZDEyYzJmMjFhMTk3MmYzZDJmMzgxZWQwNWE2Y2MwODg0ODlmY2ZkZjY4YTcxM2IzODc0ODJmZTkxZTIifX19@'
+      title: "&l8"
+   oxygenSabotage_button9:
+      mat: '@eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvOWY3YWEwZDk3OTgzY2Q2N2RmYjY3YjdkOWQ5YzY0MWJjOWFhMzRkOTY2MzJmMzcyZDI2ZmVlMTlmNzFmOGI3In19fQ==@'
+      title: "&l9"
+   # Version 1.2:
+   # Chart course task inventory
+   chartCourse_point:
+      mat: LIGHT_BLUE_CONCRETE
+      title: "o"
+   chartCourse_ship:
+      mat: IRON_BLOCK 
+      title: "&fShip"
+      # When ship is clicked
+      mat2: IRON_BLOCK 
+      title2: "&fShip"
+   chartCourse_middle:
+      mat: BLUE_STAINED_GLASS_PANE
+      title: " "
+   chartCourse_info:
+      mat: BLACK_STAINED_GLASS_PANE 
+      title: " "
+   # Stabilize steering task inventory
+   StabilizeSteering_crosshair:
+      mat: WHITE_CONCRETE 
+      title: "&f&lClick here"
+      mat2: LIME_CONCRETE 
+      title2: "&a&lDone"
+   StabilizeSteering_info:
+      mat: BLACK_STAINED_GLASS_PANE
+      title: " "
+   # Version 1.7:
+   # Fill canisters task inventory
+   fillCanisters_info:
+      mat: BLACK_STAINED_GLASS_PANE 
+      title: " "
+   fillCanisters_leftCanister:
+      mat: LIGHT_BLUE_CONCRETE 
+      title: " "
+   fillCanisters_outerCanister:
+      # Player needs to click the canister
+      mat: BLUE_STAINED_GLASS
+      title: "&9Click to start"
+      # Canister is filling up
+      mat2: BLUE_STAINED_GLASS
+      title2: "&9Filling up..."
+      # Canister is full / done
+      mat3: BLUE_STAINED_GLASS
+      title3: "&9Done!"
+   fillCanisters_canisterProgress:
+      # Not active
+      mat: BLACK_CONCRETE
+      title: "&9Click to start"
+      mat2: LIGHT_GRAY_CONCRETE
+      title2: "&9Filling up..."
+      mat3: YELLOW_CONCRETE 
+      title3: "&9Filling up..."
+   fillCanisters_canisterProgressDone:
+      mat: YELLOW_CONCRETE
+      title: "&9Done!"
+   # Insert keys task inventory
+   insertKeys_info:
+      mat: BLACK_STAINED_GLASS_PANE
+      title: " "
+   insertKeys_key:
+      mat: LIGHT_GRAY_SHULKER_BOX
+      title: " "
+      # Player's key
+      mat2: YELLOW_SHULKER_BOX
+      title2: "&eInsert key"
+   # Replace water jug task inventory
+   replaceWaterJug_info:
+      mat: BLACK_STAINED_GLASS_PANE
+      title: " "
+   replaceWaterJug_button:
+      mat: RED_CONCRETE
+      title: "&LClick to start"
+      mat2: LIGHT_BLUE_CONCRETE
+      title2: "&LClick to stop"
+   replaceWaterJug_waterJug:
+      mat: LIGHT_BLUE_STAINED_GLASS
+      title: "&9Water Jug"
+      mat2: BLUE_ICE
+      title2: "&9Water"
+   # Record tempature task inventory
+   recordTemperature_info:
+      mat: BLACK_STAINED_GLASS_PANE
+      title: " "
+   recordTemperature_background:
+      # Left side
+      mat: LIME_STAINED_GLASS_PANE
+      title: " "
+      # Right side
+      mat2: BLUE_STAINED_GLASS_PANE
+      title2: " "
+      # Right side - hot
+      mat3: RED_STAINED_GLASS_PANE
+      title3: " "
+   recordTemperature_infoTop:
+      # Left side
+      mat: PAPER
+      title: "&lLOG"
+      # Right side
+      mat2: PAPER
+      title2: "&lREADING"
+   # %value% Active temperature
+   # %value1% Target temperature
+   recordTemperature_arrows:
+      # Up arrow
+      mat: "@eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYjIyMWRhNDQxOGJkM2JmYjQyZWI2NGQyYWI0MjljNjFkZWNiOGY0YmY3ZDRjZmI3N2ExNjJiZTNkY2IwYjkyNyJ9fX0=@"
+      title: "&a&l⇧  %value%"
+      # Down arrow
+      mat2: "@eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvM2I4M2JiY2NmNGYwYzg2YjEyZjZmNzk5ODlkMTU5NDU0YmY5MjgxOTU1ZDdlMjQxMWNlOThjMWI4YWEzOGQ4In19fQ==@"
+      title2: "&a&l⇩ %value%"
+   recordTemperature_num_0:
+      mat: "@eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZGVmYTRhNzQ0NDdkMGUyZmE0YzQzZjAzZDk2NjFhN2VlNmRlZTUxZGE4MmUwMmVhNTNhYWQ5M2Y3MTUyOTIifX19@"
+      title: "&a&l%value%"
+      # Right side
+      mat2: "@eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZTVhNzQzOTM4MjIxNTFkM2U4MWY4Nzk0ZmY4NGJjMWI5OGM1N2VlOWE4YTgxZTI5ODMxZjczZWRhMmIzNmEifX19@"
+      title2: "&9&l%value1%"
+   recordTemperature_num_1:
+      mat: "@eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvODg5OTE2OTc0Njk2NTNjOWFmODM1MmZkZjE4ZDBjYzljNjc3NjNjZmU2NjE3NWMxNTU2YWVkMzMyNDZjNyJ9fX0=@"
+      title: "&a&l%value%"
+      mat2: "@eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYmQyMWIwYmFmYjg5NzIxY2FjNDk0ZmYyZWY1MmE1NGExODMzOTg1OGU0ZGNhOTlhNDEzYzQyZDlmODhlMGY2In19fQ==@"
+      title2: "&9&l%value1%"
+   recordTemperature_num_2:
+      mat: "@eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNTQ5NmMxNjJkN2M5ZTFiYzhjZjM2M2YxYmZhNmY0YjJlZTVkZWM2MjI2YzIyOGY1MmViNjVkOTZhNDYzNWMifX19@"
+      title: "&a&l%value%"
+      mat2: "@eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMmIzNTEzYWE0MTE3YTNhMzI5ZTFmOWE0M2QyYThjNTFjZDcyMmFhZGQ0ZThhZjJmZWRhNjdiMzNiNjRjMjk4In19fQ==@"
+      title2: "&9&l%value1%"
+   recordTemperature_num_3:
+      mat: "@eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYzQyMjZmMmViNjRhYmM4NmIzOGI2MWQxNDk3NzY0Y2JhMDNkMTc4YWZjMzNiN2I4MDIzY2Y0OGI0OTMxMSJ9fX0=@"
+      title: "&a&l%value%"
+      mat2: "@eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNjllMzhjODE0MzZmM2RhMTIwNjcyZWZiMTYyZDJmNGVhODc0YWIwY2U1NDVhZTMyMzc3N2Y1ZTU3M2MyNTRhIn19fQ==@"
+      title2: "&9&l%value1%"
+   recordTemperature_num_4:
+      mat: "@eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZjkyMGVjY2UxYzhjZGU1ZGJjYTU5MzhjNTM4NGY3MTRlNTViZWU0Y2NhODY2YjcyODNiOTVkNjllZWQzZDJjIn19fQ==@"
+      title: "&a&l%value%"
+      mat2: "@eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZjAzZDQ1NTIxYzI3ZmRkMmYyYjExMzlhMWExN2Q2NDk1ZThmNDdkOWYxMjM0OTNkNGRkOGFhMDZhZmY0MGNlIn19fQ==@"
+      title2: "&9&l%value1%"
+   recordTemperature_num_5:
+      mat: "@eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYTJjMTQyYWY1OWYyOWViMzVhYjI5YzZhNDVlMzM2MzVkY2ZjMmE5NTZkYmQ0ZDJlNTU3MmIwZDM4ODkxYjM1NCJ9fX0=@"
+      title: "&a&l%value%"
+      mat2: "@eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvOWYyYTE0ZGJmOTU4ODEyNmM0M2NkMjExMWViNDFmMWRlNmQ4YzI4MWI2NTE5MTk0MzY0Yjk5NjVmYzQ1NmUifX19@"
+      title2: "&9&l%value1%"
+   recordTemperature_num_6:
+      mat: "@eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMjRkZGIwM2FhOGM1ODQxNjhjNjNlY2UzMzdhZWZiMjgxNzc0Mzc3ZGI3MjMzNzI5N2RlMjU4YjRjY2E2ZmJhNCJ9fX0=@"
+      title: "&a&l%value%"
+      mat2: "@eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZWFlN2NiMzdmZmE2ODY2MzE3NjcyOTI0MzAxYjFiMjk2MzNlNmYyM2YyNTI1NTEzZGJmNzI5YmQyZDA2NiJ9fX0=@"
+      title2: "&9&l%value1%"
+   recordTemperature_num_7:
+      mat: "@eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZDdkZTcwYjg4MzY4Y2UyM2ExYWM2ZDFjNGFkOTEzMTQ4MGYyZWUyMDVmZDRhODVhYjI0MTdhZjdmNmJkOTAifX19@"
+      title: "&a&l%value%"
+      mat2: "@eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZTIxZDU2MmM1YTUxYjY0MjI5ZmM2MjZmMjVjNDIxZjZhYzM4Y2Y3ODM5ZTFjNmM0NzE2OGZhYzM3NDJjY2RmOCJ9fX0=@"
+      title2: "&9&l%value1%"
+   recordTemperature_num_8:
+      mat: "@eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNDI2NDdhZTQ3YjZiNTFmNWE0NWViM2RjYWZhOWI4OGYyODhlZGU5Y2ViZGI1MmExNTllMzExMGU2YjgxMThlIn19fQ==@"
+      title: "&a&l%value%"
+      mat2: "@eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYjZiNTZjYjBiNDhkOWM5ZWRkMTk4NGFmZTE3MTNiOThlZWE5NmQyOWJlNWIyYjU4ZGE0NDQ0YTEwMThlOTVkIn19fQ==@"
+      title2: "&9&l%value1%"
+   recordTemperature_num_9:
+      mat: "@eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZGFlNDYxYTQ0MzQxOTZkMzcyOTZhZDVhZGY2ZDlkNTc0NGEwNDE1ZGM2MWM0NzVhNmRmYTYyODU4MTQwNTIifX19@"
+      title: "&a&l%value%"
+      mat2: "@eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMTM3ZmRlZjgyOTVkZjNmYjZkZWEyMWM2YzhlNDUxZjFmN2ZkNjU3YTYxY2M2NDIzYTNjZTQyYzJmYjk2MWI2YyJ9fX0=@"
+      title2: "&9&l%value1%"
+   recordTemperature_num_minus:
+      mat: "@eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNWY2N2Y3N2Y5Njk3MjU1NTUzZmExNzk3OWNmNzI0MmNlN2Q3NWRkNTJmYmYzY2ZiMjZjOWFiNTRlMmE3MTkzOCJ9fX0=@"
+      title: "&a&l%value%"
+      mat2: "@eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZjg0Y2NmZjA5ZjgzYTJhZWQ5ZWJlMDhiNjgxN2VlYzY2N2ZiOTk2ZDEyOTg2Y2I5OGVkZTQxYWY1OGJiMWQifX19@"
+      title2: "&9&l%value1%"
+   recordTemperature_num_plus:
+      mat: "@eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYjA1NmJjMTI0NGZjZmY5OTM0NGYxMmFiYTQyYWMyM2ZlZTZlZjZlMzM1MWQyN2QyNzNjMTU3MjUzMWYifX19@"
+      title: "&a&l%value%"
+      mat2: "@eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZWFlYTVkNzEyNzIxNGVlMmNjYTFiODJlZjgyZjhhZTU1OTI5MzI1NzY2ZWE4NGRkZTE4YzExZGUwYzdkNTkxIn19fQ==@"
+      title2: "&9&l%value1%"
+   # Repair drill task inventory
+   repairDrill_info:
+      mat: BLACK_STAINED_GLASS_PANE
+      title: " "
+   repairDrill_square:
+      # %value% How many times the player need to click this square
+      mat: RED_CONCRETE
+      title: "&c&lClick here (%value%/4)"
+   repairDrill_status:
+      mat: RED_CONCRETE
+      title: "&lStatus: &c&lBAD"
+      mat2: LIME_CONCRETE
+      title2: "&lStatus: &a&lFINE"
+   # Monitor tree task inventory
+   monitorTree_info:
+      mat: BLACK_STAINED_GLASS_PANE
+      title: " "
+   monitorTree_barBG:
+      mat: LIGHT_BLUE_STAINED_GLASS_PANE
+      title: " "
+      # Target height
+      mat2: WHITE_STAINED_GLASS_PANE
+      title2: " "
+   monitorTree_barYellow:
+      # First item in the bar
+      mat: YELLOW_CONCRETE
+      title: "&lCO2"
+      mat2: YELLOW_CONCRETE
+      title2: " "
+   monitorTree_barGreen:
+      mat: GREEN_CONCRETE
+      title: "&lNUTRI"
+      mat2: GREEN_CONCRETE
+      title2: " "
+   monitorTree_barRed:
+      mat: RED_CONCRETE
+      title: "&LRAD"
+      mat2: RED_CONCRETE
+      title2: " "
+   monitorTree_barBlue:
+      mat: BLUE_CONCRETE
+      title: "&lWATER"
+      mat2: BLUE_CONCRETE
+      title2: " "
+   # Open waterways task inventory
+   openWaterways_info:
+      mat: OAK_SIGN
+      title: "&fHow to do:"
+      lore:
+         - "&fClick the valve to rotate it."
+   openWaterways_circle:
+      mat: LIGHT_GRAY_CONCRETE
+      title: "&lRotate valve"
+      mat2: GRAY_CONCRETE
+      title2: "&lRotate valve"
+   openWaterways_waterBar:
+      mat: WHITE_STAINED_GLASS_PANE
+      title: " "
+      mat2: BLUE_ICE
+      title2: "&9Water"
+   # Reboot wifi task inventory
+   rebootWifi_info:
+      mat: BLACK_STAINED_GLASS_PANE
+      title: " "
+   rebootWifi_lever:
+      # %value% Time left to wait in seconds
+      mat: RED_CONCRETE
+      title: "&fPull lever down"
+      mat2: RED_CONCRETE
+      title2: "&fPlease return in %value%s"
+      # Task done
+      mat3: RED_CONCRETE
+      title3: "&fPull lever up"
+   rebootWifi_leverDone:
+      mat: RED_CONCRETE
+      title: "&fReboot complete"
+   rebootWifi_leverTarget: # Where player needs to move the lever
+      mat: WHITE_STAINED_GLASS_PANE
+      title: " "
+   rebootWifi_screenTop:
+      # %value% Time left to wait in seconds
+      mat: LIME_TERRACOTTA
+      title: "&lReboot required"
+      mat2: LIME_TERRACOTTA
+      title2: "&lPlease return in %value%s"
+      mat3: LIME_TERRACOTTA
+      title3: "&lPlease power on"
+   rebootWifi_screenTopDone:
+      mat: LIME_TERRACOTTA
+      title: "&lReboot complete"
+   rebootWifi_screenBottom:
+      mat: LIME_TERRACOTTA
+      title: " "
+      lore:
+         - "&f◉ POWER"
+         - "&f○ US/DS"
+         - "&f○ Online"
+         - "&f○ 4.2 GHz"
+         - "&f○ 5 GHz"
+      mat2: LIME_TERRACOTTA
+      title2: " "
+      lore2:
+         - "&f○ POWER"
+         - "&f○ US/DS"
+         - "&f○ Online"
+         - "&f○ 4.2 GHz"
+         - "&f○ 5 GHz"
+      # When task is done
+      mat3: LIME_TERRACOTTA
+      title3: " "
+      lore3:
+         - "&f◉ POWER"
+         - "&f◉ US/DS"
+         - "&f◉ Online"
+         - "&f◉ 4.2 GHz"
+         - "&f◉ 5 GHz"
+   # Fix weather node task inventory
+   fixWeatherNode_info:
+      mat: BLACK_STAINED_GLASS_PANE
+      title: " "
+   fixWeatherNode_maze:
+      mat: YELLOW_TERRACOTTA
+      title: "-"
+      # Head
+      mat2: RED_CONCRETE
+      title2: " "
+      # Next move to click
+      mat3: BLUE_STAINED_GLASS_PANE
+      title3: "&9Click to move"
+   fixWeatherNode_mazeBG:
+      mat: WHITE_STAINED_GLASS_PANE
+      title: " "
+   # Switch weather node task inventory (second part of fix weather node)
+   switchWeatherNode_info:
+      mat: BLACK_STAINED_GLASS_PANE
+      title: " "
+   switchWeatherNode_node:
+      mat: CYAN_TERRACOTTA 
+      title: "&lOn"
+      mat2: MAGENTA_TERRACOTTA
+      title2: "&lNode_CA"
+      mat3: LIME_TERRACOTTA
+      title3: " "
+   switchWeatherNode_node2:
+      mat: CYAN_TERRACOTTA 
+      title: "&lOn"
+      mat2: MAGENTA_TERRACOTTA
+      title2: "&lNode_PD"
+      mat3: LIME_TERRACOTTA
+      title3: " "
+   switchWeatherNode_nodeActive: # Node player has to switch
+      mat: CYAN_TERRACOTTA
+      title: "&lSwitch on"
+      mat2: MAGENTA_TERRACOTTA
+      title2: "&lNode_MLG"
+      mat3: RED_CONCRETE 
+      title3: " "
+   switchWeatherNode_nodeActiveDone:
+      mat: CYAN_TERRACOTTA
+      title: "&lOn"
+      mat2: MAGENTA_TERRACOTTA
+      title2: "&lNode_MLG"
+      mat3: LIME_TERRACOTTA 
+      title3: " "
+   # Scan boarding pass task inventory
+   scanBoardingPass_info:
+      mat: OAK_SIGN
+      title: "&l&fHow to do:"
+      lore:
+         - "&fClick the light blue pass"
+         - "&fThen click the scanner"
+         - "&fDone"
+   scanBoardingPass_scanner:
+      mat: RED_CONCRETE
+      title: "&cClick card to scan"
+      mat2: RED_CONCRETE
+      title2: "&cClick to scan card"
+      mat3: LIME_CONCRETE
+      title3: "&aDone"
+   scanBoardingPass_card:
+      # %value% Player's name
+      mat: LIGHT_BLUE_CONCRETE
+      title: "&9Click to pickup card"
+      # Slot in the middle
+      mat2: WHITE_CONCRETE
+      title2: "&l%value%"
+   # Store artifacts task inventory
+   storeArtifacts_info:
+      mat: BLACK_STAINED_GLASS_PANE
+      title: " "
+   storeArtifacts_diamond:
+      mat: DIAMOND_BLOCK
+      title: "&lDiamond"
+      mat2: LIGHT_BLUE_STAINED_GLASS_PANE 
+      title2: " "
+   storeArtifacts_purple:
+      mat: PURPLE_CONCRETE
+      title: "&lPurple artifact"
+      mat2: PURPLE_STAINED_GLASS_PANE 
+      title2: " "
+   storeArtifacts_leaf:
+      mat: OAK_LEAVES
+      title: "&lLeaf"
+      mat2: GREEN_STAINED_GLASS_PANE 
+      title2: " "
+   storeArtifacts_skull:
+      mat: BONE_BLOCK
+      title: "&lSkull"
+      mat2: WHITE_STAINED_GLASS_PANE 
+      title2: " "
+   # Vitals inventory
+   vitals_playerHead:
+      # %value% Player name
+      # %value1% Player color name
+      # %value2% Player chat color
+      title: "&a&l%value%"
+      lore: 
+         - "&f&lOK"
+      # Dead
+      title2: "&c&l&a%value%"
+      lore2: 
+         - "&f&lDEAD"
+      # D/C
+      title3: "&8&l%value%"
+      lore3: 
+         - "&f&lD/C"
+   vitals_player:
+      mat: LIME_STAINED_GLASS_PANE
+      title: " "
+      # Dead
+      mat2: RED_STAINED_GLASS_PANE
+      title2: " "
+      # D/C
+      mat3: GRAY_STAINED_GLASS_PANE
+      title3: " "
+   vitals_prevPage:
+      mat: "@eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvOTM5NzExMjRiZTg5YWM3ZGM5YzkyOWZlOWI2ZWZhN2EwN2NlMzdjZTFkYTJkZjY5MWJmODY2MzQ2NzQ3N2M3In19fQ==@"
+      title: "&9Previous page"
+   vitals_nextPage:
+      mat: "@eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMjY3MWM0YzA0MzM3YzM4YTVjN2YzMWE1Yzc1MWY5OTFlOTZjMDNkZjczMGNkYmVlOTkzMjA2NTVjMTlkIn19fQ==@"
+      title: "&9Next page"
+   # Wiring task inventory
+   wiring_info:
+      mat: OAK_SIGN
+      title: "&fHow to do:"
+      lore:
+         - "&fConnect each colored wire from the left side"
+         - "&fTo the matching color on the right side"
+   wiring_blue:
+      mat: BLUE_WOOL
+      title: "&9Blue cable"
+      # Middle cable
+      mat2: BLUE_WOOL
+      title2: "&9&m   &r"
+   wiring_red:
+      mat: RED_WOOL
+      title: "&cRed cable"
+      mat2: RED_WOOL
+      title2: "&c&m   &r"
+   wiring_yellow:
+      mat: YELLOW_WOOL
+      title: "&eYellow cable"
+      mat2: YELLOW_WOOL
+      title2: "&e&m   &r"
+   wiring_pink:
+      mat: PINK_WOOL
+      title: "&dPink cable"
+      mat2: PINK_WOOL
+      title2: "&d&m   &r"
+   # Version 1.8:
+   # Voting inventory (If there are more than 10 players)
+   # %value% Current page
+   # %value1% Pages count
+   voting_currentPage:
+      mat: OAK_SIGN
+      title: "&9Page: %value%/%value1%"
+   voting_nextPage:
+      mat: "@eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMTE3ZjM2NjZkM2NlZGZhZTU3Nzc4Yzc4MjMwZDQ4MGM3MTlmZDVmNjVmZmEyYWQzMjU1Mzg1ZTQzM2I4NmUifX19@"
+      title: "&9Next page"
+   voting_prevPage:
+      mat: "@eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNWFlNzg0NTFiZjI2Y2Y0OWZkNWY1NGNkOGYyYjM3Y2QyNWM5MmU1Y2E3NjI5OGIzNjM0Y2I1NDFlOWFkODkifX19@"
+      title: "&9Previous page"
+   # Version 2.3:
+   cosmeticsSelector: # Cosmetics selector item in lobby
+      mat: EMERALD
+      title: "&aCosmetics selector"
+   cosmeticsSelector_coins:
+      # %value% Player's coins
+      mat: EMERALD
+      title: "&aCoins: %value%"
+      slot: 49
+   cosmeticsSelector_border:
+      mat: AIR 
+   ghost_leave:
+      title: "&c&lLeave game"
+      mat: RED_BED
+      slot: 7
+   # Version 2.4:
+   # %value% Current page
+   # %value1% Pages count
+   cosmeticsSelector_nextPage:
+      mat: "@eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMTE3ZjM2NjZkM2NlZGZhZTU3Nzc4Yzc4MjMwZDQ4MGM3MTlmZDVmNjVmZmEyYWQzMjU1Mzg1ZTQzM2I4NmUifX19@"
+      title: "&9Next page"
+      slot: 50
+   cosmeticsSelector_prevPage:
+      mat: "@eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNWFlNzg0NTFiZjI2Y2Y0OWZkNWY1NGNkOGYyYjM3Y2QyNWM5MmU1Y2E3NjI5OGIzNjM0Y2I1NDFlOWFkODkifX19@"
+      title: "&9Previous page"
+      slot: 48

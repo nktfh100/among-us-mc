@@ -1,0 +1,434 @@
+# %prefix% Plugin's prefix
+# %arena% Arena's display name
+# /n New line
+game:
+   # %value% Time before the game starts
+   gameStartingTime: '%prefix%&eGame starting in %value% seconds'
+   gameStarting: '%prefix%&eGame starting now!'
+   arenaFull: '%prefix%&cArena is full!'
+   notEnoughPlayers: '%prefix%&cNot enough players!'
+   noArenasAvailable: "%prefix%&cNo arenas available!"
+   arenaInGame: '%prefix%&cArena running!'
+   alreadyInGame: '%prefix%&cAlready in game'
+   arenaNotFound: "%prefix%&cArena doesn't exists!"
+   tasksBar: "&a&lTOTAL TASKS COMPLETED"
+   gameStartImposters: ""
+   gameStartCrewmates: ""
+   # %value% Player name
+   # %value1% Player's chat color
+   # %value2% Player's color name
+   # %value3% Arena players
+   # %value4% Arena maximum players
+   playerJoin: '%prefix%%value1%%value% &ejoined.'
+   playerLeave: '%prefix%%value1%%value% &eleft.'
+   # %value% Player name
+   # %value1% Player's chat color
+   # %value2% Player's color name
+   tabName: "%value1%%value2%&f %value%"
+   # %value3% The message
+   chat: '&6%value1%%value%: &f%value3%'
+   ghostsChat: '&6[Ghost] %value1%%value%: &f%value3%'
+   # %value% The imposters of the game
+   impostersWonMsg: '&4&lImposters won!/n%value%'
+   crewmatesWonMsg: '&4&lCrewmates won!/n%value%'
+   # %value% Voter Color
+   voteSymbol: '%value%█ '
+   # %value% - Player Name, %value1% - player color, %value2% - votes
+   playerLine: '%value1%&l%value%: %value2%'
+   # %value% Votes
+   skipVoteLine: '&f&lSkipped Voting: %value%'
+   # %value% - All Player Lines
+   votingResults: '&c&lVoting Results:/n%value%'
+   # %value% - Player, %value1% - Player color
+   playerVoted: "&a%value% has voted."
+   skipped: "Skipped"
+   tie: "Tie"
+   cantTalk: "&cYou can only talk on Meetings or being a Ghost!"
+   
+   # --- Titles Section ---
+   # When game starts
+   # %value% Imposters count
+   # %value1% Imposters of the game
+   crewmateTitle: "&9&lCrewmate"
+   crewmateSubTitle: "&fThere are %value% imposters among us"
+   imposterTitle: "&c&lImposter"
+   imposterSubTitle: "%value1%"
+   # When there is only 1 imposter
+   imposterTitle1: "&c&lImposter"
+   imposterSubTitle1: "%value1%"
+   crewmateTitle1: "&9&lCrewmate"
+   crewmateSubTitle1: "&fThere is %value% imposter among us"
+   # %value% Sabotage name
+   sabotageTitle: '&4Sabotage:'
+   sabotageSubTitle: '&4&l%value%'
+   # %value% The imposters of the game
+   winTitle: '&9&lVictory'
+   winSubTitle: '&4%value%'
+   defeatTitle: '&4&lDefeat'
+   defeatSubTitle: '&4%value%'
+   # %value% - Player died name
+   # %value1% - Player died color
+   # %value2% - Player died color name
+   # %value3% - Called color
+   # %value4% - Called color name
+   bodyFoundTitle: "%value1%%value%"
+   bodyFoundSubTitle: "&cDEAD BODY REPORTED"
+   # %value% - Caller name
+   # %value1% - Caller color
+   # %value2% - Caller color name
+   emergencyMeetingTitle: "&fEMERGENCY MEETING"
+   emergencyMeetingSubTitle: "%value1%%value%"
+   # %value% Cause (Skipped, Tie)
+   # %value1% Imposters remains
+   noOneEjectedTitle: "%value1% imposters remains."
+   noOneEjectedSubTitle: "No one was ejected. (%value%)"
+   # Confirm ejects off
+   noOneEjectedTitle1: ""
+   noOneEjectedSubTitle1: "No one was ejected. (%value%)"
+   # %value% - Player name, %value1% - Player color, %value2% Imposters remaining
+   playerWasTheImposterTitle: "%value2% imposters remains."
+   playerWasTheImposterSubTitle: "%value% was the imposter."
+   playerWasNotTheImposterTitle: "%value2% imposters remains."
+   playerWasNotTheImposterSubTitle: "%value% was not the imposter."
+   # when there is more than 1 imposter
+   playerWasAnImposterTitle: "%value2% imposters remain."
+   playerWasAnImposterSubTitle: "%value% was an imposter."
+   playerWasNotAnImposterTitle: "%value2% imposters remain."
+   playerWasNotAnImposterSubTitle: "%value% was not an imposter."
+   # Confirm ejects off
+   playerEjectedTitle: ""
+   playerEjectedSubTitle: "%value% was ejected."
+   # %value% killer name, %value1% killer color, %value2% killer color name eg (blue, red)
+   playerDiedTitle: "&cYou died!"
+   playerDiedSubTitle: "&fKilled by: %value1%&l%value%"
+   # %value% victim name, %value1% victim color, %value2% victim color name
+   playerKilledTitle: ""
+   playerKilledSubTitle: "&fKilled: %value1%&l%value%"
+   sabotageFixedTitle: "&aSabotage Fixed."
+   sabotageFixedSubTitle: ""
+   # %value% Task name
+   # %value1% Task location name
+   finishTaskTitle: ''
+   finishTaskSubTitle: '&fTask Completed!'
+   # --- End ---
+   
+   # --- GUI Titles Section ---
+   arenasSelectorInvTitle: "&e&lArenas Selector"
+   colorSelectorInvTitle: "&e&lSelect Color"
+   meetingButtonInvTitle: "&4&lEmergency Meeting"
+   votingInvTitle: "&eWho is the imposter ?"
+   votingInvTitle1: "&eVoting Results"
+   # %value% Task's name
+   # %value1% Task's location name
+   taskInvTitle: "&e%value1%: %value%"
+   # %value% Sabotage's name - found below 'tasks'
+   # %value1% Sabotage's title
+   sabotageLightsInvTitle: "&c%value%"
+   sabotageCommsInvTitle: "&c%value%"
+   # %value2% Today's code
+   # %value3% Code typed by player
+   sabotageOxygenInvTitle: "&c%value% (%value3%) (Today's code: %value2%)"
+   sabotageReactorsInvTitle: "&c%value%: Click To Stop Meltdown"
+   sabotageReactorsInvTitle1: "&c%value%: Waiting For Second User"
+   sabotageReactorsInvTitle2: "&c%value%: Reactor Normal"
+   vitalsInvTitle: "&eVitals"
+   cosmeticsSelectorInvTitle: "&eSelect kill item cosmetic"
+   # --- End ---
+   
+   # --- Action Bars ---
+   # %value% Players ingame
+   # %value1% Maximum players ingame
+   # %value2% Chance to get imposter 
+   lobbyActionBar: "&f&l%value%/%value1% players"
+   # Action bar sent to all the imposters
+   # %value% All imposters
+   impostersActionBar: "&c&lImposters: %value%"
+   # %value% Seconds left
+   votingBeginsInActionBar: "&lVoting Begins In %value%s"
+   votingEndsInActionBar: "&lVoting Ends In %value%s" 
+   proceedingInActionBar: "&lProceeding In %value%s"
+   killCooldownActionBar: "&c&lKill Cooldown: %value%s"
+   # %value% Location name
+   ventActionBar: "&c&lVent: %value%"
+   cameraActionBar: "&c&lCamera: %value%"
+   # When location name is none
+   ventActionBar1: "&c&lVent"
+   cameraActionBar1: "&c&lCamera"
+   # --- End ---
+   
+   # --- Boss Bars ---   
+   # %value% Seconds left
+   killCooldownBossBar: "&c&lKill Cooldown: %value%s"
+   sabotageCooldownBossBar: "&c&lSabotage Cooldown: %value%s"
+   # %value% Sabotage title
+   # %value1% Sabotage name
+   sabotageBossBar: "&4&l%value%"
+   # Sabotage with a timer
+   # %value% Sabotage title
+   # %value1% Sabotage name
+   # %value2% Seconds left
+   # %value3% - Extra "(0/2)" for oxygen / reactor
+   sabotageBossBarTimer: "&4&l%value%: %value2%s %value3%"
+   # --- End ---
+   
+   votingBeginsInMsg: ""
+   votingEndsInMsg: "Voting Ends In %value%s" 
+   proceedingInMsg: ""
+   # %value% killer name, %value1% killer color, %value2% killer color name eg (blue, red)
+   # Leave the msg empty if you dont want to send it
+   playerDiedMsg: "&cYou died!/n&cFinish your tasks to win."
+   playerEjectedMsg: "&cYou were ejected!/n&cFinish your tasks to win."
+   imposterEjectedMsg: "&cYou were ejected!/n&cYou can still sabotage."
+   # Cosmetics stuff
+   # %value% The cosmetic name
+   # %value1% Player coins
+   selectedCosmetic: "%prefix%&aSelected %value%"
+   # %value2% Coins 
+   playerBoughtCosmetic: "%prefix%&aSuccessfully bought %value% for %value2% coins."
+   notEnoughCoins: "%prefix%&cYou dont have enough coins to do that!"
+   # %value% Coins the player got
+   playerCoins: "&a+%value% coins"
+   
+# For download / upload task
+# Updates every second
+# uploadData_start & downloadData_start in items.yml
+estimatedTimes:
+   - "&lEstimated Time: 4d 17hr 53m 2s"
+   - "&lEstimated Time: 18hr 17m 16s"
+   - "&lEstimated Time: 16hr 13m 36s"
+   - "&lEstimated Time: 1hr 11m 5s"
+   - "&lEstimated Time: 12m 22s"
+   - "&lEstimated Time: 3s"
+   - "&lEstimated Time: 2s"
+   - "&lEstimated Time: 1s"
+   - "&lEstimated Time: 0s"
+   - "&a&lComplete"
+
+gameStates:
+   RUNNING: "RUNNING"
+   WAITING: "WAITING"
+   STARTING: "STARTING"
+   FINISHING: "FINISHING"
+
+tasks:
+   wiring:
+      name: 'Fix Wiring'
+   scan:
+      name: 'Submit Scan'
+   download_data:
+      name: 'Download Data'
+   upload_data:
+      name: 'Upload Data'
+   divert_power:
+      name: 'Divert Power'
+   accept_diverted_power:
+      name: "Accept Diverted Power"
+   unlock_manifolds:
+      name: 'Unlock Manifolds'
+   prime_shields:
+      name: 'Prime Shields'
+   calibrate_distributor:
+      name: 'calibrate distributor'
+   empty_garbage:
+      name: 'Empty Garbage'
+   clean_o2:
+      name: 'Clean O2'
+   refuel:
+      name: 'Refuel Can'
+   fuel:
+      name: 'Fuel Engines'
+   inspect_sample:
+      name: 'Inspect Sample'
+   start_reactor:
+      name: 'Start Reactor'
+   clear_asteroids:
+     name: 'Clear Asteroids'
+   swipe_card:
+     name: 'Swipe Card'
+   # Version 1.2:
+   chart_course:
+     name: 'Chart Course'
+   stabilize_steering:
+     name: "Stabilize Steering"
+   # Version 1.7:
+   fill_canisters:
+     name: "Fill Canisters"
+   insert_keys:
+     name: "Insert Keys"
+   replace_water_jug:
+     name: "Replace Water Jug"
+   record_temperature:
+     name: "Record Temperature"
+   repair_drill:
+     name: "Repair Drill"
+   monitor_tree:
+     name: "Monitor Tree"
+   open_waterways:
+     name: "Open Waterways"
+   reboot_wifi:
+     name: "Reboot Wifi"
+   fix_weather_node:
+     name: "Fix Weather Node"
+   switch_weather_node:
+     name: "Fix Weather Node"
+   scan_boarding_pass:
+     name: "Scan Boarding Pass"
+   store_artifacts:
+     name: "Store Artifacts"
+   # Sabotages
+   lights:
+      name: 'Lights'
+      title: 'Fix Lights'
+   reactor_meltdown:
+      name: 'Reactor Meltdown'
+      title: 'Reactor Meltdown'
+   oxygen:
+      name: 'Oxygen'
+      title: 'Oxygen Depleted'
+   communications:
+      name: 'communications'
+      title: 'Comms Sabotaged'
+   
+      
+
+# For floating items:
+# @MATERIAL@ - Example: '@RED_CONCRETE@'
+holograms:
+   meetingButton:
+      - "&cEmergency"
+      - "&cMeeting"
+      - "@REDSTONE_BLOCK@"
+   # %value% Task's name
+   # %value1% Task's location name
+   task:
+      - "&e%value1%:"
+      - "&e%value%"
+   cameras:
+      - "&c-----"
+      - "&cCameras"
+      - "&c-----"
+   # %value% Sabotage name
+   # %value1% Sabotage title
+   sabotage:
+      - "&c%value%"
+   # %value% Vent's location name (if it has one)
+   vent: 
+      - "&c-----"
+      - "&cVent"
+      - "&c-----"
+   vitals:
+      - "&c-----"
+      - "&cVitals"
+      - "&c-----"
+      
+      
+# Join signs
+# %arena% Arena name
+# %arena1% Arena  display name
+# %players% Current players
+# %maxplayers% Maximum players for arena
+# %statecolor% Arena game state color
+# %state% Arena game state
+arenaSignsLines:
+   - "&4&lAmong&c&lUs&9&lMC"
+   - "%statecolor%%state%"
+   - "&0%arena1%"
+   - "&8%players%/%maxplayers%"
+
+
+
+# Stats:
+# %games_played%
+# %imposter_wins%
+# %crewmate_wins%
+# %total_wins%
+# %imposter_kills%
+# %tasks_completed%
+# %emergencies_called%
+# %bodies_reported%
+# %times_murdered%
+# %times_ejected%
+# %time_played%
+# %coins%
+
+# %prefix% Plugin's prefix
+# %arena% Current arena's display name
+# %emptyline% Empty line
+scoreboard:
+   title: '&e&lAmong&e&l Us'
+   # --------- Main lobby scoreboard ---------
+   main-lobby-lines:
+      - '%emptyline%'
+      - ' &8&m   &r &c&lImposter Stats &8&m   &r'
+      - '&fWins: &a%imposter_wins%'
+      - '&fKills: &a%imposter_kills%'
+      - '%emptyline%'
+      - ' &8&m   &r &3&lCrewmate Stats &8&m   &r'
+      - '&fWins: &a%crewmate_wins%'
+      - '&fTasks Completed: &a%tasks_completed%'
+      - '&fBodies reported: &a%bodies_reported%'
+      - '%emptyline%'
+      - ' &8&m   &r &b&lMiscellaneous &8&m   &r'
+      - '&fGames Played: &a%games_played%'
+      - '%emptyline%'
+      - '&aserver.ip'
+   # --------- while in waiting lobby ---------
+   # %player% Player's name
+   # %playercolor% Player's color
+   # %playercolorname% Player's color name
+   # %players% - Current players in arena
+   # %minplayers% - Arena minimum players
+   # %maxplayers% - Arena maximum players
+   # %gamestarttime% - Arena start timer 
+   # %gamestate% - Arena state
+   waiting-lobby-lines:
+      - '%emptyline%'
+      - "&9&lArena:"
+      - "&a%arena%"
+      - '%emptyline%'
+      - '&9&lPlayers:'
+      - '&a%players%/%maxplayers%'
+      - '%emptyline%'
+      - '&awww.example.com'
+   # --------- while playing ---------
+   # %task% Task's name
+   # %taskloc% Task's location
+   # %taskcolor% not done - red, half done - yellow, done - green
+   # %state% if there are multiple tasks - for example (0/2)
+   taskLine: '%taskcolor%&l✘ %task% %state%'
+   taskDoneLine: '%taskcolor%&l✔ %task% %state%'
+   # %player% Player's name
+   # %playercolor% Player's color
+   # %playercolorname% Player's color name
+   # %playerteam% Player's teams (imposter, crewmate)
+   # %tasks% All player's tasks
+   crewmate-lines: 
+      - '%emptyline%'
+      - '%playercolor%&lYou are %playercolorname%.'
+      - '&7&lTasks:'
+      - '%tasks%'
+      - '%emptyline%'
+      - '&awww.example.com'
+   imposter-lines: 
+      - '%emptyline%'
+      - '&4&lSabotage and kill everyone'
+      - '&f&lFake Tasks:'
+      - '%tasks%'
+      - '%emptyline%'
+      - '&awww.example.com'
+   dead-crewmate-lines: 
+      - '%emptyline%'
+      - '%playercolor%&lYou are %playercolorname%.'
+      - "&4&lYou're dead."
+      - "&4&lFinish your tasks to win"
+      - '%tasks%'
+      - '%emptyline%'
+      - '&awww.example.com'
+   dead-imposter-lines: 
+      - '%emptyline%'
+      - '%playercolor%&lYou are %playercolorname%.'
+      - "&4&lYou're dead."
+      - '&4&lYou can still sabotage'
+      - '%emptyline%'
+      - '&awww.example.com'
+      
