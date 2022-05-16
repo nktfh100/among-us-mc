@@ -162,6 +162,7 @@ public class SomeExpansion extends PlaceholderExpansion {
 				out = ((out / 60D) / 60D / 24D);
 			}
 			BigDecimal a = new BigDecimal(out);
+			@SuppressWarnings("deprecation")
 			BigDecimal roundOff = a.setScale(2, BigDecimal.ROUND_HALF_EVEN);
 			out = roundOff.doubleValue();
 			return out + "";

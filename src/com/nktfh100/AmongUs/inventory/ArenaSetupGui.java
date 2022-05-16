@@ -166,10 +166,9 @@ public class ArenaSetupGui {
 				arena.endGame(false);
 				Location loc = player.getLocation();
 				String centerLoc = loc.getWorld().getName() + "," + loc.getBlockX() + "," + loc.getBlockY() + "," + loc.getBlockZ();
-				Main.getConfigManager().getConfig().getConfigurationSection("arenas." + arena.getName()).set("mapcenter", centerLoc);
-
-				Main.getPlugin().saveConfig();
-				Main.getArenaManager().loadArenas();
+				arena.getArenaConfig().set("mapcenter", centerLoc);
+				arena.setMapCenter(loc);
+				arena.saveConfig();
 				player.sendMessage(Main.getConfigManager().getPrefix() + ChatColor.YELLOW + "Successfully changed map center to (" + centerLoc + ")");
 				ArenaSetupGui.openArenaEditor(player, Main.getArenaManager().getArenaByName(arena.getName()));
 			}
@@ -185,10 +184,10 @@ public class ArenaSetupGui {
 				Location loc = player.getLocation();
 				String holoLoc = loc.getWorld().getName() + "," + (loc.getX()) + "," + (loc.getBlockY() + 1.25) + "," + (loc.getZ());
 
-				Main.getConfigManager().getConfig().getConfigurationSection("arenas." + arena.getName()).set("meetingbtn", holoLoc);
-
-				Main.getPlugin().saveConfig();
+				arena.getArenaConfig().set("meetingbtn", holoLoc);
+				
 				arena.setMeetingButton(loc.add(0, 1.25, 0));
+				arena.saveConfig();
 				arena.deleteHolograms();
 				arena.createHolograms();
 				player.sendMessage(Main.getConfigManager().getPrefix() + ChatColor.YELLOW + "Successfully changed meeting button location to (" + holoLoc + ")");
@@ -206,10 +205,10 @@ public class ArenaSetupGui {
 				Location loc = player.getLocation();
 				String locStr = loc.getWorld().getName() + "," + loc.getX() + "," + loc.getY() + "," + loc.getZ() + "," + loc.getYaw() + "," + loc.getPitch();
 
-				Main.getConfigManager().getConfig().getConfigurationSection("arenas." + arena.getName()).set("waitinglobby", locStr);
+				arena.getArenaConfig().set("waitinglobby", locStr);
 
 				arena.setWaitingLobby(loc);
-				Main.getPlugin().saveConfig();
+				arena.saveConfig();
 				player.sendMessage(Main.getConfigManager().getPrefix() + ChatColor.YELLOW + "Successfully changed waiting lobby location to (" + locStr + ")");
 				ArenaSetupGui.openArenaEditor(player, Main.getArenaManager().getArenaByName(arena.getName()));
 			}
@@ -221,9 +220,9 @@ public class ArenaSetupGui {
 		icon.addClickAction(new ClickAction() {
 			@Override
 			public void execute(Player player) {
-				Main.getConfigManager().getConfig().getConfigurationSection("arenas." + arena.getName()).set("enablevisualtasks", !arena.getEnableVisualTasks());
+				arena.getArenaConfig().set("enablevisualtasks", !arena.getEnableVisualTasks());
 
-				Main.getPlugin().saveConfig();
+				arena.saveConfig();
 				arena.setEnableVisualTasks(!arena.getEnableVisualTasks());
 				player.sendMessage(Main.getConfigManager().getPrefix() + ChatColor.YELLOW + "Successfully changed enable visual tasks to " + arena.getEnableVisualTasks());
 				ArenaSetupGui.openArenaEditor(player, arena);
@@ -236,9 +235,9 @@ public class ArenaSetupGui {
 		icon.addClickAction(new ClickAction() {
 			@Override
 			public void execute(Player player) {
-				Main.getConfigManager().getConfig().getConfigurationSection("arenas." + arena.getName()).set("disablesprinting", !arena.getDisableSprinting());
+				arena.getArenaConfig().set("disablesprinting", !arena.getDisableSprinting());
 
-				Main.getPlugin().saveConfig();
+				arena.saveConfig();
 				arena.setDisableSprinting(!arena.getDisableSprinting());
 				player.sendMessage(Main.getConfigManager().getPrefix() + ChatColor.YELLOW + "Successfully changed disable sprinting to " + arena.getDisableSprinting());
 				ArenaSetupGui.openArenaEditor(player, arena);
@@ -251,9 +250,9 @@ public class ArenaSetupGui {
 		icon.addClickAction(new ClickAction() {
 			@Override
 			public void execute(Player player) {
-				Main.getConfigManager().getConfig().getConfigurationSection("arenas." + arena.getName()).set("disablejumping", !arena.getDisableJumping());
+				arena.getArenaConfig().set("disablejumping", !arena.getDisableJumping());
 
-				Main.getPlugin().saveConfig();
+				arena.saveConfig();
 				arena.setDisableJumping(!arena.getDisableJumping());
 				player.sendMessage(Main.getConfigManager().getPrefix() + ChatColor.YELLOW + "Successfully changed disable jumping to " + arena.getDisableJumping());
 				ArenaSetupGui.openArenaEditor(player, arena);
@@ -266,9 +265,9 @@ public class ArenaSetupGui {
 		icon.addClickAction(new ClickAction() {
 			@Override
 			public void execute(Player player) {
-				Main.getConfigManager().getConfig().getConfigurationSection("arenas." + arena.getName()).set("disablemap", !arena.getDisableMap());
+				arena.getArenaConfig().set("disablemap", !arena.getDisableMap());
 
-				Main.getPlugin().saveConfig();
+				arena.saveConfig();
 				arena.setDisableMap(!arena.getDisableMap());
 				player.sendMessage(Main.getConfigManager().getPrefix() + ChatColor.YELLOW + "Successfully changed disable map to " + arena.getDisableMap());
 				ArenaSetupGui.openArenaEditor(player, arena);
@@ -281,9 +280,9 @@ public class ArenaSetupGui {
 		icon.addClickAction(new ClickAction() {
 			@Override
 			public void execute(Player player) {
-				Main.getConfigManager().getConfig().getConfigurationSection("arenas." + arena.getName()).set("hidehologramsoutofview", !arena.getHideHologramsOutOfView());
+				arena.getArenaConfig().set("hidehologramsoutofview", !arena.getHideHologramsOutOfView());
 
-				Main.getPlugin().saveConfig();
+				arena.saveConfig();
 				arena.setHideHologramsOutOfView(!arena.getHideHologramsOutOfView());
 				player.sendMessage(Main.getConfigManager().getPrefix() + ChatColor.YELLOW + "Successfully changed hide holograms out of view range to " + arena.getHideHologramsOutOfView());
 				ArenaSetupGui.openArenaEditor(player, arena);
@@ -296,11 +295,11 @@ public class ArenaSetupGui {
 		icon.addClickAction(new ClickAction() {
 			@Override
 			public void execute(Player player) {
-				Main.getConfigManager().getConfig().getConfigurationSection("arenas." + arena.getName()).set("enablereducedvision", !arena.getEnableReducedVision());
+				arena.getArenaConfig().set("enablereducedvision", !arena.getEnableReducedVision());
 
 				arena.endGame(false);
 
-				Main.getPlugin().saveConfig();
+				arena.saveConfig();
 				arena.setEnableReducedVision(!arena.getEnableReducedVision());
 				player.sendMessage(Main.getConfigManager().getPrefix() + ChatColor.YELLOW + "Successfully changed enable reduced vision to " + arena.getEnableReducedVision());
 				ArenaSetupGui.openArenaEditor(player, arena);
@@ -313,11 +312,11 @@ public class ArenaSetupGui {
 		icon.addClickAction(new ClickAction() {
 			@Override
 			public void execute(Player player) {
-				Main.getConfigManager().getConfig().getConfigurationSection("arenas." + arena.getName()).set("confirmejects", !arena.getConfirmEjects());
+				arena.getArenaConfig().set("confirmejects", !arena.getConfirmEjects());
 
 				arena.endGame(false);
 
-				Main.getPlugin().saveConfig();
+				arena.saveConfig();
 				arena.setConfirmEjects(!arena.getConfirmEjects());
 				player.sendMessage(Main.getConfigManager().getPrefix() + ChatColor.YELLOW + "Successfully changed confirm ejects to " + arena.getConfirmEjects());
 				ArenaSetupGui.openArenaEditor(player, arena);
@@ -330,9 +329,9 @@ public class ArenaSetupGui {
 		icon.addClickAction(new ClickAction() {
 			@Override
 			public void execute(Player player) {
-				Main.getConfigManager().getConfig().getConfigurationSection("arenas." + arena.getName()).set("movemapwithplayer", !arena.getMoveMapWithPlayer());
+				arena.getArenaConfig().set("movemapwithplayer", !arena.getMoveMapWithPlayer());
 
-				Main.getPlugin().saveConfig();
+				arena.saveConfig();
 				arena.setMoveMapWithPlayer(!arena.getMoveMapWithPlayer());
 				player.sendMessage(Main.getConfigManager().getPrefix() + ChatColor.YELLOW + "Successfully changed move map with player to " + arena.getMoveMapWithPlayer());
 				ArenaSetupGui.openArenaEditor(player, arena);
@@ -346,9 +345,9 @@ public class ArenaSetupGui {
 		icon.addClickAction(new ClickAction() {
 			@Override
 			public void execute(Player player) {
-				Main.getConfigManager().getConfig().getConfigurationSection("arenas." + arena.getName()).set("dynamicimposters", !arena.getDynamicImposters());
+				arena.getArenaConfig().set("dynamicimposters", !arena.getDynamicImposters());
 
-				Main.getPlugin().saveConfig();
+				arena.saveConfig();
 				arena.setDynamicImposters(!arena.getDynamicImposters());
 				player.sendMessage(Main.getConfigManager().getPrefix() + ChatColor.YELLOW + "Successfully changed dynamic imposters to " + arena.getDynamicImposters());
 				ArenaSetupGui.openArenaEditor(player, arena);
@@ -377,9 +376,9 @@ public class ArenaSetupGui {
 				Location loc = player.getLocation();
 				String holoLoc = loc.getWorld().getName() + "," + (loc.getX()) + "," + (loc.getBlockY() + 1.25) + "," + (loc.getZ());
 
-				Main.getConfigManager().getConfig().getConfigurationSection("arenas." + arena.getName()).set("vitalsloc", holoLoc);
+				arena.getArenaConfig().set("vitalsloc", holoLoc);
 
-				Main.getPlugin().saveConfig();
+				arena.saveConfig();
 				arena.setVitalsLoc(loc.add(0, 1.25, 0));
 				arena.deleteHolograms();
 				arena.createHolograms();
@@ -416,12 +415,12 @@ public class ArenaSetupGui {
 			icon.addClickAction(new ClickAction() {
 				@Override
 				public void execute(Player player) {
-					List<String> allSpawns = Main.getConfigManager().getConfig().getStringList("arenas." + arena.getName() + ".spawnpoints");
+					List<String> allSpawns =  arena.getArenaConfig().getStringList("spawnpoints");
 					arena.endGame(false);
 					allSpawns.remove(num);
 					arena.removePlayerSpawn(num);
-					Main.getConfigManager().getConfig().set("arenas." + arena.getName() + ".spawnpoints", allSpawns);
-					Main.getPlugin().saveConfig();
+					arena.getArenaConfig().set("spawnpoints", allSpawns);
+					arena.saveConfig();
 					player.sendMessage(Main.getConfigManager().getPrefix() + ChatColor.YELLOW + "Successfully removed spawn point " + (num + 1));
 					ArenaSetupGui.openSpawnsEditor(player, Main.getArenaManager().getArenaByName(arena.getName()));
 				}
@@ -438,11 +437,11 @@ public class ArenaSetupGui {
 				arena.endGame(false);
 				Location loc = player.getLocation();
 				String spawnLoc = loc.getWorld().getName() + "," + (loc.getBlockX() + 0.5) + "," + loc.getBlockY() + "," + (loc.getBlockZ() + 0.5) + "," + loc.getYaw() + "," + loc.getPitch();
-				List<String> allSpawns = Main.getConfigManager().getConfig().getStringList("arenas." + arena.getName() + ".spawnpoints");
+				List<String> allSpawns = arena.getArenaConfig().getStringList("spawnpoints");
 				allSpawns.add(spawnLoc);
 				arena.addPlayerSpawn(new Location(loc.getWorld(), loc.getBlockX() + 0.5, loc.getBlockY(), loc.getBlockZ() + 0.5, loc.getYaw(), loc.getPitch()));
-				Main.getConfigManager().getConfig().set("arenas." + arena.getName() + ".spawnpoints", allSpawns);
-				Main.getPlugin().saveConfig();
+				arena.getArenaConfig().set("spawnpoints", allSpawns);
+				arena.saveConfig();
 				player.sendMessage(Main.getConfigManager().getPrefix() + ChatColor.YELLOW + "Successfully added spawn point " + allSpawns.size());
 			}
 		});
@@ -628,7 +627,7 @@ public class ArenaSetupGui {
 				arena.endGame(false);
 				Location loc = player.getLocation();
 				String taskLoc = loc.getWorld().getName() + "," + (loc.getX()) + "," + (loc.getBlockY() + 1.85) + "," + (loc.getZ());
-				ConfigurationSection tasksSC = Main.getConfigManager().getConfig().getConfigurationSection("arenas." + arena.getName() + ".tasks");
+				ConfigurationSection tasksSC = arena.getArenaConfig().getConfigurationSection("tasks");
 
 				ConfigurationSection taskSC = tasksSC.getConfigurationSection(taskId + "");
 
@@ -637,7 +636,7 @@ public class ArenaSetupGui {
 				task.setLocation(new Location(loc.getWorld(), loc.getX(), loc.getBlockY() + 1.85, loc.getZ()));
 				arena.deleteHolograms();
 				arena.createHolograms();
-				Main.getPlugin().saveConfig();
+				arena.saveConfig();
 				player.sendMessage(Main.getConfigManager().getPrefix() + ChatColor.YELLOW + "Successfully changed " + task.getLocationName().getName() + ": " + task.getName() + " location");
 				ArenaSetupGui.openTaskEdit(player, Main.getArenaManager().getArenaByName(arena.getName()), taskId);
 
@@ -673,12 +672,12 @@ public class ArenaSetupGui {
 		icon.addClickAction(new ClickAction() {
 			@Override
 			public void execute(Player player) {
-				ConfigurationSection tasksSC = Main.getConfigManager().getConfig().getConfigurationSection("arenas." + arena.getName() + ".tasks");
+				ConfigurationSection tasksSC = arena.getArenaConfig().getConfigurationSection("tasks");
 				ConfigurationSection taskSC = tasksSC.getConfigurationSection(taskId + "");
 
 				taskSC.set("isenabled", !task.getIsEnabled());
 
-				Main.getPlugin().saveConfig();
+				arena.saveConfig();
 
 				task.setIsEnabled(!task.getIsEnabled());
 
@@ -705,12 +704,12 @@ public class ArenaSetupGui {
 			icon.addClickAction(new ClickAction() {
 				@Override
 				public void execute(Player player) {
-					ConfigurationSection tasksSC = Main.getConfigManager().getConfig().getConfigurationSection("arenas." + arena.getName() + ".tasks");
+					ConfigurationSection tasksSC = arena.getArenaConfig().getConfigurationSection("tasks");
 					ConfigurationSection taskSC = tasksSC.getConfigurationSection(taskId + "");
 
 					taskSC.set("enablevisuals", !task.getEnableVisuals());
 
-					Main.getPlugin().saveConfig();
+					arena.saveConfig();
 
 					task.setEnableVisuals(!task.getEnableVisuals());
 
@@ -728,7 +727,7 @@ public class ArenaSetupGui {
 			icon.addClickAction(new ClickAction() {
 				@Override
 				public void execute(Player player) {
-					ConfigurationSection tasksSC = Main.getConfigManager().getConfig().getConfigurationSection("arenas." + arena.getName() + ".tasks");
+					ConfigurationSection tasksSC = arena.getArenaConfig().getConfigurationSection("tasks");
 					ConfigurationSection taskSC = tasksSC.getConfigurationSection(taskId + "");
 
 					Location loc = player.getEyeLocation();
@@ -736,7 +735,7 @@ public class ArenaSetupGui {
 
 					taskSC.set("cannon1", locStr);
 
-					Main.getPlugin().saveConfig();
+					arena.saveConfig();
 					task.setCannon1(new Location(loc.getWorld(), loc.getX(), loc.getY(), loc.getZ(), loc.getYaw(), loc.getPitch()));
 					player.sendMessage(Main.getConfigManager().getPrefix() + ChatColor.YELLOW + "Successfully changed " + task.getLocationName().getName() + ": " + task.getName()
 							+ " cannon-1 location to (" + locStr + ")");
@@ -750,7 +749,7 @@ public class ArenaSetupGui {
 			icon.addClickAction(new ClickAction() {
 				@Override
 				public void execute(Player player) {
-					ConfigurationSection tasksSC = Main.getConfigManager().getConfig().getConfigurationSection("arenas." + arena.getName() + ".tasks");
+					ConfigurationSection tasksSC = arena.getArenaConfig().getConfigurationSection("tasks");
 					ConfigurationSection taskSC = tasksSC.getConfigurationSection(taskId + "");
 
 					Location loc = player.getEyeLocation();
@@ -759,7 +758,7 @@ public class ArenaSetupGui {
 					taskSC.set("cannon2", locStr);
 					task.setCannon2(new Location(loc.getWorld(), loc.getX(), loc.getY(), loc.getZ(), loc.getYaw(), loc.getPitch()));
 
-					Main.getPlugin().saveConfig();
+					arena.saveConfig();
 					player.sendMessage(Main.getConfigManager().getPrefix() + ChatColor.YELLOW + "Successfully changed " + task.getLocationName().getName() + ": " + task.getName()
 							+ " cannon-2 location to (" + locStr + ")");
 					ArenaSetupGui.openTaskEdit(player, Main.getArenaManager().getArenaByName(arena.getName()), taskId);
@@ -771,13 +770,13 @@ public class ArenaSetupGui {
 			icon.addClickAction(new ClickAction() {
 				@Override
 				public void execute(Player player) {
-					ConfigurationSection tasksSC = Main.getConfigManager().getConfig().getConfigurationSection("arenas." + arena.getName() + ".tasks");
+					ConfigurationSection tasksSC = arena.getArenaConfig().getConfigurationSection("tasks");
 					ConfigurationSection taskSC = tasksSC.getConfigurationSection(taskId + "");
 
 					task.setIsHot(!task.getIsHot());
 					taskSC.set("hot", task.getIsHot());
 
-					Main.getPlugin().saveConfig();
+					arena.saveConfig();
 					player.sendMessage(Main.getConfigManager().getPrefix() + ChatColor.YELLOW + "Successfully changed " + task.getLocationName().getName() + ": " + task.getName() + " is hot to ("
 							+ task.getIsHot() + ")");
 					ArenaSetupGui.openTaskEdit(player, Main.getArenaManager().getArenaByName(arena.getName()), taskId);
@@ -790,9 +789,9 @@ public class ArenaSetupGui {
 		icon.addClickAction(new ClickAction() {
 			@Override
 			public void execute(Player player) {
-				Main.getConfigManager().getConfig().set("arenas." + arena.getName() + ".tasks." + taskId, null);
+				arena.getArenaConfig().set("tasks." + taskId, null);
 
-				ConfigurationSection tasksSC = Main.getConfigManager().getConfig().getConfigurationSection("arenas." + arena.getName() + ".tasks");
+				ConfigurationSection tasksSC = arena.getArenaConfig().getConfigurationSection("tasks");
 				for (String taskKey : tasksSC.getKeys(false)) {
 					ConfigurationSection taskSC = tasksSC.getConfigurationSection(taskKey);
 					if (taskSC.getConfigurationSection("queuedtasks") != null) {
@@ -806,7 +805,7 @@ public class ArenaSetupGui {
 					}
 				}
 
-				Main.getPlugin().saveConfig();
+				arena.saveConfig();
 				Main.getArenaManager().loadArenas();
 				player.sendMessage(Main.getConfigManager().getPrefix() + ChatColor.YELLOW + "Successfully deleted task");
 				player.closeInventory();
@@ -883,7 +882,7 @@ public class ArenaSetupGui {
 				public void execute(Player player) {
 					Location loc = player.getLocation();
 					String taskLoc = loc.getWorld().getName() + "," + (loc.getX()) + "," + (loc.getBlockY() + 1.85) + "," + (loc.getZ());
-					ConfigurationSection tasksSC = Main.getConfigManager().getConfig().getConfigurationSection("arenas." + arena.getName() + ".tasks");
+					ConfigurationSection tasksSC = arena.getArenaConfig().getConfigurationSection("tasks");
 
 					String taskId = Utils.getRandomString(4);
 					ConfigurationSection taskSC = tasksSC.createSection(taskId);
@@ -900,7 +899,7 @@ public class ArenaSetupGui {
 						taskSC.set("hot", false);
 					}
 
-					Main.getPlugin().saveConfig();
+					arena.saveConfig();
 					Main.getArenaManager().loadArenas();
 
 					player.closeInventory();
@@ -976,12 +975,12 @@ public class ArenaSetupGui {
 				@Override
 				public void execute(Player player) {
 					arena.endGame(false);
-					ConfigurationSection tasksSC = Main.getConfigManager().getConfig().getConfigurationSection("arenas." + arena.getName() + ".tasks");
+					ConfigurationSection tasksSC = arena.getArenaConfig().getConfigurationSection("tasks");
 					ConfigurationSection taskSC = tasksSC.getConfigurationSection(taskId + "");
 
 					taskSC.set("locationid", key);
 
-					Main.getPlugin().saveConfig();
+					arena.saveConfig();
 					task.setLocationName(arena.getLocations().get(key));
 					player.sendMessage(
 							Main.getConfigManager().getPrefix() + ChatColor.YELLOW + "Successfully changed task " + task.getName() + " location name to " + arena.getLocations().get(key).getName());
@@ -1085,8 +1084,8 @@ public class ArenaSetupGui {
 			@Override
 			public void execute(Player player) {
 				final String name_ = locName.getName();
-				Main.getConfigManager().getConfig().set("arenas." + arena.getName() + ".locations." + locId, null);
-				Main.getPlugin().saveConfig();
+				arena.getArenaConfig().set("locations." + locId, null);
+				arena.saveConfig();
 				Main.getArenaManager().loadArenas();
 				player.sendMessage(Main.getConfigManager().getPrefix() + ChatColor.YELLOW + "Successfully deleted " + name_);
 				player.closeInventory();
@@ -1139,12 +1138,12 @@ public class ArenaSetupGui {
 			public void execute(Player player) {
 				arena.endGame(false);
 				String configId_ = Utils.getRandomString(4);
-				ConfigurationSection tasksSC = Main.getConfigManager().getConfig().getConfigurationSection("arenas." + arena.getName() + ".tasks");
+				ConfigurationSection tasksSC = arena.getArenaConfig().getConfigurationSection("tasks");
 				ConfigurationSection taskSC = tasksSC.getConfigurationSection(taskId + "");
 
 				taskSC.getConfigurationSection("queuedtasks").set(configId_, new ArrayList<String>());
 
-				Main.getPlugin().saveConfig();
+				arena.saveConfig();
 				player.sendMessage(Main.getConfigManager().getPrefix() + ChatColor.YELLOW + "Successfully add queued tasks variant to " + task.getName());
 				Main.getArenaManager().loadArenas();
 				ArenaSetupGui.openQueuedTasksVariantsSelector(player, Main.getArenaManager().getArenaByName(arena.getName()), taskId);
@@ -1194,7 +1193,7 @@ public class ArenaSetupGui {
 				@Override
 				public void execute(Player player) {
 					arena.endGame(false);
-					ConfigurationSection tasksSC = Main.getConfigManager().getConfig().getConfigurationSection("arenas." + arena.getName() + ".tasks");
+					ConfigurationSection tasksSC = arena.getArenaConfig().getConfigurationSection("tasks");
 					ConfigurationSection taskSC = tasksSC.getConfigurationSection(taskId + "");
 
 					ArrayList<String> queuedTasks = (ArrayList<String>) taskSC.getConfigurationSection("queuedtasks").getStringList(qtv.getConfigId());
@@ -1203,7 +1202,7 @@ public class ArenaSetupGui {
 					taskSC.set("queuedtasks." + qtv.getConfigId(), queuedTasks);
 					qtv.setQueuedTasks(queuedTasks);
 
-					Main.getPlugin().saveConfig();
+					arena.saveConfig();
 
 					Task removedTask = arena.getTask(task_.getId());
 					player.sendMessage(Main.getConfigManager().getPrefix() + ChatColor.YELLOW + "Successfully removed " + removedTask.getName() + " from queued tasks variant " + qtv.getId());
@@ -1228,12 +1227,12 @@ public class ArenaSetupGui {
 			@Override
 			public void execute(Player player) {
 				arena.endGame(false);
-				ConfigurationSection tasksSC = Main.getConfigManager().getConfig().getConfigurationSection("arenas." + arena.getName() + ".tasks");
+				ConfigurationSection tasksSC = arena.getArenaConfig().getConfigurationSection("tasks");
 				ConfigurationSection taskSC = tasksSC.getConfigurationSection(taskId + "");
 
 				taskSC.getConfigurationSection("queuedtasks").set(qtv.getConfigId(), null);
 
-				Main.getPlugin().saveConfig();
+				arena.saveConfig();
 				player.sendMessage(Main.getConfigManager().getPrefix() + ChatColor.YELLOW + "Successfully removed queued tasks variant " + qtv.getId() + " from " + task.getName());
 				Main.getArenaManager().loadArenas();
 				ArenaSetupGui.openTaskEdit(player, Main.getArenaManager().getArenaByName(arena.getName()), taskId);
@@ -1401,14 +1400,14 @@ public class ArenaSetupGui {
 				@Override
 				public void execute(Player player) {
 					arena.endGame(false);
-					ConfigurationSection tasksSC = Main.getConfigManager().getConfig().getConfigurationSection("arenas." + arena.getName() + ".tasks");
+					ConfigurationSection tasksSC = arena.getArenaConfig().getConfigurationSection("tasks");
 					ConfigurationSection taskSC = tasksSC.getConfigurationSection(taskId + "");
 
 					ArrayList<String> queuedTasks = (ArrayList<String>) taskSC.getConfigurationSection("queuedtasks").getStringList(qtv.getConfigId());
 					queuedTasks.add(tId);
 					taskSC.set("queuedtasks." + qtv.getConfigId(), queuedTasks);
 					qtv.setQueuedTasks(queuedTasks);
-					Main.getPlugin().saveConfig();
+					arena.saveConfig();
 
 					Task addedTask = arena.getTask(tId);
 					player.sendMessage(Main.getConfigManager().getPrefix() + ChatColor.YELLOW + "Successfully added " + Main.getMessagesManager().getTaskName(addedTask.getTaskType().toString())
@@ -1501,7 +1500,7 @@ public class ArenaSetupGui {
 			icon.addClickAction(new ClickAction() {
 				@Override
 				public void execute(Player player) {
-					ConfigurationSection sabotagesSC = Main.getConfigManager().getConfig().getConfigurationSection("arenas." + arena.getName() + ".sabotages");
+					ConfigurationSection sabotagesSC = arena.getArenaConfig().getConfigurationSection("sabotages");
 					ConfigurationSection sabotageSC = sabotagesSC.createSection(saboType.toString());
 
 					Integer timer = 0;
@@ -1517,7 +1516,7 @@ public class ArenaSetupGui {
 						sabotageSC.set("location2", locStr);
 					}
 
-					Main.getPlugin().saveConfig();
+					arena.saveConfig();
 					Main.getArenaManager().loadArenas();
 
 					player.sendMessage(Main.getConfigManager().getPrefix() + ChatColor.YELLOW + "Successfully added sabotage " + Main.getMessagesManager().getTaskName(saboType.toString()) + " to "
@@ -1561,7 +1560,7 @@ public class ArenaSetupGui {
 				arena.endGame(false);
 				Integer locId = 1;
 
-				ConfigurationSection sabotagesSC = Main.getConfigManager().getConfig().getConfigurationSection("arenas." + arena.getName() + ".sabotages");
+				ConfigurationSection sabotagesSC = arena.getArenaConfig().getConfigurationSection("sabotages");
 				ConfigurationSection sabotageSC = sabotagesSC.getConfigurationSection(sabo.getType().toString());
 
 				String locStr = player.getWorld().getName() + "," + (player.getLocation().getX()) + "," + (player.getLocation().getBlockY() + 1.85) + "," + (player.getLocation().getZ());
@@ -1569,7 +1568,7 @@ public class ArenaSetupGui {
 
 				sabo.getTask1().setInfo(new Location(player.getWorld(), player.getLocation().getX(), player.getLocation().getBlockY() + 1.85, player.getLocation().getZ()), arena);
 
-				Main.getPlugin().saveConfig();
+				arena.saveConfig();
 				arena.deleteHolograms();
 				arena.createHolograms();
 				ArenaSetupGui.openSabotageEdit(player, Main.getArenaManager().getArenaByName(arena.getName()), sabo.getType().toString());
@@ -1588,13 +1587,13 @@ public class ArenaSetupGui {
 					arena.endGame(false);
 					Integer locId = 2;
 
-					ConfigurationSection sabotagesSC = Main.getConfigManager().getConfig().getConfigurationSection("arenas." + arena.getName() + ".sabotages");
+					ConfigurationSection sabotagesSC = arena.getArenaConfig().getConfigurationSection("sabotages");
 					ConfigurationSection sabotageSC = sabotagesSC.getConfigurationSection(sabo.getType().toString());
 
 					String locStr = player.getWorld().getName() + "," + (player.getLocation().getX()) + "," + (player.getLocation().getBlockY() + 1.85) + "," + (player.getLocation().getZ());
 					sabotageSC.set("location" + locId, locStr);
 
-					Main.getPlugin().saveConfig();
+					arena.saveConfig();
 
 					sabo.getTask2().setInfo(new Location(player.getWorld(), player.getLocation().getX(), player.getLocation().getBlockY() + 1.85, player.getLocation().getZ()), arena);
 					arena.deleteHolograms();
@@ -1610,10 +1609,10 @@ public class ArenaSetupGui {
 		icon.addClickAction(new ClickAction() {
 			@Override
 			public void execute(Player player) {
-				ConfigurationSection sabotagesSC = Main.getConfigManager().getConfig().getConfigurationSection("arenas." + arena.getName() + ".sabotages");
+				ConfigurationSection sabotagesSC = arena.getArenaConfig().getConfigurationSection("sabotages");
 				sabotagesSC.set(sabo.getType().toString(), null);
 
-				Main.getPlugin().saveConfig();
+				arena.saveConfig();
 				Main.getArenaManager().loadArenas();
 
 				ArenaSetupGui.openSabotageSelector(player, Main.getArenaManager().getArenaByName(arena.getName()));
@@ -1659,14 +1658,14 @@ public class ArenaSetupGui {
 		icon.addClickAction(new ClickAction() {
 			@Override
 			public void execute(Player player) {
-				ConfigurationSection ventGroupsSec = Main.getConfigManager().getConfig().getConfigurationSection("arenas." + arena.getName() + ".ventgroups");
+				ConfigurationSection ventGroupsSec = arena.getArenaConfig().getConfigurationSection("ventgroups");
 
 				ConfigurationSection createdSec = ventGroupsSec.createSection(Utils.getRandomString(4));
 				createdSec.set("id", manager.getVentGroups().size());
 				createdSec.set("loop", false);
 				createdSec.createSection("vents");
 
-				Main.getPlugin().saveConfig();
+				arena.saveConfig();
 				Main.getArenaManager().loadArenas();
 
 				ArenaSetupGui.openVentsGroupsSelector(player, Main.getArenaManager().getArenaByName(arena.getName()));
@@ -1711,11 +1710,11 @@ public class ArenaSetupGui {
 		icon.addClickAction(new ClickAction() {
 			@Override
 			public void execute(Player player) {
-				ConfigurationSection ventGroupsSec = Main.getConfigManager().getConfig().getConfigurationSection("arenas." + arena.getName() + ".ventgroups");
+				ConfigurationSection ventGroupsSec = arena.getArenaConfig().getConfigurationSection("ventgroups");
 				ConfigurationSection ventGroupSec = ventGroupsSec.getConfigurationSection(ventGroup.getConfigId());
 				ventGroupSec.set("loop", !ventGroup.getLoop());
 
-				Main.getPlugin().saveConfig();
+				arena.saveConfig();
 				ventGroup.setLoop(!ventGroup.getLoop());
 
 				ArenaSetupGui.openVentGroupEdit(player, Main.getArenaManager().getArenaByName(arena.getName()), ventGroupId);
@@ -1728,7 +1727,7 @@ public class ArenaSetupGui {
 		icon.addClickAction(new ClickAction() {
 			@Override
 			public void execute(Player player) {
-				ConfigurationSection ventGroupsSec = Main.getConfigManager().getConfig().getConfigurationSection("arenas." + arena.getName() + ".ventgroups");
+				ConfigurationSection ventGroupsSec = arena.getArenaConfig().getConfigurationSection("ventgroups");
 				ventGroupsSec.set(ventGroup.getConfigId(), null);
 
 				int i = 0;
@@ -1737,7 +1736,7 @@ public class ArenaSetupGui {
 					i++;
 				}
 
-				Main.getPlugin().saveConfig();
+				arena.saveConfig();
 				Main.getArenaManager().loadArenas();
 
 				ArenaSetupGui.openVentsGroupsSelector(player, Main.getArenaManager().getArenaByName(arena.getName()));
@@ -1840,7 +1839,7 @@ public class ArenaSetupGui {
 			@Override
 			public void execute(Player player) {
 				arena.endGame(false);
-				ConfigurationSection ventGroupsSec = Main.getConfigManager().getConfig().getConfigurationSection("arenas." + arena.getName() + ".ventgroups");
+				ConfigurationSection ventGroupsSec = arena.getArenaConfig().getConfigurationSection("ventgroups");
 				ConfigurationSection ventsSec = ventGroupsSec.getConfigurationSection(ventGroup.getConfigId() + ".vents");
 				ConfigurationSection ventSec = ventsSec.getConfigurationSection(vent.getConfigId());
 
@@ -1849,7 +1848,7 @@ public class ArenaSetupGui {
 
 				ventSec.set("location", locStr);
 
-				Main.getPlugin().saveConfig();
+				arena.saveConfig();
 				vent.setLoc(new Location(player.getWorld(), player.getLocation().getBlockX() + 0.5, player.getLocation().getBlockY() + 1.85, player.getLocation().getBlockZ() + 0.5,
 						player.getLocation().getYaw(), player.getLocation().getPitch()));
 
@@ -1874,7 +1873,7 @@ public class ArenaSetupGui {
 		icon.addClickAction(new ClickAction() {
 			@Override
 			public void execute(Player player) {
-				ConfigurationSection ventGroupsSec = Main.getConfigManager().getConfig().getConfigurationSection("arenas." + arena.getName() + ".ventgroups");
+				ConfigurationSection ventGroupsSec = arena.getArenaConfig().getConfigurationSection("ventgroups");
 				ConfigurationSection ventGroupSec = ventGroupsSec.getConfigurationSection(ventGroup.getConfigId());
 				ConfigurationSection ventsSec = ventGroupSec.getConfigurationSection("vents");
 
@@ -1886,7 +1885,7 @@ public class ArenaSetupGui {
 					i++;
 				}
 
-				Main.getPlugin().saveConfig();
+				arena.saveConfig();
 				Main.getArenaManager().loadArenas();
 
 				ArenaSetupGui.openVentGroupVentsEdit(player, Main.getArenaManager().getArenaByName(arena.getName()), ventGroupId);
@@ -1966,7 +1965,7 @@ public class ArenaSetupGui {
 			icon.addClickAction(new ClickAction() {
 				@Override
 				public void execute(Player player) {
-					ConfigurationSection ventGroupsSec = Main.getConfigManager().getConfig().getConfigurationSection("arenas." + arena.getName() + ".ventgroups");
+					ConfigurationSection ventGroupsSec = arena.getArenaConfig().getConfigurationSection("ventgroups");
 					ConfigurationSection ventGroupSec = ventGroupsSec.getConfigurationSection(ventGroup.getConfigId());
 
 					ConfigurationSection ventSec = ventGroupSec.getConfigurationSection("vents").createSection(Utils.getRandomString(4));
@@ -1977,7 +1976,7 @@ public class ArenaSetupGui {
 					ventSec.set("id", ventGroup.getVents().size());
 					ventSec.set("locationid", key);
 
-					Main.getPlugin().saveConfig();
+					arena.saveConfig();
 					Main.getArenaManager().loadArenas();
 
 					player.closeInventory();
@@ -2069,14 +2068,14 @@ public class ArenaSetupGui {
 			icon.addClickAction(new ClickAction() {
 				@Override
 				public void execute(Player player) {
-					ConfigurationSection ventGroupsSec = Main.getConfigManager().getConfig().getConfigurationSection("arenas." + arena.getName() + ".ventgroups");
+					ConfigurationSection ventGroupsSec = arena.getArenaConfig().getConfigurationSection("ventgroups");
 					ConfigurationSection ventGroupSec = ventGroupsSec.getConfigurationSection(ventGroup.getConfigId());
 
 					ConfigurationSection ventSec = ventGroupSec.getConfigurationSection("vents").getConfigurationSection(vent.getConfigId());
 
 					ventSec.set("locationid", key);
 
-					Main.getPlugin().saveConfig();
+					arena.saveConfig();
 					if (isNone) {
 						vent.setLocName(null);
 					} else {
@@ -2117,11 +2116,11 @@ public class ArenaSetupGui {
 		icon.addClickAction(new ClickAction() {
 			@Override
 			public void execute(Player player) {
-				ConfigurationSection camerasTopSec = Main.getConfigManager().getConfig().getConfigurationSection("arenas." + arena.getName() + ".cameras");
+				ConfigurationSection camerasTopSec = arena.getArenaConfig().getConfigurationSection("cameras");
 
 				camerasTopSec.set("enable", !arena.getEnableCameras());
 
-				Main.getPlugin().saveConfig();
+				arena.saveConfig();
 				Main.getArenaManager().loadArenas();
 				ArenaSetupGui.openCamerasEdit(player, Main.getArenaManager().getArenaByName(arena.getName()));
 
@@ -2134,14 +2133,14 @@ public class ArenaSetupGui {
 		icon.addClickAction(new ClickAction() {
 			@Override
 			public void execute(Player player) {
-				ConfigurationSection camerasTopSec = Main.getConfigManager().getConfig().getConfigurationSection("arenas." + arena.getName() + ".cameras");
+				ConfigurationSection camerasTopSec = arena.getArenaConfig().getConfigurationSection("cameras");
 
 				String locStr = player.getWorld().getName() + "," + (player.getLocation().getX()) + "," + (player.getLocation().getBlockY() + 1.85) + "," + (player.getLocation().getZ());
 				camerasTopSec.set("hologramloc", locStr);
 
 				arena.setCamerasLoc(new Location(player.getWorld(), player.getLocation().getX(), player.getLocation().getBlockY() + 1.85, player.getLocation().getZ()));
 
-				Main.getPlugin().saveConfig();
+				arena.saveConfig();
 				arena.deleteHolograms();
 				arena.createHolograms();
 				ArenaSetupGui.openCamerasEdit(player, Main.getArenaManager().getArenaByName(arena.getName()));
@@ -2266,13 +2265,13 @@ public class ArenaSetupGui {
 		icon.addClickAction(new ClickAction() {
 			@Override
 			public void execute(Player player) {
-				ConfigurationSection camSec = Main.getConfigManager().getConfig().getConfigurationSection("arenas." + arena.getName() + ".cameras.cams." + cam.getConfigKey());
+				ConfigurationSection camSec = arena.getArenaConfig().getConfigurationSection("cameras.cams." + cam.getConfigKey());
 
 				String locStr = player.getWorld().getName() + "," + (player.getLocation().getX()) + "," + (player.getLocation().getY()) + "," + (player.getLocation().getZ()) + ","
 						+ player.getLocation().getYaw() + "," + player.getLocation().getPitch();
 				camSec.set("camlocation", locStr);
 
-				Main.getPlugin().saveConfig();
+				arena.saveConfig();
 				cam.updateCamLoc(player.getLocation().clone());
 				ArenaSetupGui.openCameraEdit(player, Main.getArenaManager().getArenaByName(arena.getName()), camId);
 			}
@@ -2284,13 +2283,13 @@ public class ArenaSetupGui {
 		icon.addClickAction(new ClickAction() {
 			@Override
 			public void execute(Player player) {
-				ConfigurationSection camSec = Main.getConfigManager().getConfig().getConfigurationSection("arenas." + arena.getName() + ".cameras.cams." + cam.getConfigKey());
+				ConfigurationSection camSec = arena.getArenaConfig().getConfigurationSection("cameras.cams." + cam.getConfigKey());
 
 				String locStr = player.getWorld().getName() + "," + (player.getLocation().getX()) + "," + (player.getLocation().getY()) + "," + (player.getLocation().getZ()) + ","
 						+ player.getLocation().getYaw() + "," + 0;
 				camSec.set("lamplocation", locStr);
 
-				Main.getPlugin().saveConfig();
+				arena.saveConfig();
 
 				Location loc_ = player.getLocation().clone();
 				loc_.setPitch(0);
@@ -2306,13 +2305,13 @@ public class ArenaSetupGui {
 		icon.addClickAction(new ClickAction() {
 			@Override
 			public void execute(Player player) {
-				ConfigurationSection camSec = Main.getConfigManager().getConfig().getConfigurationSection("arenas." + arena.getName() + ".cameras.cams." + cam.getConfigKey());
+				ConfigurationSection camSec = arena.getArenaConfig().getConfigurationSection("cameras.cams." + cam.getConfigKey());
 
 				String locStr = player.getWorld().getName() + "," + (player.getLocation().getX()) + "," + (player.getLocation().getY()) + "," + (player.getLocation().getZ()) + ","
 						+ player.getLocation().getYaw() + "," + player.getLocation().getPitch();
 				camSec.set("viewlocation", locStr);
 
-				Main.getPlugin().saveConfig();
+				arena.saveConfig();
 
 				cam.updateViewLoc(player.getLocation().clone());
 
@@ -2345,7 +2344,7 @@ public class ArenaSetupGui {
 		icon.addClickAction(new ClickAction() {
 			@Override
 			public void execute(Player player) {
-				ConfigurationSection camerasSec = Main.getConfigManager().getConfig().getConfigurationSection("arenas." + arena.getName() + ".cameras.cams");
+				ConfigurationSection camerasSec = arena.getArenaConfig().getConfigurationSection("cameras.cams");
 
 				cam.deleteArmorStands();
 
@@ -2357,7 +2356,7 @@ public class ArenaSetupGui {
 					i++;
 				}
 
-				Main.getPlugin().saveConfig();
+				arena.saveConfig();
 				Main.getArenaManager().loadArenas();
 
 				ArenaSetupGui.openCamerasSelector(player, Main.getArenaManager().getArenaByName(arena.getName()));
@@ -2431,7 +2430,7 @@ public class ArenaSetupGui {
 			icon.addClickAction(new ClickAction() {
 				@Override
 				public void execute(Player player) {
-					ConfigurationSection camerasSec = Main.getConfigManager().getConfig().getConfigurationSection("arenas." + arena.getName() + ".cameras.cams");
+					ConfigurationSection camerasSec = arena.getArenaConfig().getConfigurationSection("cameras.cams");
 
 					ConfigurationSection createdSec = camerasSec.createSection(Utils.getRandomString(4));
 
@@ -2449,7 +2448,7 @@ public class ArenaSetupGui {
 							+ player.getLocation().getYaw() + ", " + 0;
 					createdSec.set("lamplocation", lampLocStr);
 
-					Main.getPlugin().saveConfig();
+					arena.saveConfig();
 					Main.getArenaManager().loadArenas();
 
 					player.closeInventory();
@@ -2536,11 +2535,11 @@ public class ArenaSetupGui {
 			icon.addClickAction(new ClickAction() {
 				@Override
 				public void execute(Player player) {
-					ConfigurationSection camSec = Main.getConfigManager().getConfig().getConfigurationSection("arenas." + arena.getName() + ".cameras.cams." + cam.getConfigKey());
+					ConfigurationSection camSec = arena.getArenaConfig().getConfigurationSection("cameras.cams." + cam.getConfigKey());
 
 					camSec.set("locationid", key);
 
-					Main.getPlugin().saveConfig();
+					arena.saveConfig();
 					if (isNone) {
 						cam.setLocName(null);
 					} else {
@@ -2603,11 +2602,11 @@ public class ArenaSetupGui {
 			@Override
 			public void execute(Player player) {
 				arena.endGame(false);
-				ConfigurationSection camSec = Main.getConfigManager().getConfig().getConfigurationSection("arenas." + arena.getName() + ".cameras.cams." + cam.getConfigKey());
+				ConfigurationSection camSec = arena.getArenaConfig().getConfigurationSection("cameras.cams." + cam.getConfigKey());
 
 				camSec.set("fakeblocks", new ArrayList<String>());
 
-				Main.getPlugin().saveConfig();
+				arena.saveConfig();
 				cam.deleteFakeBlocks();
 				player.sendMessage(Main.getConfigManager().getPrefix() + ChatColor.YELLOW + "Successfully removed all fake blocks for camera " + cam.getId());
 
@@ -2700,11 +2699,11 @@ public class ArenaSetupGui {
 			@Override
 			public void execute(Player player) {
 				arena.endGame(false);
-				ConfigurationSection camSec = Main.getConfigManager().getConfig().getConfigurationSection("arenas." + arena.getName() + ".cameras.cams." + cam.getConfigKey());
+				ConfigurationSection camSec = arena.getArenaConfig().getConfigurationSection("cameras.cams." + cam.getConfigKey());
 
 				camSec.set("fakeairblocks", new ArrayList<String>());
 
-				Main.getPlugin().saveConfig();
+				arena.saveConfig();
 				cam.deleteFakeAirBlocks();
 				player.sendMessage(Main.getConfigManager().getPrefix() + ChatColor.YELLOW + "Successfully removed all fake air blocks for camera " + cam.getId());
 
@@ -2822,7 +2821,7 @@ public class ArenaSetupGui {
 		icon.addClickAction(new ClickAction() {
 			@Override
 			public void execute(Player player) {
-				ConfigurationSection doorGroupsSec = Main.getConfigManager().getConfig().getConfigurationSection("arenas." + arena.getName() + ".doorgroups");
+				ConfigurationSection doorGroupsSec = arena.getArenaConfig().getConfigurationSection("doorgroups");
 				doorGroupsSec.set(doorGroup.getConfigId(), null);
 
 				int i = 0;
@@ -2831,7 +2830,7 @@ public class ArenaSetupGui {
 					i++;
 				}
 
-				Main.getPlugin().saveConfig();
+				arena.saveConfig();
 				Main.getArenaManager().loadArenas();
 
 				ArenaSetupGui.openDoorGroupSelector(player, Main.getArenaManager().getArenaByName(arena.getName()));
@@ -2879,7 +2878,7 @@ public class ArenaSetupGui {
 			@Override
 			public void execute(Player player) {
 				arena.endGame(false);
-				ConfigurationSection doorGroupsSec = Main.getConfigManager().getConfig().getConfigurationSection("arenas." + arena.getName() + ".doorgroups");
+				ConfigurationSection doorGroupsSec = arena.getArenaConfig().getConfigurationSection("doorgroups");
 				ConfigurationSection doorGroupSec = doorGroupsSec.getConfigurationSection(doorGroup.getConfigId());
 				ConfigurationSection doorsSec = doorGroupSec.getConfigurationSection("doors");
 
@@ -2892,7 +2891,7 @@ public class ArenaSetupGui {
 				doorSec.set("corner2", "world,0,0,0");
 
 				doorGroup.addDoor(new Door(arena, doorGroup, new Location(player.getWorld(), 0, 0, 0), new Location(player.getWorld(), 0, 0, 0), id, configId));
-				Main.getPlugin().saveConfig();
+				arena.saveConfig();
 
 				ArenaSetupGui.openDoorsSelector(player, Main.getArenaManager().getArenaByName(arena.getName()), doorGroupId);
 			}
@@ -2965,7 +2964,7 @@ public class ArenaSetupGui {
 			icon.addClickAction(new ClickAction() {
 				@Override
 				public void execute(Player player) {
-					ConfigurationSection doorGroupsSec = Main.getConfigManager().getConfig().getConfigurationSection("arenas." + arena.getName() + ".doorgroups");
+					ConfigurationSection doorGroupsSec = arena.getArenaConfig().getConfigurationSection("doorgroups");
 
 					ConfigurationSection createdSec = doorGroupsSec.createSection(Utils.getRandomString(4));
 
@@ -2975,7 +2974,7 @@ public class ArenaSetupGui {
 
 					player.sendMessage(Main.getConfigManager().getPrefix() + ChatColor.YELLOW + "Successfully created door group " + (arena.getDoorsManager().getDoorGroups().size() + 1));
 
-					Main.getPlugin().saveConfig();
+					arena.saveConfig();
 					Main.getArenaManager().loadArenas();
 
 					player.closeInventory();
@@ -3054,13 +3053,13 @@ public class ArenaSetupGui {
 			icon.addClickAction(new ClickAction() {
 				@Override
 				public void execute(Player player) {
-					ConfigurationSection doorGroupsSec = Main.getConfigManager().getConfig().getConfigurationSection("arenas." + arena.getName() + ".doorgroups");
+					ConfigurationSection doorGroupsSec = arena.getArenaConfig().getConfigurationSection("doorgroups");
 
 					ConfigurationSection doorSec = doorGroupsSec.getConfigurationSection(doorGroup.getConfigId());
 
 					doorSec.set("locationid", key);
 
-					Main.getPlugin().saveConfig();
+					arena.saveConfig();
 					Main.getArenaManager().loadArenas();
 
 					player.sendMessage(Main.getConfigManager().getPrefix() + ChatColor.YELLOW + "Successfully changed door group " + doorGroup.getId() + " location name to "
@@ -3105,7 +3104,7 @@ public class ArenaSetupGui {
 			@Override
 			public void execute(Player player) {
 				arena.endGame(false);
-				ConfigurationSection doorGroupsSec = Main.getConfigManager().getConfig().getConfigurationSection("arenas." + arena.getName() + ".doorgroups");
+				ConfigurationSection doorGroupsSec = arena.getArenaConfig().getConfigurationSection("doorgroups");
 				ConfigurationSection doorGroupSec = doorGroupsSec.getConfigurationSection(doorGroup.getConfigId());
 				ConfigurationSection doorsSec = doorGroupSec.getConfigurationSection("doors");
 
@@ -3121,7 +3120,7 @@ public class ArenaSetupGui {
 
 				door.setCorner1(player.getLocation());
 
-				Main.getPlugin().saveConfig();
+				arena.saveConfig();
 //				Main.getArenaManager().loadArenas();
 
 				ArenaSetupGui.openDoorEdit(player, Main.getArenaManager().getArenaByName(arena.getName()), doorGroupId, doorId);
@@ -3135,7 +3134,7 @@ public class ArenaSetupGui {
 			@Override
 			public void execute(Player player) {
 				arena.endGame(false);
-				ConfigurationSection doorGroupsSec = Main.getConfigManager().getConfig().getConfigurationSection("arenas." + arena.getName() + ".doorgroups");
+				ConfigurationSection doorGroupsSec = arena.getArenaConfig().getConfigurationSection("doorgroups");
 				ConfigurationSection doorGroupSec = doorGroupsSec.getConfigurationSection(doorGroup.getConfigId());
 				ConfigurationSection doorsSec = doorGroupSec.getConfigurationSection("doors");
 
@@ -3151,7 +3150,7 @@ public class ArenaSetupGui {
 
 				door.setCorner2(player.getLocation());
 
-				Main.getPlugin().saveConfig();
+				arena.saveConfig();
 //				Main.getArenaManager().loadArenas();
 
 				ArenaSetupGui.openDoorEdit(player, Main.getArenaManager().getArenaByName(arena.getName()), doorGroupId, doorId);
@@ -3174,7 +3173,7 @@ public class ArenaSetupGui {
 		icon.addClickAction(new ClickAction() {
 			@Override
 			public void execute(Player player) {
-				ConfigurationSection doorGroupsSec = Main.getConfigManager().getConfig().getConfigurationSection("arenas." + arena.getName() + ".doorgroups");
+				ConfigurationSection doorGroupsSec = arena.getArenaConfig().getConfigurationSection("doorgroups");
 				ConfigurationSection doorGroupSec = doorGroupsSec.getConfigurationSection(doorGroup.getConfigId());
 				ConfigurationSection doorsSec = doorGroupSec.getConfigurationSection("doors");
 
@@ -3186,7 +3185,7 @@ public class ArenaSetupGui {
 					i++;
 				}
 
-				Main.getPlugin().saveConfig();
+				arena.saveConfig();
 				Main.getArenaManager().loadArenas();
 
 				ArenaSetupGui.openDoorGroupEdit(player, Main.getArenaManager().getArenaByName(arena.getName()), doorGroupId);

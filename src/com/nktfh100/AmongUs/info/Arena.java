@@ -1,5 +1,7 @@
 package com.nktfh100.AmongUs.info;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -25,6 +27,9 @@ import org.bukkit.block.data.Lightable;
 import org.bukkit.boss.BarColor;
 import org.bukkit.boss.BarStyle;
 import org.bukkit.boss.BossBar;
+import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Firework;
 import org.bukkit.entity.Player;
@@ -77,6 +82,8 @@ import com.nktfh100.AmongUs.utils.Utils;
 
 public class Arena {
 
+	private File arenaFile;
+	private FileConfiguration arenaConfig;
 	private String name;
 	private String displayName;
 	private Integer minPlayers;
@@ -171,7 +178,8 @@ public class Arena {
 	public Arena(String name) {
 		this.name = name;
 
-		this.bossBar = Bukkit.createBossBar(Main.getMessagesManager().getGameMsg("tasksBar", this, ""), BarColor.GREEN, BarStyle.SEGMENTED_20);
+		this.bossBar = Bukkit.createBossBar(Main.getMessagesManager().getGameMsg("tasksBar", this, ""), BarColor.GREEN,
+				BarStyle.SEGMENTED_20);
 		this.bossBar.setProgress(0);
 	}
 
@@ -206,7 +214,9 @@ public class Arena {
 				}
 				ItemInfo leaveVent = itemsManager.getItem("vent_leave").getItem();
 				pInfo.getPlayer().getInventory().setItem(leaveVent.getSlot(), leaveVent.getItem());
-				if (pInfo.getVent().getId() < pInfo.getVentGroup().getVents().size() - 1 || (pInfo.getVentGroup().getLoop() && pInfo.getVent().getId() == pInfo.getVentGroup().getVents().size() - 1)) {
+				if (pInfo.getVent().getId() < pInfo.getVentGroup().getVents().size() - 1
+						|| (pInfo.getVentGroup().getLoop()
+								&& pInfo.getVent().getId() == pInfo.getVentGroup().getVents().size() - 1)) {
 					ItemInfo ventRight = itemsManager.getItem("vent_right").getItem();
 					pInfo.getPlayer().getInventory().setItem(ventRight.getSlot(), ventRight.getItem());
 				}
@@ -214,12 +224,14 @@ public class Arena {
 				for (SabotageArena sa : this.getSabotages()) {
 					String name = Main.getMessagesManager().getTaskName(sa.getType().toString());
 					ItemInfoContainer saboItemInfo = this.getSabotageManager().getSabotageItemInfo(sa.getType());
-					ItemStack saboItem = this.getSabotageManager().getSabotageItem(sa.getType(), name, this.getSabotageManager().getSabotageCoolDownTimer(pInfo.getPlayer()));
+					ItemStack saboItem = this.getSabotageManager().getSabotageItem(sa.getType(), name,
+							this.getSabotageManager().getSabotageCoolDownTimer(pInfo.getPlayer()));
 					pInfo.getPlayer().getInventory().setItem(saboItemInfo.getSlot(), saboItem);
 				}
 				int s_ = 9;
 				for (DoorGroup dg : this.getDoorsManager().getDoorGroups()) {
-					pInfo.getPlayer().getInventory().setItem(s_, this.getDoorsManager().getSabotageDoorItem(pInfo.getPlayer(), dg.getId()));
+					pInfo.getPlayer().getInventory().setItem(s_,
+							this.getDoorsManager().getSabotageDoorItem(pInfo.getPlayer(), dg.getId()));
 					s_++;
 				}
 				if (!pInfo.isGhost()) {
@@ -280,7 +292,8 @@ public class Arena {
 			public void run() {
 				if (arena.getGameState() == GameState.RUNNING) {
 					if (arena.getMeetingManager().getMeetingCooldownTimer() > 0) {
-						arena.getMeetingManager().setMeetingCooldownTimer(arena.getMeetingManager().getMeetingCooldownTimer() - 1);
+						arena.getMeetingManager()
+								.setMeetingCooldownTimer(arena.getMeetingManager().getMeetingCooldownTimer() - 1);
 
 						for (Player player : arena.getPlayers()) {
 							if (player.getOpenInventory().getTopInventory().getHolder() instanceof MeetingBtnInv) {
@@ -300,7 +313,8 @@ public class Arena {
 						}
 
 						String msg = Main.getMessagesManager().getGameMsg(msgKey + "Msg", arena, timer + "");
-						String actionBar = Main.getMessagesManager().getGameMsg(msgKey + "ActionBar", arena, timer + "");
+						String actionBar = Main.getMessagesManager().getGameMsg(msgKey + "ActionBar", arena,
+								timer + "");
 						if (!actionBar.isEmpty()) {
 							for (Player p : arena.getPlayers()) {
 								Utils.sendActionBar(p, actionBar);
@@ -315,9 +329,11 @@ public class Arena {
 					} else if (!arena.getIsInMeeting()) {
 						if (!arena.getSabotageManager().getIsSabotageActive()) {
 							for (PlayerInfo pInfo : arena.getGameImposters()) {
-								Integer saboCooldown = arena.getSabotageManager().getSabotageCoolDownTimer(pInfo.getPlayer());
+								Integer saboCooldown = arena.getSabotageManager()
+										.getSabotageCoolDownTimer(pInfo.getPlayer());
 								if (saboCooldown > 0) {
-									arena.getSabotageManager().setSabotageCoolDownTimer(pInfo.getPlayer().getUniqueId().toString(), saboCooldown - 1);
+									arena.getSabotageManager().setSabotageCoolDownTimer(
+											pInfo.getPlayer().getUniqueId().toString(), saboCooldown - 1);
 								}
 								int s_ = 9;
 								String uuid = pInfo.getPlayer().getUniqueId().toString();
@@ -326,7 +342,8 @@ public class Arena {
 									if (doorCooldown > 0) {
 										dg.setCooldownTimer(uuid, doorCooldown - 1);
 									}
-									ItemStack item = arena.getDoorsManager().getSabotageDoorItem(pInfo.getPlayer(), dg.getId());
+									ItemStack item = arena.getDoorsManager().getSabotageDoorItem(pInfo.getPlayer(),
+											dg.getId());
 									pInfo.getPlayer().getInventory().setItem(s_, item);
 									s_++;
 								}
@@ -336,11 +353,13 @@ public class Arena {
 								// Send damage animation / sound (while a sabotage is active)
 								if (sendDamageAnim) {
 									for (PlayerInfo pInfo : arena.getPlayersInfo()) {
-										PacketContainer damagePacket = new PacketContainer(PacketType.Play.Server.ANIMATION);
+										PacketContainer damagePacket = new PacketContainer(
+												PacketType.Play.Server.ANIMATION);
 										damagePacket.getIntegers().write(1, 1);
 										damagePacket.getIntegers().write(0, pInfo.getPlayer().getEntityId());
 										Packets.sendPacket(pInfo.getPlayer(), damagePacket);
-										Packets.sendPacket(pInfo.getPlayer(), Packets.NAMED_SOUND(pInfo.getPlayer().getLocation(), Sound.ENTITY_PLAYER_HURT));
+										Packets.sendPacket(pInfo.getPlayer(), Packets.NAMED_SOUND(
+												pInfo.getPlayer().getLocation(), Sound.ENTITY_PLAYER_HURT));
 									}
 									sendDamageAnim = false;
 								} else {
@@ -348,10 +367,13 @@ public class Arena {
 								}
 							}
 
-							if (arena.getSabotageManager().getActiveSabotage().getType() == SabotageType.REACTOR_MELTDOWN
-									|| arena.getSabotageManager().getActiveSabotage().getType() == SabotageType.OXYGEN) {
+							if (arena.getSabotageManager().getActiveSabotage()
+									.getType() == SabotageType.REACTOR_MELTDOWN
+									|| arena.getSabotageManager().getActiveSabotage()
+											.getType() == SabotageType.OXYGEN) {
 								for (PlayerInfo pInfo : arena.getPlayersInfo()) {
-									Main.getSoundsManager().playSound("sabotageAlarm", pInfo.getPlayer(), pInfo.getPlayer().getLocation());
+									Main.getSoundsManager().playSound("sabotageAlarm", pInfo.getPlayer(),
+											pInfo.getPlayer().getLocation());
 								}
 							}
 						}
@@ -365,11 +387,18 @@ public class Arena {
 								}
 								if (!pInfo.getIsImposter()) {
 									for (TaskPlayer tp : tasksManager.getTasksForPlayer(pInfo.getPlayer())) {
-										if (!tp.getIsDone() && tp.getActiveTask().getHolo().getVisibilityManager().isVisibleTo(pInfo.getPlayer())) {
+										if (!tp.getIsDone() && tp.getActiveTask().getHolo().getVisibilityManager()
+												.isVisibleTo(pInfo.getPlayer())) {
 											if (!arena.getEnableReducedVision()
-													|| Utils.isInsideCircle(pInfo.getPlayer().getLocation(), (double) pInfo.getVision(), tp.getActiveTask().getLocation()) != 2) {
-												Packets.sendPacket(pInfo.getPlayer(), Packets.PARTICLES(tp.getActiveTask().getHolo().getLocation().add(0, -0.3, 0),
-														Main.getConfigManager().getParticlesOnTasksType(), null, 8, 0.4f, 0.3f, 0.4f));
+													|| Utils.isInsideCircle(pInfo.getPlayer().getLocation(),
+															(double) pInfo.getVision(),
+															tp.getActiveTask().getLocation()) != 2) {
+												Packets.sendPacket(pInfo.getPlayer(),
+														Packets.PARTICLES(
+																tp.getActiveTask().getHolo().getLocation().add(0, -0.3,
+																		0),
+																Main.getConfigManager().getParticlesOnTasksType(), null,
+																8, 0.4f, 0.3f, 0.4f));
 											}
 										}
 									}
@@ -415,18 +444,22 @@ public class Arena {
 						// action bar for imposters
 						String imposters_ = "";
 						for (PlayerInfo pInfo : arena.getGameImposters()) {
-							imposters_ += pInfo.getColor().getChatColor() + "" + ChatColor.BOLD + pInfo.getPlayer().getName() + " ";
+							imposters_ += pInfo.getColor().getChatColor() + "" + ChatColor.BOLD
+									+ pInfo.getPlayer().getName() + " ";
 						}
-						String impostersActionBar = Main.getMessagesManager().getGameMsg("impostersActionBar", arena, imposters_);
+						String impostersActionBar = Main.getMessagesManager().getGameMsg("impostersActionBar", arena,
+								imposters_);
 
 						for (PlayerInfo pInfo : arena.getGameImposters()) {
 							if (pInfo.getIsInVent()) {
-								Utils.sendActionBar(pInfo.getPlayer(), arena.getVentsManager().getVentActionBar(pInfo.getVent()));
+								Utils.sendActionBar(pInfo.getPlayer(),
+										arena.getVentsManager().getVentActionBar(pInfo.getVent()));
 							} else if (!pInfo.getIsInCameras()) {
 								Utils.sendActionBar(pInfo.getPlayer(), impostersActionBar);
 							}
 
-							if (!pInfo.isGhost() && !pInfo.getIsInVent() && !pInfo.getIsInCameras() && !pInfo.getKillCoolDownPaused()) {
+							if (!pInfo.isGhost() && !pInfo.getIsInVent() && !pInfo.getIsInCameras()
+									&& !pInfo.getKillCoolDownPaused()) {
 								if (pInfo.getKillCoolDown() > 0) {
 									pInfo.setKillCoolDown(pInfo.getKillCoolDown() - 1);
 									if (pInfo.getKillCoolDown() == 0) {
@@ -437,7 +470,8 @@ public class Arena {
 						}
 						for (PlayerInfo pInfo : arena.getPlayersInfo()) {
 							if (pInfo.getIsInCameras()) {
-								Utils.sendActionBar(pInfo.getPlayer(), arena.getCamerasManager().getCameraActionBar(pInfo.getActiveCamera()));
+								Utils.sendActionBar(pInfo.getPlayer(),
+										arena.getCamerasManager().getCameraActionBar(pInfo.getActiveCamera()));
 							}
 						}
 					}
@@ -462,10 +496,12 @@ public class Arena {
 							} else if (imposterChance1 < 0) {
 								imposterChance1 = 0D;
 							}
-							String msg = Main.getMessagesManager().getGameMsg("lobbyActionBar", arena, arena.getPlayersInfo().size() + "", "" + arena.getMaxPlayers(), imposterChance.intValue() + "",
-									null);
-							String msg1 = Main.getMessagesManager().getGameMsg("lobbyActionBar", arena, arena.getPlayersInfo().size() + "", "" + arena.getMaxPlayers(), imposterChance1.intValue() + "",
-									null);
+							String msg = Main.getMessagesManager().getGameMsg("lobbyActionBar", arena,
+									arena.getPlayersInfo().size() + "", "" + arena.getMaxPlayers(),
+									imposterChance.intValue() + "", null);
+							String msg1 = Main.getMessagesManager().getGameMsg("lobbyActionBar", arena,
+									arena.getPlayersInfo().size() + "", "" + arena.getMaxPlayers(),
+									imposterChance1.intValue() + "", null);
 
 							for (Player player : arena.getPlayers()) {
 								if (player.hasPermission("amongus.perk.double-imposter-chance")) {
@@ -488,7 +524,9 @@ public class Arena {
 									playersCount++;
 								}
 							}
-							String msg = Main.getMessagesManager().getGameMsg("lobbyActionBar", arena, playersCount + "", "" + arena.getMaxPlayers(), imposterChance.intValue() + "", null);
+							String msg = Main.getMessagesManager().getGameMsg("lobbyActionBar", arena,
+									playersCount + "", "" + arena.getMaxPlayers(), imposterChance.intValue() + "",
+									null);
 							for (PlayerInfo pInfo : arena.getPlayersInfo()) {
 								Utils.sendActionBar(pInfo.getPlayer(), msg);
 							}
@@ -524,8 +562,10 @@ public class Arena {
 			pInfo.setColor(color);
 			pInfo.giveArmor();
 			ItemInfo colorSelectorItem = Main.getItemsManager().getItem("colorSelector").getItem();
-			pInfo.getPlayer().getInventory().setItem(colorSelectorItem.getSlot(), Utils.createItem(pInfo.getColor().getWool(), colorSelectorItem.getTitle(), 1, colorSelectorItem.getLore()));
-			PacketContainer packet = Packets.UPDATE_DISPLAY_NAME(pInfo.getPlayer().getUniqueId(), pInfo.getPlayer().getName(), pInfo.getCustomName());
+			pInfo.getPlayer().getInventory().setItem(colorSelectorItem.getSlot(), Utils.createItem(
+					pInfo.getColor().getWool(), colorSelectorItem.getTitle(), 1, colorSelectorItem.getLore()));
+			PacketContainer packet = Packets.UPDATE_DISPLAY_NAME(pInfo.getPlayer().getUniqueId(),
+					pInfo.getPlayer().getName(), pInfo.getCustomName());
 			for (Player player : this.getPlayers()) {
 				Packets.sendPacket(player, packet);
 			}
@@ -538,7 +578,8 @@ public class Arena {
 		if (!this.disableMap) {
 			ItemInfoContainer mapInfo = Main.getItemsManager().getItem("map");
 			short id = pInfo.getMapId();
-			ItemStack mapItem = Utils.createItem(Material.FILLED_MAP, mapInfo.getItem().getTitle(), 1, mapInfo.getItem().getLore());
+			ItemStack mapItem = Utils.createItem(Material.FILLED_MAP, mapInfo.getItem().getTitle(), 1,
+					mapInfo.getItem().getLore());
 			MapMeta meta = (MapMeta) mapItem.getItemMeta();
 			meta.setMapView(Bukkit.getMap(id));
 			if (!meta.hasMapView()) {
@@ -558,7 +599,8 @@ public class Arena {
 			mapItem.setItemMeta(meta);
 			if (pInfo.getIsMapInOffHand()) {
 				pInfo.getPlayer().getInventory().setItemInOffHand(mapItem);
-				pInfo.getPlayer().getInventory().setItem(slot, Utils.createItem(mapInfo.getItem2().getMat(), mapInfo.getItem2().getTitle(), 1, mapInfo.getItem2().getLore()));
+				pInfo.getPlayer().getInventory().setItem(slot, Utils.createItem(mapInfo.getItem2().getMat(),
+						mapInfo.getItem2().getTitle(), 1, mapInfo.getItem2().getLore()));
 			} else {
 				pInfo.getPlayer().getInventory().setItem(slot, mapItem);
 			}
@@ -651,7 +693,9 @@ public class Arena {
 				if (this.colors_.size() == 0) {
 					Bukkit.getLogger().log(Level.SEVERE, "There are not enough colors!");
 					Bukkit.getLogger().log(Level.SEVERE,
-							"Number of colors: " + Main.getConfigManager().getAllColors().size() + ", Number of players in '" + this.getDisplayName() + "': " + this.getMaxPlayers());
+							"Number of colors: " + Main.getConfigManager().getAllColors().size()
+									+ ", Number of players in '" + this.getDisplayName() + "': "
+									+ this.getMaxPlayers());
 					return;
 				} else {
 					if (pInfo.getPreferredColor() != null) {
@@ -693,13 +737,15 @@ public class Arena {
 				ItemInfo leaveItem = Main.getItemsManager().getItem("leave").getItem();
 				player.getInventory().setItem(leaveItem.getSlot(), leaveItem.getItem());
 				ItemInfo colorSelectorItem = Main.getItemsManager().getItem("colorSelector").getItem();
-				player.getInventory().setItem(colorSelectorItem.getSlot(), Utils.createItem(pInfo.getColor().getWool(), colorSelectorItem.getTitle(), 1, colorSelectorItem.getLore()));
+				player.getInventory().setItem(colorSelectorItem.getSlot(), Utils.createItem(pInfo.getColor().getWool(),
+						colorSelectorItem.getTitle(), 1, colorSelectorItem.getLore()));
 
 				if (this.ingamePlayers.size() >= this.minPlayers && this.gameState != GameState.STARTING) {
 					this.startGameTimer();
 				}
 
-				this.sendMessage(Main.getMessagesManager().getGameMsg("playerJoin", this, player.getName(), pInfo.getColor().getChatColor() + "", pInfo.getColor().getName(),
+				this.sendMessage(Main.getMessagesManager().getGameMsg("playerJoin", this, player.getName(),
+						pInfo.getColor().getChatColor() + "", pInfo.getColor().getName(),
 						this.ingamePlayers.size() + "", this.maxPlayers + ""));
 				this.updateScoreBoard();
 				this.updateSigns();
@@ -711,18 +757,22 @@ public class Arena {
 				}
 
 				if (!Main.getConfigManager().getBungeecord() && Main.getConfigManager().getHidePlayersOutSideArena()) {
-					PacketContainer packet1 = Packets.REMOVE_PLAYER(pInfo.getPlayer().getUniqueId(), pInfo.getPlayer().getName(), pInfo.getPlayer().getName());
-					PacketContainer packet2 = Packets.ADD_PLAYER(pInfo.getPlayer().getUniqueId(), pInfo.getPlayer().getName(), pInfo.getCustomName(), pInfo.getTextureValue(),
+					PacketContainer packet1 = Packets.REMOVE_PLAYER(pInfo.getPlayer().getUniqueId(),
+							pInfo.getPlayer().getName(), pInfo.getPlayer().getName());
+					PacketContainer packet2 = Packets.ADD_PLAYER(pInfo.getPlayer().getUniqueId(),
+							pInfo.getPlayer().getName(), pInfo.getCustomName(), pInfo.getTextureValue(),
 							pInfo.getTextureSignature());
 					for (PlayerInfo pInfo_ : Main.getPlayersManager().getPlayers()) {
 						if (pInfo != pInfo_) {
 							if (!pInfo_.getIsIngame()) {
-								PacketContainer packet = Packets.REMOVE_PLAYER(pInfo_.getPlayer().getUniqueId(), pInfo_.getPlayer().getName(), pInfo_.getPlayer().getName());
+								PacketContainer packet = Packets.REMOVE_PLAYER(pInfo_.getPlayer().getUniqueId(),
+										pInfo_.getPlayer().getName(), pInfo_.getPlayer().getName());
 								Packets.sendPacket(player, packet);
 
 								Packets.sendPacket(pInfo_.getPlayer(), packet1);
 							} else if (pInfo_.getArena() == this) {
-								PacketContainer packet = Packets.ADD_PLAYER(pInfo_.getPlayer().getUniqueId(), pInfo_.getPlayer().getName(), pInfo_.getCustomName(), pInfo_.getTextureValue(),
+								PacketContainer packet = Packets.ADD_PLAYER(pInfo_.getPlayer().getUniqueId(),
+										pInfo_.getPlayer().getName(), pInfo_.getCustomName(), pInfo_.getTextureValue(),
 										pInfo_.getTextureSignature());
 								Packets.sendPacket(player, packet);
 							}
@@ -748,17 +798,21 @@ public class Arena {
 					new BukkitRunnable() {
 						@Override
 						public void run() {
-							if (arena == null || pInfo == null || !pInfo.getPlayer().isOnline() || !pInfo.getIsIngame()) {
+							if (arena == null || pInfo == null || !pInfo.getPlayer().isOnline()
+									|| !pInfo.getIsIngame()) {
 								return;
 							}
-							PacketContainer packet_ = Packets.UPDATE_DISPLAY_NAME(pInfo.getPlayer().getUniqueId(), pInfo.getPlayer().getName(), pInfo.getCustomName());
+							PacketContainer packet_ = Packets.UPDATE_DISPLAY_NAME(pInfo.getPlayer().getUniqueId(),
+									pInfo.getPlayer().getName(), pInfo.getCustomName());
 							Packets.sendPacket(player, packet_);
 							for (PlayerInfo pInfo1 : arena.getPlayersInfo()) {
 								if (pInfo1 == null || !pInfo1.getPlayer().isOnline() || !pInfo1.getIsIngame()) {
 									continue;
 								}
 								if (pInfo1 != pInfo) {
-									PacketContainer packet = Packets.UPDATE_DISPLAY_NAME(pInfo1.getPlayer().getUniqueId(), pInfo1.getPlayer().getName(), pInfo1.getCustomName());
+									PacketContainer packet = Packets.UPDATE_DISPLAY_NAME(
+											pInfo1.getPlayer().getUniqueId(), pInfo1.getPlayer().getName(),
+											pInfo1.getCustomName());
 									Packets.sendPacket(pInfo.getPlayer(), packet);
 									Packets.sendPacket(pInfo1.getPlayer(), packet_);
 								}
@@ -778,12 +832,14 @@ public class Arena {
 					}
 				}
 			} else {
-				for (String str : Main.getMessagesManager().getGameMsg("arenaInGame", null, this.getDisplayName()).split("/n")) {
+				for (String str : Main.getMessagesManager().getGameMsg("arenaInGame", null, this.getDisplayName())
+						.split("/n")) {
 					player.sendMessage(str);
 				}
 			}
 		} else if (this.getPlayers().size() >= this.maxPlayers) {
-			for (String str : Main.getMessagesManager().getGameMsg("arenaFull", null, this.getDisplayName()).split("/n")) {
+			for (String str : Main.getMessagesManager().getGameMsg("arenaFull", null, this.getDisplayName())
+					.split("/n")) {
 				player.sendMessage(str);
 			}
 		}
@@ -799,7 +855,8 @@ public class Arena {
 			Bukkit.getPluginManager().callEvent(ev);
 
 			PlayerInfo pInfo = Main.getPlayersManager().getPlayerInfo(player);
-			this.sendMessage(Main.getMessagesManager().getGameMsg("playerLeave", this, player.getName(), pInfo.getColor().getChatColor() + "", pInfo.getColor().getName(),
+			this.sendMessage(Main.getMessagesManager().getGameMsg("playerLeave", this, player.getName(),
+					pInfo.getColor().getChatColor() + "", pInfo.getColor().getName(),
 					(this.ingamePlayers.size() - 1) + "", this.maxPlayers + ""));
 
 			if (!endGame && this.gameState == GameState.RUNNING && this.vitalsManager != null) {
@@ -882,8 +939,8 @@ public class Arena {
 			pInfo.removeVisionBlocks();
 			updateScoreBoard();
 
-			PacketContainer tabNamePacket = Packets.ADD_PLAYER(pInfo.getPlayer().getUniqueId(), player.getName(), pInfo.getOriginalPlayerListName(), pInfo.getTextureValue(),
-					pInfo.getTextureSignature());
+			PacketContainer tabNamePacket = Packets.ADD_PLAYER(pInfo.getPlayer().getUniqueId(), player.getName(),
+					pInfo.getOriginalPlayerListName(), pInfo.getTextureValue(), pInfo.getTextureSignature());
 			for (PlayerInfo pInfo1 : this.getPlayersInfo()) {
 				if (pInfo.getPlayer() != null) {
 					if (pInfo1.getFakePlayer() != null) {
@@ -894,15 +951,18 @@ public class Arena {
 					}
 					Packets.sendPacket(pInfo1.getPlayer(), tabNamePacket);
 					if (pInfo != pInfo1) {
-						Packets.sendPacket(player, Packets.ADD_PLAYER(pInfo1.getPlayer().getUniqueId(), pInfo1.getPlayer().getName(), pInfo1.getOriginalPlayerListName(), pInfo1.getTextureValue(),
-								pInfo1.getTextureSignature()));
+						Packets.sendPacket(player,
+								Packets.ADD_PLAYER(pInfo1.getPlayer().getUniqueId(), pInfo1.getPlayer().getName(),
+										pInfo1.getOriginalPlayerListName(), pInfo1.getTextureValue(),
+										pInfo1.getTextureSignature()));
 					}
 					if (!endGame) {
 						pInfo1.updateScoreBoard();
 					}
 				}
 			}
-			Packets.sendPacket(player, Packets.UPDATE_DISPLAY_NAME(player.getUniqueId(), player.getName(), pInfo.getOriginalPlayerListName()));
+			Packets.sendPacket(player, Packets.UPDATE_DISPLAY_NAME(player.getUniqueId(), player.getName(),
+					pInfo.getOriginalPlayerListName()));
 
 			this.getTasksManager().removeTasksForPlayer(player);
 			if (!endGame) {
@@ -917,9 +977,11 @@ public class Arena {
 			if (!Main.getConfigManager().getSaveInventory()) {
 				if (Main.getConfigManager().getGiveLobbyItems() && !Main.getConfigManager().getBungeecord()) {
 					ItemInfo item = Main.getItemsManager().getItem("arenasSelector").getItem();
-					pInfo.getPlayer().getInventory().setItem(Main.getConfigManager().getLobbyItemSlot("arenasSelector"), item.getItem());
+					pInfo.getPlayer().getInventory().setItem(Main.getConfigManager().getLobbyItemSlot("arenasSelector"),
+							item.getItem());
 					if (Main.getIsPlayerPoints()) {
-						player.getInventory().setItem(Main.getConfigManager().getLobbyItemSlot("cosmeticsSelector"), Main.getItemsManager().getItem("cosmeticsSelector").getItem().getItem());
+						player.getInventory().setItem(Main.getConfigManager().getLobbyItemSlot("cosmeticsSelector"),
+								Main.getItemsManager().getItem("cosmeticsSelector").getItem().getItem());
 					}
 				}
 			}
@@ -932,7 +994,8 @@ public class Arena {
 				this.stopSecondRunnable();
 			}
 
-			PacketContainer packet1 = Packets.ADD_PLAYER(player.getUniqueId(), player.getName(), player.getName(), pInfo.getTextureValue(), pInfo.getTextureSignature());
+			PacketContainer packet1 = Packets.ADD_PLAYER(player.getUniqueId(), player.getName(), player.getName(),
+					pInfo.getTextureValue(), pInfo.getTextureSignature());
 			PacketContainer packet2 = Packets.REMOVE_PLAYER(player.getUniqueId(), player.getName(), player.getName());
 
 			if (!isLeaving && Main.getConfigManager().getBungeecord()) {
@@ -944,7 +1007,8 @@ public class Arena {
 			if (!Main.getConfigManager().getBungeecord() && Main.getConfigManager().getHidePlayersOutSideArena()) {
 				for (PlayerInfo pInfo_ : Main.getPlayersManager().getPlayers()) {
 					if (!pInfo_.getIsIngame()) {
-						PacketContainer packet = Packets.ADD_PLAYER(pInfo_.getPlayer().getUniqueId(), pInfo_.getPlayer().getName(), pInfo_.getCustomName(), pInfo_.getTextureValue(),
+						PacketContainer packet = Packets.ADD_PLAYER(pInfo_.getPlayer().getUniqueId(),
+								pInfo_.getPlayer().getName(), pInfo_.getCustomName(), pInfo_.getTextureValue(),
 								pInfo_.getTextureSignature());
 						Packets.sendPacket(player, packet);
 
@@ -953,7 +1017,8 @@ public class Arena {
 				}
 
 				for (PlayerInfo pInfo_ : this.getPlayersInfo()) {
-					PacketContainer packet = Packets.REMOVE_PLAYER(pInfo_.getPlayer().getUniqueId(), pInfo_.getPlayer().getName(), pInfo_.getCustomName());
+					PacketContainer packet = Packets.REMOVE_PLAYER(pInfo_.getPlayer().getUniqueId(),
+							pInfo_.getPlayer().getName(), pInfo_.getCustomName());
 					Packets.sendPacket(player, packet);
 
 					Packets.sendPacket(pInfo_.getPlayer(), packet2);
@@ -992,11 +1057,13 @@ public class Arena {
 						this.gameTimerRunnable.cancel();
 					}
 					this.setGameState(GameState.WAITING);
-					this.sendMessage(Main.getMessagesManager().getGameMsg("notEnoughPlayers", null, this.getDisplayName()));
+					this.sendMessage(
+							Main.getMessagesManager().getGameMsg("notEnoughPlayers", null, this.getDisplayName()));
 				}
 			}
 			if (!endGame) {
-				if (Main.getConfigManager().getBungeecord() && !Main.getConfigManager().getBungeecordIsLobby() && Main.getArenaManager().getAllArenas().size() > 0) {
+				if (Main.getConfigManager().getBungeecord() && !Main.getConfigManager().getBungeecordIsLobby()
+						&& Main.getArenaManager().getAllArenas().size() > 0) {
 					Main.getArenaManager().sendBungeUpdate(this);
 				}
 			}
@@ -1016,12 +1083,13 @@ public class Arena {
 		vpi.setIsDead(true);
 		this.vitalsManager.updateInventory();
 
-		AUArenaPlayerDeath ev = new AUArenaPlayerDeath(this, player, killed, killerInfo == null ? null : killerInfo.getPlayer());
+		AUArenaPlayerDeath ev = new AUArenaPlayerDeath(this, player, killed,
+				killerInfo == null ? null : killerInfo.getPlayer());
 		Bukkit.getPluginManager().callEvent(ev);
 
 		if (killed) {
-			String msg = Main.getMessagesManager().getGameMsg("playerDiedMsg", this, killerInfo.getPlayer().getName(), "" + killerInfo.getColor().getChatColor(),
-					killerInfo.getColor().toString().toLowerCase(), null);
+			String msg = Main.getMessagesManager().getGameMsg("playerDiedMsg", this, killerInfo.getPlayer().getName(),
+					"" + killerInfo.getColor().getChatColor(), killerInfo.getColor().toString().toLowerCase(), null);
 			if (!msg.isEmpty()) {
 				for (String line : msg.split("/n")) {
 					player.sendMessage(line);
@@ -1029,18 +1097,21 @@ public class Arena {
 			}
 
 			// Victim title
-			String title = Main.getMessagesManager().getGameMsg("playerDiedTitle", this, killerInfo.getPlayer().getName(), "" + killerInfo.getColor().getChatColor(),
+			String title = Main.getMessagesManager().getGameMsg("playerDiedTitle", this,
+					killerInfo.getPlayer().getName(), "" + killerInfo.getColor().getChatColor(),
 					killerInfo.getColor().toString().toLowerCase(), null);
-			String subTitle = Main.getMessagesManager().getGameMsg("playerDiedSubTitle", this, killerInfo.getPlayer().getName(), "" + killerInfo.getColor().getChatColor(),
+			String subTitle = Main.getMessagesManager().getGameMsg("playerDiedSubTitle", this,
+					killerInfo.getPlayer().getName(), "" + killerInfo.getColor().getChatColor(),
 					killerInfo.getColor().toString().toLowerCase(), null);
 			if (!(title.isEmpty() && subTitle.isEmpty())) {
 				pInfo.sendTitle(title, subTitle, 15, 60, 15);
 			}
 
 			// Killer title
-			String title1 = Main.getMessagesManager().getGameMsg("playerKilledTitle", this, pInfo.getPlayer().getName(), "" + pInfo.getColor().getChatColor(),
-					pInfo.getColor().toString().toLowerCase(), null);
-			String subTitle1 = Main.getMessagesManager().getGameMsg("playerKilledSubTitle", this, pInfo.getPlayer().getName(), "" + pInfo.getColor().getChatColor(),
+			String title1 = Main.getMessagesManager().getGameMsg("playerKilledTitle", this, pInfo.getPlayer().getName(),
+					"" + pInfo.getColor().getChatColor(), pInfo.getColor().toString().toLowerCase(), null);
+			String subTitle1 = Main.getMessagesManager().getGameMsg("playerKilledSubTitle", this,
+					pInfo.getPlayer().getName(), "" + pInfo.getColor().getChatColor(),
 					pInfo.getColor().toString().toLowerCase(), null);
 			if (!(title1.isEmpty() && subTitle1.isEmpty())) {
 				killerInfo.sendTitle(title1, subTitle1, 15, 40, 15);
@@ -1049,13 +1120,15 @@ public class Arena {
 		} else {
 			if (pInfo.getIsImposter()) {
 				if (!Main.getMessagesManager().getGameMsg("imposterEjectedMsg", this, null).isEmpty()) {
-					for (String line : Main.getMessagesManager().getGameMsg("imposterEjectedMsg", this, null).split("/n")) {
+					for (String line : Main.getMessagesManager().getGameMsg("imposterEjectedMsg", this, null)
+							.split("/n")) {
 						player.sendMessage(line);
 					}
 				}
 			} else {
 				if (!Main.getMessagesManager().getGameMsg("playerEjectedMsg", this, null).isEmpty()) {
-					for (String line : Main.getMessagesManager().getGameMsg("playerEjectedMsg", this, null).split("/n")) {
+					for (String line : Main.getMessagesManager().getGameMsg("playerEjectedMsg", this, null)
+							.split("/n")) {
 						player.sendMessage(line);
 					}
 				}
@@ -1100,11 +1173,13 @@ public class Arena {
 		}
 
 		// if Ejected
-		PacketContainer removePlayerPacket = Packets.REMOVE_PLAYER(pInfo.getPlayer().getUniqueId(), player.getName(), pInfo.getCustomName());
+		PacketContainer removePlayerPacket = Packets.REMOVE_PLAYER(pInfo.getPlayer().getUniqueId(), player.getName(),
+				pInfo.getCustomName());
 
 		// for other ghosts
 		String name = ChatColor.GRAY + "" + ChatColor.ITALIC + player.getName();
-		PacketContainer addPlayerPacket = Packets.ADD_PLAYER(player.getUniqueId(), player.getName(), name, pInfo.getTextureValue(), pInfo.getTextureSignature());
+		PacketContainer addPlayerPacket = Packets.ADD_PLAYER(player.getUniqueId(), player.getName(), name,
+				pInfo.getTextureValue(), pInfo.getTextureSignature());
 
 		for (PlayerInfo pInfo1 : this.getPlayersInfo()) {
 			if (pInfo != pInfo1) {
@@ -1125,8 +1200,10 @@ public class Arena {
 					pInfo1.addPlayerToTeam(pInfo.getPlayer(), "ghosts");
 
 					Packets.sendPacket(pInfo1.getPlayer(), addPlayerPacket);
-					Packets.sendPacket(player, Packets.ADD_PLAYER(pInfo1.getPlayer().getUniqueId(), pInfo1.getPlayer().getName(), ChatColor.GRAY + "" + ChatColor.ITALIC + pInfo1.getPlayer().getName(),
-							pInfo1.getTextureValue(), pInfo1.getTextureSignature()));
+					Packets.sendPacket(player,
+							Packets.ADD_PLAYER(pInfo1.getPlayer().getUniqueId(), pInfo1.getPlayer().getName(),
+									ChatColor.GRAY + "" + ChatColor.ITALIC + pInfo1.getPlayer().getName(),
+									pInfo1.getTextureValue(), pInfo1.getTextureSignature()));
 
 					this.getVisibilityManager().showPlayer(pInfo, pInfo1, false);
 					this.getVisibilityManager().showPlayer(pInfo1, pInfo, false);
@@ -1134,7 +1211,8 @@ public class Arena {
 			}
 		}
 
-		Packets.sendPacket(player, Packets.UPDATE_DISPLAY_NAME(player.getUniqueId(), player.getName(), ChatColor.GRAY + "" + ChatColor.ITALIC + player.getName()));
+		Packets.sendPacket(player, Packets.UPDATE_DISPLAY_NAME(player.getUniqueId(), player.getName(),
+				ChatColor.GRAY + "" + ChatColor.ITALIC + player.getName()));
 		pInfo.updateScoreBoard();
 		this.ghosts.add(pInfo);
 		if (killed) {
@@ -1156,7 +1234,8 @@ public class Arena {
 	}
 
 	public Integer getWinState(Boolean execute) { // 0 = no one won, 1 = crewmates won, 2 = imposters won
-		if (this.impostersAlive.size() >= ((this.ingamePlayers.values().size() - this.ghosts.size()) - this.impostersAlive.size())) {
+		if (this.impostersAlive
+				.size() >= ((this.ingamePlayers.values().size() - this.ghosts.size()) - this.impostersAlive.size())) {
 			if (execute) {
 				this.gameWin(true);
 			}
@@ -1184,7 +1263,8 @@ public class Arena {
 
 			@Override
 			public void run() {
-				if (arena_.getGameState() != GameState.STARTING || arena_.getPlayers().size() < arena_.getMinPlayers()) {
+				if (arena_.getGameState() != GameState.STARTING
+						|| arena_.getPlayers().size() < arena_.getMinPlayers()) {
 					this.cancel();
 					return;
 				}
@@ -1193,9 +1273,11 @@ public class Arena {
 
 					for (PlayerInfo pInfo : arena_.getPlayersInfo()) {
 						Player player = pInfo.getPlayer();
-						if ((gameTimer_ >= 0 && gameTimer_ <= 5) || gameTimer_ == 10 || gameTimer_ == 20 || gameTimer_ == 30 || gameTimer_ == 60) {
+						if ((gameTimer_ >= 0 && gameTimer_ <= 5) || gameTimer_ == 10 || gameTimer_ == 20
+								|| gameTimer_ == 30 || gameTimer_ == 60) {
 							Main.getSoundsManager().playSound("gameTimerTick", player, player.getLocation());
-							player.sendMessage(Main.getMessagesManager().getGameMsg("gameStartingTime", arena_, gameTimer_ + ""));
+							player.sendMessage(
+									Main.getMessagesManager().getGameMsg("gameStartingTime", arena_, gameTimer_ + ""));
 							if (gameTimer_ <= 0) {
 								player.sendMessage(Main.getMessagesManager().getGameMsg("gameStarting", arena_, null));
 							}
@@ -1227,7 +1309,8 @@ public class Arena {
 			Bukkit.getPluginManager().callEvent(ev);
 
 			if (Main.getConfigManager().getBungeecord() && !Main.getConfigManager().getBungeecordIsLobby()) {
-				Main.getArenaManager().sendBungeUpdate(this.getName(), GameState.RUNNING, this.ingamePlayers.size(), this.maxPlayers);
+				Main.getArenaManager().sendBungeUpdate(this.getName(), GameState.RUNNING, this.ingamePlayers.size(),
+						this.maxPlayers);
 			}
 
 			this.impostersAlive.clear();
@@ -1258,7 +1341,8 @@ public class Arena {
 				Collections.shuffle(_players_);
 				for (int i = 0; i < this.numImposters; i++) {
 					if (_players_.size() > 0) {
-						imposters_.add(_players_.remove(Utils.getRandomNumberInRange(0, _players_.size() - 1)).getName());
+						imposters_
+								.add(_players_.remove(Utils.getRandomNumberInRange(0, _players_.size() - 1)).getName());
 					}
 				}
 				_players_ = null;
@@ -1296,7 +1380,8 @@ public class Arena {
 					pInfo.setKillCoolDown(this.killCooldown);
 					pInfo.setVision(this.imposterVision);
 					this.sabotageManager.getSabotageCooldownBossBar(player).addPlayer(player);
-					this.sabotageManager.setSabotageCoolDownTimer(player.getUniqueId().toString(), this.sabotageCooldown);
+					this.sabotageManager.setSabotageCoolDownTimer(player.getUniqueId().toString(),
+							this.sabotageCooldown);
 				} else {
 					pInfo.setVision(this.crewmateVision);
 				}
@@ -1316,7 +1401,8 @@ public class Arena {
 
 				pInfo.setFakePlayer(new FakePlayer(this, pInfo));
 
-				PacketContainer packet = Packets.UPDATE_DISPLAY_NAME(player.getUniqueId(), player.getName(), pInfo.getCustomName());
+				PacketContainer packet = Packets.UPDATE_DISPLAY_NAME(player.getUniqueId(), player.getName(),
+						pInfo.getCustomName());
 				for (PlayerInfo pInfo1 : this.getPlayersInfo()) {
 					if (pInfo != pInfo1) {
 						Packets.sendPacket(pInfo1.getPlayer(), packet);
@@ -1329,7 +1415,8 @@ public class Arena {
 
 			String allImpostersStr = "";
 			for (PlayerInfo pInfo : this.getGameImposters()) {
-				allImpostersStr += pInfo.getColor().getChatColor() + "" + ChatColor.BOLD + pInfo.getPlayer().getName() + " ";
+				allImpostersStr += pInfo.getColor().getChatColor() + "" + ChatColor.BOLD + pInfo.getPlayer().getName()
+						+ " ";
 			}
 
 			// set teams
@@ -1339,8 +1426,11 @@ public class Arena {
 				if (pInfo.getIsImposter()) {
 					key = "imposter";
 				}
-				pInfo.sendTitle(Main.getMessagesManager().getGameMsg(key + "Title" + (this.numImposters == 1 ? "1" : ""), this, this.numImposters + "", allImpostersStr),
-						Main.getMessagesManager().getGameMsg(key + "SubTitle" + (this.numImposters == 1 ? "1" : ""), this, this.numImposters + "", allImpostersStr));
+				pInfo.sendTitle(
+						Main.getMessagesManager().getGameMsg(key + "Title" + (this.numImposters == 1 ? "1" : ""), this,
+								this.numImposters + "", allImpostersStr),
+						Main.getMessagesManager().getGameMsg(key + "SubTitle" + (this.numImposters == 1 ? "1" : ""),
+								this, this.numImposters + "", allImpostersStr));
 
 				// teams
 				for (PlayerInfo pInfo1 : this.getPlayersInfo()) {
@@ -1352,7 +1442,8 @@ public class Arena {
 				}
 
 				if (pInfo.getIsImposter()) {
-					Main.getSoundsManager().playSound("gameStartedImposter", pInfo.getPlayer(), pInfo.getPlayer().getLocation());
+					Main.getSoundsManager().playSound("gameStartedImposter", pInfo.getPlayer(),
+							pInfo.getPlayer().getLocation());
 					String msg_ = Main.getMessagesManager().getGameMsg("gameStartImposters", this, null);
 					if (!msg_.isEmpty()) {
 						for (String line : msg_.split("/n")) {
@@ -1361,7 +1452,8 @@ public class Arena {
 					}
 					Main.getConfigManager().executeCommands("gameStartImposter", pInfo.getPlayer());
 				} else {
-					Main.getSoundsManager().playSound("gameStartedCrewmate", pInfo.getPlayer(), pInfo.getPlayer().getLocation());
+					Main.getSoundsManager().playSound("gameStartedCrewmate", pInfo.getPlayer(),
+							pInfo.getPlayer().getLocation());
 					String msg_ = Main.getMessagesManager().getGameMsg("gameStartCrewmates", this, null);
 					if (!msg_.isEmpty()) {
 						for (String line : msg_.split("/n")) {
@@ -1432,7 +1524,8 @@ public class Arena {
 			if (Main.getConfigManager().getGameEndSendToLobby()) {
 				Main.getArenaManager().sendBungeUpdate(this.getName(), GameState.WAITING, 0, maxPlayers);
 			} else {
-				Main.getArenaManager().sendBungeUpdate(this.getName(), GameState.FINISHING, this.ingamePlayers.size(), maxPlayers);
+				Main.getArenaManager().sendBungeUpdate(this.getName(), GameState.FINISHING, this.ingamePlayers.size(),
+						maxPlayers);
 			}
 		}
 
@@ -1478,14 +1571,16 @@ public class Arena {
 
 		_isTesting = false;
 
-		if ((!Main.getConfigManager().getBungeecord() && !isReload) || (Main.getConfigManager().getGameEndSendToLobby() && !isReload)) {
+		if ((!Main.getConfigManager().getBungeecord() && !isReload)
+				|| (Main.getConfigManager().getGameEndSendToLobby() && !isReload)) {
 			for (Player player : players_) {
 				if (!player.isOnline()) {
 					Main.getPlayersManager().deletePlayer(player.getUniqueId().toString());
 					continue;
 				}
 				PlayerInfo pInfo = Main.getPlayersManager().getPlayerInfo(player);
-				PacketContainer packet = Packets.ADD_PLAYER(pInfo.getPlayer().getUniqueId(), pInfo.getPlayer().getName(), pInfo.getOriginalPlayerListName(), pInfo.getTextureValue(),
+				PacketContainer packet = Packets.ADD_PLAYER(pInfo.getPlayer().getUniqueId(),
+						pInfo.getPlayer().getName(), pInfo.getOriginalPlayerListName(), pInfo.getTextureValue(),
 						pInfo.getTextureSignature());
 				for (Player player1 : players_) {
 					if (!player1.isOnline()) {
@@ -1500,8 +1595,10 @@ public class Arena {
 							pInfo1.getFakePlayer().hidePlayerFrom(pInfo.getPlayer(), true);
 						}
 						Packets.sendPacket(pInfo1.getPlayer(), packet);
-						Packets.sendPacket(pInfo.getPlayer(), Packets.ADD_PLAYER(pInfo1.getPlayer().getUniqueId(), pInfo1.getPlayer().getName(), pInfo1.getOriginalPlayerListName(),
-								pInfo1.getTextureValue(), pInfo1.getTextureSignature()));
+						Packets.sendPacket(pInfo.getPlayer(),
+								Packets.ADD_PLAYER(pInfo1.getPlayer().getUniqueId(), pInfo1.getPlayer().getName(),
+										pInfo1.getOriginalPlayerListName(), pInfo1.getTextureValue(),
+										pInfo1.getTextureSignature()));
 						this.getVisibilityManager().showPlayer(pInfo, pInfo1, true);
 						this.getVisibilityManager().showPlayer(pInfo1, pInfo, true);
 					}
@@ -1564,7 +1661,8 @@ public class Arena {
 			impostersStrB.append(" ");
 		}
 		String impostersStr = impostersStrB.toString();
-		String[] msg_ = Main.getMessagesManager().getGameMsg(isImposters ? "impostersWonMsg" : "crewmatesWonMsg", this, impostersStr).split("/n");
+		String[] msg_ = Main.getMessagesManager()
+				.getGameMsg(isImposters ? "impostersWonMsg" : "crewmatesWonMsg", this, impostersStr).split("/n");
 		int si = 0;
 		for (PlayerInfo pInfo : this.ingamePlayers.values()) {
 			Player player = pInfo.getPlayer();
@@ -1606,18 +1704,22 @@ public class Arena {
 			Integer fadeOut = 20;
 			if (isImposters) {
 				if (pInfo.getIsImposter()) {
-					player.sendTitle(Main.getMessagesManager().getGameMsg("winTitle", this, impostersStr), Main.getMessagesManager().getGameMsg("winSubTitle", this, impostersStr), fadeIn, stay,
+					player.sendTitle(Main.getMessagesManager().getGameMsg("winTitle", this, impostersStr),
+							Main.getMessagesManager().getGameMsg("winSubTitle", this, impostersStr), fadeIn, stay,
 							fadeOut);
 				} else {
-					player.sendTitle(Main.getMessagesManager().getGameMsg("defeatTitle", this, impostersStr), Main.getMessagesManager().getGameMsg("defeatSubTitle", this, impostersStr), fadeIn, stay,
+					player.sendTitle(Main.getMessagesManager().getGameMsg("defeatTitle", this, impostersStr),
+							Main.getMessagesManager().getGameMsg("defeatSubTitle", this, impostersStr), fadeIn, stay,
 							fadeOut);
 				}
 			} else {
 				if (pInfo.getIsImposter()) {
-					player.sendTitle(Main.getMessagesManager().getGameMsg("defeatTitle", this, impostersStr), Main.getMessagesManager().getGameMsg("defeatSubTitle", this, impostersStr), fadeIn, stay,
+					player.sendTitle(Main.getMessagesManager().getGameMsg("defeatTitle", this, impostersStr),
+							Main.getMessagesManager().getGameMsg("defeatSubTitle", this, impostersStr), fadeIn, stay,
 							fadeOut);
 				} else {
-					player.sendTitle(Main.getMessagesManager().getGameMsg("winTitle", this, impostersStr), Main.getMessagesManager().getGameMsg("winSubTitle", this, impostersStr), fadeIn, stay,
+					player.sendTitle(Main.getMessagesManager().getGameMsg("winTitle", this, impostersStr),
+							Main.getMessagesManager().getGameMsg("winSubTitle", this, impostersStr), fadeIn, stay,
 							fadeOut);
 				}
 			}
@@ -1647,13 +1749,15 @@ public class Arena {
 					return;
 				}
 				for (PlayerInfo pInfo : arena.ingamePlayers.values()) {
-					if (pInfo == null || arena == null || !pInfo.getIsIngame() || !pInfo.getPlayer().getWorld().getName().equals(arena.getWorld().getName())) {
+					if (pInfo == null || arena == null || !pInfo.getIsIngame()
+							|| !pInfo.getPlayer().getWorld().getName().equals(arena.getWorld().getName())) {
 						continue;
 					}
 					if (pInfo.getIsImposter() == isImposters) {
 						Player player = pInfo.getPlayer();
 						if (Math.random() < 0.3) {
-							Firework firework = (Firework) player.getWorld().spawnEntity(player.getLocation().add(0, 3, 0), EntityType.FIREWORK);
+							Firework firework = (Firework) player.getWorld()
+									.spawnEntity(player.getLocation().add(0, 3, 0), EntityType.FIREWORK);
 							firework.setFireworkMeta(meta);
 						}
 					}
@@ -1706,8 +1810,12 @@ public class Arena {
 				for (PlayerInfo pInfo1 : arena.getPlayersInfo()) {
 					for (PlayerInfo pInfo2 : arena.getPlayersInfo()) {
 						if (pInfo1 != pInfo2) {
-							Packets.sendPacket(pInfo1.getPlayer(), Packets.REMOVE_PLAYER(pInfo2.getPlayer().getUniqueId(), pInfo2.getPlayer().getName(), pInfo2.getCustomName()));
-							Packets.sendPacket(pInfo2.getPlayer(), Packets.REMOVE_PLAYER(pInfo1.getPlayer().getUniqueId(), pInfo1.getPlayer().getName(), pInfo1.getCustomName()));
+							Packets.sendPacket(pInfo1.getPlayer(),
+									Packets.REMOVE_PLAYER(pInfo2.getPlayer().getUniqueId(),
+											pInfo2.getPlayer().getName(), pInfo2.getCustomName()));
+							Packets.sendPacket(pInfo2.getPlayer(),
+									Packets.REMOVE_PLAYER(pInfo1.getPlayer().getUniqueId(),
+											pInfo1.getPlayer().getName(), pInfo1.getCustomName()));
 						}
 					}
 				}
@@ -1736,7 +1844,8 @@ public class Arena {
 				sign.update();
 			} else {
 				itr.remove();
-				List<String> signs_ = Main.getConfigManager().getConfig().getStringList("arenas." + this.getName() + ".signs");
+				List<String> signs_ = Main.getConfigManager().getConfig()
+						.getStringList("arenas." + this.getName() + ".signs");
 				signs_.remove(i);
 				Main.getConfigManager().getConfig().set("arenas." + this.getName() + ".signs", signs_);
 				saveConfig = true;
@@ -1754,7 +1863,8 @@ public class Arena {
 			line = line.replace("@", "");
 			Material mat = Material.getMaterial(line);
 			if (mat == null) {
-				Main.getPlugin().getLogger().warning("Hologram item line 'task': " + line + " is not a valid material!");
+				Main.getPlugin().getLogger()
+						.warning("Hologram item line 'task': " + line + " is not a valid material!");
 				return;
 			}
 			line_ = holo.appendItemLine(Utils.createItem(mat, " "));
@@ -1770,7 +1880,9 @@ public class Arena {
 		// loop all tasks
 		for (Task task : this.getAllTasks()) {
 			Hologram created = HologramsAPI.createHologram(Main.getPlugin(), task.getLocation());
-			for (String line : Main.getMessagesManager().getHologramLines("task", Main.getMessagesManager().getTaskName(task.getTaskType().toString()), task.getLocationName().getName())) {
+			for (String line : Main.getMessagesManager().getHologramLines("task",
+					Main.getMessagesManager().getTaskName(task.getTaskType().toString()),
+					task.getLocationName().getName())) {
 				createLine(created, line, task.getTouchHandler());
 			}
 			created.getVisibilityManager().setVisibleByDefault(false);
@@ -1807,7 +1919,8 @@ public class Arena {
 				if (!pInfo.getIsIngame()) {
 					return;
 				}
-				if (pInfo.getArena().getGameState() == GameState.RUNNING && !pInfo.getArena().getIsInMeeting() && !pInfo.isGhost()) {
+				if (pInfo.getArena().getGameState() == GameState.RUNNING && !pInfo.getArena().getIsInMeeting()
+						&& !pInfo.isGhost()) {
 					MeetingBtnInv invHolder = new MeetingBtnInv(pInfo.getArena(), pInfo);
 					Main.getSoundsManager().playSound("meetingBtnInvOpen", p, p.getLocation());
 					p.openInventory(invHolder.getInventory());
@@ -1834,11 +1947,13 @@ public class Arena {
 					@Override
 					public void onTouch(Player player) {
 						PlayerInfo pInfo = Main.getPlayersManager().getPlayerInfo(player);
-						if (pInfo.getIsIngame() && pInfo.getIsImposter() && !pInfo.isGhost() && !pInfo.getIsInVent() && !pInfo.getArena().getIsInMeeting()) {
+						if (pInfo.getIsIngame() && pInfo.getIsImposter() && !pInfo.isGhost() && !pInfo.getIsInVent()
+								&& !pInfo.getArena().getIsInMeeting()) {
 							pInfo.getArena().getVentsManager().ventHoloClick(pInfo, vgId, vId);
 						} else if (!pInfo.getIsIngame()) {
 							if (player.hasPermission("amongus.admin")) {
-								player.sendMessage(Main.getConfigManager().getPrefix() + ChatColor.GREEN + "Vent holo click group: " + vgId + " id: " + vId);
+								player.sendMessage(Main.getConfigManager().getPrefix() + ChatColor.GREEN
+										+ "Vent holo click group: " + vgId + " id: " + vId);
 							}
 						}
 					}
@@ -1889,7 +2004,8 @@ public class Arena {
 				public void onTouch(Player player) {
 					PlayerInfo pInfo = Main.getPlayersManager().getPlayerInfo(player);
 					if (pInfo != null) {
-						if (pInfo.getIsIngame() && !pInfo.getIsInVent() && !pInfo.getArena().getIsInMeeting() && pInfo.getArena().getGameState() == GameState.RUNNING) {
+						if (pInfo.getIsIngame() && !pInfo.getIsInVent() && !pInfo.getArena().getIsInMeeting()
+								&& pInfo.getArena().getGameState() == GameState.RUNNING) {
 							pInfo.getArena().getVitalsManager().openInventory(player);
 						}
 					}
@@ -2085,6 +2201,14 @@ public class Arena {
 		this.joinSigns = null;
 		this.colorSelectorInv = null;
 		this.primeShieldsBlocks = null;
+	}
+
+	public void saveConfig() {
+		try {
+			this.arenaConfig.save(this.arenaFile);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	/* ------- Getters / Setters ------- */
@@ -2548,4 +2672,18 @@ public class Arena {
 	public void setDynamicImposters(Boolean dynamicImposters) {
 		this.dynamicImposters = dynamicImposters;
 	}
+
+	public File getArenaFile() {
+		return arenaFile;
+	}
+
+	public void setArenaFile(File arenaFile) {
+		this.arenaFile = arenaFile;
+		this.arenaConfig = YamlConfiguration.loadConfiguration(arenaFile);
+	}
+
+	public FileConfiguration getArenaConfig() {
+		return this.arenaConfig;
+	}
+
 }

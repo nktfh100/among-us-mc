@@ -89,7 +89,7 @@ public class Main extends JavaPlugin {
 			isOk = true;
 		}
 		if (!isOk) {
-			Bukkit.getLogger().log(Level.SEVERE, "Server version not supported! (1.16 - 1.16.5 are supported)");
+			Bukkit.getLogger().log(Level.SEVERE, "Server version not supported! (only 1.16 - 1.16.5 are supported)");
 			this.getPluginLoader().disablePlugin(this);
 			return;
 		}
