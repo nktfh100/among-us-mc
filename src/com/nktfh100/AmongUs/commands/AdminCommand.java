@@ -451,6 +451,25 @@ public class AdminCommand implements CommandExecutor {
 						config.set("movemapwithplayer", false);
 						config.set("world", ((Player) sender).getWorld().getName());
 						config.set("mapids", "");
+						// Roles
+						config.set("roles.scientist.chance", 0);
+						config.set("roles.scientist.count", 0);
+						config.set("roles.scientist.vitalsCooldown", 15);
+						config.set("roles.scientist.batteryDuration", 5);
+						config.set("roles.engineer.chance", 0);
+						config.set("roles.engineer.count", 0);
+						config.set("roles.engineer.ventCooldown", 30);
+						config.set("roles.engineer.maxTimeInVents", 15);
+						config.set("roles.angel.chance", 0);
+						config.set("roles.angel.count", 0);
+						config.set("roles.angel.cooldown", 60);
+						config.set("roles.angel.duration", 10);
+						config.set("roles.angel.protectVisibleToImposters", false);			
+						config.set("roles.shapeshifter.chance", 0);
+						config.set("roles.shapeshifter.count", 0);
+						config.set("roles.shapeshifter.duration", 30);
+						config.set("roles.shapeshifter.cooldown", 10);
+						config.set("roles.shapeshifter.leaveEvidence", false);
 
 						try {
 							Main.getArenaManager().loadArena(args[1], config, file);							

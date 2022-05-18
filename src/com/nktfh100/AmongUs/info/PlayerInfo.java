@@ -26,6 +26,7 @@ import com.gmail.filoghost.holographicdisplays.api.HologramsAPI;
 import com.gmail.filoghost.holographicdisplays.api.VisibilityManager;
 import com.nktfh100.AmongUs.enums.CosmeticType;
 import com.nktfh100.AmongUs.enums.GameState;
+import com.nktfh100.AmongUs.enums.RoleType;
 import com.nktfh100.AmongUs.enums.SabotageType;
 import com.nktfh100.AmongUs.main.Main;
 import com.nktfh100.AmongUs.managers.MessagesManager;
@@ -40,10 +41,10 @@ public class PlayerInfo {
 	private Integer joinedId = 0;
 	private Boolean isInGame = false;
 	private Boolean isGhost = false;
-
+	private RoleType role = null;
+	
 	private ColorInfo color;
 	private ColorInfo preferredColor = null;
-	private Boolean isImposter = false;
 	private Integer meetingsLeft = 1;
 	private Integer killCoolDown = 0;
 	private Integer sabotageCoolDown = 30;
@@ -183,7 +184,7 @@ public class PlayerInfo {
 	public void initGame(Arena arena, Integer joinedId) {
 		this.arena = arena;
 		this.joinedId = joinedId;
-		this.isImposter = false; // only known when game starts
+		this.role = RoleType.CREWMATE; // only known when game starts
 		this.isInGame = true;
 		this.killCoolDownPaused = false;
 		this.isScanning = false;
@@ -285,9 +286,9 @@ public class PlayerInfo {
 		this.tempReducedVisBlocks.clear();
 	}
 
-	public void startGame(Boolean isImposter) {
-		this.isImposter = isImposter;
-		if (isImposter) {
+	public void startGame(RoleType givenRole) {
+		this.role = givenRole;
+		if (this.getIsImposter()) {
 			this.killCooldownBossBar = Bukkit.createBossBar(Main.getMessagesManager().getGameMsg("killCooldownBossBar", this.getArena(), ""), BarColor.RED, BarStyle.SOLID);
 			this.killCooldownBossBar.setProgress(1);
 			this.killCooldownBossBar.addPlayer(this.player);
@@ -308,7 +309,7 @@ public class PlayerInfo {
 			this.scoreboard.addTeam("imposters", ChatColor.RED, "never");
 
 			this.scoreboard.addTeam("ghosts", ChatColor.GRAY, "for_other_teams");
-			this.addPlayerToTeam(this.getPlayer(), isImposter ? "imposters" : "crewmates");
+			this.addPlayerToTeam(this.getPlayer(), this.getIsImposter() ? "imposters" : "crewmates");
 
 		} else {
 			this.board = null;
@@ -343,7 +344,7 @@ public class PlayerInfo {
 			ghosts.setColor(ChatColor.GRAY);
 			ghosts.setPrefix("");
 
-			this.addPlayerToTeam(this.getPlayer(), isImposter ? "imposters" : "crewmates");
+			this.addPlayerToTeam(this.getPlayer(), this.getIsImposter() ? "imposters" : "crewmates");
 			this.player.setScoreboard(this.board);
 		}
 		this.canReportBody = false;
@@ -765,7 +766,7 @@ public class PlayerInfo {
 	}
 
 	public void leaveGame() {
-		if (this.isImposter) {
+		if (this.getIsImposter()) {
 			this.killCooldownBossBar.removePlayer(this.player);
 			this.killCooldownBossBar = null;
 		}
@@ -878,7 +879,6 @@ public class PlayerInfo {
 		this.isInGame = null;
 		this.isGhost = null;
 		this.color = null;
-		this.isImposter = null;
 		this.meetingsLeft = null;
 		this.killCoolDown = null;
 		this.sabotageCoolDown = null;
@@ -999,7 +999,7 @@ public class PlayerInfo {
 	}
 
 	public Boolean getIsImposter() {
-		return this.isImposter;
+		return this.role == RoleType.IMPOSTER || this.role == RoleType.SHAPESHIFTER;
 	}
 
 	public int getOutOfAreaTimeOut() {
@@ -1244,5 +1244,13 @@ public class PlayerInfo {
 
 	public void setExpBefore(Float expBefore) {
 		this.expBefore = expBefore;
+	}
+
+	public RoleType getRole() {
+		return role;
+	}
+
+	public void setRole(RoleType role) {
+		this.role = role;
 	}
 }

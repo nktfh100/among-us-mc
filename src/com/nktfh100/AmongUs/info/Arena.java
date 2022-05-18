@@ -27,7 +27,6 @@ import org.bukkit.block.data.Lightable;
 import org.bukkit.boss.BarColor;
 import org.bukkit.boss.BarStyle;
 import org.bukkit.boss.BossBar;
-import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.EntityType;
@@ -56,6 +55,7 @@ import com.nktfh100.AmongUs.api.events.AUArenaPlayerJoin;
 import com.nktfh100.AmongUs.api.events.AUArenaPlayerLeave;
 import com.nktfh100.AmongUs.api.events.AUArenaStart;
 import com.nktfh100.AmongUs.enums.GameState;
+import com.nktfh100.AmongUs.enums.RoleType;
 import com.nktfh100.AmongUs.enums.SabotageLength;
 import com.nktfh100.AmongUs.enums.SabotageType;
 import com.nktfh100.AmongUs.enums.StatInt;
@@ -141,6 +141,30 @@ public class Arena {
 	private Boolean moveMapWithPlayer = false;
 	private Boolean dynamicImposters = false;
 
+	// Roles
+	
+	private Integer scientistChance = 0;
+	private Integer scientistCount = 0;
+	private Integer scientistVitalsCooldown = 15;
+	private Integer scientistBatteryDuration = 5;
+	
+	private Integer engineerChance = 0;
+	private Integer engineerCount = 0;
+	private Integer engineerVentCooldown = 30;
+	private Integer engineerMaxTimeInVents = 15;
+	
+	private Integer angelChance = 0;
+	private Integer angelCount = 0;
+	private Integer angelCooldown = 60;
+	private Integer angelDuration = 10;
+	private boolean angelProtectVisibleToImposters = false;
+	
+	private Integer shapeshifterChance = 0;
+	private Integer shapeshifterCount = 0;
+	private Integer shapeshifterDuration = 30;
+	private Integer shapeshifterCooldown = 10;
+	private boolean shapeshifterLeaveEvidence = false;
+	
 	private BukkitTask gameTimerRunnable = null;
 	private BukkitTask secondRunnable = null;
 
@@ -1375,7 +1399,7 @@ public class Arena {
 				}
 				this.getSabotageManager().addImposter(player);
 				this.getDoorsManager().addImposter(player.getUniqueId().toString());
-				pInfo.startGame(isImposter);
+				pInfo.startGame(isImposter ? RoleType.IMPOSTER : RoleType.CREWMATE); // TODO
 				if (isImposter) {
 					pInfo.setKillCoolDown(this.killCooldown);
 					pInfo.setVision(this.imposterVision);
@@ -1426,6 +1450,7 @@ public class Arena {
 				if (pInfo.getIsImposter()) {
 					key = "imposter";
 				}
+				String role_ = ""
 				pInfo.sendTitle(
 						Main.getMessagesManager().getGameMsg(key + "Title" + (this.numImposters == 1 ? "1" : ""), this,
 								this.numImposters + "", allImpostersStr),
@@ -2684,6 +2709,150 @@ public class Arena {
 
 	public FileConfiguration getArenaConfig() {
 		return this.arenaConfig;
+	}
+
+	public Integer getScientistCount() {
+		return scientistCount;
+	}
+
+	public void setScientistCount(Integer scientistCount) {
+		this.scientistCount = scientistCount;
+	}
+
+	public Integer getScientistVitalsCooldown() {
+		return scientistVitalsCooldown;
+	}
+
+	public void setScientistVitalsCooldown(Integer scientistVitalsCooldown) {
+		this.scientistVitalsCooldown = scientistVitalsCooldown;
+	}
+
+	public Integer getScientistBatteryDuration() {
+		return scientistBatteryDuration;
+	}
+
+	public void setScientistBatteryDuration(Integer scientistBatteryDuration) {
+		this.scientistBatteryDuration = scientistBatteryDuration;
+	}
+
+	public Integer getEngineerCount() {
+		return engineerCount;
+	}
+
+	public void setEngineerCount(Integer engineerCount) {
+		this.engineerCount = engineerCount;
+	}
+
+	public Integer getEngineerVentCooldown() {
+		return engineerVentCooldown;
+	}
+
+	public void setEngineerVentCooldown(Integer engineerVentCooldown) {
+		this.engineerVentCooldown = engineerVentCooldown;
+	}
+
+	public Integer getEngineerMaxTimeInVents() {
+		return engineerMaxTimeInVents;
+	}
+
+	public void setEngineerMaxTimeInVents(Integer engineerMaxTimeInVents) {
+		this.engineerMaxTimeInVents = engineerMaxTimeInVents;
+	}
+
+	public Integer getAngelCount() {
+		return angelCount;
+	}
+
+	public void setAngelCount(Integer angelCount) {
+		this.angelCount = angelCount;
+	}
+
+	public Integer getAngelCooldown() {
+		return angelCooldown;
+	}
+
+	public void setAngelCooldown(Integer angelCooldown) {
+		this.angelCooldown = angelCooldown;
+	}
+
+	public boolean getAngelProtectVisibleToImposters() {
+		return angelProtectVisibleToImposters;
+	}
+
+	public void setAngelProtectVisibleToImposters(boolean angelProtectVisibleToImposters) {
+		this.angelProtectVisibleToImposters = angelProtectVisibleToImposters;
+	}
+
+	public Integer getAngelDuration() {
+		return angelDuration;
+	}
+
+	public void setAngelDuration(Integer angelDuration) {
+		this.angelDuration = angelDuration;
+	}
+
+	public Integer getShapeshifterCount() {
+		return shapeshifterCount;
+	}
+
+	public void setShapeshifterCount(Integer shapeshifterCount) {
+		this.shapeshifterCount = shapeshifterCount;
+	}
+
+	public Integer getShapeshifterCooldown() {
+		return shapeshifterCooldown;
+	}
+
+	public void setShapeshifterCooldown(Integer shapeshifterCooldown) {
+		this.shapeshifterCooldown = shapeshifterCooldown;
+	}
+
+	public boolean getShapeshifterLeaveEvidence() {
+		return shapeshifterLeaveEvidence;
+	}
+
+	public void setShapeshifterLeaveEvidence(boolean shapeshifterLeaveEvidence) {
+		this.shapeshifterLeaveEvidence = shapeshifterLeaveEvidence;
+	}
+
+	public Integer getShapeshifterDuration() {
+		return shapeshifterDuration;
+	}
+
+	public void setShapeshifterDuration(Integer shapeshifterDuration) {
+		this.shapeshifterDuration = shapeshifterDuration;
+	}
+
+	public Integer getScientistChance() {
+		return scientistChance;
+	}
+
+	public void setScientistChance(Integer scientistChance) {
+		this.scientistChance = scientistChance;
+	}
+
+	public Integer getEngineerChance() {
+		return engineerChance;
+	}
+
+	public void setEngineerChance(Integer engineerChance) {
+		this.engineerChance = engineerChance;
+	}
+
+	public Integer getAngelChance() {
+		return angelChance;
+	}
+
+	public void setAngelChance(Integer angelChance) {
+		this.angelChance = angelChance;
+	}
+
+	public Integer getShapeshifterChance() {
+		return shapeshifterChance;
+	}
+
+	public void setShapeshifterChance(Integer shapeshifterChance) {
+		this.shapeshifterChance = shapeshifterChance;
 	}
 
 }

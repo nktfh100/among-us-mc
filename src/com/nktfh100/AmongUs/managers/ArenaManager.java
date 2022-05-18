@@ -289,6 +289,32 @@ public class ArenaManager {
 		created.setMoveMapWithPlayer(arenaSC.getBoolean("movemapwithplayer", false));
 		created.setDynamicImposters(arenaSC.getBoolean("dynamicimposters", false));
 
+		// Load roles settings
+		ConfigurationSection rolesSC = arenaSC.getConfigurationSection("roles");
+		if(rolesSC != null) {
+			created.setScientistChance(arenaSC.getInt("scientist.chance", 0));
+			created.setScientistCount(arenaSC.getInt("scientist.count", 0));
+			created.setScientistVitalsCooldown(arenaSC.getInt("scientist.vitalsCooldown", 15));
+			created.setScientistBatteryDuration(arenaSC.getInt("scientist.batteryDuration", 5));
+			
+			created.setEngineerChance(arenaSC.getInt("engineer.chance", 0));
+			created.setEngineerCount(arenaSC.getInt("engineer.count", 0));
+			created.setEngineerVentCooldown(arenaSC.getInt("engineer.ventCooldown", 30));
+			created.setEngineerMaxTimeInVents(arenaSC.getInt("engineer.maxTimeInVents", 15));
+			
+			created.setAngelChance(arenaSC.getInt("angel.chance", 0));
+			created.setAngelCount(arenaSC.getInt("angel.count", 0));
+			created.setAngelCooldown(arenaSC.getInt("angel.cooldown", 60));
+			created.setAngelDuration(arenaSC.getInt("angel.duration", 10));
+			created.setAngelProtectVisibleToImposters(arenaSC.getBoolean("angel.protectVisibleToImposters", false));
+			
+			created.setShapeshifterChance(arenaSC.getInt("shapeshifter.chance", 0));
+			created.setShapeshifterCount(arenaSC.getInt("shapeshifter.count", 0));
+			created.setShapeshifterDuration(arenaSC.getInt("shapeshifter.duration", 30));
+			created.setShapeshifterCooldown(arenaSC.getInt("shapeshifter.cooldown", 10));
+			created.setShapeshifterLeaveEvidence(arenaSC.getBoolean("shapeshifter.leaveEvidence", false));
+		}
+		
 		String[] locCenterInfo = arenaSC.getString("mapcenter").split(",");
 		Location locCenter = new Location(Bukkit.getWorld(locCenterInfo[0]), Double.valueOf(locCenterInfo[1]),
 				Double.valueOf(locCenterInfo[2]), Double.valueOf(locCenterInfo[3]));

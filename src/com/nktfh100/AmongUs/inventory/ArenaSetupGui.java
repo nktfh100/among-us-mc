@@ -57,22 +57,34 @@ public class ArenaSetupGui {
 	}
 
 	public static void openArenaEditor(Player player, Arena arena) {
+		openArenaEditor(player, arena, 1);
+	}
+
+	public static void openArenaEditor(Player player, Arena arena, Integer page) {
 		CustomHolder invHolder = new CustomHolder(45, ChatColor.YELLOW + "Edit arena: " + arena.getName());
 		Utils.addBorder(invHolder.getInventory(), 45);
 
-		invHolder.getInventory().setItem(0, Utils.createItem(Material.WHITE_WOOL, ChatColor.YELLOW + arena.getName(), 1));
+		invHolder.getInventory().setItem(0,
+				Utils.createItem(Material.WHITE_WOOL, ChatColor.YELLOW + arena.getName(), 1));
 
 		invHolder.getInventory().setItem(1,
-				Utils.createItem(Material.PAPER, ChatColor.YELLOW + "Arena settings", 1, ChatColor.YELLOW + "Minimum players: " + arena.getMinPlayers(),
-						ChatColor.YELLOW + "Maximum players: " + arena.getMaxPlayers(), ChatColor.YELLOW + "Imposters: " + arena.getNumImposters(),
-						ChatColor.YELLOW + "Game timer: " + arena.getGameTimer() + "s", ChatColor.YELLOW + "Discussion time: " + arena.getDiscussionTime() + "s",
-						ChatColor.YELLOW + "Voting time: " + arena.getVotingTime() + "s", ChatColor.YELLOW + "Kill cooldown: " + arena.getKillCooldown() + "s",
-						ChatColor.YELLOW + "Sabotage cooldown: " + arena.getSabotageCooldown() + "s", ChatColor.YELLOW + "Emergency meetings cooldown: " + arena.getMeetingCooldown() + "s",
-						ChatColor.YELLOW + "Emergency meetings per person: " + arena.getMeetingsPerPlayer(), ChatColor.YELLOW + "Common tasks: " + arena.getCommonTasks(),
-						ChatColor.YELLOW + "Long tasks: " + arena.getLongTasks(), ChatColor.YELLOW + "Short tasks: " + arena.getShortTasks(),
-						ChatColor.YELLOW + "Report distance: " + arena.getReportDistance(), ChatColor.YELLOW + "Crewmates vision: " + arena.getCrewmateVision(),
+				Utils.createItem(Material.PAPER, ChatColor.YELLOW + "Arena settings", 1,
+						ChatColor.YELLOW + "Minimum players: " + arena.getMinPlayers(),
+						ChatColor.YELLOW + "Maximum players: " + arena.getMaxPlayers(),
+						ChatColor.YELLOW + "Imposters: " + arena.getNumImposters(),
+						ChatColor.YELLOW + "Game timer: " + arena.getGameTimer() + "s",
+						ChatColor.YELLOW + "Discussion time: " + arena.getDiscussionTime() + "s",
+						ChatColor.YELLOW + "Voting time: " + arena.getVotingTime() + "s",
+						ChatColor.YELLOW + "Kill cooldown: " + arena.getKillCooldown() + "s",
+						ChatColor.YELLOW + "Sabotage cooldown: " + arena.getSabotageCooldown() + "s",
+						ChatColor.YELLOW + "Emergency meetings cooldown: " + arena.getMeetingCooldown() + "s",
+						ChatColor.YELLOW + "Emergency meetings per person: " + arena.getMeetingsPerPlayer(),
+						ChatColor.YELLOW + "Common tasks: " + arena.getCommonTasks(),
+						ChatColor.YELLOW + "Long tasks: " + arena.getLongTasks(),
+						ChatColor.YELLOW + "Short tasks: " + arena.getShortTasks(),
+						ChatColor.YELLOW + "Report distance: " + arena.getReportDistance(),
+						ChatColor.YELLOW + "Crewmates vision: " + arena.getCrewmateVision(),
 						ChatColor.YELLOW + "Imposters vision: " + arena.getImposterVision()));
-
 
 		Icon icon = new Icon(Utils.createItem(Material.ARROW, ChatColor.YELLOW + "Back"));
 		icon.addClickAction(new ClickAction() {
@@ -83,311 +95,390 @@ public class ArenaSetupGui {
 		});
 		invHolder.setIcon(36, icon);
 
-		icon = new Icon(Utils.createItem(Material.OAK_SIGN, ChatColor.GREEN + "Edit tasks", 1, ChatColor.YELLOW + "Tasks count: " + arena.getAllTasks().size()));
-		icon.addClickAction(new ClickAction() {
-			@Override
-			public void execute(Player player) {
-				ArenaSetupGui.openTasksSelectLocation(player, arena, 1);
-			}
-		});
-		invHolder.addIcon(icon);
+		if (page == 1) {
 
-		icon = new Icon(Utils.createItem(Material.REDSTONE_TORCH, ChatColor.GREEN + "Edit sabotages"));
-		icon.addClickAction(new ClickAction() {
-			@Override
-			public void execute(Player player) {
-				ArenaSetupGui.openSabotageSelector(player, arena);
-			}
-		});
-		invHolder.addIcon(icon);
+			icon = new Icon(Utils.createItem(Material.OAK_SIGN, ChatColor.GREEN + "Edit tasks", 1,
+					ChatColor.YELLOW + "Tasks count: " + arena.getAllTasks().size()));
+			icon.addClickAction(new ClickAction() {
+				@Override
+				public void execute(Player player) {
+					ArenaSetupGui.openTasksSelectLocation(player, arena, 1);
+				}
+			});
+			invHolder.addIcon(icon);
 
-		icon = new Icon(Utils.createItem(Material.END_CRYSTAL, ChatColor.GREEN + "Edit spawns", 1, ChatColor.YELLOW + "Spawns count: " + arena.getPlayerSpawns().size(), "",
-				ChatColor.YELLOW + "Locations around the emergency meeting button", ChatColor.YELLOW + "Must be the same as max players!"));
-		icon.addClickAction(new ClickAction() {
-			@Override
-			public void execute(Player player) {
-				ArenaSetupGui.openSpawnsEditor(player, arena);
-			}
-		});
-		invHolder.addIcon(icon);
+			icon = new Icon(Utils.createItem(Material.REDSTONE_TORCH, ChatColor.GREEN + "Edit sabotages"));
+			icon.addClickAction(new ClickAction() {
+				@Override
+				public void execute(Player player) {
+					ArenaSetupGui.openSabotageSelector(player, arena);
+				}
+			});
+			invHolder.addIcon(icon);
 
-		icon = new Icon(Utils.createItem(Material.WHITE_BANNER, ChatColor.GREEN + "Edit locations", 1, ChatColor.YELLOW + "Locations count: " + arena.getLocations().size()));
-		icon.addClickAction(new ClickAction() {
-			@Override
-			public void execute(Player player) {
-				ArenaSetupGui.openLocationSelector(player, arena, 1);
-			}
-		});
-		invHolder.addIcon(icon);
+			icon = new Icon(Utils.createItem(Material.END_CRYSTAL, ChatColor.GREEN + "Edit spawns", 1,
+					ChatColor.YELLOW + "Spawns count: " + arena.getPlayerSpawns().size(), "",
+					ChatColor.YELLOW + "Locations around the emergency meeting button",
+					ChatColor.YELLOW + "Must be the same as max players!"));
+			icon.addClickAction(new ClickAction() {
+				@Override
+				public void execute(Player player) {
+					ArenaSetupGui.openSpawnsEditor(player, arena);
+				}
+			});
+			invHolder.addIcon(icon);
 
-		Integer ventsCount = 0;
-		for (VentGroup vg_ : arena.getVentsManager().getVentGroups()) {
-			ventsCount += vg_.getVents().size();
+			icon = new Icon(Utils.createItem(Material.WHITE_BANNER, ChatColor.GREEN + "Edit locations", 1,
+					ChatColor.YELLOW + "Locations count: " + arena.getLocations().size()));
+			icon.addClickAction(new ClickAction() {
+				@Override
+				public void execute(Player player) {
+					ArenaSetupGui.openLocationSelector(player, arena, 1);
+				}
+			});
+			invHolder.addIcon(icon);
+
+			Integer ventsCount = 0;
+			for (VentGroup vg_ : arena.getVentsManager().getVentGroups()) {
+				ventsCount += vg_.getVents().size();
+			}
+
+			icon = new Icon(Utils.createItem(Material.IRON_TRAPDOOR, ChatColor.GREEN + "Edit vents", 1,
+					ChatColor.YELLOW + "Vent groups count: " + arena.getVentsManager().getVentGroups().size(),
+					ChatColor.YELLOW + "Vents count: " + ventsCount));
+			icon.addClickAction(new ClickAction() {
+				@Override
+				public void execute(Player player) {
+					ArenaSetupGui.openVentsGroupsSelector(player, arena);
+				}
+			});
+			invHolder.addIcon(icon);
+
+			icon = new Icon(Utils.createSkull(Camera.camera, ChatColor.GREEN + "Edit cameras", 1,
+					ChatColor.YELLOW + "Cameras count: " + arena.getCamerasManager().getCameras().size()));
+			icon.addClickAction(new ClickAction() {
+				@Override
+				public void execute(Player player) {
+					ArenaSetupGui.openCamerasEdit(player, arena);
+				}
+			});
+			invHolder.addIcon(icon);
+
+			Integer doorsCount = 0;
+			for (DoorGroup dg_ : arena.getDoorsManager().getDoorGroups()) {
+				doorsCount += dg_.getDoors().size();
+			}
+			icon = new Icon(Utils.createItem(Material.OAK_DOOR, ChatColor.GREEN + "Edit doors", 1,
+					ChatColor.YELLOW + "Door groups count: " + arena.getDoorsManager().getDoorGroups().size(),
+					ChatColor.YELLOW + "Doors count: " + doorsCount));
+			icon.addClickAction(new ClickAction() {
+				@Override
+				public void execute(Player player) {
+					ArenaSetupGui.openDoorGroupSelector(player, arena);
+				}
+			});
+			invHolder.addIcon(icon);
+
+			icon = new Icon(Utils.createItem(Material.MAP, ChatColor.GREEN + "Map center", 1,
+					ChatColor.YELLOW + Utils.locationToStringB(arena.getMapCenter()),
+					ChatColor.YELLOW + "Click to change to your current location"));
+			icon.addClickAction(new ClickAction() {
+				@Override
+				public void execute(Player player) {
+					arena.endGame(false);
+					Location loc = player.getLocation();
+					String centerLoc = loc.getWorld().getName() + "," + loc.getBlockX() + "," + loc.getBlockY() + ","
+							+ loc.getBlockZ();
+					arena.getArenaConfig().set("mapcenter", centerLoc);
+					arena.setMapCenter(loc);
+					arena.saveConfig();
+					player.sendMessage(Main.getConfigManager().getPrefix() + ChatColor.YELLOW
+							+ "Successfully changed map center to (" + centerLoc + ")");
+					ArenaSetupGui.openArenaEditor(player, Main.getArenaManager().getArenaByName(arena.getName()));
+				}
+			});
+			invHolder.addIcon(icon);
+
+			icon = new Icon(Utils.createItem(Material.REDSTONE, ChatColor.GREEN + "Meeting button location", 1,
+					ChatColor.YELLOW + Utils.locationToStringB(arena.getMeetingButton()),
+					ChatColor.YELLOW + "Click to change to your current location"));
+			icon.addClickAction(new ClickAction() {
+				@Override
+				public void execute(Player player) {
+					arena.endGame(false);
+					Location loc = player.getLocation();
+					String holoLoc = loc.getWorld().getName() + "," + (loc.getX()) + "," + (loc.getBlockY() + 1.25)
+							+ "," + (loc.getZ());
+
+					arena.getArenaConfig().set("meetingbtn", holoLoc);
+
+					arena.setMeetingButton(loc.add(0, 1.25, 0));
+					arena.saveConfig();
+					arena.deleteHolograms();
+					arena.createHolograms();
+					player.sendMessage(Main.getConfigManager().getPrefix() + ChatColor.YELLOW
+							+ "Successfully changed meeting button location to (" + holoLoc + ")");
+					ArenaSetupGui.openArenaEditor(player, Main.getArenaManager().getArenaByName(arena.getName()));
+
+				}
+			});
+			invHolder.addIcon(icon);
+
+			icon = new Icon(Utils.createItem(Material.END_CRYSTAL, ChatColor.GREEN + "Waiting lobby location", 1,
+					ChatColor.YELLOW + Utils.locationToStringB(arena.getWaitingLobby()),
+					ChatColor.YELLOW + "Click to change to your current location"));
+			icon.addClickAction(new ClickAction() {
+				@Override
+				public void execute(Player player) {
+					Location loc = player.getLocation();
+					String locStr = loc.getWorld().getName() + "," + loc.getX() + "," + loc.getY() + "," + loc.getZ()
+							+ "," + loc.getYaw() + "," + loc.getPitch();
+
+					arena.getArenaConfig().set("waitinglobby", locStr);
+
+					arena.setWaitingLobby(loc);
+					arena.saveConfig();
+					player.sendMessage(Main.getConfigManager().getPrefix() + ChatColor.YELLOW
+							+ "Successfully changed waiting lobby location to (" + locStr + ")");
+					ArenaSetupGui.openArenaEditor(player, Main.getArenaManager().getArenaByName(arena.getName()));
+				}
+			});
+			invHolder.addIcon(icon);
+
+			icon = new Icon(Utils.createItem(arena.getEnableVisualTasks() ? Material.LIME_DYE : Material.RED_DYE,
+					ChatColor.GREEN + "Enable visual tasks: " + arena.getEnableVisualTasks(), 1,
+					ChatColor.YELLOW + "Click to change"));
+			icon.addClickAction(new ClickAction() {
+				@Override
+				public void execute(Player player) {
+					arena.getArenaConfig().set("enablevisualtasks", !arena.getEnableVisualTasks());
+
+					arena.saveConfig();
+					arena.setEnableVisualTasks(!arena.getEnableVisualTasks());
+					player.sendMessage(Main.getConfigManager().getPrefix() + ChatColor.YELLOW
+							+ "Successfully changed enable visual tasks to " + arena.getEnableVisualTasks());
+					ArenaSetupGui.openArenaEditor(player, arena);
+				}
+			});
+			invHolder.addIcon(icon);
+
+			icon = new Icon(Utils.createItem(arena.getDisableSprinting() ? Material.LIME_DYE : Material.RED_DYE,
+					ChatColor.GREEN + "Disable sprinting: " + arena.getDisableSprinting(), 1,
+					ChatColor.YELLOW + "Click to change"));
+			icon.addClickAction(new ClickAction() {
+				@Override
+				public void execute(Player player) {
+					arena.getArenaConfig().set("disablesprinting", !arena.getDisableSprinting());
+
+					arena.saveConfig();
+					arena.setDisableSprinting(!arena.getDisableSprinting());
+					player.sendMessage(Main.getConfigManager().getPrefix() + ChatColor.YELLOW
+							+ "Successfully changed disable sprinting to " + arena.getDisableSprinting());
+					ArenaSetupGui.openArenaEditor(player, arena);
+				}
+			});
+			invHolder.addIcon(icon);
+
+			icon = new Icon(Utils.createItem(arena.getDisableJumping() ? Material.LIME_DYE : Material.RED_DYE,
+					ChatColor.GREEN + "Disable jumping: " + arena.getDisableJumping(), 1,
+					ChatColor.YELLOW + "Click to change"));
+			icon.addClickAction(new ClickAction() {
+				@Override
+				public void execute(Player player) {
+					arena.getArenaConfig().set("disablejumping", !arena.getDisableJumping());
+
+					arena.saveConfig();
+					arena.setDisableJumping(!arena.getDisableJumping());
+					player.sendMessage(Main.getConfigManager().getPrefix() + ChatColor.YELLOW
+							+ "Successfully changed disable jumping to " + arena.getDisableJumping());
+					ArenaSetupGui.openArenaEditor(player, arena);
+				}
+			});
+			invHolder.addIcon(icon);
+
+			icon = new Icon(Utils.createItem(arena.getDisableMap() ? Material.LIME_DYE : Material.RED_DYE,
+					ChatColor.GREEN + "Disable map: " + arena.getDisableMap(), 1,
+					ChatColor.YELLOW + "Click to change"));
+			icon.addClickAction(new ClickAction() {
+				@Override
+				public void execute(Player player) {
+					arena.getArenaConfig().set("disablemap", !arena.getDisableMap());
+
+					arena.saveConfig();
+					arena.setDisableMap(!arena.getDisableMap());
+					player.sendMessage(Main.getConfigManager().getPrefix() + ChatColor.YELLOW
+							+ "Successfully changed disable map to " + arena.getDisableMap());
+					ArenaSetupGui.openArenaEditor(player, arena);
+				}
+			});
+			invHolder.addIcon(icon);
+
+			icon = new Icon(Utils.createItem(arena.getHideHologramsOutOfView() ? Material.LIME_DYE : Material.RED_DYE,
+					ChatColor.GREEN + "Hide holograms out of view range: " + arena.getHideHologramsOutOfView(), 1,
+					ChatColor.YELLOW + "Click to change"));
+			icon.addClickAction(new ClickAction() {
+				@Override
+				public void execute(Player player) {
+					arena.getArenaConfig().set("hidehologramsoutofview", !arena.getHideHologramsOutOfView());
+
+					arena.saveConfig();
+					arena.setHideHologramsOutOfView(!arena.getHideHologramsOutOfView());
+					player.sendMessage(Main.getConfigManager().getPrefix() + ChatColor.YELLOW
+							+ "Successfully changed hide holograms out of view range to "
+							+ arena.getHideHologramsOutOfView());
+					ArenaSetupGui.openArenaEditor(player, arena);
+				}
+			});
+			invHolder.addIcon(icon);
+
+			icon = new Icon(Utils.createItem(arena.getEnableReducedVision() ? Material.LIME_DYE : Material.RED_DYE,
+					ChatColor.GREEN + "Enable reduced vision: " + arena.getEnableReducedVision(), 1,
+					ChatColor.YELLOW + "Click to change"));
+			icon.addClickAction(new ClickAction() {
+				@Override
+				public void execute(Player player) {
+					arena.getArenaConfig().set("enablereducedvision", !arena.getEnableReducedVision());
+
+					arena.endGame(false);
+
+					arena.saveConfig();
+					arena.setEnableReducedVision(!arena.getEnableReducedVision());
+					player.sendMessage(Main.getConfigManager().getPrefix() + ChatColor.YELLOW
+							+ "Successfully changed enable reduced vision to " + arena.getEnableReducedVision());
+					ArenaSetupGui.openArenaEditor(player, arena);
+				}
+			});
+			invHolder.addIcon(icon);
+
+			icon = new Icon(Utils.createItem(arena.getConfirmEjects() ? Material.LIME_DYE : Material.RED_DYE,
+					ChatColor.GREEN + "Confirm ejects: " + arena.getConfirmEjects(), 1,
+					ChatColor.YELLOW + "Click to change"));
+			icon.addClickAction(new ClickAction() {
+				@Override
+				public void execute(Player player) {
+					arena.getArenaConfig().set("confirmejects", !arena.getConfirmEjects());
+
+					arena.endGame(false);
+
+					arena.saveConfig();
+					arena.setConfirmEjects(!arena.getConfirmEjects());
+					player.sendMessage(Main.getConfigManager().getPrefix() + ChatColor.YELLOW
+							+ "Successfully changed confirm ejects to " + arena.getConfirmEjects());
+					ArenaSetupGui.openArenaEditor(player, arena);
+				}
+			});
+			invHolder.addIcon(icon);
+
+			icon = new Icon(Utils.createItem(arena.getMoveMapWithPlayer() ? Material.LIME_DYE : Material.RED_DYE,
+					ChatColor.GREEN + "Move map with player: " + arena.getMoveMapWithPlayer(), 1,
+					ChatColor.YELLOW + "Recommended if your map is big", ChatColor.YELLOW + "Click to change"));
+			icon.addClickAction(new ClickAction() {
+				@Override
+				public void execute(Player player) {
+					arena.getArenaConfig().set("movemapwithplayer", !arena.getMoveMapWithPlayer());
+
+					arena.saveConfig();
+					arena.setMoveMapWithPlayer(!arena.getMoveMapWithPlayer());
+					player.sendMessage(Main.getConfigManager().getPrefix() + ChatColor.YELLOW
+							+ "Successfully changed move map with player to " + arena.getMoveMapWithPlayer());
+					ArenaSetupGui.openArenaEditor(player, arena);
+				}
+			});
+			invHolder.addIcon(icon);
+
+			icon = new Icon(Utils.createItem(arena.getDynamicImposters() ? Material.LIME_DYE : Material.RED_DYE,
+					ChatColor.GREEN + "Dynamic number of imposters: " + arena.getDynamicImposters(), 1,
+					ChatColor.YELLOW + "If there are less than 7 players:",
+					ChatColor.YELLOW + "There will be 1 imposter", ChatColor.YELLOW + "More than 7 players:",
+					ChatColor.YELLOW + "There will be 2 imposters"));
+			icon.addClickAction(new ClickAction() {
+				@Override
+				public void execute(Player player) {
+					arena.getArenaConfig().set("dynamicimposters", !arena.getDynamicImposters());
+
+					arena.saveConfig();
+					arena.setDynamicImposters(!arena.getDynamicImposters());
+					player.sendMessage(Main.getConfigManager().getPrefix() + ChatColor.YELLOW
+							+ "Successfully changed dynamic imposters to " + arena.getDynamicImposters());
+					ArenaSetupGui.openArenaEditor(player, arena);
+				}
+			});
+			invHolder.addIcon(icon);
+
+			icon = new Icon(Utils.createItem(Material.GOLDEN_HOE, ChatColor.GREEN + "Prime shields blocks wand", 1,
+					ChatColor.YELLOW + "Use to remove/add blocks from the prime shields visual task",
+					ChatColor.YELLOW + "Break blocks to add/remove"));
+			icon.addClickAction(new ClickAction() {
+				@Override
+				public void execute(Player player) {
+					player.getInventory()
+							.addItem(Utils.createItem(Material.GOLDEN_HOE,
+									ChatColor.GOLD + "Prime Shields Blocks Wand: " + arena.getName(), 1,
+									ChatColor.YELLOW + "Break blocks to add/remove"));
+					player.closeInventory();
+				}
+			});
+			invHolder.addIcon(icon);
+
+			icon = new Icon(Utils.createItem(Material.SLIME_BALL, ChatColor.GREEN + "Vitals location", 1,
+					ChatColor.YELLOW + Utils.locationToStringB(arena.getVitalsLoc()),
+					ChatColor.YELLOW + "Click to change to your current location"));
+			icon.addClickAction(new ClickAction() {
+				@Override
+				public void execute(Player player) {
+					arena.endGame(false);
+					Location loc = player.getLocation();
+					String holoLoc = loc.getWorld().getName() + "," + (loc.getX()) + "," + (loc.getBlockY() + 1.25)
+							+ "," + (loc.getZ());
+
+					arena.getArenaConfig().set("vitalsloc", holoLoc);
+
+					arena.saveConfig();
+					arena.setVitalsLoc(loc.add(0, 1.25, 0));
+					arena.deleteHolograms();
+					arena.createHolograms();
+					player.sendMessage(Main.getConfigManager().getPrefix() + ChatColor.YELLOW
+							+ "Successfully changed vitals location to (" + holoLoc + ")");
+					ArenaSetupGui.openArenaEditor(player, Main.getArenaManager().getArenaByName(arena.getName()));
+
+				}
+			});
+			invHolder.addIcon(icon);
+		} else if (page == 2) {
+			icon = new Icon(Utils.createItem(Material.BOOK, ChatColor.GREEN + "Roles settings", 1,
+					ChatColor.YELLOW + "Click to edit roles"));
+			icon.addClickAction(new ClickAction() {
+				@Override
+				public void execute(Player player) {
+					ArenaSetupGui.openRolesSettings(player, arena);
+				}
+			});
+			invHolder.addIcon(icon);
 		}
 
-		icon = new Icon(Utils.createItem(Material.IRON_TRAPDOOR, ChatColor.GREEN + "Edit vents", 1, ChatColor.YELLOW + "Vent groups count: " + arena.getVentsManager().getVentGroups().size(),
-				ChatColor.YELLOW + "Vents count: " + ventsCount));
-		icon.addClickAction(new ClickAction() {
-			@Override
-			public void execute(Player player) {
-				ArenaSetupGui.openVentsGroupsSelector(player, arena);
-			}
-		});
-		invHolder.addIcon(icon);
+		invHolder.getInventory().setItem(40,
+				Utils.createItem(Material.OAK_SIGN, ChatColor.YELLOW + "Page: " + page + "/" + 2, page));
 
-		icon = new Icon(Utils.createSkull(Camera.camera, ChatColor.GREEN + "Edit cameras", 1, ChatColor.YELLOW + "Cameras count: " + arena.getCamerasManager().getCameras().size()));
-		icon.addClickAction(new ClickAction() {
-			@Override
-			public void execute(Player player) {
-				ArenaSetupGui.openCamerasEdit(player, arena);
-			}
-		});
-		invHolder.addIcon(icon);
-
-		Integer doorsCount = 0;
-		for (DoorGroup dg_ : arena.getDoorsManager().getDoorGroups()) {
-			doorsCount += dg_.getDoors().size();
+		if (page > 1) {
+			icon = new Icon(Utils.createItem(Material.PAPER, ChatColor.YELLOW + "Previous page"));
+			icon.addClickAction(new ClickAction() {
+				@Override
+				public void execute(Player player) {
+					ArenaSetupGui.openArenaEditor(player, arena);
+				}
+			});
+			invHolder.setIcon(39, icon);
 		}
-		icon = new Icon(Utils.createItem(Material.OAK_DOOR, ChatColor.GREEN + "Edit doors", 1, ChatColor.YELLOW + "Door groups count: " + arena.getDoorsManager().getDoorGroups().size(),
-				ChatColor.YELLOW + "Doors count: " + doorsCount));
-		icon.addClickAction(new ClickAction() {
-			@Override
-			public void execute(Player player) {
-				ArenaSetupGui.openDoorGroupSelector(player, arena);
-			}
-		});
-		invHolder.addIcon(icon);
-
-		icon = new Icon(Utils.createItem(Material.MAP, ChatColor.GREEN + "Map center", 1, ChatColor.YELLOW + Utils.locationToStringB(arena.getMapCenter()),
-				ChatColor.YELLOW + "Click to change to your current location"));
-		icon.addClickAction(new ClickAction() {
-			@Override
-			public void execute(Player player) {
-				arena.endGame(false);
-				Location loc = player.getLocation();
-				String centerLoc = loc.getWorld().getName() + "," + loc.getBlockX() + "," + loc.getBlockY() + "," + loc.getBlockZ();
-				arena.getArenaConfig().set("mapcenter", centerLoc);
-				arena.setMapCenter(loc);
-				arena.saveConfig();
-				player.sendMessage(Main.getConfigManager().getPrefix() + ChatColor.YELLOW + "Successfully changed map center to (" + centerLoc + ")");
-				ArenaSetupGui.openArenaEditor(player, Main.getArenaManager().getArenaByName(arena.getName()));
-			}
-		});
-		invHolder.addIcon(icon);
-
-		icon = new Icon(Utils.createItem(Material.REDSTONE, ChatColor.GREEN + "Meeting button location", 1, ChatColor.YELLOW + Utils.locationToStringB(arena.getMeetingButton()),
-				ChatColor.YELLOW + "Click to change to your current location"));
-		icon.addClickAction(new ClickAction() {
-			@Override
-			public void execute(Player player) {
-				arena.endGame(false);
-				Location loc = player.getLocation();
-				String holoLoc = loc.getWorld().getName() + "," + (loc.getX()) + "," + (loc.getBlockY() + 1.25) + "," + (loc.getZ());
-
-				arena.getArenaConfig().set("meetingbtn", holoLoc);
-				
-				arena.setMeetingButton(loc.add(0, 1.25, 0));
-				arena.saveConfig();
-				arena.deleteHolograms();
-				arena.createHolograms();
-				player.sendMessage(Main.getConfigManager().getPrefix() + ChatColor.YELLOW + "Successfully changed meeting button location to (" + holoLoc + ")");
-				ArenaSetupGui.openArenaEditor(player, Main.getArenaManager().getArenaByName(arena.getName()));
-
-			}
-		});
-		invHolder.addIcon(icon);
-
-		icon = new Icon(Utils.createItem(Material.END_CRYSTAL, ChatColor.GREEN + "Waiting lobby location", 1, ChatColor.YELLOW + Utils.locationToStringB(arena.getWaitingLobby()),
-				ChatColor.YELLOW + "Click to change to your current location"));
-		icon.addClickAction(new ClickAction() {
-			@Override
-			public void execute(Player player) {
-				Location loc = player.getLocation();
-				String locStr = loc.getWorld().getName() + "," + loc.getX() + "," + loc.getY() + "," + loc.getZ() + "," + loc.getYaw() + "," + loc.getPitch();
-
-				arena.getArenaConfig().set("waitinglobby", locStr);
-
-				arena.setWaitingLobby(loc);
-				arena.saveConfig();
-				player.sendMessage(Main.getConfigManager().getPrefix() + ChatColor.YELLOW + "Successfully changed waiting lobby location to (" + locStr + ")");
-				ArenaSetupGui.openArenaEditor(player, Main.getArenaManager().getArenaByName(arena.getName()));
-			}
-		});
-		invHolder.addIcon(icon);
-
-		icon = new Icon(Utils.createItem(arena.getEnableVisualTasks() ? Material.LIME_DYE : Material.RED_DYE, ChatColor.GREEN + "Enable visual tasks: " + arena.getEnableVisualTasks(), 1,
-				ChatColor.YELLOW + "Click to change"));
-		icon.addClickAction(new ClickAction() {
-			@Override
-			public void execute(Player player) {
-				arena.getArenaConfig().set("enablevisualtasks", !arena.getEnableVisualTasks());
-
-				arena.saveConfig();
-				arena.setEnableVisualTasks(!arena.getEnableVisualTasks());
-				player.sendMessage(Main.getConfigManager().getPrefix() + ChatColor.YELLOW + "Successfully changed enable visual tasks to " + arena.getEnableVisualTasks());
-				ArenaSetupGui.openArenaEditor(player, arena);
-			}
-		});
-		invHolder.addIcon(icon);
-
-		icon = new Icon(Utils.createItem(arena.getDisableSprinting() ? Material.LIME_DYE : Material.RED_DYE, ChatColor.GREEN + "Disable sprinting: " + arena.getDisableSprinting(), 1,
-				ChatColor.YELLOW + "Click to change"));
-		icon.addClickAction(new ClickAction() {
-			@Override
-			public void execute(Player player) {
-				arena.getArenaConfig().set("disablesprinting", !arena.getDisableSprinting());
-
-				arena.saveConfig();
-				arena.setDisableSprinting(!arena.getDisableSprinting());
-				player.sendMessage(Main.getConfigManager().getPrefix() + ChatColor.YELLOW + "Successfully changed disable sprinting to " + arena.getDisableSprinting());
-				ArenaSetupGui.openArenaEditor(player, arena);
-			}
-		});
-		invHolder.addIcon(icon);
-
-		icon = new Icon(Utils.createItem(arena.getDisableJumping() ? Material.LIME_DYE : Material.RED_DYE, ChatColor.GREEN + "Disable jumping: " + arena.getDisableJumping(), 1,
-				ChatColor.YELLOW + "Click to change"));
-		icon.addClickAction(new ClickAction() {
-			@Override
-			public void execute(Player player) {
-				arena.getArenaConfig().set("disablejumping", !arena.getDisableJumping());
-
-				arena.saveConfig();
-				arena.setDisableJumping(!arena.getDisableJumping());
-				player.sendMessage(Main.getConfigManager().getPrefix() + ChatColor.YELLOW + "Successfully changed disable jumping to " + arena.getDisableJumping());
-				ArenaSetupGui.openArenaEditor(player, arena);
-			}
-		});
-		invHolder.addIcon(icon);
-
-		icon = new Icon(
-				Utils.createItem(arena.getDisableMap() ? Material.LIME_DYE : Material.RED_DYE, ChatColor.GREEN + "Disable map: " + arena.getDisableMap(), 1, ChatColor.YELLOW + "Click to change"));
-		icon.addClickAction(new ClickAction() {
-			@Override
-			public void execute(Player player) {
-				arena.getArenaConfig().set("disablemap", !arena.getDisableMap());
-
-				arena.saveConfig();
-				arena.setDisableMap(!arena.getDisableMap());
-				player.sendMessage(Main.getConfigManager().getPrefix() + ChatColor.YELLOW + "Successfully changed disable map to " + arena.getDisableMap());
-				ArenaSetupGui.openArenaEditor(player, arena);
-			}
-		});
-		invHolder.addIcon(icon);
-
-		icon = new Icon(Utils.createItem(arena.getHideHologramsOutOfView() ? Material.LIME_DYE : Material.RED_DYE,
-				ChatColor.GREEN + "Hide holograms out of view range: " + arena.getHideHologramsOutOfView(), 1, ChatColor.YELLOW + "Click to change"));
-		icon.addClickAction(new ClickAction() {
-			@Override
-			public void execute(Player player) {
-				arena.getArenaConfig().set("hidehologramsoutofview", !arena.getHideHologramsOutOfView());
-
-				arena.saveConfig();
-				arena.setHideHologramsOutOfView(!arena.getHideHologramsOutOfView());
-				player.sendMessage(Main.getConfigManager().getPrefix() + ChatColor.YELLOW + "Successfully changed hide holograms out of view range to " + arena.getHideHologramsOutOfView());
-				ArenaSetupGui.openArenaEditor(player, arena);
-			}
-		});
-		invHolder.addIcon(icon);
-
-		icon = new Icon(Utils.createItem(arena.getEnableReducedVision() ? Material.LIME_DYE : Material.RED_DYE, ChatColor.GREEN + "Enable reduced vision: " + arena.getEnableReducedVision(), 1,
-				ChatColor.YELLOW + "Click to change"));
-		icon.addClickAction(new ClickAction() {
-			@Override
-			public void execute(Player player) {
-				arena.getArenaConfig().set("enablereducedvision", !arena.getEnableReducedVision());
-
-				arena.endGame(false);
-
-				arena.saveConfig();
-				arena.setEnableReducedVision(!arena.getEnableReducedVision());
-				player.sendMessage(Main.getConfigManager().getPrefix() + ChatColor.YELLOW + "Successfully changed enable reduced vision to " + arena.getEnableReducedVision());
-				ArenaSetupGui.openArenaEditor(player, arena);
-			}
-		});
-		invHolder.addIcon(icon);
-
-		icon = new Icon(Utils.createItem(arena.getConfirmEjects() ? Material.LIME_DYE : Material.RED_DYE, ChatColor.GREEN + "Confirm ejects: " + arena.getConfirmEjects(), 1,
-				ChatColor.YELLOW + "Click to change"));
-		icon.addClickAction(new ClickAction() {
-			@Override
-			public void execute(Player player) {
-				arena.getArenaConfig().set("confirmejects", !arena.getConfirmEjects());
-
-				arena.endGame(false);
-
-				arena.saveConfig();
-				arena.setConfirmEjects(!arena.getConfirmEjects());
-				player.sendMessage(Main.getConfigManager().getPrefix() + ChatColor.YELLOW + "Successfully changed confirm ejects to " + arena.getConfirmEjects());
-				ArenaSetupGui.openArenaEditor(player, arena);
-			}
-		});
-		invHolder.addIcon(icon);
-
-		icon = new Icon(Utils.createItem(arena.getMoveMapWithPlayer() ? Material.LIME_DYE : Material.RED_DYE, ChatColor.GREEN + "Move map with player: " + arena.getMoveMapWithPlayer(), 1,
-				ChatColor.YELLOW + "Recommended if your map is big", ChatColor.YELLOW + "Click to change"));
-		icon.addClickAction(new ClickAction() {
-			@Override
-			public void execute(Player player) {
-				arena.getArenaConfig().set("movemapwithplayer", !arena.getMoveMapWithPlayer());
-
-				arena.saveConfig();
-				arena.setMoveMapWithPlayer(!arena.getMoveMapWithPlayer());
-				player.sendMessage(Main.getConfigManager().getPrefix() + ChatColor.YELLOW + "Successfully changed move map with player to " + arena.getMoveMapWithPlayer());
-				ArenaSetupGui.openArenaEditor(player, arena);
-			}
-		});
-		invHolder.addIcon(icon);
-
-		icon = new Icon(Utils.createItem(arena.getDynamicImposters() ? Material.LIME_DYE : Material.RED_DYE, ChatColor.GREEN + "Dynamic number of imposters: " + arena.getDynamicImposters(), 1,
-				ChatColor.YELLOW + "If there are less than 7 players:", ChatColor.YELLOW + "There will be 1 imposter", ChatColor.YELLOW + "More than 7 players:",
-				ChatColor.YELLOW + "There will be 2 imposters"));
-		icon.addClickAction(new ClickAction() {
-			@Override
-			public void execute(Player player) {
-				arena.getArenaConfig().set("dynamicimposters", !arena.getDynamicImposters());
-
-				arena.saveConfig();
-				arena.setDynamicImposters(!arena.getDynamicImposters());
-				player.sendMessage(Main.getConfigManager().getPrefix() + ChatColor.YELLOW + "Successfully changed dynamic imposters to " + arena.getDynamicImposters());
-				ArenaSetupGui.openArenaEditor(player, arena);
-			}
-		});
-		invHolder.addIcon(icon);
-
-		icon = new Icon(Utils.createItem(Material.GOLDEN_HOE, ChatColor.GREEN + "Prime shields blocks wand", 1, ChatColor.YELLOW + "Use to remove/add blocks from the prime shields visual task",
-				ChatColor.YELLOW + "Break blocks to add/remove"));
-		icon.addClickAction(new ClickAction() {
-			@Override
-			public void execute(Player player) {
-				player.getInventory()
-						.addItem(Utils.createItem(Material.GOLDEN_HOE, ChatColor.GOLD + "Prime Shields Blocks Wand: " + arena.getName(), 1, ChatColor.YELLOW + "Break blocks to add/remove"));
-				player.closeInventory();
-			}
-		});
-		invHolder.addIcon(icon);
-
-		icon = new Icon(Utils.createItem(Material.SLIME_BALL, ChatColor.GREEN + "Vitals location", 1, ChatColor.YELLOW + Utils.locationToStringB(arena.getVitalsLoc()),
-				ChatColor.YELLOW + "Click to change to your current location"));
-		icon.addClickAction(new ClickAction() {
-			@Override
-			public void execute(Player player) {
-				arena.endGame(false);
-				Location loc = player.getLocation();
-				String holoLoc = loc.getWorld().getName() + "," + (loc.getX()) + "," + (loc.getBlockY() + 1.25) + "," + (loc.getZ());
-
-				arena.getArenaConfig().set("vitalsloc", holoLoc);
-
-				arena.saveConfig();
-				arena.setVitalsLoc(loc.add(0, 1.25, 0));
-				arena.deleteHolograms();
-				arena.createHolograms();
-				player.sendMessage(Main.getConfigManager().getPrefix() + ChatColor.YELLOW + "Successfully changed vitals location to (" + holoLoc + ")");
-				ArenaSetupGui.openArenaEditor(player, Main.getArenaManager().getArenaByName(arena.getName()));
-
-			}
-		});
-		invHolder.addIcon(icon);
+		if (page < 2) {
+			icon = new Icon(Utils.createItem(Material.PAPER, ChatColor.YELLOW + "Next page"));
+			icon.addClickAction(new ClickAction() {
+				@Override
+				public void execute(Player player) {
+					ArenaSetupGui.openArenaEditor(player, arena, page + 1);
+				}
+			});
+			invHolder.setIcon(41, icon);
+		}
 
 		player.openInventory(invHolder.getInventory());
 	}
@@ -396,7 +487,8 @@ public class ArenaSetupGui {
 		CustomHolder invHolder = new CustomHolder(45, ChatColor.YELLOW + "Edit spawns: " + arena.getName());
 		Utils.addBorder(invHolder.getInventory(), 45);
 
-		invHolder.getInventory().setItem(0, Utils.createItem(Material.WHITE_WOOL, ChatColor.YELLOW + arena.getName(), 1));
+		invHolder.getInventory().setItem(0,
+				Utils.createItem(Material.WHITE_WOOL, ChatColor.YELLOW + arena.getName(), 1));
 		invHolder.getInventory().setItem(1, Utils.createItem(Material.END_CRYSTAL, ChatColor.YELLOW + "Spawns", 1));
 
 		Icon icon = new Icon(Utils.createItem(Material.ARROW, ChatColor.YELLOW + "Back", 1));
@@ -410,18 +502,20 @@ public class ArenaSetupGui {
 
 		int i = 0;
 		for (Location loc : arena.getPlayerSpawns()) {
-			icon = new Icon(Utils.createItem(Material.END_CRYSTAL, ChatColor.GREEN + "Spawn: " + (i + 1), 1, ChatColor.YELLOW + Utils.locationToStringB(loc), ChatColor.YELLOW + "Click to delete"));
+			icon = new Icon(Utils.createItem(Material.END_CRYSTAL, ChatColor.GREEN + "Spawn: " + (i + 1), 1,
+					ChatColor.YELLOW + Utils.locationToStringB(loc), ChatColor.YELLOW + "Click to delete"));
 			final int num = i;
 			icon.addClickAction(new ClickAction() {
 				@Override
 				public void execute(Player player) {
-					List<String> allSpawns =  arena.getArenaConfig().getStringList("spawnpoints");
+					List<String> allSpawns = arena.getArenaConfig().getStringList("spawnpoints");
 					arena.endGame(false);
 					allSpawns.remove(num);
 					arena.removePlayerSpawn(num);
 					arena.getArenaConfig().set("spawnpoints", allSpawns);
 					arena.saveConfig();
-					player.sendMessage(Main.getConfigManager().getPrefix() + ChatColor.YELLOW + "Successfully removed spawn point " + (num + 1));
+					player.sendMessage(Main.getConfigManager().getPrefix() + ChatColor.YELLOW
+							+ "Successfully removed spawn point " + (num + 1));
 					ArenaSetupGui.openSpawnsEditor(player, Main.getArenaManager().getArenaByName(arena.getName()));
 				}
 			});
@@ -429,20 +523,24 @@ public class ArenaSetupGui {
 			i++;
 		}
 
-		icon = new Icon(Utils.createItem(Material.CRAFTING_TABLE, ChatColor.YELLOW + "Add spawn", 1, ChatColor.YELLOW + "Click to add a spawn at your current location"));
+		icon = new Icon(Utils.createItem(Material.CRAFTING_TABLE, ChatColor.YELLOW + "Add spawn", 1,
+				ChatColor.YELLOW + "Click to add a spawn at your current location"));
 		icon.addClickAction(new ClickAction() {
 			@Override
 			public void execute(Player player) {
 				player.closeInventory();
 				arena.endGame(false);
 				Location loc = player.getLocation();
-				String spawnLoc = loc.getWorld().getName() + "," + (loc.getBlockX() + 0.5) + "," + loc.getBlockY() + "," + (loc.getBlockZ() + 0.5) + "," + loc.getYaw() + "," + loc.getPitch();
+				String spawnLoc = loc.getWorld().getName() + "," + (loc.getBlockX() + 0.5) + "," + loc.getBlockY() + ","
+						+ (loc.getBlockZ() + 0.5) + "," + loc.getYaw() + "," + loc.getPitch();
 				List<String> allSpawns = arena.getArenaConfig().getStringList("spawnpoints");
 				allSpawns.add(spawnLoc);
-				arena.addPlayerSpawn(new Location(loc.getWorld(), loc.getBlockX() + 0.5, loc.getBlockY(), loc.getBlockZ() + 0.5, loc.getYaw(), loc.getPitch()));
+				arena.addPlayerSpawn(new Location(loc.getWorld(), loc.getBlockX() + 0.5, loc.getBlockY(),
+						loc.getBlockZ() + 0.5, loc.getYaw(), loc.getPitch()));
 				arena.getArenaConfig().set("spawnpoints", allSpawns);
 				arena.saveConfig();
-				player.sendMessage(Main.getConfigManager().getPrefix() + ChatColor.YELLOW + "Successfully added spawn point " + allSpawns.size());
+				player.sendMessage(Main.getConfigManager().getPrefix() + ChatColor.YELLOW
+						+ "Successfully added spawn point " + allSpawns.size());
 			}
 		});
 		invHolder.setIcon(44, icon);
@@ -454,12 +552,15 @@ public class ArenaSetupGui {
 		Integer totalItems = arena.getLocations().size();
 		Integer totalPages = (int) Math.ceil((double) totalItems / (double) pageSize);
 
-		CustomHolder invHolder = new CustomHolder(45, ChatColor.YELLOW + "Select location name (tasks) " + arena.getName());
+		CustomHolder invHolder = new CustomHolder(45,
+				ChatColor.YELLOW + "Select location name (tasks) " + arena.getName());
 		Utils.addBorder(invHolder.getInventory(), 45);
 
-		invHolder.getInventory().setItem(0, Utils.createItem(Material.WHITE_WOOL, ChatColor.YELLOW + arena.getName(), 1));
+		invHolder.getInventory().setItem(0,
+				Utils.createItem(Material.WHITE_WOOL, ChatColor.YELLOW + arena.getName(), 1));
 		invHolder.getInventory().setItem(1, Utils.createItem(Material.OAK_SIGN, ChatColor.YELLOW + "Tasks", 1));
-		invHolder.getInventory().setItem(2, Utils.createItem(Material.WHITE_BANNER, ChatColor.YELLOW + "Select location name", 1));
+		invHolder.getInventory().setItem(2,
+				Utils.createItem(Material.WHITE_BANNER, ChatColor.YELLOW + "Select location name", 1));
 
 		Icon icon = new Icon(Utils.createItem(Material.ARROW, ChatColor.YELLOW + "Back"));
 		icon.addClickAction(new ClickAction() {
@@ -471,7 +572,8 @@ public class ArenaSetupGui {
 		invHolder.setIcon(36, icon);
 
 		if (totalPages > 1) {
-			invHolder.getInventory().setItem(40, Utils.createItem(Material.OAK_SIGN, ChatColor.YELLOW + "Page: " + currentPage + "/" + totalPages, currentPage));
+			invHolder.getInventory().setItem(40, Utils.createItem(Material.OAK_SIGN,
+					ChatColor.YELLOW + "Page: " + currentPage + "/" + totalPages, currentPage));
 
 			if (currentPage > 1) {
 				icon = new Icon(Utils.createItem(Material.PAPER, ChatColor.YELLOW + "Previous page"));
@@ -501,8 +603,10 @@ public class ArenaSetupGui {
 
 		for (int i = startIndex; i <= endIndex; i++) {
 			final String key = keys.get(i);
-			icon = new Icon(Utils.createItem(Material.WHITE_BANNER, ChatColor.GREEN + arena.getLocations().get(key).getName(), 1,
-					ChatColor.YELLOW + "Tasks count: " + arena.getAllTasksLocationName(key).size(), ChatColor.YELLOW + key));
+			icon = new Icon(
+					Utils.createItem(Material.WHITE_BANNER, ChatColor.GREEN + arena.getLocations().get(key).getName(),
+							1, ChatColor.YELLOW + "Tasks count: " + arena.getAllTasksLocationName(key).size(),
+							ChatColor.YELLOW + key));
 
 			icon.addClickAction(new ClickAction() {
 				@Override
@@ -526,12 +630,15 @@ public class ArenaSetupGui {
 		Integer totalItems = allTasks.size();
 		Integer totalPages = (int) Math.ceil((double) totalItems / (double) pageSize);
 
-		CustomHolder invHolder = new CustomHolder(45, ChatColor.YELLOW + "Select task: " + arena.getName() + " (" + locName.getName() + ")");
+		CustomHolder invHolder = new CustomHolder(45,
+				ChatColor.YELLOW + "Select task: " + arena.getName() + " (" + locName.getName() + ")");
 		Utils.addBorder(invHolder.getInventory(), 45);
 
-		invHolder.getInventory().setItem(0, Utils.createItem(Material.WHITE_WOOL, ChatColor.YELLOW + arena.getName(), 1));
+		invHolder.getInventory().setItem(0,
+				Utils.createItem(Material.WHITE_WOOL, ChatColor.YELLOW + arena.getName(), 1));
 		invHolder.getInventory().setItem(1, Utils.createItem(Material.OAK_SIGN, ChatColor.YELLOW + "Tasks", 1));
-		invHolder.getInventory().setItem(2, Utils.createItem(Material.WHITE_BANNER, ChatColor.YELLOW + "Location name: " + locName.getName(), 1));
+		invHolder.getInventory().setItem(2,
+				Utils.createItem(Material.WHITE_BANNER, ChatColor.YELLOW + "Location name: " + locName.getName(), 1));
 
 		Icon icon = new Icon(Utils.createItem(Material.ARROW, ChatColor.YELLOW + "Back"));
 		icon.addClickAction(new ClickAction() {
@@ -543,7 +650,8 @@ public class ArenaSetupGui {
 		invHolder.setIcon(36, icon);
 
 		if (totalPages > 1) {
-			invHolder.getInventory().setItem(40, Utils.createItem(Material.OAK_SIGN, ChatColor.YELLOW + "Page: " + currentPage + "/" + totalPages, currentPage));
+			invHolder.getInventory().setItem(40, Utils.createItem(Material.OAK_SIGN,
+					ChatColor.YELLOW + "Page: " + currentPage + "/" + totalPages, currentPage));
 
 			if (currentPage > 1) {
 				icon = new Icon(Utils.createItem(Material.PAPER, ChatColor.YELLOW + "Previous page"));
@@ -572,8 +680,11 @@ public class ArenaSetupGui {
 
 		for (int i = startIndex; i <= endIndex; i++) {
 			Task task = allTasks.get(i);
-			icon = new Icon(Utils.createItem(Material.OAK_SIGN, ChatColor.GREEN + task.getLocationName().getName() + ": " + task.getName(), 1, ChatColor.YELLOW + task.getLocationName().getName(),
-					ChatColor.YELLOW + task.getTaskType().toString(), ChatColor.YELLOW + "ID: " + task.getId(), ChatColor.YELLOW + "Click to edit"));
+			icon = new Icon(Utils.createItem(Material.OAK_SIGN,
+					ChatColor.GREEN + task.getLocationName().getName() + ": " + task.getName(), 1,
+					ChatColor.YELLOW + task.getLocationName().getName(),
+					ChatColor.YELLOW + task.getTaskType().toString(), ChatColor.YELLOW + "ID: " + task.getId(),
+					ChatColor.YELLOW + "Click to edit"));
 			String tId = task.getId();
 			icon.addClickAction(new ClickAction() {
 				@Override
@@ -584,7 +695,8 @@ public class ArenaSetupGui {
 			invHolder.addIcon(icon);
 		}
 
-		icon = new Icon(Utils.createItem(Material.CRAFTING_TABLE, ChatColor.YELLOW + "Create task", 1, ChatColor.YELLOW + "In this location name"));
+		icon = new Icon(Utils.createItem(Material.CRAFTING_TABLE, ChatColor.YELLOW + "Create task", 1,
+				ChatColor.YELLOW + "In this location name"));
 		icon.addClickAction(new ClickAction() {
 			@Override
 			public void execute(Player player) {
@@ -600,15 +712,21 @@ public class ArenaSetupGui {
 		if (task == null) {
 			return;
 		}
-		CustomHolder invHolder = new CustomHolder(45, ChatColor.YELLOW + "Edit task: " + task.getLocationName().getName() + " - " + task.getName());
+		CustomHolder invHolder = new CustomHolder(45,
+				ChatColor.YELLOW + "Edit task: " + task.getLocationName().getName() + " - " + task.getName());
 
 		Utils.addBorder(invHolder.getInventory(), 45);
 
-		invHolder.getInventory().setItem(0, Utils.createItem(Material.WHITE_WOOL, ChatColor.YELLOW + arena.getName(), 1));
+		invHolder.getInventory().setItem(0,
+				Utils.createItem(Material.WHITE_WOOL, ChatColor.YELLOW + arena.getName(), 1));
 		invHolder.getInventory().setItem(1,
-				Utils.createItem(Material.WHITE_BANNER, ChatColor.YELLOW + "Location name: " + task.getLocationName().getName(), 1, ChatColor.YELLOW + task.getLocationName().getId()));
-		invHolder.getInventory().setItem(2, Utils.createItem(Material.OAK_SIGN, ChatColor.YELLOW + "Task: " + task.getLocationName().getName() + " - " + task.getName(), 1,
-				ChatColor.YELLOW + task.getTaskType().toString(), ChatColor.YELLOW + "ID: " + task.getId()));
+				Utils.createItem(Material.WHITE_BANNER,
+						ChatColor.YELLOW + "Location name: " + task.getLocationName().getName(), 1,
+						ChatColor.YELLOW + task.getLocationName().getId()));
+		invHolder.getInventory().setItem(2,
+				Utils.createItem(Material.OAK_SIGN,
+						ChatColor.YELLOW + "Task: " + task.getLocationName().getName() + " - " + task.getName(), 1,
+						ChatColor.YELLOW + task.getTaskType().toString(), ChatColor.YELLOW + "ID: " + task.getId()));
 
 		Icon icon = new Icon(Utils.createItem(Material.ARROW, ChatColor.YELLOW + "Back"));
 		icon.addClickAction(new ClickAction() {
@@ -619,14 +737,16 @@ public class ArenaSetupGui {
 		});
 		invHolder.setIcon(36, icon);
 
-		icon = new Icon(Utils.createItem(Material.END_CRYSTAL, ChatColor.GREEN + "Change location", 1, ChatColor.YELLOW + Utils.locationToStringB(task.getLocation()),
+		icon = new Icon(Utils.createItem(Material.END_CRYSTAL, ChatColor.GREEN + "Change location", 1,
+				ChatColor.YELLOW + Utils.locationToStringB(task.getLocation()),
 				ChatColor.YELLOW + "Click to set to your current location"));
 		icon.addClickAction(new ClickAction() {
 			@Override
 			public void execute(Player player) {
 				arena.endGame(false);
 				Location loc = player.getLocation();
-				String taskLoc = loc.getWorld().getName() + "," + (loc.getX()) + "," + (loc.getBlockY() + 1.85) + "," + (loc.getZ());
+				String taskLoc = loc.getWorld().getName() + "," + (loc.getX()) + "," + (loc.getBlockY() + 1.85) + ","
+						+ (loc.getZ());
 				ConfigurationSection tasksSC = arena.getArenaConfig().getConfigurationSection("tasks");
 
 				ConfigurationSection taskSC = tasksSC.getConfigurationSection(taskId + "");
@@ -637,14 +757,16 @@ public class ArenaSetupGui {
 				arena.deleteHolograms();
 				arena.createHolograms();
 				arena.saveConfig();
-				player.sendMessage(Main.getConfigManager().getPrefix() + ChatColor.YELLOW + "Successfully changed " + task.getLocationName().getName() + ": " + task.getName() + " location");
+				player.sendMessage(Main.getConfigManager().getPrefix() + ChatColor.YELLOW + "Successfully changed "
+						+ task.getLocationName().getName() + ": " + task.getName() + " location");
 				ArenaSetupGui.openTaskEdit(player, Main.getArenaManager().getArenaByName(arena.getName()), taskId);
 
 			}
 		});
 		invHolder.addIcon(icon);
 
-		icon = new Icon(Utils.createItem(Material.WHITE_BANNER, ChatColor.GREEN + "Change location name", 1, ChatColor.YELLOW + task.getLocationName().getName()));
+		icon = new Icon(Utils.createItem(Material.WHITE_BANNER, ChatColor.GREEN + "Change location name", 1,
+				ChatColor.YELLOW + task.getLocationName().getName()));
 		icon.addClickAction(new ClickAction() {
 			@Override
 			public void execute(Player player) {
@@ -653,7 +775,8 @@ public class ArenaSetupGui {
 		});
 		invHolder.addIcon(icon);
 
-		icon = new Icon(Utils.createItem(Material.ANVIL, ChatColor.GREEN + "Queued tasks", 1, ChatColor.YELLOW + "If task has multiple stages"));
+		icon = new Icon(Utils.createItem(Material.ANVIL, ChatColor.GREEN + "Queued tasks", 1,
+				ChatColor.YELLOW + "If task has multiple stages"));
 		icon.addClickAction(new ClickAction() {
 			@Override
 			public void execute(Player player) {
@@ -667,8 +790,10 @@ public class ArenaSetupGui {
 			mat = Material.LIME_DYE;
 		}
 
-		icon = new Icon(Utils.createItem(mat, ChatColor.GREEN + "Task enabled: " + task.getIsEnabled(), 1, ChatColor.YELLOW + "Enabled: Task can be given normally",
-				ChatColor.YELLOW + "Disabled: task can only be given", ChatColor.YELLOW + "if its queued by another task"));
+		icon = new Icon(Utils.createItem(mat, ChatColor.GREEN + "Task enabled: " + task.getIsEnabled(), 1,
+				ChatColor.YELLOW + "Enabled: Task can be given normally",
+				ChatColor.YELLOW + "Disabled: task can only be given",
+				ChatColor.YELLOW + "if its queued by another task"));
 		icon.addClickAction(new ClickAction() {
 			@Override
 			public void execute(Player player) {
@@ -681,14 +806,16 @@ public class ArenaSetupGui {
 
 				task.setIsEnabled(!task.getIsEnabled());
 
-				player.sendMessage(Main.getConfigManager().getPrefix() + ChatColor.YELLOW + "Successfully changed " + task.getLocationName().getName() + ": " + task.getName() + " is enabled to "
+				player.sendMessage(Main.getConfigManager().getPrefix() + ChatColor.YELLOW + "Successfully changed "
+						+ task.getLocationName().getName() + ": " + task.getName() + " is enabled to "
 						+ !task.getIsEnabled());
 				ArenaSetupGui.openTaskEdit(player, Main.getArenaManager().getArenaByName(arena.getName()), taskId);
 			}
 		});
 		invHolder.addIcon(icon);
 
-		icon = new Icon(Utils.createItem(Material.ENDER_PEARL, ChatColor.GREEN + "Teleport", 1, ChatColor.YELLOW + Utils.locationToStringB(task.getLocation()),
+		icon = new Icon(Utils.createItem(Material.ENDER_PEARL, ChatColor.GREEN + "Teleport", 1,
+				ChatColor.YELLOW + Utils.locationToStringB(task.getLocation()),
 				ChatColor.YELLOW + "Click to teleport task's location"));
 		icon.addClickAction(new ClickAction() {
 			@Override
@@ -698,8 +825,10 @@ public class ArenaSetupGui {
 		});
 		invHolder.addIcon(icon);
 
-		if (task.getTaskType() == TaskType.PRIME_SHIELDS || task.getTaskType() == TaskType.EMPTY_GARBAGE || task.getTaskType() == TaskType.SCAN || task.getTaskType() == TaskType.CLEAR_ASTEROIDS) {
-			icon = new Icon(Utils.createItem(task.getEnableVisuals() ? Material.LIME_DYE : Material.RED_DYE, ChatColor.GREEN + "Visuals enabled: " + task.getEnableVisuals(), 1,
+		if (task.getTaskType() == TaskType.PRIME_SHIELDS || task.getTaskType() == TaskType.EMPTY_GARBAGE
+				|| task.getTaskType() == TaskType.SCAN || task.getTaskType() == TaskType.CLEAR_ASTEROIDS) {
+			icon = new Icon(Utils.createItem(task.getEnableVisuals() ? Material.LIME_DYE : Material.RED_DYE,
+					ChatColor.GREEN + "Visuals enabled: " + task.getEnableVisuals(), 1,
 					ChatColor.YELLOW + "Show visuals for players", ChatColor.YELLOW + "Click to change"));
 			icon.addClickAction(new ClickAction() {
 				@Override
@@ -713,8 +842,9 @@ public class ArenaSetupGui {
 
 					task.setEnableVisuals(!task.getEnableVisuals());
 
-					player.sendMessage(Main.getConfigManager().getPrefix() + ChatColor.YELLOW + "Successfully changed " + task.getLocationName().getName() + ": " + task.getName()
-							+ " enable visuals to " + !task.getEnableVisuals());
+					player.sendMessage(Main.getConfigManager().getPrefix() + ChatColor.YELLOW + "Successfully changed "
+							+ task.getLocationName().getName() + ": " + task.getName() + " enable visuals to "
+							+ !task.getEnableVisuals());
 					ArenaSetupGui.openTaskEdit(player, Main.getArenaManager().getArenaByName(arena.getName()), taskId);
 				}
 			});
@@ -722,7 +852,8 @@ public class ArenaSetupGui {
 		}
 
 		if (task.getTaskType() == TaskType.CLEAR_ASTEROIDS) {
-			icon = new Icon(Utils.createItem(Material.OAK_SAPLING, ChatColor.GREEN + "Cannon-1 location", 1, ChatColor.YELLOW + Utils.locationToStringB(task.getCannon1()),
+			icon = new Icon(Utils.createItem(Material.OAK_SAPLING, ChatColor.GREEN + "Cannon-1 location", 1,
+					ChatColor.YELLOW + Utils.locationToStringB(task.getCannon1()),
 					ChatColor.YELLOW + "Click to change to your location"));
 			icon.addClickAction(new ClickAction() {
 				@Override
@@ -731,20 +862,24 @@ public class ArenaSetupGui {
 					ConfigurationSection taskSC = tasksSC.getConfigurationSection(taskId + "");
 
 					Location loc = player.getEyeLocation();
-					String locStr = loc.getWorld().getName() + "," + loc.getX() + "," + loc.getY() + "," + loc.getZ() + "," + loc.getYaw() + "," + loc.getPitch();
+					String locStr = loc.getWorld().getName() + "," + loc.getX() + "," + loc.getY() + "," + loc.getZ()
+							+ "," + loc.getYaw() + "," + loc.getPitch();
 
 					taskSC.set("cannon1", locStr);
 
 					arena.saveConfig();
-					task.setCannon1(new Location(loc.getWorld(), loc.getX(), loc.getY(), loc.getZ(), loc.getYaw(), loc.getPitch()));
-					player.sendMessage(Main.getConfigManager().getPrefix() + ChatColor.YELLOW + "Successfully changed " + task.getLocationName().getName() + ": " + task.getName()
-							+ " cannon-1 location to (" + locStr + ")");
+					task.setCannon1(new Location(loc.getWorld(), loc.getX(), loc.getY(), loc.getZ(), loc.getYaw(),
+							loc.getPitch()));
+					player.sendMessage(Main.getConfigManager().getPrefix() + ChatColor.YELLOW + "Successfully changed "
+							+ task.getLocationName().getName() + ": " + task.getName() + " cannon-1 location to ("
+							+ locStr + ")");
 					ArenaSetupGui.openTaskEdit(player, Main.getArenaManager().getArenaByName(arena.getName()), taskId);
 				}
 			});
 			invHolder.addIcon(icon);
 
-			icon = new Icon(Utils.createItem(Material.OAK_SAPLING, ChatColor.GREEN + "Cannon-2 location", 1, ChatColor.YELLOW + Utils.locationToStringB(task.getCannon2()),
+			icon = new Icon(Utils.createItem(Material.OAK_SAPLING, ChatColor.GREEN + "Cannon-2 location", 1,
+					ChatColor.YELLOW + Utils.locationToStringB(task.getCannon2()),
 					ChatColor.YELLOW + "Click to change to your location"));
 			icon.addClickAction(new ClickAction() {
 				@Override
@@ -753,20 +888,24 @@ public class ArenaSetupGui {
 					ConfigurationSection taskSC = tasksSC.getConfigurationSection(taskId + "");
 
 					Location loc = player.getEyeLocation();
-					String locStr = loc.getWorld().getName() + "," + loc.getX() + "," + loc.getY() + "," + loc.getZ() + "," + loc.getYaw() + "," + loc.getPitch();
+					String locStr = loc.getWorld().getName() + "," + loc.getX() + "," + loc.getY() + "," + loc.getZ()
+							+ "," + loc.getYaw() + "," + loc.getPitch();
 
 					taskSC.set("cannon2", locStr);
-					task.setCannon2(new Location(loc.getWorld(), loc.getX(), loc.getY(), loc.getZ(), loc.getYaw(), loc.getPitch()));
+					task.setCannon2(new Location(loc.getWorld(), loc.getX(), loc.getY(), loc.getZ(), loc.getYaw(),
+							loc.getPitch()));
 
 					arena.saveConfig();
-					player.sendMessage(Main.getConfigManager().getPrefix() + ChatColor.YELLOW + "Successfully changed " + task.getLocationName().getName() + ": " + task.getName()
-							+ " cannon-2 location to (" + locStr + ")");
+					player.sendMessage(Main.getConfigManager().getPrefix() + ChatColor.YELLOW + "Successfully changed "
+							+ task.getLocationName().getName() + ": " + task.getName() + " cannon-2 location to ("
+							+ locStr + ")");
 					ArenaSetupGui.openTaskEdit(player, Main.getArenaManager().getArenaByName(arena.getName()), taskId);
 				}
 			});
 			invHolder.addIcon(icon);
 		} else if (task.getTaskType() == TaskType.RECORD_TEMPERATURE) {
-			icon = new Icon(Utils.createItem(task.getIsHot() ? Material.LIME_DYE : Material.RED_DYE, ChatColor.GREEN + "Is hot: " + task.getIsHot(), 1, ChatColor.YELLOW + "Click to change"));
+			icon = new Icon(Utils.createItem(task.getIsHot() ? Material.LIME_DYE : Material.RED_DYE,
+					ChatColor.GREEN + "Is hot: " + task.getIsHot(), 1, ChatColor.YELLOW + "Click to change"));
 			icon.addClickAction(new ClickAction() {
 				@Override
 				public void execute(Player player) {
@@ -777,7 +916,8 @@ public class ArenaSetupGui {
 					taskSC.set("hot", task.getIsHot());
 
 					arena.saveConfig();
-					player.sendMessage(Main.getConfigManager().getPrefix() + ChatColor.YELLOW + "Successfully changed " + task.getLocationName().getName() + ": " + task.getName() + " is hot to ("
+					player.sendMessage(Main.getConfigManager().getPrefix() + ChatColor.YELLOW + "Successfully changed "
+							+ task.getLocationName().getName() + ": " + task.getName() + " is hot to ("
 							+ task.getIsHot() + ")");
 					ArenaSetupGui.openTaskEdit(player, Main.getArenaManager().getArenaByName(arena.getName()), taskId);
 				}
@@ -807,7 +947,8 @@ public class ArenaSetupGui {
 
 				arena.saveConfig();
 				Main.getArenaManager().loadArenas();
-				player.sendMessage(Main.getConfigManager().getPrefix() + ChatColor.YELLOW + "Successfully deleted task");
+				player.sendMessage(
+						Main.getConfigManager().getPrefix() + ChatColor.YELLOW + "Successfully deleted task");
 				player.closeInventory();
 
 				ArenaSetupGui.openLocationSelector(player, Main.getArenaManager().getArenaByName(arena.getName()), 1);
@@ -828,9 +969,11 @@ public class ArenaSetupGui {
 		CustomHolder invHolder = new CustomHolder(45, ChatColor.YELLOW + "Create task: " + arena.getName());
 		Utils.addBorder(invHolder.getInventory(), 45);
 
-		invHolder.getInventory().setItem(0, Utils.createItem(Material.WHITE_WOOL, ChatColor.YELLOW + arena.getName(), 1));
+		invHolder.getInventory().setItem(0,
+				Utils.createItem(Material.WHITE_WOOL, ChatColor.YELLOW + arena.getName(), 1));
 
-		invHolder.getInventory().setItem(1, Utils.createItem(Material.OAK_SIGN, ChatColor.YELLOW + "Create task", 1, ChatColor.YELLOW + "Create task at your current location"));
+		invHolder.getInventory().setItem(1, Utils.createItem(Material.OAK_SIGN, ChatColor.YELLOW + "Create task", 1,
+				ChatColor.YELLOW + "Create task at your current location"));
 		invHolder.getInventory().setItem(2, Utils.createItem(Material.OAK_SIGN, ChatColor.YELLOW + "Choose task type"));
 
 		Icon icon = new Icon(Utils.createItem(Material.ARROW, ChatColor.YELLOW + "Back"));
@@ -847,7 +990,8 @@ public class ArenaSetupGui {
 		Integer totalPages = (int) Math.ceil((double) totalItems / (double) pageSize);
 
 		if (totalPages > 1) {
-			invHolder.getInventory().setItem(40, Utils.createItem(Material.OAK_SIGN, ChatColor.YELLOW + "Page: " + currentPage + "/" + totalPages, currentPage));
+			invHolder.getInventory().setItem(40, Utils.createItem(Material.OAK_SIGN,
+					ChatColor.YELLOW + "Page: " + currentPage + "/" + totalPages, currentPage));
 
 			if (currentPage > 1) {
 				icon = new Icon(Utils.createItem(Material.PAPER, ChatColor.YELLOW + "Previous page"));
@@ -876,12 +1020,14 @@ public class ArenaSetupGui {
 
 		for (int i = startIndex; i <= endIndex; i++) {
 			TaskType tt = taskTypes[i];
-			icon = new Icon(Utils.createItem(Material.OAK_SIGN, ChatColor.GREEN + tt.toString(), 1, ChatColor.YELLOW + Main.getMessagesManager().getTaskName(tt.toString())));
+			icon = new Icon(Utils.createItem(Material.OAK_SIGN, ChatColor.GREEN + tt.toString(), 1,
+					ChatColor.YELLOW + Main.getMessagesManager().getTaskName(tt.toString())));
 			icon.addClickAction(new ClickAction() {
 				@Override
 				public void execute(Player player) {
 					Location loc = player.getLocation();
-					String taskLoc = loc.getWorld().getName() + "," + (loc.getX()) + "," + (loc.getBlockY() + 1.85) + "," + (loc.getZ());
+					String taskLoc = loc.getWorld().getName() + "," + (loc.getX()) + "," + (loc.getBlockY() + 1.85)
+							+ "," + (loc.getZ());
 					ConfigurationSection tasksSC = arena.getArenaConfig().getConfigurationSection("tasks");
 
 					String taskId = Utils.getRandomString(4);
@@ -893,7 +1039,8 @@ public class ArenaSetupGui {
 					taskSC.createSection("queuedtasks");
 					taskSC.set("queuedtasks." + Utils.getRandomString(4), new ArrayList<String>());
 					taskSC.set("isenabled", true);
-					if (tt == TaskType.PRIME_SHIELDS || tt == TaskType.EMPTY_GARBAGE || tt == TaskType.SCAN || tt == TaskType.CLEAR_ASTEROIDS) {
+					if (tt == TaskType.PRIME_SHIELDS || tt == TaskType.EMPTY_GARBAGE || tt == TaskType.SCAN
+							|| tt == TaskType.CLEAR_ASTEROIDS) {
 						taskSC.set("enablevisuals", true);
 					} else if (tt == TaskType.RECORD_TEMPERATURE) {
 						taskSC.set("hot", false);
@@ -903,7 +1050,9 @@ public class ArenaSetupGui {
 					Main.getArenaManager().loadArenas();
 
 					player.closeInventory();
-					player.sendMessage(Main.getConfigManager().getPrefix() + ChatColor.YELLOW + "Successfully added task " + Main.getMessagesManager().getTaskName(tt.toString()) + " at " + taskLoc);
+					player.sendMessage(
+							Main.getConfigManager().getPrefix() + ChatColor.YELLOW + "Successfully added task "
+									+ Main.getMessagesManager().getTaskName(tt.toString()) + " at " + taskLoc);
 					ArenaSetupGui.openTaskEdit(player, Main.getArenaManager().getArenaByName(arena.getName()), taskId);
 
 				}
@@ -922,13 +1071,19 @@ public class ArenaSetupGui {
 		Integer totalItems = arena.getLocations().size();
 		Integer totalPages = (int) Math.ceil((double) totalItems / (double) pageSize);
 
-		CustomHolder invHolder = new CustomHolder(45, ChatColor.YELLOW + "Change task location: " + task.getLocationName().getName() + " - " + task.getName());
+		CustomHolder invHolder = new CustomHolder(45, ChatColor.YELLOW + "Change task location: "
+				+ task.getLocationName().getName() + " - " + task.getName());
 		Utils.addBorder(invHolder.getInventory(), 45);
 
-		invHolder.getInventory().setItem(0, Utils.createItem(Material.WHITE_WOOL, ChatColor.YELLOW + arena.getName(), 1));
-		invHolder.getInventory().setItem(1, Utils.createItem(Material.OAK_SIGN, ChatColor.YELLOW + "Task: " + task.getLocationName().getName() + ": " + task.getName(), 1,
-				ChatColor.YELLOW + task.getLocationName().getName() + ": " + Main.getMessagesManager().getTaskName(task.getTaskType().toString())));
-		invHolder.getInventory().setItem(2, Utils.createItem(Material.WHITE_BANNER, ChatColor.YELLOW + "Change task location name", 1));
+		invHolder.getInventory().setItem(0,
+				Utils.createItem(Material.WHITE_WOOL, ChatColor.YELLOW + arena.getName(), 1));
+		invHolder.getInventory().setItem(1,
+				Utils.createItem(Material.OAK_SIGN,
+						ChatColor.YELLOW + "Task: " + task.getLocationName().getName() + ": " + task.getName(), 1,
+						ChatColor.YELLOW + task.getLocationName().getName() + ": "
+								+ Main.getMessagesManager().getTaskName(task.getTaskType().toString())));
+		invHolder.getInventory().setItem(2,
+				Utils.createItem(Material.WHITE_BANNER, ChatColor.YELLOW + "Change task location name", 1));
 
 		Icon icon = new Icon(Utils.createItem(Material.ARROW, ChatColor.YELLOW + "Back"));
 		icon.addClickAction(new ClickAction() {
@@ -940,7 +1095,8 @@ public class ArenaSetupGui {
 		invHolder.setIcon(36, icon);
 
 		if (totalPages > 1) {
-			invHolder.getInventory().setItem(40, Utils.createItem(Material.OAK_SIGN, ChatColor.YELLOW + "Page: " + currentPage + "/" + totalPages, currentPage));
+			invHolder.getInventory().setItem(40, Utils.createItem(Material.OAK_SIGN,
+					ChatColor.YELLOW + "Page: " + currentPage + "/" + totalPages, currentPage));
 
 			if (currentPage > 1) {
 				icon = new Icon(Utils.createItem(Material.PAPER, ChatColor.YELLOW + "Previous page"));
@@ -970,7 +1126,8 @@ public class ArenaSetupGui {
 
 		for (int i = startIndex; i <= endIndex; i++) {
 			final String key = keys.get(i);
-			icon = new Icon(Utils.createItem(Material.WHITE_BANNER, ChatColor.GREEN + "Location: " + arena.getLocations().get(key).getName()));
+			icon = new Icon(Utils.createItem(Material.WHITE_BANNER,
+					ChatColor.GREEN + "Location: " + arena.getLocations().get(key).getName()));
 			icon.addClickAction(new ClickAction() {
 				@Override
 				public void execute(Player player) {
@@ -983,7 +1140,8 @@ public class ArenaSetupGui {
 					arena.saveConfig();
 					task.setLocationName(arena.getLocations().get(key));
 					player.sendMessage(
-							Main.getConfigManager().getPrefix() + ChatColor.YELLOW + "Successfully changed task " + task.getName() + " location name to " + arena.getLocations().get(key).getName());
+							Main.getConfigManager().getPrefix() + ChatColor.YELLOW + "Successfully changed task "
+									+ task.getName() + " location name to " + arena.getLocations().get(key).getName());
 
 					ArenaSetupGui.openTaskEdit(player, Main.getArenaManager().getArenaByName(arena.getName()), taskId);
 
@@ -1001,7 +1159,8 @@ public class ArenaSetupGui {
 		CustomHolder invHolder = new CustomHolder(45, ChatColor.YELLOW + "Select location: " + arena.getName());
 		Utils.addBorder(invHolder.getInventory(), 45);
 
-		invHolder.getInventory().setItem(0, Utils.createItem(Material.WHITE_WOOL, ChatColor.YELLOW + arena.getName(), 1));
+		invHolder.getInventory().setItem(0,
+				Utils.createItem(Material.WHITE_WOOL, ChatColor.YELLOW + arena.getName(), 1));
 		invHolder.getInventory().setItem(1, Utils.createItem(Material.OAK_SIGN, ChatColor.YELLOW + "Locations", 1));
 
 		Icon icon = new Icon(Utils.createItem(Material.ARROW, ChatColor.YELLOW + "Back"));
@@ -1014,7 +1173,8 @@ public class ArenaSetupGui {
 		invHolder.setIcon(36, icon);
 
 		if (totalPages > 1) {
-			invHolder.getInventory().setItem(40, Utils.createItem(Material.OAK_SIGN, ChatColor.YELLOW + "Page: " + currentPage + "/" + totalPages, currentPage));
+			invHolder.getInventory().setItem(40, Utils.createItem(Material.OAK_SIGN,
+					ChatColor.YELLOW + "Page: " + currentPage + "/" + totalPages, currentPage));
 
 			if (currentPage > 1) {
 				icon = new Icon(Utils.createItem(Material.PAPER, ChatColor.YELLOW + "Previous page"));
@@ -1044,7 +1204,8 @@ public class ArenaSetupGui {
 
 		for (int i = startIndex; i <= endIndex; i++) {
 			final String key = keys.get(i);
-			icon = new Icon(Utils.createItem(Material.WHITE_BANNER, ChatColor.GREEN + "Location: " + arena.getLocations().get(key).getName()));
+			icon = new Icon(Utils.createItem(Material.WHITE_BANNER,
+					ChatColor.GREEN + "Location: " + arena.getLocations().get(key).getName()));
 			icon.addClickAction(new ClickAction() {
 				@Override
 				public void execute(Player player) {
@@ -1066,8 +1227,10 @@ public class ArenaSetupGui {
 
 		Utils.addBorder(invHolder.getInventory(), 45);
 
-		invHolder.getInventory().setItem(0, Utils.createItem(Material.WHITE_WOOL, ChatColor.YELLOW + arena.getName(), 1));
-		invHolder.getInventory().setItem(1, Utils.createItem(Material.WHITE_BANNER, ChatColor.YELLOW + "Location: " + locName.getName()));
+		invHolder.getInventory().setItem(0,
+				Utils.createItem(Material.WHITE_WOOL, ChatColor.YELLOW + arena.getName(), 1));
+		invHolder.getInventory().setItem(1,
+				Utils.createItem(Material.WHITE_BANNER, ChatColor.YELLOW + "Location: " + locName.getName()));
 
 		Icon icon = new Icon(Utils.createItem(Material.ARROW, ChatColor.YELLOW + "Back"));
 		icon.addClickAction(new ClickAction() {
@@ -1078,8 +1241,10 @@ public class ArenaSetupGui {
 		});
 		invHolder.setIcon(36, icon);
 
-		icon = new Icon(Utils.createItem(Material.REDSTONE, ChatColor.YELLOW + "Delete location", 1, ChatColor.RED + "Warning:", ChatColor.RED + "Before you delete this location",
-				ChatColor.RED + "Make sure nothing is using this location.", ChatColor.RED + "Otherwise some unexpected bugs will occur."));
+		icon = new Icon(Utils.createItem(Material.REDSTONE, ChatColor.YELLOW + "Delete location", 1,
+				ChatColor.RED + "Warning:", ChatColor.RED + "Before you delete this location",
+				ChatColor.RED + "Make sure nothing is using this location.",
+				ChatColor.RED + "Otherwise some unexpected bugs will occur."));
 		icon.addClickAction(new ClickAction() {
 			@Override
 			public void execute(Player player) {
@@ -1087,7 +1252,8 @@ public class ArenaSetupGui {
 				arena.getArenaConfig().set("locations." + locId, null);
 				arena.saveConfig();
 				Main.getArenaManager().loadArenas();
-				player.sendMessage(Main.getConfigManager().getPrefix() + ChatColor.YELLOW + "Successfully deleted " + name_);
+				player.sendMessage(
+						Main.getConfigManager().getPrefix() + ChatColor.YELLOW + "Successfully deleted " + name_);
 				player.closeInventory();
 				ArenaSetupGui.openLocationSelector(player, Main.getArenaManager().getArenaByName(arena.getName()), 1);
 			}
@@ -1102,14 +1268,19 @@ public class ArenaSetupGui {
 		if (task == null) {
 			return;
 		}
-		CustomHolder invHolder = new CustomHolder(45, ChatColor.YELLOW + "Edit queued tasks: " + task.getLocationName().getName() + ": " + task.getName());
+		CustomHolder invHolder = new CustomHolder(45,
+				ChatColor.YELLOW + "Edit queued tasks: " + task.getLocationName().getName() + ": " + task.getName());
 
 		Utils.addBorder(invHolder.getInventory(), 45);
 
-		invHolder.getInventory().setItem(0, Utils.createItem(Material.WHITE_WOOL, ChatColor.YELLOW + arena.getName(), 1));
-		invHolder.getInventory().setItem(1, Utils.createItem(Material.OAK_SIGN, ChatColor.YELLOW + "Task: " + taskId, 1, ChatColor.YELLOW + task.getLocationName().getName() + ": " + task.getName()));
-		invHolder.getInventory().setItem(2, Utils.createItem(Material.ANVIL, ChatColor.YELLOW + "Select Queued tasks variant", 1,
-				ChatColor.YELLOW + "When giving task a random variant of queued tasks", ChatColor.YELLOW + "Will be selected"));
+		invHolder.getInventory().setItem(0,
+				Utils.createItem(Material.WHITE_WOOL, ChatColor.YELLOW + arena.getName(), 1));
+		invHolder.getInventory().setItem(1, Utils.createItem(Material.OAK_SIGN, ChatColor.YELLOW + "Task: " + taskId, 1,
+				ChatColor.YELLOW + task.getLocationName().getName() + ": " + task.getName()));
+		invHolder.getInventory().setItem(2,
+				Utils.createItem(Material.ANVIL, ChatColor.YELLOW + "Select Queued tasks variant", 1,
+						ChatColor.YELLOW + "When giving task a random variant of queued tasks",
+						ChatColor.YELLOW + "Will be selected"));
 
 		Icon icon = new Icon(Utils.createItem(Material.ARROW, ChatColor.YELLOW + "Back"));
 		icon.addClickAction(new ClickAction() {
@@ -1121,7 +1292,8 @@ public class ArenaSetupGui {
 		invHolder.setIcon(36, icon);
 
 		for (QueuedTasksVariant qtv : task.getQueuedTasksVariants()) {
-			icon = new Icon(Utils.createItem(Material.ANVIL, ChatColor.GREEN + "Queued Task Variant: " + qtv.getId(), 1, ChatColor.YELLOW + "Queued tasks count: " + qtv.getQueuedTasks().size()));
+			icon = new Icon(Utils.createItem(Material.ANVIL, ChatColor.GREEN + "Queued Task Variant: " + qtv.getId(), 1,
+					ChatColor.YELLOW + "Queued tasks count: " + qtv.getQueuedTasks().size()));
 			icon.addClickAction(new ClickAction() {
 				@Override
 				public void execute(Player player) {
@@ -1131,8 +1303,10 @@ public class ArenaSetupGui {
 			invHolder.addIcon(icon);
 		}
 
-		icon = new Icon(Utils.createItem(Material.CRAFTING_TABLE, ChatColor.YELLOW + "Add queued tasks variant", 1, ChatColor.YELLOW + "When giving tasks a random queued tasks variant",
-				ChatColor.YELLOW + "Will be selected", ChatColor.YELLOW + "(So you can have multiple tasks starting with the same task"));
+		icon = new Icon(Utils.createItem(Material.CRAFTING_TABLE, ChatColor.YELLOW + "Add queued tasks variant", 1,
+				ChatColor.YELLOW + "When giving tasks a random queued tasks variant",
+				ChatColor.YELLOW + "Will be selected",
+				ChatColor.YELLOW + "(So you can have multiple tasks starting with the same task"));
 		icon.addClickAction(new ClickAction() {
 			@Override
 			public void execute(Player player) {
@@ -1144,9 +1318,11 @@ public class ArenaSetupGui {
 				taskSC.getConfigurationSection("queuedtasks").set(configId_, new ArrayList<String>());
 
 				arena.saveConfig();
-				player.sendMessage(Main.getConfigManager().getPrefix() + ChatColor.YELLOW + "Successfully add queued tasks variant to " + task.getName());
+				player.sendMessage(Main.getConfigManager().getPrefix() + ChatColor.YELLOW
+						+ "Successfully add queued tasks variant to " + task.getName());
 				Main.getArenaManager().loadArenas();
-				ArenaSetupGui.openQueuedTasksVariantsSelector(player, Main.getArenaManager().getArenaByName(arena.getName()), taskId);
+				ArenaSetupGui.openQueuedTasksVariantsSelector(player,
+						Main.getArenaManager().getArenaByName(arena.getName()), taskId);
 
 			}
 		});
@@ -1167,13 +1343,17 @@ public class ArenaSetupGui {
 			return;
 		}
 
-		CustomHolder invHolder = new CustomHolder(45, ChatColor.YELLOW + "Edit queued tasks: " + task.getLocationName().getName() + ": " + task.getName() + " variant: " + variantId);
+		CustomHolder invHolder = new CustomHolder(45, ChatColor.YELLOW + "Edit queued tasks: "
+				+ task.getLocationName().getName() + ": " + task.getName() + " variant: " + variantId);
 
 		Utils.addBorder(invHolder.getInventory(), 45);
 
-		invHolder.getInventory().setItem(0, Utils.createItem(Material.WHITE_WOOL, ChatColor.YELLOW + arena.getName(), 1));
-		invHolder.getInventory().setItem(1, Utils.createItem(Material.OAK_SIGN, ChatColor.YELLOW + "Task: " + taskId, 1, ChatColor.YELLOW + task.getLocationName().getName() + ": " + task.getName()));
-		invHolder.getInventory().setItem(2, Utils.createItem(Material.ANVIL, ChatColor.YELLOW + "Queued tasks variant: " + qtv.getId(), 1));
+		invHolder.getInventory().setItem(0,
+				Utils.createItem(Material.WHITE_WOOL, ChatColor.YELLOW + arena.getName(), 1));
+		invHolder.getInventory().setItem(1, Utils.createItem(Material.OAK_SIGN, ChatColor.YELLOW + "Task: " + taskId, 1,
+				ChatColor.YELLOW + task.getLocationName().getName() + ": " + task.getName()));
+		invHolder.getInventory().setItem(2,
+				Utils.createItem(Material.ANVIL, ChatColor.YELLOW + "Queued tasks variant: " + qtv.getId(), 1));
 
 		Icon icon = new Icon(Utils.createItem(Material.ARROW, ChatColor.YELLOW + "Back"));
 		icon.addClickAction(new ClickAction() {
@@ -1186,7 +1366,8 @@ public class ArenaSetupGui {
 
 		int i = 0;
 		for (Task task_ : qtv.getQueuedTasksTasks()) {
-			icon = new Icon(Utils.createItem(Material.OAK_SIGN, ChatColor.GREEN + "Task: " + task_.getLocationName().getName() + ": " + task_.getName(), 1,
+			icon = new Icon(Utils.createItem(Material.OAK_SIGN,
+					ChatColor.GREEN + "Task: " + task_.getLocationName().getName() + ": " + task_.getName(), 1,
 					ChatColor.YELLOW + task_.getTaskType().toString(), ChatColor.YELLOW + "Click to remove"));
 			final int tId = i;
 			icon.addClickAction(new ClickAction() {
@@ -1196,7 +1377,8 @@ public class ArenaSetupGui {
 					ConfigurationSection tasksSC = arena.getArenaConfig().getConfigurationSection("tasks");
 					ConfigurationSection taskSC = tasksSC.getConfigurationSection(taskId + "");
 
-					ArrayList<String> queuedTasks = (ArrayList<String>) taskSC.getConfigurationSection("queuedtasks").getStringList(qtv.getConfigId());
+					ArrayList<String> queuedTasks = (ArrayList<String>) taskSC.getConfigurationSection("queuedtasks")
+							.getStringList(qtv.getConfigId());
 					queuedTasks.remove(tId);
 
 					taskSC.set("queuedtasks." + qtv.getConfigId(), queuedTasks);
@@ -1205,7 +1387,8 @@ public class ArenaSetupGui {
 					arena.saveConfig();
 
 					Task removedTask = arena.getTask(task_.getId());
-					player.sendMessage(Main.getConfigManager().getPrefix() + ChatColor.YELLOW + "Successfully removed " + removedTask.getName() + " from queued tasks variant " + qtv.getId());
+					player.sendMessage(Main.getConfigManager().getPrefix() + ChatColor.YELLOW + "Successfully removed "
+							+ removedTask.getName() + " from queued tasks variant " + qtv.getId());
 					ArenaSetupGui.openTaskEdit(player, Main.getArenaManager().getArenaByName(arena.getName()), taskId);
 				}
 			});
@@ -1233,7 +1416,8 @@ public class ArenaSetupGui {
 				taskSC.getConfigurationSection("queuedtasks").set(qtv.getConfigId(), null);
 
 				arena.saveConfig();
-				player.sendMessage(Main.getConfigManager().getPrefix() + ChatColor.YELLOW + "Successfully removed queued tasks variant " + qtv.getId() + " from " + task.getName());
+				player.sendMessage(Main.getConfigManager().getPrefix() + ChatColor.YELLOW
+						+ "Successfully removed queued tasks variant " + qtv.getId() + " from " + task.getName());
 				Main.getArenaManager().loadArenas();
 				ArenaSetupGui.openTaskEdit(player, Main.getArenaManager().getArenaByName(arena.getName()), taskId);
 
@@ -1245,7 +1429,8 @@ public class ArenaSetupGui {
 	}
 
 	// add queued task select location name
-	public static void openAddQueuedTasksSelectLocation(Player player, Arena arena, String taskId, Integer variantId, Integer currentPage) {
+	public static void openAddQueuedTasksSelectLocation(Player player, Arena arena, String taskId, Integer variantId,
+			Integer currentPage) {
 		Task task = arena.getTask(taskId);
 		if (task == null) {
 			return;
@@ -1259,15 +1444,21 @@ public class ArenaSetupGui {
 		Integer totalItems = arena.getLocations().size();
 		Integer totalPages = (int) Math.ceil((double) totalItems / (double) pageSize);
 
-		CustomHolder invHolder = new CustomHolder(45, ChatColor.YELLOW + "Select location name (add queued task) " + arena.getName());
+		CustomHolder invHolder = new CustomHolder(45,
+				ChatColor.YELLOW + "Select location name (add queued task) " + arena.getName());
 		Utils.addBorder(invHolder.getInventory(), 45);
 
-		invHolder.getInventory().setItem(0, Utils.createItem(Material.WHITE_WOOL, ChatColor.YELLOW + arena.getName(), 1));
+		invHolder.getInventory().setItem(0,
+				Utils.createItem(Material.WHITE_WOOL, ChatColor.YELLOW + arena.getName(), 1));
 		invHolder.getInventory().setItem(1,
-				Utils.createItem(Material.OAK_SIGN, ChatColor.YELLOW + task.getLocationName().getName() + ": " + task.getName(), 1, ChatColor.YELLOW + task.getTaskType().toString()));
-		invHolder.getInventory().setItem(2, Utils.createItem(Material.ANVIL, ChatColor.YELLOW + "Variant: " + qtv.getId(), 1));
+				Utils.createItem(Material.OAK_SIGN,
+						ChatColor.YELLOW + task.getLocationName().getName() + ": " + task.getName(), 1,
+						ChatColor.YELLOW + task.getTaskType().toString()));
+		invHolder.getInventory().setItem(2,
+				Utils.createItem(Material.ANVIL, ChatColor.YELLOW + "Variant: " + qtv.getId(), 1));
 		invHolder.getInventory().setItem(3, Utils.createItem(Material.ANVIL, ChatColor.YELLOW + "Add queued task", 1));
-		invHolder.getInventory().setItem(4, Utils.createItem(Material.WHITE_BANNER, ChatColor.YELLOW + "Select location name", 1));
+		invHolder.getInventory().setItem(4,
+				Utils.createItem(Material.WHITE_BANNER, ChatColor.YELLOW + "Select location name", 1));
 
 		Icon icon = new Icon(Utils.createItem(Material.ARROW, ChatColor.YELLOW + "Back"));
 		icon.addClickAction(new ClickAction() {
@@ -1279,14 +1470,16 @@ public class ArenaSetupGui {
 		invHolder.setIcon(36, icon);
 
 		if (totalPages > 1) {
-			invHolder.getInventory().setItem(40, Utils.createItem(Material.OAK_SIGN, ChatColor.YELLOW + "Page: " + currentPage + "/" + totalPages, currentPage));
+			invHolder.getInventory().setItem(40, Utils.createItem(Material.OAK_SIGN,
+					ChatColor.YELLOW + "Page: " + currentPage + "/" + totalPages, currentPage));
 
 			if (currentPage > 1) {
 				icon = new Icon(Utils.createItem(Material.PAPER, ChatColor.YELLOW + "Previous page"));
 				icon.addClickAction(new ClickAction() {
 					@Override
 					public void execute(Player player) {
-						ArenaSetupGui.openAddQueuedTasksSelectLocation(player, arena, taskId, variantId, currentPage - 1);
+						ArenaSetupGui.openAddQueuedTasksSelectLocation(player, arena, taskId, variantId,
+								currentPage - 1);
 					}
 				});
 				invHolder.setIcon(39, icon);
@@ -1296,7 +1489,8 @@ public class ArenaSetupGui {
 				icon.addClickAction(new ClickAction() {
 					@Override
 					public void execute(Player player) {
-						ArenaSetupGui.openAddQueuedTasksSelectLocation(player, arena, taskId, variantId, currentPage + 1);
+						ArenaSetupGui.openAddQueuedTasksSelectLocation(player, arena, taskId, variantId,
+								currentPage + 1);
 					}
 				});
 				invHolder.setIcon(41, icon);
@@ -1309,8 +1503,10 @@ public class ArenaSetupGui {
 
 		for (int i = startIndex; i <= endIndex; i++) {
 			final String key = keys.get(i);
-			icon = new Icon(Utils.createItem(Material.WHITE_BANNER, ChatColor.GREEN + arena.getLocations().get(key).getName(), 1,
-					ChatColor.YELLOW + "Tasks count: " + arena.getAllTasksLocationName(key).size(), ChatColor.YELLOW + key));
+			icon = new Icon(
+					Utils.createItem(Material.WHITE_BANNER, ChatColor.GREEN + arena.getLocations().get(key).getName(),
+							1, ChatColor.YELLOW + "Tasks count: " + arena.getAllTasksLocationName(key).size(),
+							ChatColor.YELLOW + key));
 
 			icon.addClickAction(new ClickAction() {
 				@Override
@@ -1323,7 +1519,8 @@ public class ArenaSetupGui {
 		player.openInventory(invHolder.getInventory());
 	}
 
-	public static void openAddQueuedTaskSelector(Player player, Arena arena, String taskId, Integer variantId, String locationId, Integer currentPage) {
+	public static void openAddQueuedTaskSelector(Player player, Arena arena, String taskId, Integer variantId,
+			String locationId, Integer currentPage) {
 		Task task = arena.getTask(taskId);
 		if (task == null) {
 			return;
@@ -1344,15 +1541,21 @@ public class ArenaSetupGui {
 		Integer totalItems = tasks.size();
 		Integer totalPages = (int) Math.ceil((double) totalItems / (double) pageSize);
 
-		CustomHolder invHolder = new CustomHolder(45, ChatColor.YELLOW + "Add queued task: " + task.getLocationName().getName() + ": " + task.getName() + " variant " + variantId);
+		CustomHolder invHolder = new CustomHolder(45, ChatColor.YELLOW + "Add queued task: "
+				+ task.getLocationName().getName() + ": " + task.getName() + " variant " + variantId);
 		Utils.addBorder(invHolder.getInventory(), 45);
 
-		invHolder.getInventory().setItem(0, Utils.createItem(Material.WHITE_WOOL, ChatColor.YELLOW + arena.getName(), 1));
+		invHolder.getInventory().setItem(0,
+				Utils.createItem(Material.WHITE_WOOL, ChatColor.YELLOW + arena.getName(), 1));
 		invHolder.getInventory().setItem(1,
-				Utils.createItem(Material.OAK_SIGN, ChatColor.YELLOW + task.getLocationName().getName() + ":" + task.getName(), 1, ChatColor.YELLOW + task.getTaskType().toString()));
-		invHolder.getInventory().setItem(2, Utils.createItem(Material.ANVIL, ChatColor.YELLOW + "Variant: " + qtv.getId(), 1));
+				Utils.createItem(Material.OAK_SIGN,
+						ChatColor.YELLOW + task.getLocationName().getName() + ":" + task.getName(), 1,
+						ChatColor.YELLOW + task.getTaskType().toString()));
+		invHolder.getInventory().setItem(2,
+				Utils.createItem(Material.ANVIL, ChatColor.YELLOW + "Variant: " + qtv.getId(), 1));
 		invHolder.getInventory().setItem(3, Utils.createItem(Material.ANVIL, ChatColor.YELLOW + "Add queued task", 1));
-		invHolder.getInventory().setItem(4, Utils.createItem(Material.WHITE_BANNER, ChatColor.YELLOW + locName.getName(), 1));
+		invHolder.getInventory().setItem(4,
+				Utils.createItem(Material.WHITE_BANNER, ChatColor.YELLOW + locName.getName(), 1));
 
 		Icon icon = new Icon(Utils.createItem(Material.ARROW, ChatColor.YELLOW + "Back"));
 		icon.addClickAction(new ClickAction() {
@@ -1364,14 +1567,16 @@ public class ArenaSetupGui {
 		invHolder.setIcon(36, icon);
 
 		if (totalPages > 1) {
-			invHolder.getInventory().setItem(40, Utils.createItem(Material.OAK_SIGN, ChatColor.YELLOW + "Page: " + currentPage + "/" + totalPages, currentPage));
+			invHolder.getInventory().setItem(40, Utils.createItem(Material.OAK_SIGN,
+					ChatColor.YELLOW + "Page: " + currentPage + "/" + totalPages, currentPage));
 
 			if (currentPage > 1) {
 				icon = new Icon(Utils.createItem(Material.PAPER, ChatColor.YELLOW + "Previous page"));
 				icon.addClickAction(new ClickAction() {
 					@Override
 					public void execute(Player player) {
-						ArenaSetupGui.openAddQueuedTaskSelector(player, arena, taskId, variantId, locationId, currentPage - 1);
+						ArenaSetupGui.openAddQueuedTaskSelector(player, arena, taskId, variantId, locationId,
+								currentPage - 1);
 					}
 				});
 				invHolder.setIcon(39, icon);
@@ -1381,7 +1586,8 @@ public class ArenaSetupGui {
 				icon.addClickAction(new ClickAction() {
 					@Override
 					public void execute(Player player) {
-						ArenaSetupGui.openAddQueuedTaskSelector(player, arena, taskId, variantId, locationId, currentPage + 1);
+						ArenaSetupGui.openAddQueuedTaskSelector(player, arena, taskId, variantId, locationId,
+								currentPage + 1);
 					}
 				});
 				invHolder.setIcon(41, icon);
@@ -1393,8 +1599,10 @@ public class ArenaSetupGui {
 
 		for (int i = startIndex; i <= endIndex; i++) {
 			Task task_ = tasks.get(i);
-			icon = new Icon(Utils.createItem(Material.OAK_SIGN, ChatColor.GREEN + task_.getLocationName().getName() + ": " + task_.getName(), 1, ChatColor.YELLOW + task_.getTaskType().toString(),
-					ChatColor.YELLOW + task_.getId(), ChatColor.YELLOW + "Click to add"));
+			icon = new Icon(Utils.createItem(Material.OAK_SIGN,
+					ChatColor.GREEN + task_.getLocationName().getName() + ": " + task_.getName(), 1,
+					ChatColor.YELLOW + task_.getTaskType().toString(), ChatColor.YELLOW + task_.getId(),
+					ChatColor.YELLOW + "Click to add"));
 			final String tId = task_.getId();
 			icon.addClickAction(new ClickAction() {
 				@Override
@@ -1403,16 +1611,19 @@ public class ArenaSetupGui {
 					ConfigurationSection tasksSC = arena.getArenaConfig().getConfigurationSection("tasks");
 					ConfigurationSection taskSC = tasksSC.getConfigurationSection(taskId + "");
 
-					ArrayList<String> queuedTasks = (ArrayList<String>) taskSC.getConfigurationSection("queuedtasks").getStringList(qtv.getConfigId());
+					ArrayList<String> queuedTasks = (ArrayList<String>) taskSC.getConfigurationSection("queuedtasks")
+							.getStringList(qtv.getConfigId());
 					queuedTasks.add(tId);
 					taskSC.set("queuedtasks." + qtv.getConfigId(), queuedTasks);
 					qtv.setQueuedTasks(queuedTasks);
 					arena.saveConfig();
 
 					Task addedTask = arena.getTask(tId);
-					player.sendMessage(Main.getConfigManager().getPrefix() + ChatColor.YELLOW + "Successfully added " + Main.getMessagesManager().getTaskName(addedTask.getTaskType().toString())
+					player.sendMessage(Main.getConfigManager().getPrefix() + ChatColor.YELLOW + "Successfully added "
+							+ Main.getMessagesManager().getTaskName(addedTask.getTaskType().toString())
 							+ " to queued tasks variant " + qtv.getId());
-					ArenaSetupGui.openQueuedTasksEditor(player, Main.getArenaManager().getArenaByName(arena.getName()), taskId, variantId);
+					ArenaSetupGui.openQueuedTasksEditor(player, Main.getArenaManager().getArenaByName(arena.getName()),
+							taskId, variantId);
 
 				}
 			});
@@ -1426,8 +1637,10 @@ public class ArenaSetupGui {
 		CustomHolder invHolder = new CustomHolder(45, ChatColor.YELLOW + "Select sabotage: " + arena.getName());
 		Utils.addBorder(invHolder.getInventory(), 45);
 
-		invHolder.getInventory().setItem(0, Utils.createItem(Material.WHITE_WOOL, ChatColor.YELLOW + arena.getName(), 1));
-		invHolder.getInventory().setItem(1, Utils.createItem(Material.REDSTONE_TORCH, ChatColor.YELLOW + "Sabotages", 1));
+		invHolder.getInventory().setItem(0,
+				Utils.createItem(Material.WHITE_WOOL, ChatColor.YELLOW + arena.getName(), 1));
+		invHolder.getInventory().setItem(1,
+				Utils.createItem(Material.REDSTONE_TORCH, ChatColor.YELLOW + "Sabotages", 1));
 
 		Icon icon = new Icon(Utils.createItem(Material.ARROW, ChatColor.YELLOW + "Back"));
 		icon.addClickAction(new ClickAction() {
@@ -1440,8 +1653,9 @@ public class ArenaSetupGui {
 
 		for (SabotageArena sa : arena.getSabotages()) {
 			String name = Main.getMessagesManager().getTaskName(sa.getTask1().getSabotageType().toString());
-			icon = new Icon(Utils.createItem(Material.REDSTONE_TORCH, ChatColor.GREEN + "Sabotage: " + sa.getTask1().getSabotageType().toString(), 1, ChatColor.YELLOW + name,
-					ChatColor.YELLOW + "Click to edit"));
+			icon = new Icon(Utils.createItem(Material.REDSTONE_TORCH,
+					ChatColor.GREEN + "Sabotage: " + sa.getTask1().getSabotageType().toString(), 1,
+					ChatColor.YELLOW + name, ChatColor.YELLOW + "Click to edit"));
 			icon.addClickAction(new ClickAction() {
 				@Override
 				public void execute(Player player) {
@@ -1482,8 +1696,10 @@ public class ArenaSetupGui {
 			}
 		}
 
-		invHolder.getInventory().setItem(0, Utils.createItem(Material.WHITE_WOOL, ChatColor.YELLOW + arena.getName(), 1));
-		invHolder.getInventory().setItem(1, Utils.createItem(Material.REDSTONE_TORCH, ChatColor.YELLOW + "Add sabotage", 1));
+		invHolder.getInventory().setItem(0,
+				Utils.createItem(Material.WHITE_WOOL, ChatColor.YELLOW + arena.getName(), 1));
+		invHolder.getInventory().setItem(1,
+				Utils.createItem(Material.REDSTONE_TORCH, ChatColor.YELLOW + "Add sabotage", 1));
 
 		Icon icon = new Icon(Utils.createItem(Material.ARROW, ChatColor.YELLOW + "Back"));
 		icon.addClickAction(new ClickAction() {
@@ -1496,7 +1712,9 @@ public class ArenaSetupGui {
 
 		for (SabotageType saboType : types) {
 			String name = Main.getMessagesManager().getTaskName(saboType.toString());
-			icon = new Icon(Utils.createItem(Material.REDSTONE_TORCH, ChatColor.GREEN + "Sabotage: " + saboType.toString(), 1, ChatColor.YELLOW + name, ChatColor.YELLOW + "Click to add"));
+			icon = new Icon(
+					Utils.createItem(Material.REDSTONE_TORCH, ChatColor.GREEN + "Sabotage: " + saboType.toString(), 1,
+							ChatColor.YELLOW + name, ChatColor.YELLOW + "Click to add"));
 			icon.addClickAction(new ClickAction() {
 				@Override
 				public void execute(Player player) {
@@ -1509,7 +1727,8 @@ public class ArenaSetupGui {
 					}
 					sabotageSC.set("timer", timer);
 
-					String locStr = player.getWorld().getName() + "," + player.getLocation().getX() + "," + (player.getLocation().getBlockY() + 1.85) + "," + player.getLocation().getZ();
+					String locStr = player.getWorld().getName() + "," + player.getLocation().getX() + ","
+							+ (player.getLocation().getBlockY() + 1.85) + "," + player.getLocation().getZ();
 
 					sabotageSC.set("location1", locStr);
 					if (saboType.getSabotageLength() != SabotageLength.SINGLE) {
@@ -1519,8 +1738,9 @@ public class ArenaSetupGui {
 					arena.saveConfig();
 					Main.getArenaManager().loadArenas();
 
-					player.sendMessage(Main.getConfigManager().getPrefix() + ChatColor.YELLOW + "Successfully added sabotage " + Main.getMessagesManager().getTaskName(saboType.toString()) + " to "
-							+ arena.getName());
+					player.sendMessage(Main.getConfigManager().getPrefix() + ChatColor.YELLOW
+							+ "Successfully added sabotage "
+							+ Main.getMessagesManager().getTaskName(saboType.toString()) + " to " + arena.getName());
 					ArenaSetupGui.openSabotageSelector(player, Main.getArenaManager().getArenaByName(arena.getName()));
 
 				}
@@ -1536,12 +1756,15 @@ public class ArenaSetupGui {
 		if (sabo == null) {
 			return;
 		}
-		CustomHolder invHolder = new CustomHolder(45, ChatColor.YELLOW + "Edit sabotage: " + arena.getName() + " - " + sabotageType);
+		CustomHolder invHolder = new CustomHolder(45,
+				ChatColor.YELLOW + "Edit sabotage: " + arena.getName() + " - " + sabotageType);
 		Utils.addBorder(invHolder.getInventory(), 45);
 
-		invHolder.getInventory().setItem(0, Utils.createItem(Material.WHITE_WOOL, ChatColor.YELLOW + arena.getName(), 1));
+		invHolder.getInventory().setItem(0,
+				Utils.createItem(Material.WHITE_WOOL, ChatColor.YELLOW + arena.getName(), 1));
 		invHolder.getInventory().setItem(1,
-				Utils.createItem(Material.REDSTONE_TORCH, ChatColor.YELLOW + "Sabotage: " + sabotageType, 1, ChatColor.YELLOW + Main.getMessagesManager().getTaskName(sabotageType)));
+				Utils.createItem(Material.REDSTONE_TORCH, ChatColor.YELLOW + "Sabotage: " + sabotageType, 1,
+						ChatColor.YELLOW + Main.getMessagesManager().getTaskName(sabotageType)));
 
 		Icon icon = new Icon(Utils.createItem(Material.ARROW, ChatColor.YELLOW + "Back"));
 		icon.addClickAction(new ClickAction() {
@@ -1552,8 +1775,10 @@ public class ArenaSetupGui {
 		});
 		invHolder.setIcon(36, icon);
 
-		icon = new Icon(Utils.createItem(Material.END_CRYSTAL, ChatColor.GREEN + "Location: 1", 1, ChatColor.YELLOW + Utils.locationToStringB(sabo.getTask1().getLocation()),
-				ChatColor.YELLOW + "Sabotage task 1 location", ChatColor.YELLOW + "Click to change to your current location"));
+		icon = new Icon(Utils.createItem(Material.END_CRYSTAL, ChatColor.GREEN + "Location: 1", 1,
+				ChatColor.YELLOW + Utils.locationToStringB(sabo.getTask1().getLocation()),
+				ChatColor.YELLOW + "Sabotage task 1 location",
+				ChatColor.YELLOW + "Click to change to your current location"));
 		icon.addClickAction(new ClickAction() {
 			@Override
 			public void execute(Player player) {
@@ -1563,15 +1788,18 @@ public class ArenaSetupGui {
 				ConfigurationSection sabotagesSC = arena.getArenaConfig().getConfigurationSection("sabotages");
 				ConfigurationSection sabotageSC = sabotagesSC.getConfigurationSection(sabo.getType().toString());
 
-				String locStr = player.getWorld().getName() + "," + (player.getLocation().getX()) + "," + (player.getLocation().getBlockY() + 1.85) + "," + (player.getLocation().getZ());
+				String locStr = player.getWorld().getName() + "," + (player.getLocation().getX()) + ","
+						+ (player.getLocation().getBlockY() + 1.85) + "," + (player.getLocation().getZ());
 				sabotageSC.set("location" + locId, locStr);
 
-				sabo.getTask1().setInfo(new Location(player.getWorld(), player.getLocation().getX(), player.getLocation().getBlockY() + 1.85, player.getLocation().getZ()), arena);
+				sabo.getTask1().setInfo(new Location(player.getWorld(), player.getLocation().getX(),
+						player.getLocation().getBlockY() + 1.85, player.getLocation().getZ()), arena);
 
 				arena.saveConfig();
 				arena.deleteHolograms();
 				arena.createHolograms();
-				ArenaSetupGui.openSabotageEdit(player, Main.getArenaManager().getArenaByName(arena.getName()), sabo.getType().toString());
+				ArenaSetupGui.openSabotageEdit(player, Main.getArenaManager().getArenaByName(arena.getName()),
+						sabo.getType().toString());
 
 			}
 		});
@@ -1579,8 +1807,10 @@ public class ArenaSetupGui {
 
 		if (sabo.getLength() != SabotageLength.SINGLE) {
 
-			icon = new Icon(Utils.createItem(Material.END_CRYSTAL, ChatColor.GREEN + "Location: 2", 1, ChatColor.YELLOW + Utils.locationToStringB(sabo.getTask2().getLocation()),
-					ChatColor.YELLOW + "Sabotage task 2 location", ChatColor.YELLOW + "Click to change to your current location"));
+			icon = new Icon(Utils.createItem(Material.END_CRYSTAL, ChatColor.GREEN + "Location: 2", 1,
+					ChatColor.YELLOW + Utils.locationToStringB(sabo.getTask2().getLocation()),
+					ChatColor.YELLOW + "Sabotage task 2 location",
+					ChatColor.YELLOW + "Click to change to your current location"));
 			icon.addClickAction(new ClickAction() {
 				@Override
 				public void execute(Player player) {
@@ -1590,15 +1820,18 @@ public class ArenaSetupGui {
 					ConfigurationSection sabotagesSC = arena.getArenaConfig().getConfigurationSection("sabotages");
 					ConfigurationSection sabotageSC = sabotagesSC.getConfigurationSection(sabo.getType().toString());
 
-					String locStr = player.getWorld().getName() + "," + (player.getLocation().getX()) + "," + (player.getLocation().getBlockY() + 1.85) + "," + (player.getLocation().getZ());
+					String locStr = player.getWorld().getName() + "," + (player.getLocation().getX()) + ","
+							+ (player.getLocation().getBlockY() + 1.85) + "," + (player.getLocation().getZ());
 					sabotageSC.set("location" + locId, locStr);
 
 					arena.saveConfig();
 
-					sabo.getTask2().setInfo(new Location(player.getWorld(), player.getLocation().getX(), player.getLocation().getBlockY() + 1.85, player.getLocation().getZ()), arena);
+					sabo.getTask2().setInfo(new Location(player.getWorld(), player.getLocation().getX(),
+							player.getLocation().getBlockY() + 1.85, player.getLocation().getZ()), arena);
 					arena.deleteHolograms();
 					arena.createHolograms();
-					ArenaSetupGui.openSabotageEdit(player, Main.getArenaManager().getArenaByName(arena.getName()), sabo.getType().toString());
+					ArenaSetupGui.openSabotageEdit(player, Main.getArenaManager().getArenaByName(arena.getName()),
+							sabo.getType().toString());
 
 				}
 			});
@@ -1628,8 +1861,10 @@ public class ArenaSetupGui {
 		CustomHolder invHolder = new CustomHolder(45, ChatColor.YELLOW + "Select vent group: " + arena.getName());
 		Utils.addBorder(invHolder.getInventory(), 45);
 
-		invHolder.getInventory().setItem(0, Utils.createItem(Material.WHITE_WOOL, ChatColor.YELLOW + arena.getName(), 1));
-		invHolder.getInventory().setItem(1, Utils.createItem(Material.OAK_TRAPDOOR, ChatColor.YELLOW + "Vent groups", 1));
+		invHolder.getInventory().setItem(0,
+				Utils.createItem(Material.WHITE_WOOL, ChatColor.YELLOW + arena.getName(), 1));
+		invHolder.getInventory().setItem(1,
+				Utils.createItem(Material.OAK_TRAPDOOR, ChatColor.YELLOW + "Vent groups", 1));
 
 		Icon icon = new Icon(Utils.createItem(Material.ARROW, ChatColor.YELLOW + "Back"));
 		icon.addClickAction(new ClickAction() {
@@ -1643,8 +1878,8 @@ public class ArenaSetupGui {
 		VentsManager manager = arena.getVentsManager();
 		for (VentGroup vg : manager.getVentGroups()) {
 
-			icon = new Icon(Utils.createItem(Material.OAK_TRAPDOOR, ChatColor.GREEN + "Vent group: " + vg.getId(), 1, ChatColor.YELLOW + "Vents: " + vg.getVents().size(),
-					ChatColor.YELLOW + "Loop: " + vg.getLoop()));
+			icon = new Icon(Utils.createItem(Material.OAK_TRAPDOOR, ChatColor.GREEN + "Vent group: " + vg.getId(), 1,
+					ChatColor.YELLOW + "Vents: " + vg.getVents().size(), ChatColor.YELLOW + "Loop: " + vg.getLoop()));
 			icon.addClickAction(new ClickAction() {
 				@Override
 				public void execute(Player player) {
@@ -1681,11 +1916,14 @@ public class ArenaSetupGui {
 		if (ventGroup == null) {
 			return;
 		}
-		CustomHolder invHolder = new CustomHolder(45, ChatColor.YELLOW + "Edit vent group: " + arena.getName() + " - " + ventGroupId);
+		CustomHolder invHolder = new CustomHolder(45,
+				ChatColor.YELLOW + "Edit vent group: " + arena.getName() + " - " + ventGroupId);
 		Utils.addBorder(invHolder.getInventory(), 45);
 
-		invHolder.getInventory().setItem(0, Utils.createItem(Material.WHITE_WOOL, ChatColor.YELLOW + arena.getName(), 1));
-		invHolder.getInventory().setItem(1, Utils.createItem(Material.OAK_TRAPDOOR, ChatColor.YELLOW + "Vent group: " + ventGroupId, 1));
+		invHolder.getInventory().setItem(0,
+				Utils.createItem(Material.WHITE_WOOL, ChatColor.YELLOW + arena.getName(), 1));
+		invHolder.getInventory().setItem(1,
+				Utils.createItem(Material.OAK_TRAPDOOR, ChatColor.YELLOW + "Vent group: " + ventGroupId, 1));
 
 		Icon icon = new Icon(Utils.createItem(Material.ARROW, ChatColor.YELLOW + "Back"));
 		icon.addClickAction(new ClickAction() {
@@ -1696,7 +1934,8 @@ public class ArenaSetupGui {
 		});
 		invHolder.setIcon(36, icon);
 
-		icon = new Icon(Utils.createItem(Material.IRON_TRAPDOOR, ChatColor.GREEN + "Vents", 1, ChatColor.YELLOW + "Vent count: " + ventGroup.getVents().size()));
+		icon = new Icon(Utils.createItem(Material.IRON_TRAPDOOR, ChatColor.GREEN + "Vents", 1,
+				ChatColor.YELLOW + "Vent count: " + ventGroup.getVents().size()));
 		icon.addClickAction(new ClickAction() {
 			@Override
 			public void execute(Player player) {
@@ -1705,7 +1944,8 @@ public class ArenaSetupGui {
 		});
 		invHolder.addIcon(icon);
 
-		icon = new Icon(Utils.createItem(ventGroup.getLoop() ? Material.LIME_DYE : Material.RED_DYE, ChatColor.GREEN + "Loop: " + ventGroup.getLoop(), 1,
+		icon = new Icon(Utils.createItem(ventGroup.getLoop() ? Material.LIME_DYE : Material.RED_DYE,
+				ChatColor.GREEN + "Loop: " + ventGroup.getLoop(), 1,
 				ChatColor.YELLOW + "Are vents only one way or loopable", ChatColor.YELLOW + "Click to change"));
 		icon.addClickAction(new ClickAction() {
 			@Override
@@ -1717,7 +1957,8 @@ public class ArenaSetupGui {
 				arena.saveConfig();
 				ventGroup.setLoop(!ventGroup.getLoop());
 
-				ArenaSetupGui.openVentGroupEdit(player, Main.getArenaManager().getArenaByName(arena.getName()), ventGroupId);
+				ArenaSetupGui.openVentGroupEdit(player, Main.getArenaManager().getArenaByName(arena.getName()),
+						ventGroupId);
 
 			}
 		});
@@ -1751,11 +1992,14 @@ public class ArenaSetupGui {
 		if (ventGroup == null) {
 			return;
 		}
-		CustomHolder invHolder = new CustomHolder(45, ChatColor.YELLOW + "Edit vent group vents: " + arena.getName() + " - " + ventGroupId);
+		CustomHolder invHolder = new CustomHolder(45,
+				ChatColor.YELLOW + "Edit vent group vents: " + arena.getName() + " - " + ventGroupId);
 		Utils.addBorder(invHolder.getInventory(), 45);
 
-		invHolder.getInventory().setItem(0, Utils.createItem(Material.WHITE_WOOL, ChatColor.YELLOW + arena.getName(), 1));
-		invHolder.getInventory().setItem(1, Utils.createItem(Material.OAK_TRAPDOOR, ChatColor.YELLOW + "Vent group: " + ventGroupId, 1));
+		invHolder.getInventory().setItem(0,
+				Utils.createItem(Material.WHITE_WOOL, ChatColor.YELLOW + arena.getName(), 1));
+		invHolder.getInventory().setItem(1,
+				Utils.createItem(Material.OAK_TRAPDOOR, ChatColor.YELLOW + "Vent group: " + ventGroupId, 1));
 		invHolder.getInventory().setItem(2, Utils.createItem(Material.IRON_TRAPDOOR, ChatColor.YELLOW + "Vents", 1));
 
 		Icon icon = new Icon(Utils.createItem(Material.ARROW, ChatColor.YELLOW + "Back"));
@@ -1772,8 +2016,9 @@ public class ArenaSetupGui {
 			if (v.getLocName() != null) {
 				name = v.getLocName().getName();
 			}
-			icon = new Icon(Utils.createItem(Material.IRON_TRAPDOOR, ChatColor.GREEN + "Vent: " + v.getId(), 1, ChatColor.YELLOW + "Location name: " + name,
-					ChatColor.YELLOW + Utils.locationToStringB(v.getLoc()), ChatColor.YELLOW + "Click to edit"));
+			icon = new Icon(Utils.createItem(Material.IRON_TRAPDOOR, ChatColor.GREEN + "Vent: " + v.getId(), 1,
+					ChatColor.YELLOW + "Location name: " + name, ChatColor.YELLOW + Utils.locationToStringB(v.getLoc()),
+					ChatColor.YELLOW + "Click to edit"));
 			icon.addClickAction(new ClickAction() {
 				@Override
 				public void execute(Player player) {
@@ -1803,12 +2048,16 @@ public class ArenaSetupGui {
 		if (vent == null) {
 			return;
 		}
-		CustomHolder invHolder = new CustomHolder(45, ChatColor.YELLOW + "Edit vent: " + arena.getName() + " - " + ventGroupId + ": " + ventId);
+		CustomHolder invHolder = new CustomHolder(45,
+				ChatColor.YELLOW + "Edit vent: " + arena.getName() + " - " + ventGroupId + ": " + ventId);
 		Utils.addBorder(invHolder.getInventory(), 45);
 
-		invHolder.getInventory().setItem(0, Utils.createItem(Material.WHITE_WOOL, ChatColor.YELLOW + arena.getName(), 1));
-		invHolder.getInventory().setItem(1, Utils.createItem(Material.OAK_TRAPDOOR, ChatColor.YELLOW + "Vent group: " + ventGroupId, 1));
-		invHolder.getInventory().setItem(2, Utils.createItem(Material.IRON_TRAPDOOR, ChatColor.YELLOW + "Vent: " + ventId, 1));
+		invHolder.getInventory().setItem(0,
+				Utils.createItem(Material.WHITE_WOOL, ChatColor.YELLOW + arena.getName(), 1));
+		invHolder.getInventory().setItem(1,
+				Utils.createItem(Material.OAK_TRAPDOOR, ChatColor.YELLOW + "Vent group: " + ventGroupId, 1));
+		invHolder.getInventory().setItem(2,
+				Utils.createItem(Material.IRON_TRAPDOOR, ChatColor.YELLOW + "Vent: " + ventId, 1));
 
 		Icon icon = new Icon(Utils.createItem(Material.ARROW, ChatColor.YELLOW + "Back"));
 		icon.addClickAction(new ClickAction() {
@@ -1824,7 +2073,8 @@ public class ArenaSetupGui {
 		if (locName != null) {
 			name = locName.getName();
 		}
-		icon = new Icon(Utils.createItem(Material.WHITE_BANNER, ChatColor.GREEN + "Change location name", 1, ChatColor.YELLOW + name));
+		icon = new Icon(Utils.createItem(Material.WHITE_BANNER, ChatColor.GREEN + "Change location name", 1,
+				ChatColor.YELLOW + name));
 		icon.addClickAction(new ClickAction() {
 			@Override
 			public void execute(Player player) {
@@ -1833,28 +2083,33 @@ public class ArenaSetupGui {
 		});
 		invHolder.addIcon(icon);
 
-		icon = new Icon(Utils.createItem(Material.END_CRYSTAL, ChatColor.GREEN + "Change location", 1, ChatColor.YELLOW + Utils.locationToStringB(vent.getLoc()),
+		icon = new Icon(Utils.createItem(Material.END_CRYSTAL, ChatColor.GREEN + "Change location", 1,
+				ChatColor.YELLOW + Utils.locationToStringB(vent.getLoc()),
 				ChatColor.YELLOW + "Click to change to your location"));
 		icon.addClickAction(new ClickAction() {
 			@Override
 			public void execute(Player player) {
 				arena.endGame(false);
 				ConfigurationSection ventGroupsSec = arena.getArenaConfig().getConfigurationSection("ventgroups");
-				ConfigurationSection ventsSec = ventGroupsSec.getConfigurationSection(ventGroup.getConfigId() + ".vents");
+				ConfigurationSection ventsSec = ventGroupsSec
+						.getConfigurationSection(ventGroup.getConfigId() + ".vents");
 				ConfigurationSection ventSec = ventsSec.getConfigurationSection(vent.getConfigId());
 
-				String locStr = player.getWorld().getName() + "," + (player.getLocation().getBlockX() + 0.5) + "," + (player.getLocation().getBlockY() + 1.85) + ","
-						+ (player.getLocation().getBlockZ() + 0.5) + "," + player.getLocation().getYaw() + "," + player.getLocation().getPitch();
+				String locStr = player.getWorld().getName() + "," + (player.getLocation().getBlockX() + 0.5) + ","
+						+ (player.getLocation().getBlockY() + 1.85) + "," + (player.getLocation().getBlockZ() + 0.5)
+						+ "," + player.getLocation().getYaw() + "," + player.getLocation().getPitch();
 
 				ventSec.set("location", locStr);
 
 				arena.saveConfig();
-				vent.setLoc(new Location(player.getWorld(), player.getLocation().getBlockX() + 0.5, player.getLocation().getBlockY() + 1.85, player.getLocation().getBlockZ() + 0.5,
+				vent.setLoc(new Location(player.getWorld(), player.getLocation().getBlockX() + 0.5,
+						player.getLocation().getBlockY() + 1.85, player.getLocation().getBlockZ() + 0.5,
 						player.getLocation().getYaw(), player.getLocation().getPitch()));
 
 				arena.deleteHolograms();
 				arena.createHolograms();
-				ArenaSetupGui.openVentEdit(player, Main.getArenaManager().getArenaByName(arena.getName()), ventGroupId, ventId);
+				ArenaSetupGui.openVentEdit(player, Main.getArenaManager().getArenaByName(arena.getName()), ventGroupId,
+						ventId);
 			}
 		});
 		invHolder.addIcon(icon);
@@ -1888,7 +2143,8 @@ public class ArenaSetupGui {
 				arena.saveConfig();
 				Main.getArenaManager().loadArenas();
 
-				ArenaSetupGui.openVentGroupVentsEdit(player, Main.getArenaManager().getArenaByName(arena.getName()), ventGroupId);
+				ArenaSetupGui.openVentGroupVentsEdit(player, Main.getArenaManager().getArenaByName(arena.getName()),
+						ventGroupId);
 			}
 		});
 		invHolder.setIcon(44, icon);
@@ -1896,7 +2152,8 @@ public class ArenaSetupGui {
 	}
 
 	// create vent choose location
-	public static void openCreateVentChooseLocation(Player player, Arena arena, Integer ventGroupId, Integer currentPage) {
+	public static void openCreateVentChooseLocation(Player player, Arena arena, Integer ventGroupId,
+			Integer currentPage) {
 		VentGroup ventGroup = arena.getVentsManager().getVentGroup(ventGroupId);
 		if (ventGroup == null) {
 			return;
@@ -1905,13 +2162,18 @@ public class ArenaSetupGui {
 		Integer totalItems = arena.getLocations().size() + 1;
 		Integer totalPages = (int) Math.ceil((double) totalItems / (double) pageSize);
 
-		CustomHolder invHolder = new CustomHolder(45, ChatColor.YELLOW + "Choose vent location name: " + arena.getName() + " - " + ventGroupId);
+		CustomHolder invHolder = new CustomHolder(45,
+				ChatColor.YELLOW + "Choose vent location name: " + arena.getName() + " - " + ventGroupId);
 		Utils.addBorder(invHolder.getInventory(), 45);
 
-		invHolder.getInventory().setItem(0, Utils.createItem(Material.WHITE_WOOL, ChatColor.YELLOW + arena.getName(), 1));
-		invHolder.getInventory().setItem(1, Utils.createItem(Material.OAK_TRAPDOOR, ChatColor.YELLOW + "Vent group: " + ventGroupId, 1));
-		invHolder.getInventory().setItem(2, Utils.createItem(Material.IRON_TRAPDOOR, ChatColor.YELLOW + "Create vent", 1));
-		invHolder.getInventory().setItem(3, Utils.createItem(Material.WHITE_BANNER, ChatColor.YELLOW + "Choose vent location name", 1));
+		invHolder.getInventory().setItem(0,
+				Utils.createItem(Material.WHITE_WOOL, ChatColor.YELLOW + arena.getName(), 1));
+		invHolder.getInventory().setItem(1,
+				Utils.createItem(Material.OAK_TRAPDOOR, ChatColor.YELLOW + "Vent group: " + ventGroupId, 1));
+		invHolder.getInventory().setItem(2,
+				Utils.createItem(Material.IRON_TRAPDOOR, ChatColor.YELLOW + "Create vent", 1));
+		invHolder.getInventory().setItem(3,
+				Utils.createItem(Material.WHITE_BANNER, ChatColor.YELLOW + "Choose vent location name", 1));
 
 		Icon icon = new Icon(Utils.createItem(Material.ARROW, ChatColor.YELLOW + "Back"));
 		icon.addClickAction(new ClickAction() {
@@ -1923,7 +2185,8 @@ public class ArenaSetupGui {
 		invHolder.setIcon(36, icon);
 
 		if (totalPages > 1) {
-			invHolder.getInventory().setItem(40, Utils.createItem(Material.OAK_SIGN, ChatColor.YELLOW + "Page: " + currentPage + "/" + totalPages, currentPage));
+			invHolder.getInventory().setItem(40, Utils.createItem(Material.OAK_SIGN,
+					ChatColor.YELLOW + "Page: " + currentPage + "/" + totalPages, currentPage));
 
 			if (currentPage > 1) {
 				icon = new Icon(Utils.createItem(Material.PAPER, ChatColor.YELLOW + "Previous page"));
@@ -1956,10 +2219,11 @@ public class ArenaSetupGui {
 			final String key = keys.get(i);
 			final Boolean isNone = key.equals("----");
 			if (isNone) {
-				icon = new Icon(
-						Utils.createItem(Material.BARRIER, ChatColor.GREEN + "No location name", 1, ChatColor.YELLOW + "If you dont want this vent", ChatColor.YELLOW + "to have a location name"));
+				icon = new Icon(Utils.createItem(Material.BARRIER, ChatColor.GREEN + "No location name", 1,
+						ChatColor.YELLOW + "If you dont want this vent", ChatColor.YELLOW + "to have a location name"));
 			} else {
-				icon = new Icon(Utils.createItem(Material.WHITE_BANNER, ChatColor.GREEN + "Location: " + arena.getLocations().get(key).getName()));
+				icon = new Icon(Utils.createItem(Material.WHITE_BANNER,
+						ChatColor.GREEN + "Location: " + arena.getLocations().get(key).getName()));
 			}
 
 			icon.addClickAction(new ClickAction() {
@@ -1968,10 +2232,12 @@ public class ArenaSetupGui {
 					ConfigurationSection ventGroupsSec = arena.getArenaConfig().getConfigurationSection("ventgroups");
 					ConfigurationSection ventGroupSec = ventGroupsSec.getConfigurationSection(ventGroup.getConfigId());
 
-					ConfigurationSection ventSec = ventGroupSec.getConfigurationSection("vents").createSection(Utils.getRandomString(4));
+					ConfigurationSection ventSec = ventGroupSec.getConfigurationSection("vents")
+							.createSection(Utils.getRandomString(4));
 
-					String locStr = player.getWorld().getName() + "," + (player.getLocation().getBlockX() + 0.5) + "," + (player.getLocation().getBlockY() + 1.85) + ","
-							+ (player.getLocation().getBlockZ() + 0.5) + "," + player.getLocation().getYaw() + "," + player.getLocation().getPitch();
+					String locStr = player.getWorld().getName() + "," + (player.getLocation().getBlockX() + 0.5) + ","
+							+ (player.getLocation().getBlockY() + 1.85) + "," + (player.getLocation().getBlockZ() + 0.5)
+							+ "," + player.getLocation().getYaw() + "," + player.getLocation().getPitch();
 					ventSec.set("location", locStr);
 					ventSec.set("id", ventGroup.getVents().size());
 					ventSec.set("locationid", key);
@@ -1980,7 +2246,8 @@ public class ArenaSetupGui {
 					Main.getArenaManager().loadArenas();
 
 					player.closeInventory();
-					player.sendMessage(Main.getConfigManager().getPrefix() + ChatColor.YELLOW + "Successfully created vent in group: " + ventGroupId);
+					player.sendMessage(Main.getConfigManager().getPrefix() + ChatColor.YELLOW
+							+ "Successfully created vent in group: " + ventGroupId);
 				}
 			});
 			invHolder.addIcon(icon);
@@ -1990,7 +2257,8 @@ public class ArenaSetupGui {
 	}
 
 	// change vent's location name after created
-	public static void openVentChangeChooseLocation(Player player, Arena arena, Integer ventGroupId, Integer ventId, Integer currentPage) {
+	public static void openVentChangeChooseLocation(Player player, Arena arena, Integer ventGroupId, Integer ventId,
+			Integer currentPage) {
 		VentGroup ventGroup = arena.getVentsManager().getVentGroup(ventGroupId);
 		if (ventGroup == null) {
 			return;
@@ -2009,13 +2277,18 @@ public class ArenaSetupGui {
 		Integer totalItems = arena.getLocations().size() + 1;
 		Integer totalPages = (int) Math.ceil((double) totalItems / (double) pageSize);
 
-		CustomHolder invHolder = new CustomHolder(45, ChatColor.YELLOW + "Change vent location name: " + name + " - " + vent.getId());
+		CustomHolder invHolder = new CustomHolder(45,
+				ChatColor.YELLOW + "Change vent location name: " + name + " - " + vent.getId());
 		Utils.addBorder(invHolder.getInventory(), 45);
 
-		invHolder.getInventory().setItem(0, Utils.createItem(Material.WHITE_WOOL, ChatColor.YELLOW + arena.getName(), 1));
-		invHolder.getInventory().setItem(1, Utils.createItem(Material.OAK_TRAPDOOR, ChatColor.YELLOW + "Vent group: " + ventGroupId, 1));
-		invHolder.getInventory().setItem(2, Utils.createItem(Material.IRON_TRAPDOOR, ChatColor.YELLOW + "vent: " + ventId, 1));
-		invHolder.getInventory().setItem(3, Utils.createItem(Material.WHITE_BANNER, ChatColor.YELLOW + "Change vent location name", 1));
+		invHolder.getInventory().setItem(0,
+				Utils.createItem(Material.WHITE_WOOL, ChatColor.YELLOW + arena.getName(), 1));
+		invHolder.getInventory().setItem(1,
+				Utils.createItem(Material.OAK_TRAPDOOR, ChatColor.YELLOW + "Vent group: " + ventGroupId, 1));
+		invHolder.getInventory().setItem(2,
+				Utils.createItem(Material.IRON_TRAPDOOR, ChatColor.YELLOW + "vent: " + ventId, 1));
+		invHolder.getInventory().setItem(3,
+				Utils.createItem(Material.WHITE_BANNER, ChatColor.YELLOW + "Change vent location name", 1));
 
 		Icon icon = new Icon(Utils.createItem(Material.ARROW, ChatColor.YELLOW + "Back"));
 		icon.addClickAction(new ClickAction() {
@@ -2027,7 +2300,8 @@ public class ArenaSetupGui {
 		invHolder.setIcon(36, icon);
 
 		if (totalPages > 1) {
-			invHolder.getInventory().setItem(40, Utils.createItem(Material.OAK_SIGN, ChatColor.YELLOW + "Page: " + currentPage + "/" + totalPages, currentPage));
+			invHolder.getInventory().setItem(40, Utils.createItem(Material.OAK_SIGN,
+					ChatColor.YELLOW + "Page: " + currentPage + "/" + totalPages, currentPage));
 
 			if (currentPage > 1) {
 				icon = new Icon(Utils.createItem(Material.PAPER, ChatColor.YELLOW + "Previous page"));
@@ -2060,10 +2334,11 @@ public class ArenaSetupGui {
 			final String key = keys.get(i);
 			final Boolean isNone = key.equals("----");
 			if (isNone) {
-				icon = new Icon(
-						Utils.createItem(Material.BARRIER, ChatColor.GREEN + "No location name", 1, ChatColor.YELLOW + "If you dont want this vent", ChatColor.YELLOW + "to have a location name"));
+				icon = new Icon(Utils.createItem(Material.BARRIER, ChatColor.GREEN + "No location name", 1,
+						ChatColor.YELLOW + "If you dont want this vent", ChatColor.YELLOW + "to have a location name"));
 			} else {
-				icon = new Icon(Utils.createItem(Material.WHITE_BANNER, ChatColor.GREEN + "Location: " + arena.getLocations().get(key).getName()));
+				icon = new Icon(Utils.createItem(Material.WHITE_BANNER,
+						ChatColor.GREEN + "Location: " + arena.getLocations().get(key).getName()));
 			}
 			icon.addClickAction(new ClickAction() {
 				@Override
@@ -2071,7 +2346,8 @@ public class ArenaSetupGui {
 					ConfigurationSection ventGroupsSec = arena.getArenaConfig().getConfigurationSection("ventgroups");
 					ConfigurationSection ventGroupSec = ventGroupsSec.getConfigurationSection(ventGroup.getConfigId());
 
-					ConfigurationSection ventSec = ventGroupSec.getConfigurationSection("vents").getConfigurationSection(vent.getConfigId());
+					ConfigurationSection ventSec = ventGroupSec.getConfigurationSection("vents")
+							.getConfigurationSection(vent.getConfigId());
 
 					ventSec.set("locationid", key);
 
@@ -2083,7 +2359,8 @@ public class ArenaSetupGui {
 					}
 					player.closeInventory();
 
-					player.sendMessage(Main.getConfigManager().getPrefix() + ChatColor.YELLOW + "Successfully changed vent " + vent.getId() + " location name to "
+					player.sendMessage(Main.getConfigManager().getPrefix() + ChatColor.YELLOW
+							+ "Successfully changed vent " + vent.getId() + " location name to "
 							+ (isNone ? "none" : arena.getLocations().get(key)));
 
 				}
@@ -2100,7 +2377,8 @@ public class ArenaSetupGui {
 		CustomHolder invHolder = new CustomHolder(45, ChatColor.YELLOW + "Edit cameras: " + arena.getName());
 		Utils.addBorder(invHolder.getInventory(), 45);
 
-		invHolder.getInventory().setItem(0, Utils.createItem(Material.WHITE_WOOL, ChatColor.YELLOW + arena.getName(), 1));
+		invHolder.getInventory().setItem(0,
+				Utils.createItem(Material.WHITE_WOOL, ChatColor.YELLOW + arena.getName(), 1));
 		invHolder.getInventory().setItem(1, Utils.createSkull(Camera.camera, ChatColor.YELLOW + "Cameras", 1, ""));
 
 		Icon icon = new Icon(Utils.createItem(Material.ARROW, ChatColor.YELLOW + "Back"));
@@ -2112,7 +2390,8 @@ public class ArenaSetupGui {
 		});
 		invHolder.setIcon(36, icon);
 
-		icon = new Icon(Utils.createItem(arena.getEnableCameras() ? Material.LIME_DYE : Material.RED_DYE, ChatColor.GREEN + "Enable cameras: " + arena.getEnableCameras()));
+		icon = new Icon(Utils.createItem(arena.getEnableCameras() ? Material.LIME_DYE : Material.RED_DYE,
+				ChatColor.GREEN + "Enable cameras: " + arena.getEnableCameras()));
 		icon.addClickAction(new ClickAction() {
 			@Override
 			public void execute(Player player) {
@@ -2128,17 +2407,20 @@ public class ArenaSetupGui {
 		});
 		invHolder.addIcon(icon);
 
-		icon = new Icon(Utils.createItem(Material.END_CRYSTAL, ChatColor.GREEN + "Cameras hologram location", 1, ChatColor.YELLOW + Utils.locationToStringB(arena.getCamerasLoc()),
+		icon = new Icon(Utils.createItem(Material.END_CRYSTAL, ChatColor.GREEN + "Cameras hologram location", 1,
+				ChatColor.YELLOW + Utils.locationToStringB(arena.getCamerasLoc()),
 				ChatColor.YELLOW + "Click to change to your location"));
 		icon.addClickAction(new ClickAction() {
 			@Override
 			public void execute(Player player) {
 				ConfigurationSection camerasTopSec = arena.getArenaConfig().getConfigurationSection("cameras");
 
-				String locStr = player.getWorld().getName() + "," + (player.getLocation().getX()) + "," + (player.getLocation().getBlockY() + 1.85) + "," + (player.getLocation().getZ());
+				String locStr = player.getWorld().getName() + "," + (player.getLocation().getX()) + ","
+						+ (player.getLocation().getBlockY() + 1.85) + "," + (player.getLocation().getZ());
 				camerasTopSec.set("hologramloc", locStr);
 
-				arena.setCamerasLoc(new Location(player.getWorld(), player.getLocation().getX(), player.getLocation().getBlockY() + 1.85, player.getLocation().getZ()));
+				arena.setCamerasLoc(new Location(player.getWorld(), player.getLocation().getX(),
+						player.getLocation().getBlockY() + 1.85, player.getLocation().getZ()));
 
 				arena.saveConfig();
 				arena.deleteHolograms();
@@ -2149,7 +2431,8 @@ public class ArenaSetupGui {
 		});
 		invHolder.addIcon(icon);
 
-		icon = new Icon(Utils.createSkull(Camera.camera, ChatColor.GREEN + "Edit cameras", 1, ChatColor.YELLOW + "Cameras count: " + arena.getCamerasManager().getCameras().size()));
+		icon = new Icon(Utils.createSkull(Camera.camera, ChatColor.GREEN + "Edit cameras", 1,
+				ChatColor.YELLOW + "Cameras count: " + arena.getCamerasManager().getCameras().size()));
 		icon.addClickAction(new ClickAction() {
 			@Override
 			public void execute(Player player) {
@@ -2165,7 +2448,8 @@ public class ArenaSetupGui {
 		CustomHolder invHolder = new CustomHolder(45, ChatColor.YELLOW + "Select camera: " + arena.getName());
 		Utils.addBorder(invHolder.getInventory(), 45);
 
-		invHolder.getInventory().setItem(0, Utils.createItem(Material.WHITE_WOOL, ChatColor.YELLOW + arena.getName(), 1));
+		invHolder.getInventory().setItem(0,
+				Utils.createItem(Material.WHITE_WOOL, ChatColor.YELLOW + arena.getName(), 1));
 		invHolder.getInventory().setItem(1, Utils.createSkull(Camera.camera, ChatColor.YELLOW + "Cameras", 1, ""));
 
 		Icon icon = new Icon(Utils.createItem(Material.ARROW, ChatColor.YELLOW + "Back"));
@@ -2183,7 +2467,8 @@ public class ArenaSetupGui {
 			if (cam.getLocName() != null) {
 				locName = cam.getLocName().getName();
 			}
-			icon = new Icon(Utils.createSkull(Camera.camera, ChatColor.GREEN + "Camera: " + cam.getId(), 1, ChatColor.YELLOW + "Location name: " + locName));
+			icon = new Icon(Utils.createSkull(Camera.camera, ChatColor.GREEN + "Camera: " + cam.getId(), 1,
+					ChatColor.YELLOW + "Location name: " + locName));
 			icon.addClickAction(new ClickAction() {
 				@Override
 				public void execute(Player player) {
@@ -2211,11 +2496,14 @@ public class ArenaSetupGui {
 			return;
 		}
 
-		CustomHolder invHolder = new CustomHolder(45, ChatColor.YELLOW + "Edit camera: " + arena.getName() + " - " + camId);
+		CustomHolder invHolder = new CustomHolder(45,
+				ChatColor.YELLOW + "Edit camera: " + arena.getName() + " - " + camId);
 		Utils.addBorder(invHolder.getInventory(), 45);
 
-		invHolder.getInventory().setItem(0, Utils.createItem(Material.WHITE_WOOL, ChatColor.YELLOW + arena.getName(), 1));
-		invHolder.getInventory().setItem(1, Utils.createSkull(Camera.camera, ChatColor.YELLOW + "Camera: " + camId, 1, ""));
+		invHolder.getInventory().setItem(0,
+				Utils.createItem(Material.WHITE_WOOL, ChatColor.YELLOW + arena.getName(), 1));
+		invHolder.getInventory().setItem(1,
+				Utils.createSkull(Camera.camera, ChatColor.YELLOW + "Camera: " + camId, 1, ""));
 
 		Icon icon = new Icon(Utils.createItem(Material.ARROW, ChatColor.YELLOW + "Back"));
 		icon.addClickAction(new ClickAction() {
@@ -2232,7 +2520,8 @@ public class ArenaSetupGui {
 			name = locName.getName();
 		}
 
-		icon = new Icon(Utils.createItem(Material.WHITE_BANNER, ChatColor.GREEN + "Change location name", 1, ChatColor.YELLOW + name));
+		icon = new Icon(Utils.createItem(Material.WHITE_BANNER, ChatColor.GREEN + "Change location name", 1,
+				ChatColor.YELLOW + name));
 		icon.addClickAction(new ClickAction() {
 			@Override
 			public void execute(Player player) {
@@ -2241,7 +2530,8 @@ public class ArenaSetupGui {
 		});
 		invHolder.addIcon(icon);
 
-		icon = new Icon(Utils.createItem(Material.BLACK_CONCRETE, ChatColor.GREEN + "Fake blocks", 1, ChatColor.YELLOW + "Fake blocks to limit the player vision", ChatColor.YELLOW + "Optional"));
+		icon = new Icon(Utils.createItem(Material.BLACK_CONCRETE, ChatColor.GREEN + "Fake blocks", 1,
+				ChatColor.YELLOW + "Fake blocks to limit the player vision", ChatColor.YELLOW + "Optional"));
 		icon.addClickAction(new ClickAction() {
 			@Override
 			public void execute(Player player) {
@@ -2250,8 +2540,10 @@ public class ArenaSetupGui {
 		});
 		invHolder.addIcon(icon);
 
-		icon = new Icon(Utils.createItem(Material.GLASS, ChatColor.GREEN + "Fake air blocks", 1, ChatColor.YELLOW + "Fake air blocks to allow players to see through stuff",
-				ChatColor.YELLOW + "For example: the camera is top down", ChatColor.YELLOW + "and you want players to see through the roof", ChatColor.YELLOW + "Optional"));
+		icon = new Icon(Utils.createItem(Material.GLASS, ChatColor.GREEN + "Fake air blocks", 1,
+				ChatColor.YELLOW + "Fake air blocks to allow players to see through stuff",
+				ChatColor.YELLOW + "For example: the camera is top down",
+				ChatColor.YELLOW + "and you want players to see through the roof", ChatColor.YELLOW + "Optional"));
 		icon.addClickAction(new ClickAction() {
 			@Override
 			public void execute(Player player) {
@@ -2261,13 +2553,16 @@ public class ArenaSetupGui {
 		invHolder.addIcon(icon);
 
 		icon = new Icon(Utils.createSkull(Camera.camera, ChatColor.GREEN + "Change camera head location", 1,
-				ChatColor.YELLOW + Utils.locationToStringB(cam.getCamLoc()) + "/n" + ChatColor.YELLOW + "Click to change to your location"));
+				ChatColor.YELLOW + Utils.locationToStringB(cam.getCamLoc()) + "/n" + ChatColor.YELLOW
+						+ "Click to change to your location"));
 		icon.addClickAction(new ClickAction() {
 			@Override
 			public void execute(Player player) {
-				ConfigurationSection camSec = arena.getArenaConfig().getConfigurationSection("cameras.cams." + cam.getConfigKey());
+				ConfigurationSection camSec = arena.getArenaConfig()
+						.getConfigurationSection("cameras.cams." + cam.getConfigKey());
 
-				String locStr = player.getWorld().getName() + "," + (player.getLocation().getX()) + "," + (player.getLocation().getY()) + "," + (player.getLocation().getZ()) + ","
+				String locStr = player.getWorld().getName() + "," + (player.getLocation().getX()) + ","
+						+ (player.getLocation().getY()) + "," + (player.getLocation().getZ()) + ","
 						+ player.getLocation().getYaw() + "," + player.getLocation().getPitch();
 				camSec.set("camlocation", locStr);
 
@@ -2279,13 +2574,16 @@ public class ArenaSetupGui {
 		invHolder.addIcon(icon);
 
 		icon = new Icon(Utils.createSkull(Camera.lampOn, ChatColor.GREEN + "Change camera lamp location", 1,
-				ChatColor.YELLOW + Utils.locationToStringB(cam.getLampLoc()) + "/n" + ChatColor.YELLOW + "Click to change to your location"));
+				ChatColor.YELLOW + Utils.locationToStringB(cam.getLampLoc()) + "/n" + ChatColor.YELLOW
+						+ "Click to change to your location"));
 		icon.addClickAction(new ClickAction() {
 			@Override
 			public void execute(Player player) {
-				ConfigurationSection camSec = arena.getArenaConfig().getConfigurationSection("cameras.cams." + cam.getConfigKey());
+				ConfigurationSection camSec = arena.getArenaConfig()
+						.getConfigurationSection("cameras.cams." + cam.getConfigKey());
 
-				String locStr = player.getWorld().getName() + "," + (player.getLocation().getX()) + "," + (player.getLocation().getY()) + "," + (player.getLocation().getZ()) + ","
+				String locStr = player.getWorld().getName() + "," + (player.getLocation().getX()) + ","
+						+ (player.getLocation().getY()) + "," + (player.getLocation().getZ()) + ","
 						+ player.getLocation().getYaw() + "," + 0;
 				camSec.set("lamplocation", locStr);
 
@@ -2300,14 +2598,17 @@ public class ArenaSetupGui {
 		});
 		invHolder.addIcon(icon);
 
-		icon = new Icon(Utils.createItem(Material.END_CRYSTAL, ChatColor.GREEN + "Change camera view location", 1, ChatColor.YELLOW + Utils.locationToStringB(cam.getViewLoc()),
+		icon = new Icon(Utils.createItem(Material.END_CRYSTAL, ChatColor.GREEN + "Change camera view location", 1,
+				ChatColor.YELLOW + Utils.locationToStringB(cam.getViewLoc()),
 				ChatColor.YELLOW + "Click to change to your location"));
 		icon.addClickAction(new ClickAction() {
 			@Override
 			public void execute(Player player) {
-				ConfigurationSection camSec = arena.getArenaConfig().getConfigurationSection("cameras.cams." + cam.getConfigKey());
+				ConfigurationSection camSec = arena.getArenaConfig()
+						.getConfigurationSection("cameras.cams." + cam.getConfigKey());
 
-				String locStr = player.getWorld().getName() + "," + (player.getLocation().getX()) + "," + (player.getLocation().getY()) + "," + (player.getLocation().getZ()) + ","
+				String locStr = player.getWorld().getName() + "," + (player.getLocation().getX()) + ","
+						+ (player.getLocation().getY()) + "," + (player.getLocation().getZ()) + ","
 						+ player.getLocation().getYaw() + "," + player.getLocation().getPitch();
 				camSec.set("viewlocation", locStr);
 
@@ -2371,12 +2672,16 @@ public class ArenaSetupGui {
 		Integer totalItems = arena.getLocations().size() + 1;
 		Integer totalPages = (int) Math.ceil((double) totalItems / (double) pageSize);
 
-		CustomHolder invHolder = new CustomHolder(45, ChatColor.YELLOW + "Choose camera location name: " + arena.getName());
+		CustomHolder invHolder = new CustomHolder(45,
+				ChatColor.YELLOW + "Choose camera location name: " + arena.getName());
 		Utils.addBorder(invHolder.getInventory(), 45);
 
-		invHolder.getInventory().setItem(0, Utils.createItem(Material.WHITE_WOOL, ChatColor.YELLOW + arena.getName(), 1));
-		invHolder.getInventory().setItem(1, Utils.createSkull(Camera.camera, ChatColor.YELLOW + "Create camera", 1, ""));
-		invHolder.getInventory().setItem(2, Utils.createItem(Material.WHITE_BANNER, ChatColor.YELLOW + "Choose camera location name", 1));
+		invHolder.getInventory().setItem(0,
+				Utils.createItem(Material.WHITE_WOOL, ChatColor.YELLOW + arena.getName(), 1));
+		invHolder.getInventory().setItem(1,
+				Utils.createSkull(Camera.camera, ChatColor.YELLOW + "Create camera", 1, ""));
+		invHolder.getInventory().setItem(2,
+				Utils.createItem(Material.WHITE_BANNER, ChatColor.YELLOW + "Choose camera location name", 1));
 
 		Icon icon = new Icon(Utils.createItem(Material.ARROW, ChatColor.YELLOW + "Back"));
 		icon.addClickAction(new ClickAction() {
@@ -2388,7 +2693,8 @@ public class ArenaSetupGui {
 		invHolder.setIcon(36, icon);
 
 		if (totalPages > 1) {
-			invHolder.getInventory().setItem(40, Utils.createItem(Material.OAK_SIGN, ChatColor.YELLOW + "Page: " + currentPage + "/" + totalPages, currentPage));
+			invHolder.getInventory().setItem(40, Utils.createItem(Material.OAK_SIGN,
+					ChatColor.YELLOW + "Page: " + currentPage + "/" + totalPages, currentPage));
 
 			if (currentPage > 1) {
 				icon = new Icon(Utils.createItem(Material.PAPER, ChatColor.YELLOW + "Previous page"));
@@ -2421,10 +2727,12 @@ public class ArenaSetupGui {
 			final String key = keys.get(i);
 			final Boolean isNone = key.equals("----");
 			if (isNone) {
-				icon = new Icon(
-						Utils.createItem(Material.BARRIER, ChatColor.GREEN + "No location name", 1, ChatColor.YELLOW + "If you dont want this camera", ChatColor.YELLOW + "to have a location name"));
+				icon = new Icon(Utils.createItem(Material.BARRIER, ChatColor.GREEN + "No location name", 1,
+						ChatColor.YELLOW + "If you dont want this camera",
+						ChatColor.YELLOW + "to have a location name"));
 			} else {
-				icon = new Icon(Utils.createItem(Material.WHITE_BANNER, ChatColor.GREEN + "Location: " + arena.getLocations().get(key).getName()));
+				icon = new Icon(Utils.createItem(Material.WHITE_BANNER,
+						ChatColor.GREEN + "Location: " + arena.getLocations().get(key).getName()));
 			}
 
 			icon.addClickAction(new ClickAction() {
@@ -2434,7 +2742,8 @@ public class ArenaSetupGui {
 
 					ConfigurationSection createdSec = camerasSec.createSection(Utils.getRandomString(4));
 
-					String locStr = player.getWorld().getName() + "," + (player.getLocation().getX()) + "," + (player.getLocation().getY()) + "," + (player.getLocation().getZ()) + ","
+					String locStr = player.getWorld().getName() + "," + (player.getLocation().getX()) + ","
+							+ (player.getLocation().getY()) + "," + (player.getLocation().getZ()) + ","
 							+ player.getLocation().getYaw() + ", " + player.getLocation().getPitch();
 
 					createdSec.set("id", arena.getCamerasManager().getCameras().size());
@@ -2444,7 +2753,8 @@ public class ArenaSetupGui {
 					createdSec.set("fakeblocks", new ArrayList<String>());
 					createdSec.set("fakeairblocks", new ArrayList<String>());
 
-					String lampLocStr = player.getWorld().getName() + "," + (player.getLocation().getX()) + "," + (player.getLocation().getY() - 1) + "," + (player.getLocation().getZ()) + ","
+					String lampLocStr = player.getWorld().getName() + "," + (player.getLocation().getX()) + ","
+							+ (player.getLocation().getY() - 1) + "," + (player.getLocation().getZ()) + ","
 							+ player.getLocation().getYaw() + ", " + 0;
 					createdSec.set("lamplocation", lampLocStr);
 
@@ -2452,7 +2762,8 @@ public class ArenaSetupGui {
 					Main.getArenaManager().loadArenas();
 
 					player.closeInventory();
-					player.sendMessage(Main.getConfigManager().getPrefix() + ChatColor.YELLOW + "Successfully created camera");
+					player.sendMessage(
+							Main.getConfigManager().getPrefix() + ChatColor.YELLOW + "Successfully created camera");
 				}
 			});
 			invHolder.addIcon(icon);
@@ -2477,12 +2788,16 @@ public class ArenaSetupGui {
 		Integer totalItems = arena.getLocations().size() + 1;
 		Integer totalPages = (int) Math.ceil((double) totalItems / (double) pageSize);
 
-		CustomHolder invHolder = new CustomHolder(45, ChatColor.YELLOW + "Change camera location name: " + name + " - " + cam.getId());
+		CustomHolder invHolder = new CustomHolder(45,
+				ChatColor.YELLOW + "Change camera location name: " + name + " - " + cam.getId());
 		Utils.addBorder(invHolder.getInventory(), 45);
 
-		invHolder.getInventory().setItem(0, Utils.createItem(Material.WHITE_WOOL, ChatColor.YELLOW + arena.getName(), 1));
-		invHolder.getInventory().setItem(1, Utils.createSkull(Camera.camera, ChatColor.YELLOW + "camera: " + camId, 1, ""));
-		invHolder.getInventory().setItem(2, Utils.createItem(Material.WHITE_BANNER, ChatColor.YELLOW + "Change camera location name", 1));
+		invHolder.getInventory().setItem(0,
+				Utils.createItem(Material.WHITE_WOOL, ChatColor.YELLOW + arena.getName(), 1));
+		invHolder.getInventory().setItem(1,
+				Utils.createSkull(Camera.camera, ChatColor.YELLOW + "camera: " + camId, 1, ""));
+		invHolder.getInventory().setItem(2,
+				Utils.createItem(Material.WHITE_BANNER, ChatColor.YELLOW + "Change camera location name", 1));
 
 		Icon icon = new Icon(Utils.createItem(Material.ARROW, ChatColor.YELLOW + "Back"));
 		icon.addClickAction(new ClickAction() {
@@ -2494,7 +2809,8 @@ public class ArenaSetupGui {
 		invHolder.setIcon(36, icon);
 
 		if (totalPages > 1) {
-			invHolder.getInventory().setItem(40, Utils.createItem(Material.OAK_SIGN, ChatColor.YELLOW + "Page: " + currentPage + "/" + totalPages, currentPage));
+			invHolder.getInventory().setItem(40, Utils.createItem(Material.OAK_SIGN,
+					ChatColor.YELLOW + "Page: " + currentPage + "/" + totalPages, currentPage));
 
 			if (currentPage > 1) {
 				icon = new Icon(Utils.createItem(Material.PAPER, ChatColor.YELLOW + "Previous page"));
@@ -2527,15 +2843,17 @@ public class ArenaSetupGui {
 			final String key = keys.get(i);
 			final Boolean isNone = key.equals("----");
 			if (isNone) {
-				icon = new Icon(
-						Utils.createItem(Material.BARRIER, ChatColor.GREEN + "No location name", 1, ChatColor.YELLOW + "If you dont want this vent", ChatColor.YELLOW + "to have a location name"));
+				icon = new Icon(Utils.createItem(Material.BARRIER, ChatColor.GREEN + "No location name", 1,
+						ChatColor.YELLOW + "If you dont want this vent", ChatColor.YELLOW + "to have a location name"));
 			} else {
-				icon = new Icon(Utils.createItem(Material.WHITE_BANNER, ChatColor.GREEN + "Location: " + arena.getLocations().get(key).getName()));
+				icon = new Icon(Utils.createItem(Material.WHITE_BANNER,
+						ChatColor.GREEN + "Location: " + arena.getLocations().get(key).getName()));
 			}
 			icon.addClickAction(new ClickAction() {
 				@Override
 				public void execute(Player player) {
-					ConfigurationSection camSec = arena.getArenaConfig().getConfigurationSection("cameras.cams." + cam.getConfigKey());
+					ConfigurationSection camSec = arena.getArenaConfig()
+							.getConfigurationSection("cameras.cams." + cam.getConfigKey());
 
 					camSec.set("locationid", key);
 
@@ -2546,7 +2864,8 @@ public class ArenaSetupGui {
 						cam.setLocName(arena.getLocations().get(key));
 					}
 					player.closeInventory();
-					player.sendMessage(Main.getConfigManager().getPrefix() + ChatColor.YELLOW + "Successfully changed camera " + cam.getId() + " location name to"
+					player.sendMessage(Main.getConfigManager().getPrefix() + ChatColor.YELLOW
+							+ "Successfully changed camera " + cam.getId() + " location name to"
 							+ (isNone ? "none" : arena.getLocations().get(key).getName()));
 				}
 			});
@@ -2561,12 +2880,17 @@ public class ArenaSetupGui {
 			return;
 		}
 
-		CustomHolder invHolder = new CustomHolder(45, ChatColor.YELLOW + "Edit camera fake blocks: " + arena.getName() + " - " + camId);
+		CustomHolder invHolder = new CustomHolder(45,
+				ChatColor.YELLOW + "Edit camera fake blocks: " + arena.getName() + " - " + camId);
 		Utils.addBorder(invHolder.getInventory(), 45);
 
-		invHolder.getInventory().setItem(0, Utils.createItem(Material.WHITE_WOOL, ChatColor.YELLOW + arena.getName(), 1));
-		invHolder.getInventory().setItem(1, Utils.createSkull(Camera.camera, ChatColor.YELLOW + "Camera: " + camId, 1, ""));
-		invHolder.getInventory().setItem(2, Utils.createItem(Material.BLACK_CONCRETE, ChatColor.YELLOW + "Edit fake blocks", 1, ChatColor.YELLOW + "Fake blocks count: " + cam.getFakeBlocks().size()));
+		invHolder.getInventory().setItem(0,
+				Utils.createItem(Material.WHITE_WOOL, ChatColor.YELLOW + arena.getName(), 1));
+		invHolder.getInventory().setItem(1,
+				Utils.createSkull(Camera.camera, ChatColor.YELLOW + "Camera: " + camId, 1, ""));
+		invHolder.getInventory().setItem(2,
+				Utils.createItem(Material.BLACK_CONCRETE, ChatColor.YELLOW + "Edit fake blocks", 1,
+						ChatColor.YELLOW + "Fake blocks count: " + cam.getFakeBlocks().size()));
 
 		Icon icon = new Icon(Utils.createItem(Material.ARROW, ChatColor.YELLOW + "Back"));
 		icon.addClickAction(new ClickAction() {
@@ -2577,38 +2901,46 @@ public class ArenaSetupGui {
 		});
 		invHolder.setIcon(36, icon);
 
-		icon = new Icon(Utils.createItem(Material.STICK, ChatColor.GREEN + "Get fake blocks wand", 1, ChatColor.YELLOW + "Break blocks to make them fake blocks"));
+		icon = new Icon(Utils.createItem(Material.STICK, ChatColor.GREEN + "Get fake blocks wand", 1,
+				ChatColor.YELLOW + "Break blocks to make them fake blocks"));
 		icon.addClickAction(new ClickAction() {
 			@Override
 			public void execute(Player player) {
-				player.getInventory().addItem(Utils.createItem(Material.STICK, ChatColor.GOLD + "Fake Blocks Wand: " + arena.getName() + "|" + camId, 1,
-						ChatColor.YELLOW + "Break blocks to make them fake blocks for camera " + camId));
+				player.getInventory()
+						.addItem(Utils.createItem(Material.STICK,
+								ChatColor.GOLD + "Fake Blocks Wand: " + arena.getName() + "|" + camId, 1,
+								ChatColor.YELLOW + "Break blocks to make them fake blocks for camera " + camId));
 			}
 		});
 		invHolder.addIcon(icon);
 
-		icon = new Icon(Utils.createItem(Material.BLAZE_ROD, ChatColor.GREEN + "Get remove fake blocks wand", 1, ChatColor.YELLOW + "Break blocks to remove them from the fake blocks list"));
+		icon = new Icon(Utils.createItem(Material.BLAZE_ROD, ChatColor.GREEN + "Get remove fake blocks wand", 1,
+				ChatColor.YELLOW + "Break blocks to remove them from the fake blocks list"));
 		icon.addClickAction(new ClickAction() {
 			@Override
 			public void execute(Player player) {
-				player.getInventory().addItem(Utils.createItem(Material.BLAZE_ROD, ChatColor.GOLD + "Remove Fake Blocks Wand: " + arena.getName() + "|" + camId, 1,
+				player.getInventory().addItem(Utils.createItem(Material.BLAZE_ROD,
+						ChatColor.GOLD + "Remove Fake Blocks Wand: " + arena.getName() + "|" + camId, 1,
 						ChatColor.YELLOW + "Break blocks to remove them from the fake blocks list for cam " + camId));
 			}
 		});
 		invHolder.addIcon(icon);
 
-		icon = new Icon(Utils.createItem(Material.REDSTONE, ChatColor.GREEN + "Delete all fake blocks", 1, ChatColor.YELLOW + "Fake blocks count: " + cam.getFakeBlocks().size()));
+		icon = new Icon(Utils.createItem(Material.REDSTONE, ChatColor.GREEN + "Delete all fake blocks", 1,
+				ChatColor.YELLOW + "Fake blocks count: " + cam.getFakeBlocks().size()));
 		icon.addClickAction(new ClickAction() {
 			@Override
 			public void execute(Player player) {
 				arena.endGame(false);
-				ConfigurationSection camSec = arena.getArenaConfig().getConfigurationSection("cameras.cams." + cam.getConfigKey());
+				ConfigurationSection camSec = arena.getArenaConfig()
+						.getConfigurationSection("cameras.cams." + cam.getConfigKey());
 
 				camSec.set("fakeblocks", new ArrayList<String>());
 
 				arena.saveConfig();
 				cam.deleteFakeBlocks();
-				player.sendMessage(Main.getConfigManager().getPrefix() + ChatColor.YELLOW + "Successfully removed all fake blocks for camera " + cam.getId());
+				player.sendMessage(Main.getConfigManager().getPrefix() + ChatColor.YELLOW
+						+ "Successfully removed all fake blocks for camera " + cam.getId());
 
 			}
 		});
@@ -2625,7 +2957,8 @@ public class ArenaSetupGui {
 		});
 		invHolder.addIcon(icon);
 
-		icon = new Icon(Utils.createItem(Material.STONE, ChatColor.GREEN + "Hide all fake blocks to you", 1, ChatColor.YELLOW + "Hide all fake blocks only to you"));
+		icon = new Icon(Utils.createItem(Material.STONE, ChatColor.GREEN + "Hide all fake blocks to you", 1,
+				ChatColor.YELLOW + "Hide all fake blocks only to you"));
 		icon.addClickAction(new ClickAction() {
 			@Override
 			public void execute(Player player) {
@@ -2636,7 +2969,8 @@ public class ArenaSetupGui {
 		});
 		invHolder.addIcon(icon);
 
-		icon = new Icon(Utils.createItem(Material.BARRIER, ChatColor.GREEN + "Place all fake blocks", 1, ChatColor.YELLOW + "Replace all fake blocks with real blocks.",
+		icon = new Icon(Utils.createItem(Material.BARRIER, ChatColor.GREEN + "Place all fake blocks", 1,
+				ChatColor.YELLOW + "Replace all fake blocks with real blocks.",
 				ChatColor.RED + "Warning: this will replace all existing blocks to the fake blocks."));
 		icon.addClickAction(new ClickAction() {
 			@Override
@@ -2657,13 +2991,16 @@ public class ArenaSetupGui {
 			return;
 		}
 
-		CustomHolder invHolder = new CustomHolder(45, ChatColor.YELLOW + "Edit camera fake air blocks: " + arena.getName() + " - " + camId);
+		CustomHolder invHolder = new CustomHolder(45,
+				ChatColor.YELLOW + "Edit camera fake air blocks: " + arena.getName() + " - " + camId);
 		Utils.addBorder(invHolder.getInventory(), 45);
 
-		invHolder.getInventory().setItem(0, Utils.createItem(Material.WHITE_WOOL, ChatColor.YELLOW + arena.getName(), 1));
-		invHolder.getInventory().setItem(1, Utils.createSkull(Camera.camera, ChatColor.YELLOW + "Camera: " + camId, 1, ""));
-		invHolder.getInventory().setItem(2,
-				Utils.createItem(Material.GLASS, ChatColor.YELLOW + "Edit fake air blocks", 1, ChatColor.YELLOW + "Fake air blocks count: " + cam.getFakeAirBlocks().size()));
+		invHolder.getInventory().setItem(0,
+				Utils.createItem(Material.WHITE_WOOL, ChatColor.YELLOW + arena.getName(), 1));
+		invHolder.getInventory().setItem(1,
+				Utils.createSkull(Camera.camera, ChatColor.YELLOW + "Camera: " + camId, 1, ""));
+		invHolder.getInventory().setItem(2, Utils.createItem(Material.GLASS, ChatColor.YELLOW + "Edit fake air blocks",
+				1, ChatColor.YELLOW + "Fake air blocks count: " + cam.getFakeAirBlocks().size()));
 
 		Icon icon = new Icon(Utils.createItem(Material.ARROW, ChatColor.YELLOW + "Back"));
 		icon.addClickAction(new ClickAction() {
@@ -2674,38 +3011,48 @@ public class ArenaSetupGui {
 		});
 		invHolder.setIcon(36, icon);
 
-		icon = new Icon(Utils.createItem(Material.STICK, ChatColor.GREEN + "Get fake air blocks wand", 1, ChatColor.YELLOW + "Break blocks to make them fake air blocks"));
+		icon = new Icon(Utils.createItem(Material.STICK, ChatColor.GREEN + "Get fake air blocks wand", 1,
+				ChatColor.YELLOW + "Break blocks to make them fake air blocks"));
 		icon.addClickAction(new ClickAction() {
 			@Override
 			public void execute(Player player) {
-				player.getInventory().addItem(Utils.createItem(Material.STICK, ChatColor.GOLD + "Fake Air Blocks Wand: " + arena.getName() + "|" + camId, 1,
-						ChatColor.YELLOW + "Break blocks to make them fake air blocks for camera " + camId));
+				player.getInventory()
+						.addItem(Utils.createItem(Material.STICK,
+								ChatColor.GOLD + "Fake Air Blocks Wand: " + arena.getName() + "|" + camId, 1,
+								ChatColor.YELLOW + "Break blocks to make them fake air blocks for camera " + camId));
 			}
 		});
 		invHolder.addIcon(icon);
 
-		icon = new Icon(Utils.createItem(Material.BLAZE_ROD, ChatColor.GREEN + "Get remove fake air blocks wand", 1, ChatColor.YELLOW + "Break blocks to remove them from the fake air blocks list"));
+		icon = new Icon(Utils.createItem(Material.BLAZE_ROD, ChatColor.GREEN + "Get remove fake air blocks wand", 1,
+				ChatColor.YELLOW + "Break blocks to remove them from the fake air blocks list"));
 		icon.addClickAction(new ClickAction() {
 			@Override
 			public void execute(Player player) {
-				player.getInventory().addItem(Utils.createItem(Material.BLAZE_ROD, ChatColor.GOLD + "Remove Fake Air Blocks Wand: " + arena.getName() + "|" + camId, 1,
-						ChatColor.YELLOW + "Break blocks to remove them from the fake air blocks list for cam " + camId));
+				player.getInventory()
+						.addItem(Utils.createItem(Material.BLAZE_ROD,
+								ChatColor.GOLD + "Remove Fake Air Blocks Wand: " + arena.getName() + "|" + camId, 1,
+								ChatColor.YELLOW + "Break blocks to remove them from the fake air blocks list for cam "
+										+ camId));
 			}
 		});
 		invHolder.addIcon(icon);
 
-		icon = new Icon(Utils.createItem(Material.REDSTONE, ChatColor.GREEN + "Delete all fake air blocks", 1, ChatColor.YELLOW + "Fake air blocks count: " + cam.getFakeAirBlocks().size()));
+		icon = new Icon(Utils.createItem(Material.REDSTONE, ChatColor.GREEN + "Delete all fake air blocks", 1,
+				ChatColor.YELLOW + "Fake air blocks count: " + cam.getFakeAirBlocks().size()));
 		icon.addClickAction(new ClickAction() {
 			@Override
 			public void execute(Player player) {
 				arena.endGame(false);
-				ConfigurationSection camSec = arena.getArenaConfig().getConfigurationSection("cameras.cams." + cam.getConfigKey());
+				ConfigurationSection camSec = arena.getArenaConfig()
+						.getConfigurationSection("cameras.cams." + cam.getConfigKey());
 
 				camSec.set("fakeairblocks", new ArrayList<String>());
 
 				arena.saveConfig();
 				cam.deleteFakeAirBlocks();
-				player.sendMessage(Main.getConfigManager().getPrefix() + ChatColor.YELLOW + "Successfully removed all fake air blocks for camera " + cam.getId());
+				player.sendMessage(Main.getConfigManager().getPrefix() + ChatColor.YELLOW
+						+ "Successfully removed all fake air blocks for camera " + cam.getId());
 
 			}
 		});
@@ -2742,7 +3089,8 @@ public class ArenaSetupGui {
 		CustomHolder invHolder = new CustomHolder(45, ChatColor.YELLOW + "Select door group: " + arena.getName());
 		Utils.addBorder(invHolder.getInventory(), 45);
 
-		invHolder.getInventory().setItem(0, Utils.createItem(Material.WHITE_WOOL, ChatColor.YELLOW + arena.getName(), 1));
+		invHolder.getInventory().setItem(0,
+				Utils.createItem(Material.WHITE_WOOL, ChatColor.YELLOW + arena.getName(), 1));
 		invHolder.getInventory().setItem(1, Utils.createItem(Material.OAK_DOOR, ChatColor.YELLOW + "Door groups"));
 
 		Icon icon = new Icon(Utils.createItem(Material.ARROW, ChatColor.YELLOW + "Back"));
@@ -2756,7 +3104,8 @@ public class ArenaSetupGui {
 
 		DoorsManager manager = arena.getDoorsManager();
 		for (DoorGroup dg : manager.getDoorGroups()) {
-			icon = new Icon(Utils.createItem(Material.OAK_DOOR, ChatColor.GREEN + "Door group: " + dg.getId(), 1, ChatColor.YELLOW + "Location name: " + dg.getLocName().getName()));
+			icon = new Icon(Utils.createItem(Material.OAK_DOOR, ChatColor.GREEN + "Door group: " + dg.getId(), 1,
+					ChatColor.YELLOW + "Location name: " + dg.getLocName().getName()));
 			icon.addClickAction(new ClickAction() {
 				@Override
 				public void execute(Player player) {
@@ -2766,7 +3115,8 @@ public class ArenaSetupGui {
 			invHolder.addIcon(icon);
 		}
 
-		icon = new Icon(Utils.createItem(Material.CRAFTING_TABLE, ChatColor.YELLOW + "Add door group", 1, ChatColor.YELLOW + "Click to create a new door group"));
+		icon = new Icon(Utils.createItem(Material.CRAFTING_TABLE, ChatColor.YELLOW + "Add door group", 1,
+				ChatColor.YELLOW + "Click to create a new door group"));
 		icon.addClickAction(new ClickAction() {
 			@Override
 			public void execute(Player player) {
@@ -2783,12 +3133,15 @@ public class ArenaSetupGui {
 		if (doorGroup == null) {
 			return;
 		}
-		CustomHolder invHolder = new CustomHolder(45, ChatColor.YELLOW + "Edit door group: " + arena.getName() + " - " + doorGroupId);
+		CustomHolder invHolder = new CustomHolder(45,
+				ChatColor.YELLOW + "Edit door group: " + arena.getName() + " - " + doorGroupId);
 		Utils.addBorder(invHolder.getInventory(), 45);
 
-		invHolder.getInventory().setItem(0, Utils.createItem(Material.WHITE_WOOL, ChatColor.YELLOW + arena.getName(), 1));
+		invHolder.getInventory().setItem(0,
+				Utils.createItem(Material.WHITE_WOOL, ChatColor.YELLOW + arena.getName(), 1));
 		invHolder.getInventory().setItem(1,
-				Utils.createItem(Material.OAK_DOOR, ChatColor.YELLOW + "Door group: " + doorGroupId, 1, ChatColor.GREEN + "Location name: " + doorGroup.getLocName().getName()));
+				Utils.createItem(Material.OAK_DOOR, ChatColor.YELLOW + "Door group: " + doorGroupId, 1,
+						ChatColor.GREEN + "Location name: " + doorGroup.getLocName().getName()));
 
 		Icon icon = new Icon(Utils.createItem(Material.ARROW, ChatColor.YELLOW + "Back"));
 		icon.addClickAction(new ClickAction() {
@@ -2799,7 +3152,9 @@ public class ArenaSetupGui {
 		});
 		invHolder.setIcon(36, icon);
 
-		icon = new Icon(Utils.createItem(Material.WHITE_BANNER, ChatColor.GREEN + "Location name: " + doorGroup.getLocName().getName(), 1, ChatColor.YELLOW + "Click to change"));
+		icon = new Icon(Utils.createItem(Material.WHITE_BANNER,
+				ChatColor.GREEN + "Location name: " + doorGroup.getLocName().getName(), 1,
+				ChatColor.YELLOW + "Click to change"));
 		icon.addClickAction(new ClickAction() {
 			@Override
 			public void execute(Player player) {
@@ -2808,7 +3163,8 @@ public class ArenaSetupGui {
 		});
 		invHolder.addIcon(icon);
 
-		icon = new Icon(Utils.createItem(Material.IRON_DOOR, ChatColor.GREEN + "Doors", 1, ChatColor.YELLOW + "Doors count: " + doorGroup.getDoors().size()));
+		icon = new Icon(Utils.createItem(Material.IRON_DOOR, ChatColor.GREEN + "Doors", 1,
+				ChatColor.YELLOW + "Doors count: " + doorGroup.getDoors().size()));
 		icon.addClickAction(new ClickAction() {
 			@Override
 			public void execute(Player player) {
@@ -2845,12 +3201,15 @@ public class ArenaSetupGui {
 		if (doorGroup == null) {
 			return;
 		}
-		CustomHolder invHolder = new CustomHolder(45, ChatColor.YELLOW + "Select door: " + arena.getName() + " - " + doorGroupId);
+		CustomHolder invHolder = new CustomHolder(45,
+				ChatColor.YELLOW + "Select door: " + arena.getName() + " - " + doorGroupId);
 		Utils.addBorder(invHolder.getInventory(), 45);
 
-		invHolder.getInventory().setItem(0, Utils.createItem(Material.WHITE_WOOL, ChatColor.YELLOW + arena.getName(), 1));
+		invHolder.getInventory().setItem(0,
+				Utils.createItem(Material.WHITE_WOOL, ChatColor.YELLOW + arena.getName(), 1));
 		invHolder.getInventory().setItem(1,
-				Utils.createItem(Material.OAK_DOOR, ChatColor.YELLOW + "Door group: " + doorGroupId, 1, ChatColor.GREEN + "Location name: " + doorGroup.getLocName().getName()));
+				Utils.createItem(Material.OAK_DOOR, ChatColor.YELLOW + "Door group: " + doorGroupId, 1,
+						ChatColor.GREEN + "Location name: " + doorGroup.getLocName().getName()));
 		invHolder.getInventory().setItem(2, Utils.createItem(Material.IRON_DOOR, ChatColor.YELLOW + "Select door"));
 
 		Icon icon = new Icon(Utils.createItem(Material.ARROW, ChatColor.YELLOW + "Back"));
@@ -2890,10 +3249,12 @@ public class ArenaSetupGui {
 				doorSec.set("corner1", "world,0,0,0");
 				doorSec.set("corner2", "world,0,0,0");
 
-				doorGroup.addDoor(new Door(arena, doorGroup, new Location(player.getWorld(), 0, 0, 0), new Location(player.getWorld(), 0, 0, 0), id, configId));
+				doorGroup.addDoor(new Door(arena, doorGroup, new Location(player.getWorld(), 0, 0, 0),
+						new Location(player.getWorld(), 0, 0, 0), id, configId));
 				arena.saveConfig();
 
-				ArenaSetupGui.openDoorsSelector(player, Main.getArenaManager().getArenaByName(arena.getName()), doorGroupId);
+				ArenaSetupGui.openDoorsSelector(player, Main.getArenaManager().getArenaByName(arena.getName()),
+						doorGroupId);
 			}
 		});
 		invHolder.setIcon(44, icon);
@@ -2914,12 +3275,16 @@ public class ArenaSetupGui {
 		Integer totalItems = keys.size();
 		Integer totalPages = (int) Math.ceil((double) totalItems / (double) pageSize);
 
-		CustomHolder invHolder = new CustomHolder(45, ChatColor.YELLOW + "Choose door group location name: " + arena.getName());
+		CustomHolder invHolder = new CustomHolder(45,
+				ChatColor.YELLOW + "Choose door group location name: " + arena.getName());
 		Utils.addBorder(invHolder.getInventory(), 45);
 
-		invHolder.getInventory().setItem(0, Utils.createItem(Material.WHITE_WOOL, ChatColor.YELLOW + arena.getName(), 1));
-		invHolder.getInventory().setItem(1, Utils.createItem(Material.OAK_DOOR, ChatColor.YELLOW + "Create door group"));
-		invHolder.getInventory().setItem(2, Utils.createItem(Material.WHITE_BANNER, ChatColor.YELLOW + "Choose door group location name"));
+		invHolder.getInventory().setItem(0,
+				Utils.createItem(Material.WHITE_WOOL, ChatColor.YELLOW + arena.getName(), 1));
+		invHolder.getInventory().setItem(1,
+				Utils.createItem(Material.OAK_DOOR, ChatColor.YELLOW + "Create door group"));
+		invHolder.getInventory().setItem(2,
+				Utils.createItem(Material.WHITE_BANNER, ChatColor.YELLOW + "Choose door group location name"));
 
 		Icon icon = new Icon(Utils.createItem(Material.ARROW, ChatColor.YELLOW + "Back"));
 		icon.addClickAction(new ClickAction() {
@@ -2931,7 +3296,8 @@ public class ArenaSetupGui {
 		invHolder.setIcon(36, icon);
 
 		if (totalPages > 1) {
-			invHolder.getInventory().setItem(40, Utils.createItem(Material.OAK_SIGN, ChatColor.YELLOW + "Page: " + currentPage + "/" + totalPages, currentPage));
+			invHolder.getInventory().setItem(40, Utils.createItem(Material.OAK_SIGN,
+					ChatColor.YELLOW + "Page: " + currentPage + "/" + totalPages, currentPage));
 
 			if (currentPage > 1) {
 				icon = new Icon(Utils.createItem(Material.PAPER, ChatColor.YELLOW + "Previous page"));
@@ -2960,7 +3326,8 @@ public class ArenaSetupGui {
 
 		for (int i = startIndex; i <= endIndex; i++) {
 			final String key = keys.get(i);
-			icon = new Icon(Utils.createItem(Material.WHITE_BANNER, ChatColor.GREEN + "Location: " + arena.getLocations().get(key).getName()));
+			icon = new Icon(Utils.createItem(Material.WHITE_BANNER,
+					ChatColor.GREEN + "Location: " + arena.getLocations().get(key).getName()));
 			icon.addClickAction(new ClickAction() {
 				@Override
 				public void execute(Player player) {
@@ -2972,7 +3339,9 @@ public class ArenaSetupGui {
 					createdSec.set("locationid", key);
 					createdSec.createSection("doors");
 
-					player.sendMessage(Main.getConfigManager().getPrefix() + ChatColor.YELLOW + "Successfully created door group " + (arena.getDoorsManager().getDoorGroups().size() + 1));
+					player.sendMessage(
+							Main.getConfigManager().getPrefix() + ChatColor.YELLOW + "Successfully created door group "
+									+ (arena.getDoorsManager().getDoorGroups().size() + 1));
 
 					arena.saveConfig();
 					Main.getArenaManager().loadArenas();
@@ -2985,7 +3354,8 @@ public class ArenaSetupGui {
 		player.openInventory(invHolder.getInventory());
 	}
 
-	public static void openDoorGroupChangeLocation(Player player, Arena arena, Integer doorGroupId, Integer currentPage) {
+	public static void openDoorGroupChangeLocation(Player player, Arena arena, Integer doorGroupId,
+			Integer currentPage) {
 		DoorGroup doorGroup = arena.getDoorsManager().getDoorGroup(doorGroupId);
 		if (doorGroup == null) {
 			return;
@@ -3002,13 +3372,17 @@ public class ArenaSetupGui {
 		Integer totalItems = keys.size();
 		Integer totalPages = (int) Math.ceil((double) totalItems / (double) pageSize);
 
-		CustomHolder invHolder = new CustomHolder(45, ChatColor.YELLOW + "Change door group location name: " + arena.getName() + " - " + doorGroupId);
+		CustomHolder invHolder = new CustomHolder(45,
+				ChatColor.YELLOW + "Change door group location name: " + arena.getName() + " - " + doorGroupId);
 		Utils.addBorder(invHolder.getInventory(), 45);
 
-		invHolder.getInventory().setItem(0, Utils.createItem(Material.WHITE_WOOL, ChatColor.YELLOW + arena.getName(), 1));
+		invHolder.getInventory().setItem(0,
+				Utils.createItem(Material.WHITE_WOOL, ChatColor.YELLOW + arena.getName(), 1));
 		invHolder.getInventory().setItem(1,
-				Utils.createItem(Material.OAK_DOOR, ChatColor.YELLOW + "Door group: " + doorGroupId, 1, ChatColor.GREEN + "Location name: " + doorGroup.getLocName().getName()));
-		invHolder.getInventory().setItem(2, Utils.createItem(Material.WHITE_BANNER, ChatColor.YELLOW + "Change door group location name"));
+				Utils.createItem(Material.OAK_DOOR, ChatColor.YELLOW + "Door group: " + doorGroupId, 1,
+						ChatColor.GREEN + "Location name: " + doorGroup.getLocName().getName()));
+		invHolder.getInventory().setItem(2,
+				Utils.createItem(Material.WHITE_BANNER, ChatColor.YELLOW + "Change door group location name"));
 
 		Icon icon = new Icon(Utils.createItem(Material.ARROW, ChatColor.YELLOW + "Back"));
 		icon.addClickAction(new ClickAction() {
@@ -3020,7 +3394,8 @@ public class ArenaSetupGui {
 		invHolder.setIcon(36, icon);
 
 		if (totalPages > 1) {
-			invHolder.getInventory().setItem(40, Utils.createItem(Material.OAK_SIGN, ChatColor.YELLOW + "Page: " + currentPage + "/" + totalPages, currentPage));
+			invHolder.getInventory().setItem(40, Utils.createItem(Material.OAK_SIGN,
+					ChatColor.YELLOW + "Page: " + currentPage + "/" + totalPages, currentPage));
 
 			if (currentPage > 1) {
 				icon = new Icon(Utils.createItem(Material.PAPER, ChatColor.YELLOW + "Previous page"));
@@ -3049,7 +3424,8 @@ public class ArenaSetupGui {
 
 		for (int i = startIndex; i <= endIndex; i++) {
 			final String key = keys.get(i);
-			icon = new Icon(Utils.createItem(Material.WHITE_BANNER, ChatColor.GREEN + "Location: " + arena.getLocations().get(key).getName()));
+			icon = new Icon(Utils.createItem(Material.WHITE_BANNER,
+					ChatColor.GREEN + "Location: " + arena.getLocations().get(key).getName()));
 			icon.addClickAction(new ClickAction() {
 				@Override
 				public void execute(Player player) {
@@ -3062,9 +3438,11 @@ public class ArenaSetupGui {
 					arena.saveConfig();
 					Main.getArenaManager().loadArenas();
 
-					player.sendMessage(Main.getConfigManager().getPrefix() + ChatColor.YELLOW + "Successfully changed door group " + doorGroup.getId() + " location name to "
+					player.sendMessage(Main.getConfigManager().getPrefix() + ChatColor.YELLOW
+							+ "Successfully changed door group " + doorGroup.getId() + " location name to "
 							+ arena.getLocations().get(key).getName());
-					ArenaSetupGui.openDoorGroupEdit(player, Main.getArenaManager().getArenaByName(arena.getName()), doorGroupId);
+					ArenaSetupGui.openDoorGroupEdit(player, Main.getArenaManager().getArenaByName(arena.getName()),
+							doorGroupId);
 				}
 			});
 			invHolder.addIcon(icon);
@@ -3082,12 +3460,16 @@ public class ArenaSetupGui {
 		if (door == null) {
 			return;
 		}
-		CustomHolder invHolder = new CustomHolder(45, ChatColor.YELLOW + "Edit door: " + arena.getName() + " - " + doorGroupId + ": " + doorId);
+		CustomHolder invHolder = new CustomHolder(45,
+				ChatColor.YELLOW + "Edit door: " + arena.getName() + " - " + doorGroupId + ": " + doorId);
 		Utils.addBorder(invHolder.getInventory(), 45);
 
-		invHolder.getInventory().setItem(0, Utils.createItem(Material.WHITE_WOOL, ChatColor.YELLOW + arena.getName(), 1));
-		invHolder.getInventory().setItem(1, Utils.createItem(Material.OAK_DOOR, ChatColor.YELLOW + "Door group: " + doorGroupId, 1));
-		invHolder.getInventory().setItem(2, Utils.createItem(Material.IRON_DOOR, ChatColor.YELLOW + "Door: " + doorId, 1));
+		invHolder.getInventory().setItem(0,
+				Utils.createItem(Material.WHITE_WOOL, ChatColor.YELLOW + arena.getName(), 1));
+		invHolder.getInventory().setItem(1,
+				Utils.createItem(Material.OAK_DOOR, ChatColor.YELLOW + "Door group: " + doorGroupId, 1));
+		invHolder.getInventory().setItem(2,
+				Utils.createItem(Material.IRON_DOOR, ChatColor.YELLOW + "Door: " + doorId, 1));
 
 		Icon icon = new Icon(Utils.createItem(Material.ARROW, ChatColor.YELLOW + "Back"));
 		icon.addClickAction(new ClickAction() {
@@ -3098,8 +3480,10 @@ public class ArenaSetupGui {
 		});
 		invHolder.setIcon(36, icon);
 
-		icon = new Icon(Utils.createItem(Material.IRON_BLOCK, ChatColor.GREEN + "Corner-1", 1, ChatColor.YELLOW + Utils.locationToStringB(door.getCorner1()),
-				ChatColor.YELLOW + "Corner 1 for door's blocks", ChatColor.YELLOW + "Click to change to your location"));
+		icon = new Icon(Utils.createItem(Material.IRON_BLOCK, ChatColor.GREEN + "Corner-1", 1,
+				ChatColor.YELLOW + Utils.locationToStringB(door.getCorner1()),
+				ChatColor.YELLOW + "Corner 1 for door's blocks",
+				ChatColor.YELLOW + "Click to change to your location"));
 		icon.addClickAction(new ClickAction() {
 			@Override
 			public void execute(Player player) {
@@ -3110,11 +3494,14 @@ public class ArenaSetupGui {
 
 				ConfigurationSection doorSec = doorsSec.getConfigurationSection(door.getConfigId());
 
-				doorSec.set("corner1", player.getWorld().getName() + "," + player.getLocation().getBlockX() + "," + player.getLocation().getBlockY() + "," + player.getLocation().getBlockZ());
+				doorSec.set("corner1", player.getWorld().getName() + "," + player.getLocation().getBlockX() + ","
+						+ player.getLocation().getBlockY() + "," + player.getLocation().getBlockZ());
 
-				if (door.getCorner2() != null && Utils.blocksFromTwoPoints(player.getLocation(), door.getCorner2()).size() <= 30) {
+				if (door.getCorner2() != null
+						&& Utils.blocksFromTwoPoints(player.getLocation(), door.getCorner2()).size() <= 30) {
 					for (Block block : Utils.blocksFromTwoPoints(player.getLocation(), door.getCorner2())) {
-						Packets.sendPacket(player, Packets.BLOCK_CHANGE(block.getLocation(), WrappedBlockData.createData(Material.IRON_BLOCK)));
+						Packets.sendPacket(player, Packets.BLOCK_CHANGE(block.getLocation(),
+								WrappedBlockData.createData(Material.IRON_BLOCK)));
 					}
 				}
 
@@ -3123,13 +3510,16 @@ public class ArenaSetupGui {
 				arena.saveConfig();
 //				Main.getArenaManager().loadArenas();
 
-				ArenaSetupGui.openDoorEdit(player, Main.getArenaManager().getArenaByName(arena.getName()), doorGroupId, doorId);
+				ArenaSetupGui.openDoorEdit(player, Main.getArenaManager().getArenaByName(arena.getName()), doorGroupId,
+						doorId);
 			}
 		});
 		invHolder.addIcon(icon);
 
-		icon = new Icon(Utils.createItem(Material.IRON_BLOCK, ChatColor.GREEN + "Corner-2", 1, ChatColor.YELLOW + Utils.locationToStringB(door.getCorner2()),
-				ChatColor.YELLOW + "Corner 2 for door's blocks", ChatColor.YELLOW + "Click to change to your location"));
+		icon = new Icon(Utils.createItem(Material.IRON_BLOCK, ChatColor.GREEN + "Corner-2", 1,
+				ChatColor.YELLOW + Utils.locationToStringB(door.getCorner2()),
+				ChatColor.YELLOW + "Corner 2 for door's blocks",
+				ChatColor.YELLOW + "Click to change to your location"));
 		icon.addClickAction(new ClickAction() {
 			@Override
 			public void execute(Player player) {
@@ -3140,11 +3530,14 @@ public class ArenaSetupGui {
 
 				ConfigurationSection doorSec = doorsSec.getConfigurationSection(door.getConfigId());
 
-				doorSec.set("corner2", player.getWorld().getName() + "," + player.getLocation().getBlockX() + "," + player.getLocation().getBlockY() + "," + player.getLocation().getBlockZ());
+				doorSec.set("corner2", player.getWorld().getName() + "," + player.getLocation().getBlockX() + ","
+						+ player.getLocation().getBlockY() + "," + player.getLocation().getBlockZ());
 
-				if (door.getCorner1() != null && Utils.blocksFromTwoPoints(door.getCorner1(), player.getLocation()).size() <= 30) {
+				if (door.getCorner1() != null
+						&& Utils.blocksFromTwoPoints(door.getCorner1(), player.getLocation()).size() <= 30) {
 					for (Block block : Utils.blocksFromTwoPoints(door.getCorner1(), player.getLocation())) {
-						Packets.sendPacket(player, Packets.BLOCK_CHANGE(block.getLocation(), WrappedBlockData.createData(Material.IRON_BLOCK)));
+						Packets.sendPacket(player, Packets.BLOCK_CHANGE(block.getLocation(),
+								WrappedBlockData.createData(Material.IRON_BLOCK)));
 					}
 				}
 
@@ -3153,7 +3546,8 @@ public class ArenaSetupGui {
 				arena.saveConfig();
 //				Main.getArenaManager().loadArenas();
 
-				ArenaSetupGui.openDoorEdit(player, Main.getArenaManager().getArenaByName(arena.getName()), doorGroupId, doorId);
+				ArenaSetupGui.openDoorEdit(player, Main.getArenaManager().getArenaByName(arena.getName()), doorGroupId,
+						doorId);
 
 			}
 		});
@@ -3188,11 +3582,516 @@ public class ArenaSetupGui {
 				arena.saveConfig();
 				Main.getArenaManager().loadArenas();
 
-				ArenaSetupGui.openDoorGroupEdit(player, Main.getArenaManager().getArenaByName(arena.getName()), doorGroupId);
+				ArenaSetupGui.openDoorGroupEdit(player, Main.getArenaManager().getArenaByName(arena.getName()),
+						doorGroupId);
 			}
 		});
 		invHolder.setIcon(44, icon);
 		player.openInventory(invHolder.getInventory());
 	}
 
+	// Roles
+	public static void openRolesSettings(Player player, Arena arena) {
+		CustomHolder invHolder = new CustomHolder(45, ChatColor.YELLOW + "Edit roles settings: " + arena.getName());
+		Utils.addBorder(invHolder.getInventory(), 45);
+
+		invHolder.getInventory().setItem(0,
+				Utils.createItem(Material.WHITE_WOOL, ChatColor.YELLOW + arena.getName(), 1));
+		invHolder.getInventory().setItem(1, Utils.createItem(Material.BOOK, ChatColor.YELLOW + "Roles settings", 1));
+
+		Icon icon = new Icon(Utils.createItem(Material.ARROW, ChatColor.YELLOW + "Back", 1));
+		icon.addClickAction(new ClickAction() {
+			@Override
+			public void execute(Player player) {
+				ArenaSetupGui.openArenaEditor(player, arena, 2);
+			}
+		});
+		invHolder.setIcon(36, icon);
+
+		icon = new Icon(Utils.createItem(Material.BOOK, ChatColor.GREEN + "Scientist", 1,
+				ChatColor.YELLOW + "Scientists chance: " + arena.getScientistChance() + "%",
+				ChatColor.YELLOW + "Scientists count: " + arena.getScientistCount(),
+				ChatColor.YELLOW + "Vitals cooldown: " + arena.getScientistVitalsCooldown() + "s",
+				ChatColor.YELLOW + "Battery duration: " + arena.getScientistBatteryDuration() + "s",
+				ChatColor.YELLOW + "Click to edit"));
+		icon.addClickAction(new ClickAction() {
+			@Override
+			public void execute(Player player) {
+				ArenaSetupGui.openRoleScientistSettings(player, arena);
+			}
+		});
+		invHolder.addIcon(icon);
+
+		icon = new Icon(Utils.createItem(Material.BOOK, ChatColor.GREEN + "Engineer", 1,
+				ChatColor.YELLOW + "Engineers chance: " + arena.getEngineerChance() + "%",
+				ChatColor.YELLOW + "Engineers count: " + arena.getEngineerCount(),
+				ChatColor.YELLOW + "Vent cooldown: " + arena.getEngineerVentCooldown() + "s",
+				ChatColor.YELLOW + "Max time in vents: " + arena.getEngineerMaxTimeInVents() + "s",
+				ChatColor.YELLOW + "Click to edit"));
+		icon.addClickAction(new ClickAction() {
+			@Override
+			public void execute(Player player) {
+				ArenaSetupGui.openRoleEngineerSettings(player, arena);
+			}
+		});
+		invHolder.addIcon(icon);
+
+		icon = new Icon(
+				Utils.createItem(Material.BOOK, ChatColor.GREEN + "Guardian angel", 1,
+						ChatColor.YELLOW + "Guardian angels chance: " + arena.getAngelChance() + "%",
+						ChatColor.YELLOW + "Guardian angels count: " + arena.getAngelCount(),
+						ChatColor.YELLOW + "Protection cooldown: " + arena.getAngelCooldown() + "s",
+						ChatColor.YELLOW + "Protection duration: " + arena.getAngelDuration() + "s", ChatColor.YELLOW
+								+ "Protection visible to imposters: " + arena.getAngelProtectVisibleToImposters(),
+						ChatColor.YELLOW + "Click to edit"));
+		icon.addClickAction(new ClickAction() {
+			@Override
+			public void execute(Player player) {
+				ArenaSetupGui.openRoleAngelSettings(player, arena);
+			}
+		});
+		invHolder.addIcon(icon);
+
+		icon = new Icon(Utils.createItem(Material.BOOK, ChatColor.GREEN + "Shapeshifter", 1,
+				ChatColor.YELLOW + "Shapeshifters chance: " + arena.getShapeshifterChance() + "%",
+				ChatColor.YELLOW + "Shapeshifters count: " + arena.getShapeshifterCount(),
+				ChatColor.YELLOW + "Shapeshifting duration: " + arena.getShapeshifterDuration() + "s",
+				ChatColor.YELLOW + "Shapeshifing cooldown: " + arena.getShapeshifterCooldown() + "s",
+				ChatColor.YELLOW + "Shapeshifting leaves evidence: " + arena.getShapeshifterLeaveEvidence(),
+				ChatColor.YELLOW + "Click to edit"));
+		icon.addClickAction(new ClickAction() {
+			@Override
+			public void execute(Player player) {
+				ArenaSetupGui.openRoleShapeshifterSettings(player, arena);
+			}
+		});
+		invHolder.addIcon(icon);
+
+		player.openInventory(invHolder.getInventory());
+	}
+
+	public static void openRoleScientistSettings(Player player, Arena arena) {
+		CustomHolder invHolder = new CustomHolder(45, ChatColor.YELLOW + "Edit role scientist" + arena.getName());
+		Utils.addBorder(invHolder.getInventory(), 45);
+
+		invHolder.getInventory().setItem(0,
+				Utils.createItem(Material.WHITE_WOOL, ChatColor.YELLOW + arena.getName(), 1));
+		invHolder.getInventory().setItem(1, Utils.createItem(Material.BOOK, ChatColor.YELLOW + "Roles settings", 1));
+		invHolder.getInventory().setItem(2,
+				Utils.createItem(Material.BOOK, ChatColor.GREEN + "Scientist", 1,
+						ChatColor.YELLOW + "Scientists chance: " + arena.getScientistChance() + "%",
+						ChatColor.YELLOW + "Scientists count: " + arena.getScientistCount(),
+						ChatColor.YELLOW + "Vitals cooldown: " + arena.getScientistVitalsCooldown() + "s",
+						ChatColor.YELLOW + "Battery duration: " + arena.getScientistBatteryDuration() + "s"));
+
+		Icon icon = new Icon(Utils.createItem(Material.ARROW, ChatColor.YELLOW + "Back", 1));
+		icon.addClickAction(new ClickAction() {
+			@Override
+			public void execute(Player player) {
+				ArenaSetupGui.openRolesSettings(player, arena);
+			}
+		});
+		invHolder.setIcon(36, icon);
+
+		icon = new Icon(Utils.createItem(Material.COMPASS, ChatColor.GREEN + "Scientists chance",
+				arena.getScientistChance() > 0 ? arena.getScientistChance() : 1,
+				ChatColor.YELLOW + "Scientists chance: " + arena.getScientistChance()+ "%",
+				ChatColor.YELLOW + "Click to change"));
+		icon.addClickAction(new ClickAction() {
+			@Override
+			public void execute(Player player) {
+				arena.setScientistChance(arena.getScientistChance() + 5);
+				if (arena.getScientistChance() > 100) {
+					arena.setScientistChance(0);
+				}
+				arena.getArenaConfig().set("roles.scientist.chance", arena.getScientistChance());
+				arena.saveConfig();
+				ArenaSetupGui.openRoleScientistSettings(player, arena);
+			}
+		});
+		invHolder.addIcon(icon);
+
+		icon = new Icon(Utils.createItem(Material.COCOA_BEANS, ChatColor.GREEN + "Scientists count",
+				arena.getScientistCount() > 0 ? arena.getScientistCount() : 1,
+				ChatColor.YELLOW + "Scientists count: " + arena.getScientistCount(),
+				ChatColor.YELLOW + "Click to change"));
+		icon.addClickAction(new ClickAction() {
+			@Override
+			public void execute(Player player) {
+				arena.setScientistCount(arena.getScientistCount() + 1);
+				if (arena.getScientistCount() > arena.getMaxPlayers()) {
+					arena.setScientistCount(0);
+				}
+				arena.getArenaConfig().set("roles.scientist.count", arena.getScientistCount());
+				arena.saveConfig();
+				ArenaSetupGui.openRoleScientistSettings(player, arena);
+			}
+		});
+		invHolder.addIcon(icon);
+
+		icon = new Icon(Utils.createItem(Material.DANDELION, ChatColor.GREEN + "Vitals cooldown",
+				arena.getScientistVitalsCooldown() > 0 ? arena.getScientistVitalsCooldown() : 1,
+				ChatColor.YELLOW + "Vitals cooldown: " + arena.getScientistVitalsCooldown() + "s",
+				ChatColor.YELLOW + "Click to change"));
+		icon.addClickAction(new ClickAction() {
+			@Override
+			public void execute(Player player) {
+				arena.setScientistVitalsCooldown(arena.getScientistVitalsCooldown() + 5);
+				if (arena.getScientistVitalsCooldown() > 60) {
+					arena.setScientistVitalsCooldown(5);
+				}
+				arena.getArenaConfig().set("roles.scientist.vitalsCooldown", arena.getScientistVitalsCooldown());
+				arena.saveConfig();
+				ArenaSetupGui.openRoleScientistSettings(player, arena);
+			}
+		});
+		invHolder.addIcon(icon);
+
+		icon = new Icon(Utils.createItem(Material.CLOCK, ChatColor.GREEN + "Battery duration",
+				arena.getScientistBatteryDuration() > 0 ? arena.getScientistBatteryDuration() : 1,
+				ChatColor.YELLOW + "Battery duration: " + arena.getScientistBatteryDuration() + "s",
+				ChatColor.YELLOW + "Click to change"));
+		icon.addClickAction(new ClickAction() {
+			@Override
+			public void execute(Player player) {
+				arena.setScientistBatteryDuration(arena.getScientistBatteryDuration() + 5);
+				if (arena.getScientistBatteryDuration() > 30) {
+					arena.setScientistBatteryDuration(5);
+				}
+				arena.getArenaConfig().set("roles.scientist.vitalsCooldown", arena.getScientistBatteryDuration());
+				arena.saveConfig();
+				ArenaSetupGui.openRoleScientistSettings(player, arena);
+			}
+		});
+		invHolder.addIcon(icon);
+
+		player.openInventory(invHolder.getInventory());
+	}
+
+	public static void openRoleEngineerSettings(Player player, Arena arena) {
+		CustomHolder invHolder = new CustomHolder(45, ChatColor.YELLOW + "Edit role engineer" + arena.getName());
+		Utils.addBorder(invHolder.getInventory(), 45);
+
+		invHolder.getInventory().setItem(0,
+				Utils.createItem(Material.WHITE_WOOL, ChatColor.YELLOW + arena.getName(), 1));
+		invHolder.getInventory().setItem(1, Utils.createItem(Material.BOOK, ChatColor.YELLOW + "Roles settings", 1));
+		invHolder.getInventory().setItem(2,
+				Utils.createItem(Material.BOOK, ChatColor.GREEN + "Engineer", 1,
+						ChatColor.YELLOW + "Engineers chance: " + arena.getEngineerChance() + "%",
+						ChatColor.YELLOW + "Engineers count: " + arena.getEngineerCount(),
+						ChatColor.YELLOW + "Vent cooldown: " + arena.getEngineerVentCooldown() + "s",
+						ChatColor.YELLOW + "Max time in vents: " + arena.getEngineerMaxTimeInVents() + "s"));
+
+		Icon icon = new Icon(Utils.createItem(Material.ARROW, ChatColor.YELLOW + "Back", 1));
+		icon.addClickAction(new ClickAction() {
+			@Override
+			public void execute(Player player) {
+				ArenaSetupGui.openRolesSettings(player, arena);
+			}
+		});
+		invHolder.setIcon(36, icon);
+
+		icon = new Icon(Utils.createItem(Material.COMPASS, ChatColor.GREEN + "Engineers chance",
+				arena.getEngineerChance() > 0 ? arena.getEngineerChance() : 1,
+				ChatColor.YELLOW + "Engineers chance: " + arena.getEngineerChance() + "%",
+				ChatColor.YELLOW + "Click to change"));
+		icon.addClickAction(new ClickAction() {
+			@Override
+			public void execute(Player player) {
+				arena.setEngineerChance(arena.getEngineerChance() + 5);
+				if (arena.getEngineerChance() > 100) {
+					arena.setEngineerChance(0);
+				}
+				arena.getArenaConfig().set("roles.engineer.chance", arena.getEngineerChance());
+				arena.saveConfig();
+				ArenaSetupGui.openRoleEngineerSettings(player, arena);
+			}
+		});
+		invHolder.addIcon(icon);
+
+		icon = new Icon(Utils.createItem(Material.COCOA_BEANS, ChatColor.GREEN + "Engineers count",
+				arena.getEngineerCount() > 0 ? arena.getEngineerCount() : 1,
+				ChatColor.YELLOW + "Engineer count: " + arena.getEngineerCount(),
+				ChatColor.YELLOW + "Click to change"));
+		icon.addClickAction(new ClickAction() {
+			@Override
+			public void execute(Player player) {
+				arena.setEngineerCount(arena.getEngineerCount() + 1);
+				if (arena.getEngineerCount() > arena.getMaxPlayers()) {
+					arena.setEngineerCount(0);
+				}
+				arena.getArenaConfig().set("roles.engineer.count", arena.getEngineerCount());
+				arena.saveConfig();
+				ArenaSetupGui.openRoleEngineerSettings(player, arena);
+			}
+		});
+		invHolder.addIcon(icon);
+
+		icon = new Icon(Utils.createItem(Material.IRON_TRAPDOOR, ChatColor.GREEN + "Vent cooldown",
+				arena.getEngineerVentCooldown() > 0 ? arena.getEngineerVentCooldown() : 1,
+				ChatColor.YELLOW + "Vent cooldown: " + arena.getEngineerVentCooldown() + "s",
+				ChatColor.YELLOW + "Click to change"));
+		icon.addClickAction(new ClickAction() {
+			@Override
+			public void execute(Player player) {
+				arena.setEngineerVentCooldown(arena.getEngineerVentCooldown() + 5);
+				if (arena.getEngineerVentCooldown() > 60) {
+					arena.setEngineerVentCooldown(5);
+				}
+				arena.getArenaConfig().set("roles.engineer.ventCooldown", arena.getEngineerVentCooldown());
+				arena.saveConfig();
+				ArenaSetupGui.openRoleEngineerSettings(player, arena);
+			}
+		});
+		invHolder.addIcon(icon);
+
+		icon = new Icon(Utils.createItem(Material.CLOCK, ChatColor.GREEN + "Max time in vents",
+				arena.getEngineerMaxTimeInVents() > 0 ? arena.getEngineerMaxTimeInVents() : 1,
+				ChatColor.YELLOW + "Max time in vents: " + arena.getEngineerMaxTimeInVents() + "s",
+				ChatColor.YELLOW + "Click to change"));
+		icon.addClickAction(new ClickAction() {
+			@Override
+			public void execute(Player player) {
+				arena.setEngineerMaxTimeInVents(arena.getEngineerMaxTimeInVents() + 5);
+				if (arena.getEngineerMaxTimeInVents() > 60) {
+					arena.setEngineerMaxTimeInVents(0);
+				}
+				arena.getArenaConfig().set("roles.engineer.maxTimeInVents", arena.getEngineerMaxTimeInVents());
+				arena.saveConfig();
+				ArenaSetupGui.openRoleEngineerSettings(player, arena);
+			}
+		});
+		invHolder.addIcon(icon);
+
+		player.openInventory(invHolder.getInventory());
+	}
+
+	public static void openRoleAngelSettings(Player player, Arena arena) {
+		CustomHolder invHolder = new CustomHolder(45, ChatColor.YELLOW + "Edit role guardian angel" + arena.getName());
+		Utils.addBorder(invHolder.getInventory(), 45);
+
+		invHolder.getInventory().setItem(0,
+				Utils.createItem(Material.WHITE_WOOL, ChatColor.YELLOW + arena.getName(), 1));
+		invHolder.getInventory().setItem(1, Utils.createItem(Material.BOOK, ChatColor.YELLOW + "Roles settings", 1));
+		invHolder.getInventory().setItem(2, Utils.createItem(Material.BOOK, ChatColor.GREEN + "Guardian angel", 1,
+				ChatColor.YELLOW + "Guardian angels chance: " + arena.getAngelChance() + "%",
+				ChatColor.YELLOW + "Guardian angels count: " + arena.getAngelCount(),
+				ChatColor.YELLOW + "Protection cooldown: " + arena.getAngelCooldown() + "s",
+				ChatColor.YELLOW + "Protection duration: " + arena.getAngelDuration() + "s",
+				ChatColor.YELLOW + "Protection visible to imposters: " + arena.getAngelProtectVisibleToImposters()));
+
+		Icon icon = new Icon(Utils.createItem(Material.ARROW, ChatColor.YELLOW + "Back", 1));
+		icon.addClickAction(new ClickAction() {
+			@Override
+			public void execute(Player player) {
+				ArenaSetupGui.openRolesSettings(player, arena);
+			}
+		});
+		invHolder.setIcon(36, icon);
+
+		icon = new Icon(Utils.createItem(Material.COMPASS, ChatColor.GREEN + "Guardian angels chance",
+				arena.getAngelChance() > 0 ? arena.getAngelChance() : 1,
+				ChatColor.YELLOW + "Guardian angels chance: " + arena.getAngelChance() + "%",
+				ChatColor.YELLOW + "Click to change"));
+		icon.addClickAction(new ClickAction() {
+			@Override
+			public void execute(Player player) {
+				arena.setAngelChance(arena.getAngelChance() + 5);
+				if (arena.getAngelChance() > 100) {
+					arena.setAngelChance(0);
+				}
+				arena.getArenaConfig().set("roles.angel.chance", arena.getAngelChance());
+				arena.saveConfig();
+				ArenaSetupGui.openRoleAngelSettings(player, arena);
+			}
+		});
+		invHolder.addIcon(icon);
+
+		icon = new Icon(Utils.createItem(Material.COCOA_BEANS, ChatColor.GREEN + "Guardian angels count",
+				arena.getAngelCount() > 0 ? arena.getAngelCount() : 1,
+				ChatColor.YELLOW + "Guardian angels count: " + arena.getAngelCount(),
+				ChatColor.YELLOW + "Click to change"));
+		icon.addClickAction(new ClickAction() {
+			@Override
+			public void execute(Player player) {
+				arena.setAngelCount(arena.getAngelCount() + 1);
+				if (arena.getAngelCount() > arena.getMaxPlayers()) {
+					arena.setAngelCount(0);
+				}
+				arena.getArenaConfig().set("roles.angel.count", arena.getAngelCount());
+				arena.saveConfig();
+				ArenaSetupGui.openRoleAngelSettings(player, arena);
+			}
+		});
+		invHolder.addIcon(icon);
+
+		icon = new Icon(Utils.createItem(Material.BEACON, ChatColor.GREEN + "Protection cooldown",
+				arena.getAngelCooldown() > 0 ? arena.getAngelCooldown() : 1,
+				ChatColor.YELLOW + "Protection cooldown: " + arena.getAngelCooldown() + "s",
+				ChatColor.YELLOW + "Click to change"));
+		icon.addClickAction(new ClickAction() {
+			@Override
+			public void execute(Player player) {
+				arena.setAngelCooldown(arena.getAngelCooldown() + 5);
+				if (arena.getAngelCooldown() > 60) {
+					arena.setAngelCooldown(5);
+				}
+				arena.getArenaConfig().set("roles.angel.cooldown", arena.getAngelCooldown());
+				arena.saveConfig();
+				ArenaSetupGui.openRoleAngelSettings(player, arena);
+			}
+		});
+		invHolder.addIcon(icon);
+
+		icon = new Icon(Utils.createItem(Material.CLOCK, ChatColor.GREEN + "Protection duration",
+				arena.getAngelDuration() > 0 ? arena.getAngelDuration() : 1,
+				ChatColor.YELLOW + "Protection duration: " + arena.getAngelDuration() + "s",
+				ChatColor.YELLOW + "Click to change"));
+		icon.addClickAction(new ClickAction() {
+			@Override
+			public void execute(Player player) {
+				arena.setAngelDuration(arena.getAngelDuration() + 5);
+				if (arena.getAngelDuration() > 30) {
+					arena.setAngelDuration(5);
+				}
+				arena.getArenaConfig().set("roles.angel.duration", arena.getAngelDuration());
+				arena.saveConfig();
+				ArenaSetupGui.openRoleAngelSettings(player, arena);
+			}
+		});
+		invHolder.addIcon(icon);
+
+		icon = new Icon(
+				Utils.createItem(arena.getAngelProtectVisibleToImposters() ? Material.LIME_DYE : Material.RED_DYE,
+						ChatColor.GREEN + "Protection visible to imposters", 1,
+						ChatColor.YELLOW + "Protection duration: " + arena.getAngelProtectVisibleToImposters() + "s",
+						ChatColor.YELLOW + "Click to change"));
+		icon.addClickAction(new ClickAction() {
+			@Override
+			public void execute(Player player) {
+				arena.setAngelProtectVisibleToImposters(!arena.getAngelProtectVisibleToImposters());
+				arena.getArenaConfig().set("roles.angel.protectVisibleToImposters",
+						arena.getAngelProtectVisibleToImposters());
+				arena.saveConfig();
+				ArenaSetupGui.openRoleAngelSettings(player, arena);
+			}
+		});
+		invHolder.addIcon(icon);
+
+		player.openInventory(invHolder.getInventory());
+	}
+
+	public static void openRoleShapeshifterSettings(Player player, Arena arena) {
+		CustomHolder invHolder = new CustomHolder(45, ChatColor.YELLOW + "Edit role shapeshifter " + arena.getName());
+		Utils.addBorder(invHolder.getInventory(), 45);
+
+		invHolder.getInventory().setItem(0,
+				Utils.createItem(Material.WHITE_WOOL, ChatColor.YELLOW + arena.getName(), 1));
+		invHolder.getInventory().setItem(1, Utils.createItem(Material.BOOK, ChatColor.YELLOW + "Roles settings", 1));
+		invHolder.getInventory().setItem(2,
+				Utils.createItem(Material.BOOK, ChatColor.GREEN + "Shapeshifter", 1,
+						ChatColor.YELLOW + "Shapeshifters chance: " + arena.getShapeshifterChance() + "%",
+						ChatColor.YELLOW + "Shapeshifters count: " + arena.getShapeshifterCount(),
+						ChatColor.YELLOW + "Shapeshifting duration: " + arena.getShapeshifterDuration() + "s",
+						ChatColor.YELLOW + "Shapeshifing cooldown: " + arena.getShapeshifterCooldown() + "s",
+						ChatColor.YELLOW + "Shapeshifting leaves evidence: " + arena.getShapeshifterLeaveEvidence()));
+
+		Icon icon = new Icon(Utils.createItem(Material.ARROW, ChatColor.YELLOW + "Back", 1));
+		icon.addClickAction(new ClickAction() {
+			@Override
+			public void execute(Player player) {
+				ArenaSetupGui.openRolesSettings(player, arena);
+			}
+		});
+		invHolder.setIcon(36, icon);
+
+		icon = new Icon(Utils.createItem(Material.COMPASS, ChatColor.GREEN + "Shapeshifters chance",
+				arena.getShapeshifterChance() > 0 ? arena.getShapeshifterChance() : 1,
+				ChatColor.YELLOW + "Shapeshifters chance: " + arena.getShapeshifterChance() + "%",
+				ChatColor.YELLOW + "Click to change"));
+		icon.addClickAction(new ClickAction() {
+			@Override
+			public void execute(Player player) {
+				arena.setShapeshifterChance(arena.getShapeshifterChance() + 5);
+				if (arena.getShapeshifterChance() > 100) {
+					arena.setShapeshifterChance(0);
+				}
+				arena.getArenaConfig().set("roles.shapeshifter.chance", arena.getShapeshifterChance());
+				arena.saveConfig();
+				ArenaSetupGui.openRoleShapeshifterSettings(player, arena);
+			}
+		});
+		invHolder.addIcon(icon);
+
+		icon = new Icon(Utils.createItem(Material.CHICKEN_SPAWN_EGG, ChatColor.GREEN + "Shapeshifters count",
+				arena.getShapeshifterCount() > 0 ? arena.getShapeshifterCount() : 1,
+				ChatColor.YELLOW + "Shapeshifters count: " + arena.getShapeshifterCount(),
+				ChatColor.YELLOW + "Click to change"));
+		icon.addClickAction(new ClickAction() {
+			@Override
+			public void execute(Player player) {
+				arena.setShapeshifterCount(arena.getShapeshifterCount() + 1);
+				if (arena.getShapeshifterCount() > arena.getMaxPlayers()) {
+					arena.setShapeshifterCount(0);
+				}
+				arena.getArenaConfig().set("roles.shapeshifter.count", arena.getShapeshifterCount());
+				arena.saveConfig();
+				ArenaSetupGui.openRoleShapeshifterSettings(player, arena);
+			}
+		});
+		invHolder.addIcon(icon);
+
+		icon = new Icon(Utils.createItem(Material.SPAWNER, ChatColor.GREEN + "Shapeshifting cooldown",
+				arena.getShapeshifterCooldown() > 0 ? arena.getShapeshifterCooldown() : 1,
+				ChatColor.YELLOW + "Shapeshifting cooldown: " + arena.getShapeshifterCooldown(),
+				ChatColor.YELLOW + "Click to change"));
+		icon.addClickAction(new ClickAction() {
+			@Override
+			public void execute(Player player) {
+				arena.setShapeshifterCooldown(arena.getShapeshifterCooldown() + 5);
+				if (arena.getShapeshifterCooldown() > 60) {
+					arena.setShapeshifterCooldown(5);
+				}
+				arena.getArenaConfig().set("roles.shapeshifter.cooldown", arena.getShapeshifterCooldown());
+				arena.saveConfig();
+				ArenaSetupGui.openRoleShapeshifterSettings(player, arena);
+			}
+		});
+		invHolder.addIcon(icon);
+
+		icon = new Icon(Utils.createItem(Material.CLOCK, ChatColor.GREEN + "Shapeshifting duration",
+				arena.getShapeshifterDuration() > 0 ? arena.getShapeshifterDuration() : 1,
+				ChatColor.YELLOW + "Shapeshifting duration: " + arena.getShapeshifterDuration() + "s",
+				ChatColor.YELLOW + "Click to change"));
+		icon.addClickAction(new ClickAction() {
+			@Override
+			public void execute(Player player) {
+				arena.setShapeshifterDuration(arena.getShapeshifterDuration() + 5);
+				if (arena.getShapeshifterDuration() > 60) {
+					arena.setShapeshifterDuration(5);
+				}
+				arena.getArenaConfig().set("roles.shapeshifter.duration", arena.getShapeshifterDuration());
+				arena.saveConfig();
+				ArenaSetupGui.openRoleShapeshifterSettings(player, arena);
+			}
+		});
+		invHolder.addIcon(icon);
+
+		icon = new Icon(Utils.createItem(arena.getShapeshifterLeaveEvidence() ? Material.LIME_DYE : Material.RED_DYE,
+				ChatColor.GREEN + "Shapeshifter leaves evidence", 1,
+				ChatColor.YELLOW + "Shapershifer leaves evidence: " + arena.getShapeshifterLeaveEvidence(),
+				ChatColor.YELLOW + "Click to change"));
+		icon.addClickAction(new ClickAction() {
+			@Override
+			public void execute(Player player) {
+				arena.setShapeshifterLeaveEvidence(!arena.getShapeshifterLeaveEvidence());
+				arena.getArenaConfig().set("roles.shapeshifter.leaveEvidence", arena.getShapeshifterLeaveEvidence());
+				arena.saveConfig();
+				ArenaSetupGui.openRoleShapeshifterSettings(player, arena);
+			}
+		});
+		invHolder.addIcon(icon);
+
+		player.openInventory(invHolder.getInventory());
+	}
 }

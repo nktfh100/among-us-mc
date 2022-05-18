@@ -12,6 +12,7 @@ game:
    alreadyInGame: '%prefix%&cAlready in game'
    arenaNotFound: "%prefix%&cArena doesn't exists!"
    tasksBar: "&a&lTOTAL TASKS COMPLETED"
+   # Message at the start of the game
    gameStartImposters: ""
    gameStartCrewmates: ""
    # %value% Player name
@@ -50,13 +51,21 @@ game:
    # %value% Imposters count
    # %value1% Imposters of the game
    crewmateTitle: "&9&lCrewmate"
+   crewmateTitleEngineer: "&9&lEngineer"
+   crewmateTitleScientist: "&9&lScientist"
+   crewmateTitleGuardianAngel: "&9&lGuardian Angel"
    crewmateSubTitle: "&fThere are %value% imposters among us"
    imposterTitle: "&c&lImposter"
+   imposterTitleShapeshifter: "&c&lShapeshifter"
    imposterSubTitle: "%value1%"
    # When there is only 1 imposter
    imposterTitle1: "&c&lImposter"
+   imposterTitle1S1hapeshifter: "&c&lShapeshifter"
    imposterSubTitle1: "%value1%"
    crewmateTitle1: "&9&lCrewmate"
+   crewmateTitle1Engineer: "&9&lEngineer"
+   crewmateTitle1Scientist: "&9&lScientist"
+   crewmateTitle1GuardianAngel: "&9&lGuardian Angel"
    crewmateSubTitle1: "&fThere is %value% imposter among us"
    # %value% Sabotage name
    sabotageTitle: '&4Sabotage:'

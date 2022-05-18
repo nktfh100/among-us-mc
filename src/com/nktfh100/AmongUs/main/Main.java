@@ -84,11 +84,7 @@ public class Main extends JavaPlugin {
 		plugin = this;
 
 		String ver = getServer().getVersion();
-		Boolean isOk = false;
-		if (ver.contains("1.16")) {
-			isOk = true;
-		}
-		if (!isOk) {
+		if (!ver.contains("1.16")) {
 			Bukkit.getLogger().log(Level.SEVERE, "Server version not supported! (only 1.16 - 1.16.5 are supported)");
 			this.getPluginLoader().disablePlugin(this);
 			return;
