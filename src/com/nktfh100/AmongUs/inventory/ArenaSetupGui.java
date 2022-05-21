@@ -4023,7 +4023,7 @@ public class ArenaSetupGui {
 		});
 		invHolder.addIcon(icon);
 
-		icon = new Icon(Utils.createItem(Material.CHICKEN_SPAWN_EGG, ChatColor.GREEN + "Shapeshifters count",
+		icon = new Icon(Utils.createItem(Material.COCOA_BEANS, ChatColor.GREEN + "Shapeshifters count",
 				arena.getShapeshifterCount() > 0 ? arena.getShapeshifterCount() : 1,
 				ChatColor.YELLOW + "Shapeshifters count: " + arena.getShapeshifterCount(),
 				ChatColor.YELLOW + "Click to change"));

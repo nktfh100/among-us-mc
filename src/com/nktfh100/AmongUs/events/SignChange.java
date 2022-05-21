@@ -22,12 +22,12 @@ public class SignChange implements Listener {
 				if (ev.getLine(1) != null && !ev.getLine(1).equals("")) {
 					Arena arena = Main.getArenaManager().getArenaByName(ev.getLine(1));
 					if (arena != null) {
-						List<String> signs_ = Main.getConfigManager().getConfig().getStringList("arenas." + arena.getName() + ".signs");
+						List<String> signs_ = arena.getArenaConfig().getStringList("signs");
 						Block block = ev.getBlock();
 						signs_.add(block.getWorld().getName() + "," + block.getX() + "," + block.getY() + "," + block.getZ());
 						final String arenaName = arena.getName();
-						Main.getConfigManager().getConfig().set("arenas." + arena.getName() + ".signs", signs_);
-						Main.getPlugin().saveConfig();
+						arena.getArenaConfig().set("signs", signs_);
+						arena.saveConfig();
 						arena.addSign(block.getLocation());
 						ev.getPlayer().sendMessage(Main.getConfigManager().getPrefix() + ChatColor.YELLOW + "Successfully added sign at " + Utils.locationToStringB(block.getLocation()));
 						new BukkitRunnable() {

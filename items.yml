@@ -1369,3 +1369,12 @@ items:
       mat: "@eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNWFlNzg0NTFiZjI2Y2Y0OWZkNWY1NGNkOGYyYjM3Y2QyNWM5MmU1Y2E3NjI5OGIzNjM0Y2I1NDFlOWFkODkifX19@"
       title: "&9Previous page"
       slot: 48
+   # Version 3.0
+   
+   scientist_vitals:
+      mat: HEART_OF_THE_SEA
+      title: "&a&lVitals"
+      slot: 4
+      # Needs to recharge
+      mat2: BARRIER
+      title2: "&c&lVitals - no battery"

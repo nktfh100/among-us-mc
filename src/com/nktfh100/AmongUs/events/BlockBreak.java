@@ -42,7 +42,7 @@ public class BlockBreak implements Listener {
 					Camera cam = arena.getCamerasManager().getCameras().get(Integer.valueOf(name_1[1]));
 					if (cam != null) {
 						Location loc = ev.getBlock().getLocation();
-						ConfigurationSection camSec = Main.getConfigManager().getConfig().getConfigurationSection("arenas." + arena.getName() + ".cameras.cams." + cam.getConfigKey());
+						ConfigurationSection camSec = arena.getArenaConfig().getConfigurationSection("cameras.cams." + cam.getConfigKey());
 						List<String> fakeBlocks_ = camSec.getStringList("fakeblocks");
 						String locStr = ev.getBlock().getType().toString() + "," + loc.getBlockX() + "," + loc.getBlockY() + "," + loc.getBlockZ();
 						if (fakeBlocks_.contains(locStr)) {
@@ -52,7 +52,7 @@ public class BlockBreak implements Listener {
 							fakeBlocks_.add(locStr);
 
 							camSec.set("fakeblocks", fakeBlocks_);
-							Main.getPlugin().saveConfig();
+							arena.saveConfig();
 
 							player.sendMessage(Main.getConfigManager().getPrefix() + ChatColor.YELLOW + "Successfully added fake block (" + ev.getBlock().getType().toString() + ") to cam " + cam.getId() + " "
 									+ Utils.locationToStringB(loc));
@@ -99,7 +99,7 @@ public class BlockBreak implements Listener {
 						fakeBlocks_.remove(out_);
 
 						camSec.set("fakeblocks", fakeBlocks_);
-						Main.getPlugin().saveConfig();
+						arena.saveConfig();
 
 						player.sendMessage(Main.getConfigManager().getPrefix() + ChatColor.YELLOW + "Successfully removed fake block from cam " + cam.getId() + " " + Utils.locationToStringB(loc));
 
@@ -119,7 +119,7 @@ public class BlockBreak implements Listener {
 					if (cam != null) {
 						ev.setCancelled(true);
 						Location loc = ev.getBlock().getLocation();
-						ConfigurationSection camSec = Main.getConfigManager().getConfig().getConfigurationSection("arenas." + arena.getName() + ".cameras.cams." + cam.getConfigKey());
+						ConfigurationSection camSec = arena.getArenaConfig().getConfigurationSection("cameras.cams." + cam.getConfigKey());
 						List<String> fakeAirBlocks_ = camSec.getStringList("fakeairblocks");
 						String locStr = loc.getBlockX() + "," + loc.getBlockY() + "," + loc.getBlockZ();
 						if (fakeAirBlocks_.contains(locStr)) {
@@ -129,7 +129,7 @@ public class BlockBreak implements Listener {
 							fakeAirBlocks_.add(locStr);
 
 							camSec.set("fakeairblocks", fakeAirBlocks_);
-							Main.getPlugin().saveConfig();
+							arena.saveConfig();
 
 							player.sendMessage(Main.getConfigManager().getPrefix() + ChatColor.YELLOW + "Successfully added fake air block (" + ev.getBlock().getType().toString() + ") to cam " + cam.getId() + " "
 									+ Utils.locationToStringB(loc));

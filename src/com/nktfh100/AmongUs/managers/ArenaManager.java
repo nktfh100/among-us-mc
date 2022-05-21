@@ -23,6 +23,7 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.map.MapView;
 import org.bukkit.map.MapView.Scale;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import com.comphenix.protocol.wrappers.WrappedBlockData;
 import com.google.common.collect.Iterables;
@@ -248,7 +249,7 @@ public class ArenaManager {
 
 		// Clear the arenas section
 		Main.getConfigManager().getConfig().set("arenas", null);
-		Main.getPlugin().saveConfig();
+		Main.getPlugin().saveConfig();				
 	}
 
 	public void loadArena(String key, YamlConfiguration arenaSC, File file) {
@@ -292,27 +293,27 @@ public class ArenaManager {
 		// Load roles settings
 		ConfigurationSection rolesSC = arenaSC.getConfigurationSection("roles");
 		if(rolesSC != null) {
-			created.setScientistChance(arenaSC.getInt("scientist.chance", 0));
-			created.setScientistCount(arenaSC.getInt("scientist.count", 0));
-			created.setScientistVitalsCooldown(arenaSC.getInt("scientist.vitalsCooldown", 15));
-			created.setScientistBatteryDuration(arenaSC.getInt("scientist.batteryDuration", 5));
+			created.setScientistChance(rolesSC.getInt("scientist.chance", 0));
+			created.setScientistCount(rolesSC.getInt("scientist.count", 0));
+			created.setScientistVitalsCooldown(rolesSC.getInt("scientist.vitalsCooldown", 15));
+			created.setScientistBatteryDuration(rolesSC.getInt("scientist.batteryDuration", 5));
 			
-			created.setEngineerChance(arenaSC.getInt("engineer.chance", 0));
-			created.setEngineerCount(arenaSC.getInt("engineer.count", 0));
-			created.setEngineerVentCooldown(arenaSC.getInt("engineer.ventCooldown", 30));
-			created.setEngineerMaxTimeInVents(arenaSC.getInt("engineer.maxTimeInVents", 15));
+			created.setEngineerChance(rolesSC.getInt("engineer.chance", 0));
+			created.setEngineerCount(rolesSC.getInt("engineer.count", 0));
+			created.setEngineerVentCooldown(rolesSC.getInt("engineer.ventCooldown", 30));
+			created.setEngineerMaxTimeInVents(rolesSC.getInt("engineer.maxTimeInVents", 15));
 			
-			created.setAngelChance(arenaSC.getInt("angel.chance", 0));
-			created.setAngelCount(arenaSC.getInt("angel.count", 0));
-			created.setAngelCooldown(arenaSC.getInt("angel.cooldown", 60));
-			created.setAngelDuration(arenaSC.getInt("angel.duration", 10));
-			created.setAngelProtectVisibleToImposters(arenaSC.getBoolean("angel.protectVisibleToImposters", false));
+			created.setAngelChance(rolesSC.getInt("angel.chance", 0));
+			created.setAngelCount(rolesSC.getInt("angel.count", 0));
+			created.setAngelCooldown(rolesSC.getInt("angel.cooldown", 60));
+			created.setAngelDuration(rolesSC.getInt("angel.duration", 10));
+			created.setAngelProtectVisibleToImposters(rolesSC.getBoolean("angel.protectVisibleToImposters", false));
 			
-			created.setShapeshifterChance(arenaSC.getInt("shapeshifter.chance", 0));
-			created.setShapeshifterCount(arenaSC.getInt("shapeshifter.count", 0));
-			created.setShapeshifterDuration(arenaSC.getInt("shapeshifter.duration", 30));
-			created.setShapeshifterCooldown(arenaSC.getInt("shapeshifter.cooldown", 10));
-			created.setShapeshifterLeaveEvidence(arenaSC.getBoolean("shapeshifter.leaveEvidence", false));
+			created.setShapeshifterChance(rolesSC.getInt("shapeshifter.chance", 0));
+			created.setShapeshifterCount(rolesSC.getInt("shapeshifter.count", 0));
+			created.setShapeshifterDuration(rolesSC.getInt("shapeshifter.duration", 30));
+			created.setShapeshifterCooldown(rolesSC.getInt("shapeshifter.cooldown", 10));
+			created.setShapeshifterLeaveEvidence(rolesSC.getBoolean("shapeshifter.leaveEvidence", false));
 		}
 		
 		String[] locCenterInfo = arenaSC.getString("mapcenter").split(",");
@@ -614,8 +615,8 @@ public class ArenaManager {
 				for (short id_ : mapIds) {
 					strJoiner.add(String.valueOf(id_));
 				}
-				Main.getPlugin().getConfig().set("arenas." + key + "." + "mapids", strJoiner.toString());
-				Main.getPlugin().saveConfig();
+				created.getArenaConfig().set("mapids", strJoiner.toString());
+				created.saveConfig();
 			}
 			created.setMapIds((ArrayList<Short>) mapIds);
 		}
