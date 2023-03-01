@@ -171,6 +171,7 @@ public class Main extends JavaPlugin {
 
 		Bukkit.getLogger().info("[AmongUs] Plugin made by nktfh100");
 		Bukkit.getLogger().info("[AmongUs] Made with love in israel!");
+		Bukkit.getLogger().warning("[AmongUs] This is a modified version by Lucaaa. This is not an official release and it was not made by the plugin owner. If you find any error, report it to Lucaaa#6268");
 
 		ProtocolManager protocolManager = ProtocolLibrary.getProtocolManager();
 
