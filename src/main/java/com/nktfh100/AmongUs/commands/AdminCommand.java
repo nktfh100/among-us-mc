@@ -332,7 +332,7 @@ public class AdminCommand implements CommandExecutor {
 							sender.sendMessage(Main.getConfigManager().getPrefix() + ChatColor.RED + "Maximum players is 16!");
 							return true;
 						}
-						if (imposters >= maxPlayers / 2 || imposters >= minPlayers) {
+						if (imposters >= maxPlayers / 2) {
 							sender.sendMessage(Main.getConfigManager().getPrefix() + ChatColor.RED + "Too many imposters!");
 							return true;
 						}
