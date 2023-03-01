@@ -3,6 +3,7 @@ package com.nktfh100.AmongUs.managers;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import me.filoghost.holographicdisplays.api.hologram.VisibilitySettings;
 import org.bukkit.Material;
 import org.bukkit.Particle;
 import org.bukkit.entity.Player;
@@ -11,7 +12,7 @@ import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
-import com.gmail.filoghost.holographicdisplays.api.Hologram;
+import me.filoghost.holographicdisplays.api.hologram.Hologram;
 import com.nktfh100.AmongUs.info.Arena;
 import com.nktfh100.AmongUs.info.PlayerInfo;
 import com.nktfh100.AmongUs.info.Vent;
@@ -139,7 +140,7 @@ public class VentsManager {
 	public void hideAllHolos(Player player) {
 		for (VentGroup vg : this.ventGroups) {
 			for (Vent v : vg.getVents()) {
-				v.getHolo().getVisibilityManager().hideTo(player);
+				v.getHolo().getVisibilitySettings().setIndividualVisibility(player, VisibilitySettings.Visibility.HIDDEN);
 			}
 		}
 	}
@@ -147,7 +148,7 @@ public class VentsManager {
 	public void showAllHolos(Player player) {
 		for (VentGroup vg : this.ventGroups) {
 			for (Vent v : vg.getVents()) {
-				v.getHolo().getVisibilityManager().showTo(player);
+				v.getHolo().getVisibilitySettings().setIndividualVisibility(player, VisibilitySettings.Visibility.VISIBLE);
 			}
 		}
 	}

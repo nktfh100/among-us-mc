@@ -3,11 +3,12 @@ package com.nktfh100.AmongUs.info;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import me.filoghost.holographicdisplays.api.hologram.VisibilitySettings;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 
-import com.gmail.filoghost.holographicdisplays.api.Hologram;
+import me.filoghost.holographicdisplays.api.hologram.Hologram;
 import com.nktfh100.AmongUs.enums.SabotageLength;
 import com.nktfh100.AmongUs.enums.SabotageType;
 import com.nktfh100.AmongUs.main.Main;
@@ -81,24 +82,24 @@ public class SabotageArena {
 	public void hideHolo(Integer id) {
 		if (id == 0) {
 			Hologram task1Holo = this.task1.getHolo();
-			task1Holo.getVisibilityManager().resetVisibilityAll();
-			task1Holo.getVisibilityManager().setVisibleByDefault(false);
+			task1Holo.getVisibilitySettings().clearIndividualVisibilities();
+			task1Holo.getVisibilitySettings().setGlobalVisibility(VisibilitySettings.Visibility.HIDDEN);
 		} else if (this.task2 != null) {
 			Hologram task2Holo = this.task2.getHolo();
-			task2Holo.getVisibilityManager().resetVisibilityAll();
-			task2Holo.getVisibilityManager().setVisibleByDefault(false);
+			task2Holo.getVisibilitySettings().clearIndividualVisibilities();
+			task2Holo.getVisibilitySettings().setGlobalVisibility(VisibilitySettings.Visibility.HIDDEN);
 		}
 	}
 
 	public void showHolos() {
 		Hologram task1Holo = this.task1.getHolo();
-		task1Holo.getVisibilityManager().resetVisibilityAll();
-		task1Holo.getVisibilityManager().setVisibleByDefault(true);
+		task1Holo.getVisibilitySettings().clearIndividualVisibilities();
+		task1Holo.getVisibilitySettings().setGlobalVisibility(VisibilitySettings.Visibility.VISIBLE);
 
 		if (this.task2 != null) {
 			Hologram task2Holo = this.task2.getHolo();
-			task2Holo.getVisibilityManager().resetVisibilityAll();
-			task2Holo.getVisibilityManager().setVisibleByDefault(true);
+			task2Holo.getVisibilitySettings().clearIndividualVisibilities();
+			task2Holo.getVisibilitySettings().setGlobalVisibility(VisibilitySettings.Visibility.VISIBLE);
 		}
 	}
 

@@ -2,7 +2,7 @@ package com.nktfh100.AmongUs.info;
 
 import org.bukkit.Location;
 
-import com.gmail.filoghost.holographicdisplays.api.Hologram;
+import me.filoghost.holographicdisplays.api.hologram.Hologram;
 
 public class Vent implements Comparable<Vent> {
 

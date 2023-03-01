@@ -1,6 +1,6 @@
 package com.nktfh100.AmongUs.info;
 
-import com.gmail.filoghost.holographicdisplays.api.Hologram;
+import me.filoghost.holographicdisplays.api.hologram.Hologram;
 import com.gmail.filoghost.holographicdisplays.api.handler.TouchHandler;
 import com.nktfh100.AmongUs.enums.GameState;
 import com.nktfh100.AmongUs.enums.TaskType;

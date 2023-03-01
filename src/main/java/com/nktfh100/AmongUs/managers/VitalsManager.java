@@ -9,7 +9,7 @@ import com.nktfh100.AmongUs.info.Arena;
 import com.nktfh100.AmongUs.info.PlayerInfo;
 import com.nktfh100.AmongUs.info.VitalsPlayerInfo;
 import com.nktfh100.AmongUs.inventory.VitalsInv;
-import com.gmail.filoghost.holographicdisplays.api.Hologram;
+import me.filoghost.holographicdisplays.api.hologram.Hologram;
 
 public class VitalsManager {
 

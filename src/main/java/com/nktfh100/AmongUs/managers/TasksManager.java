@@ -6,6 +6,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 
+import me.filoghost.holographicdisplays.api.hologram.VisibilitySettings;
 import org.bukkit.entity.Player;
 
 import com.nktfh100.AmongUs.enums.SabotageType;
@@ -84,7 +85,7 @@ public class TasksManager {
 					if (isAddingTaskOk(playerTasks, tasksQueued)) {
 						TaskPlayer tp = new TaskPlayer(pInfo, tasksQueued, qtv == null ? -1 : qtv.getId());
 						playerTasks.add(tp);
-						tp.getActiveTask().getHolo().getVisibilityManager().showTo(pInfo.getPlayer());
+						tp.getActiveTask().getHolo().getVisibilitySettings().setIndividualVisibility(pInfo.getPlayer(), VisibilitySettings.Visibility.VISIBLE);
 						numOfTasksToAdd--;
 					}
 				}
@@ -124,7 +125,7 @@ public class TasksManager {
 		}
 		if (taskPlayer.getIsDone()) {
 			for (Task t : taskPlayer.getTasks()) {
-				t.getHolo().getVisibilityManager().hideTo(player);
+				t.getHolo().getVisibilitySettings().setIndividualVisibility(player, VisibilitySettings.Visibility.HIDDEN);
 			}
 			return;
 		}

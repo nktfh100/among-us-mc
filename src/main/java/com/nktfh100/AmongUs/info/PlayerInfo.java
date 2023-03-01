@@ -3,6 +3,7 @@ package com.nktfh100.AmongUs.info;
 import java.util.ArrayList;
 import java.util.UUID;
 
+import me.filoghost.holographicdisplays.api.HolographicDisplaysAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
@@ -21,9 +22,9 @@ import org.bukkit.scoreboard.Team;
 
 import com.comphenix.protocol.wrappers.Vector3F;
 import com.comphenix.protocol.wrappers.WrappedBlockData;
-import com.gmail.filoghost.holographicdisplays.api.Hologram;
+import me.filoghost.holographicdisplays.api.hologram.Hologram;
+import me.filoghost.holographicdisplays.api.hologram.VisibilitySettings;
 import com.gmail.filoghost.holographicdisplays.api.HologramsAPI;
-import com.gmail.filoghost.holographicdisplays.api.VisibilityManager;
 import com.nktfh100.AmongUs.enums.CosmeticType;
 import com.nktfh100.AmongUs.enums.GameState;
 import com.nktfh100.AmongUs.enums.RoleType;
@@ -424,12 +425,12 @@ public class PlayerInfo {
 
 	public void createImposterHolo() {
 		this.imposterHolo = HologramsAPI.createHologram(Main.getPlugin(), this.getPlayer().getLocation().add(0, 2.8, 0));
-		this.imposterHolo.appendItemLine(Utils.createItem(Material.RED_CONCRETE, ""));
-		VisibilityManager visManager = this.imposterHolo.getVisibilityManager();
-		visManager.setVisibleByDefault(false);
+		this.imposterHolo.getLines().appendItem(Utils.createItem(Material.RED_CONCRETE, " "));
+		VisibilitySettings visManager = this.imposterHolo.getVisibilitySettings();
+		visManager.setGlobalVisibility(VisibilitySettings.Visibility.HIDDEN);
 		for (PlayerInfo pInfo1 : this.arena.getGameImposters()) {
 			if (pInfo1 != this) {
-				visManager.showTo(pInfo1.getPlayer());
+				visManager.setIndividualVisibility(pInfo1.getPlayer(), VisibilitySettings.Visibility.VISIBLE);
 			}
 		}
 	}
@@ -819,7 +820,7 @@ public class PlayerInfo {
 
 	public void teleportImposterHolo() {
 		if (this.getImposterHolo() != null) {
-			this.getImposterHolo().teleport(this.getPlayer().getLocation().add(0, 2.8, 0));
+			this.getImposterHolo().setPosition(this.getPlayer().getLocation().add(0, 2.8, 0));
 		}
 	}
 

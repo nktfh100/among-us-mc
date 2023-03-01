@@ -3,13 +3,14 @@ package com.nktfh100.AmongUs.info;
 import java.util.ArrayList;
 import java.util.UUID;
 
+import me.filoghost.holographicdisplays.api.hologram.VisibilitySettings;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 
-import com.gmail.filoghost.holographicdisplays.api.Hologram;
+import me.filoghost.holographicdisplays.api.hologram.Hologram;
 import com.gmail.filoghost.holographicdisplays.api.HologramsAPI;
 import com.nktfh100.AmongUs.main.Main;
 
@@ -54,7 +55,7 @@ public class DeadBody {
 
 	public void create() {
 		this.holo = HologramsAPI.createHologram(Main.getPlugin(), this.loc.clone().add(0, 1.8, 0));
-		this.holo.appendItemLine(pInfo.getHead()); // floating head
+		this.holo.getLines().appendItem(pInfo.getHead()); // floating head
 		this.arena.getVisibilityManager().resetBodyVis(this);
 	}
 
@@ -67,7 +68,7 @@ public class DeadBody {
 			this.playersShownTo.add(player);
 		}
 		if (this.holo != null) {
-			this.holo.getVisibilityManager().showTo(player);
+			this.holo.getVisibilitySettings().setIndividualVisibility(player, VisibilitySettings.Visibility.VISIBLE);
 		}
 
 		this.fakePlayer.showPlayerTo(toPInfo, this.loc, true, register);
@@ -81,7 +82,7 @@ public class DeadBody {
 			this.playersShownTo.remove(player);
 		}
 		if (this.holo != null) {
-			this.holo.getVisibilityManager().hideTo(player);
+			this.holo.getVisibilitySettings().setIndividualVisibility(player, VisibilitySettings.Visibility.HIDDEN);
 		}
 		this.fakePlayer.hidePlayerFrom(player, register);
 	}
