@@ -13,8 +13,6 @@ import java.util.List;
 import java.util.Stack;
 import java.util.logging.Level;
 
-import me.filoghost.holographicdisplays.api.hologram.VisibilitySettings;
-import me.filoghost.holographicdisplays.api.hologram.line.ClickableHologramLine;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Color;
@@ -49,9 +47,11 @@ import org.bukkit.util.Vector;
 import com.comphenix.protocol.PacketType;
 import com.comphenix.protocol.events.PacketContainer;
 import me.filoghost.holographicdisplays.api.hologram.Hologram;
-/*import com.gmail.filoghost.holographicdisplays.api.HologramsAPI;
-import com.gmail.filoghost.holographicdisplays.api.handler.TouchHandler;
-import com.gmail.filoghost.holographicdisplays.api.line.TouchableLine;*/
+import me.filoghost.holographicdisplays.api.hologram.VisibilitySettings;
+import me.filoghost.holographicdisplays.api.HolographicDisplaysAPI;
+import me.filoghost.holographicdisplays.api.hologram.line.ClickableHologramLine;
+import me.filoghost.holographicdisplays.api.hologram.line.HologramLineClickListener;
+import me.filoghost.holographicdisplays.api.hologram.line.HologramLineClickEvent;
 import com.nktfh100.AmongUs.api.events.AUArenaGameStateChange;
 import com.nktfh100.AmongUs.api.events.AUArenaPlayerDeath;
 import com.nktfh100.AmongUs.api.events.AUArenaPlayerJoin;
@@ -84,7 +84,7 @@ import com.nktfh100.AmongUs.utils.Packets;
 import com.nktfh100.AmongUs.utils.Utils;
 
 public class Arena {
-
+	private HolographicDisplaysAPI holoApi = HolographicDisplaysAPI.get(Main.getPlugin());
 	private File arenaFile;
 	private FileConfiguration arenaConfig;
 	private String name;
@@ -1824,8 +1824,8 @@ public class Arena {
 		}
 	}
 
-	private void createLine(Hologram holo, String line, TouchHandler th) {
-		TouchableLine line_ = null;
+	private void createLine(Hologram holo, String line, HologramLineClickListener th) {
+		ClickableHologramLine line_ = null;
 		if (line.startsWith("@") && line.endsWith("@")) {
 			line = line.replace("@", "");
 			Material mat = Material.getMaterial(line);
@@ -1835,9 +1835,9 @@ public class Arena {
 			}
 			line_ = holo.getLines().appendItem(Utils.createItem(mat, " "));
 		} else {
-			line_ = holo.appendTextLine(line);
+			line_ = holo.getLines().appendText(line);
 		}
-		line_.setTouchHandler(th);
+		line_.setClickListener(th);
 	}
 
 	public void createHolograms() {
@@ -1845,7 +1845,7 @@ public class Arena {
 
 		// loop all tasks
 		for (Task task : this.getAllTasks()) {
-			Hologram created = HologramsAPI.createHologram(Main.getPlugin(), task.getLocation());
+			Hologram created = this.holoApi.createHologram(task.getLocation());
 			for (String line : Main.getMessagesManager().getHologramLines("task", Main.getMessagesManager().getTaskName(task.getTaskType().toString()), task.getLocationName().getName())) {
 				createLine(created, line, task.getTouchHandler());
 			}
@@ -1863,7 +1863,7 @@ public class Arena {
 			String saboName = Main.getMessagesManager().getTaskName(saboAr.getType().toString());
 			String saboTitle = Main.getMessagesManager().getSabotageTitle(saboAr.getType());
 			for (SabotageTask saboTask : saboTasks) {
-				Hologram created = HologramsAPI.createHologram(Main.getPlugin(), saboTask.getLocation());
+				Hologram created = this.holoApi.createHologram(saboTask.getLocation());
 				for (String line : Main.getMessagesManager().getHologramLines("sabotage", saboName, saboTitle)) {
 					createLine(created, line, saboTask.getTouchHandler());
 				}
@@ -1874,11 +1874,12 @@ public class Arena {
 		}
 
 		// meeting button hologram
-		Hologram createdBtn = HologramsAPI.createHologram(Main.getPlugin(), this.meetingButton);
+		Hologram createdBtn = this.holoApi.createHologram(this.meetingButton);
 
-		TouchHandler th = new TouchHandler() {
+		HologramLineClickListener th = new HologramLineClickListener() {
 			@Override
-			public void onTouch(Player p) {
+			public void onClick(HologramLineClickEvent event) {
+				Player p = event.getPlayer();
 				PlayerInfo pInfo = Main.getPlayersManager().getPlayerInfo(p);
 				if (!pInfo.getIsIngame()) {
 					return;
@@ -1899,16 +1900,17 @@ public class Arena {
 		// vents holograms
 		for (VentGroup vg : this.getVentsManager().getVentGroups()) {
 			for (Vent v : vg.getVents()) {
-				Hologram created = HologramsAPI.createHologram(Main.getPlugin(), v.getLoc());
+				Hologram created = this.holoApi.createHologram(v.getLoc());
 				String locName = "";
 				if (v.getLocName() != null) {
 					v.getLocName().getName();
 				}
 				final Integer vgId = vg.getId();
 				final Integer vId = v.getId();
-				TouchHandler th_ = new TouchHandler() {
+				HologramLineClickListener th_ = new HologramLineClickListener() {
 					@Override
-					public void onTouch(Player player) {
+					public void onClick(HologramLineClickEvent event) {
+						Player player = event.getPlayer();
 						PlayerInfo pInfo = Main.getPlayersManager().getPlayerInfo(player);
 						if (pInfo.getIsIngame() && pInfo.getIsImposter() && !pInfo.isGhost() && !pInfo.getIsInVent() && !pInfo.getArena().getIsInMeeting()) {
 							pInfo.getArena().getVentsManager().ventHoloClick(pInfo, vgId, vId);
@@ -1934,16 +1936,16 @@ public class Arena {
 			for (Camera cam : this.camerasManager.getCameras()) {
 				cam.createArmorStand();
 			}
-			Hologram created = HologramsAPI.createHologram(Main.getPlugin(), this.camerasLoc);
-			TouchHandler th_ = new TouchHandler() {
+			Hologram created = this.holoApi.createHologram(this.camerasLoc);
+			HologramLineClickListener th_ = new HologramLineClickListener() {
 				@Override
-				public void onTouch(Player arg0) {
-				}
+				public void onClick(HologramLineClickEvent event) { }
 			};
 			if (this.camerasManager.getCameras().size() > 0) {
-				th_ = new TouchHandler() {
+				th_ = new HologramLineClickListener() {
 					@Override
-					public void onTouch(Player player) {
+					public void onClick(HologramLineClickEvent event) {
+						Player player = event.getPlayer();
 						PlayerInfo pInfo = Main.getPlayersManager().getPlayerInfo(player);
 						if (pInfo.getIsIngame() && !pInfo.getIsInVent() && !pInfo.getArena().getIsInMeeting()) {
 							pInfo.getArena().getCamerasManager().camerasHoloClick(pInfo);
@@ -1959,10 +1961,11 @@ public class Arena {
 		}
 
 		if (this.vitalsLoc != null) {
-			Hologram created = HologramsAPI.createHologram(Main.getPlugin(), this.vitalsLoc);
-			TouchHandler th_ = new TouchHandler() {
+			Hologram created = this.holoApi.createHologram(this.vitalsLoc);
+			HologramLineClickListener th_ = new HologramLineClickListener() {
 				@Override
-				public void onTouch(Player player) {
+				public void onClick(HologramLineClickEvent event) {
+					Player player = event.getPlayer();
 					PlayerInfo pInfo = Main.getPlayersManager().getPlayerInfo(player);
 					if (pInfo != null) {
 						if (pInfo.getIsIngame() && !pInfo.getIsInVent() && !pInfo.getArena().getIsInMeeting() && pInfo.getArena().getGameState() == GameState.RUNNING) {

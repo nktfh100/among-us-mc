@@ -1,7 +1,8 @@
 package com.nktfh100.AmongUs.info;
 
 import me.filoghost.holographicdisplays.api.hologram.Hologram;
-import com.gmail.filoghost.holographicdisplays.api.handler.TouchHandler;
+import me.filoghost.holographicdisplays.api.hologram.line.HologramLineClickEvent;
+import me.filoghost.holographicdisplays.api.hologram.line.HologramLineClickListener;
 import com.nktfh100.AmongUs.enums.GameState;
 import com.nktfh100.AmongUs.enums.TaskType;
 import com.nktfh100.AmongUs.main.Main;
@@ -23,7 +24,7 @@ public class Task implements Comparable<Task> {
 	private TaskType taskType;
 	private Arena arena;
 	private Hologram holo;
-	private TouchHandler touchHandler;
+	private HologramLineClickListener touchHandler;
 
 	// For all visual tasks
 	private Boolean enableVisuals = true;
@@ -49,9 +50,10 @@ public class Task implements Comparable<Task> {
 		this.isEnabled = isEnabled;
 		this.enableVisuals = enableVisuals;
 		Task task = this;
-		this.touchHandler = new TouchHandler() {
+		this.touchHandler = new HologramLineClickListener() {
 			@Override
-			public void onTouch(Player p) {
+			public void onClick(HologramLineClickEvent event) {
+				Player p = event.getPlayer();
 				if (task.getArena().getGameState() == GameState.RUNNING) {
 					task.getArena().getTasksManager().taskHoloClick(p, task);
 				} else {
@@ -172,7 +174,7 @@ public class Task implements Comparable<Task> {
 		this.isEnabled = is;
 	}
 
-	public TouchHandler getTouchHandler() {
+	public HologramLineClickListener getTouchHandler() {
 		return touchHandler;
 	}
 

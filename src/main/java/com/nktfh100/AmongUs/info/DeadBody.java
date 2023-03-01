@@ -3,6 +3,7 @@ package com.nktfh100.AmongUs.info;
 import java.util.ArrayList;
 import java.util.UUID;
 
+import me.filoghost.holographicdisplays.api.HolographicDisplaysAPI;
 import me.filoghost.holographicdisplays.api.hologram.VisibilitySettings;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -11,7 +12,6 @@ import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 
 import me.filoghost.holographicdisplays.api.hologram.Hologram;
-import com.gmail.filoghost.holographicdisplays.api.HologramsAPI;
 import com.nktfh100.AmongUs.main.Main;
 
 public class DeadBody {
@@ -54,7 +54,8 @@ public class DeadBody {
 	}
 
 	public void create() {
-		this.holo = HologramsAPI.createHologram(Main.getPlugin(), this.loc.clone().add(0, 1.8, 0));
+		HolographicDisplaysAPI holoApi = HolographicDisplaysAPI.get(Main.getPlugin());
+		this.holo = holoApi.createHologram(this.loc.clone().add(0, 1.8, 0));
 		this.holo.getLines().appendItem(pInfo.getHead()); // floating head
 		this.arena.getVisibilityManager().resetBodyVis(this);
 	}

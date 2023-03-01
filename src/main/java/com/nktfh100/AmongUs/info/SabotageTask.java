@@ -1,7 +1,8 @@
 package com.nktfh100.AmongUs.info;
 
 import me.filoghost.holographicdisplays.api.hologram.Hologram;
-import com.gmail.filoghost.holographicdisplays.api.handler.TouchHandler;
+import me.filoghost.holographicdisplays.api.hologram.line.HologramLineClickEvent;
+import me.filoghost.holographicdisplays.api.hologram.line.HologramLineClickListener;
 import com.nktfh100.AmongUs.enums.GameState;
 import com.nktfh100.AmongUs.enums.SabotageType;
 import com.nktfh100.AmongUs.main.Main;
@@ -19,7 +20,7 @@ public class SabotageTask {
 	private Boolean hasTimer;
 	private Arena arena;
 	private Hologram holo;
-	private TouchHandler touchHandler;
+	private HologramLineClickListener touchHandler;
 
 	public SabotageTask(SabotageType sabotageType, Integer id, Integer timer) {
 		this.id = id;
@@ -32,9 +33,10 @@ public class SabotageTask {
 		this.location = location;
 		this.arena = arena;
 		SabotageTask sabotage = this;
-		this.touchHandler = new TouchHandler() {
+		this.touchHandler = new HologramLineClickListener() {
 			@Override
-			public void onTouch(Player p) {
+			public void onClick(HologramLineClickEvent event) {
+				Player p = event.getPlayer();
 				if (sabotage.getArena().getGameState() == GameState.RUNNING) {
 					sabotage.getArena().getSabotageManager().sabotageHoloClick(p, sabotage.getId());
 				} else {
@@ -69,7 +71,7 @@ public class SabotageTask {
 		return arena;
 	}
 
-	public TouchHandler getTouchHandler() {
+	public HologramLineClickListener getTouchHandler() {
 		return touchHandler;
 	}
 

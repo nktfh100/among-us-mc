@@ -18,12 +18,10 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.configuration.ConfigurationSection;
-import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.map.MapView;
 import org.bukkit.map.MapView.Scale;
-import org.bukkit.scheduler.BukkitRunnable;
 
 import com.comphenix.protocol.wrappers.WrappedBlockData;
 import com.google.common.collect.Iterables;
