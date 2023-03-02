@@ -6,7 +6,6 @@ import java.util.List;
 
 import com.comphenix.protocol.PacketType;
 import com.comphenix.protocol.events.PacketContainer;
-import com.comphenix.protocol.reflect.IntEnum;
 import com.comphenix.protocol.utility.MinecraftReflection;
 import com.comphenix.protocol.wrappers.WrappedChatComponent;
 
@@ -30,7 +29,7 @@ public class WrapperPlayServerScoreboardTeam extends AbstractPacket {
 	 * 
 	 * @author dmulloy2
 	 */
-	public static class Mode extends IntEnum {
+	public static class Mode {
 		public static final int TEAM_CREATED = 0;
 		public static final int TEAM_REMOVED = 1;
 		public static final int TEAM_UPDATED = 2;

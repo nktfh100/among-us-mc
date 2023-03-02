@@ -12,7 +12,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -53,11 +52,7 @@ public class ScoreboardSign {
 	}
 
 	private void sendPacket(final PacketContainer pc) {
-		try {
-			pm.sendServerPacket(player, pc);
-		} catch (InvocationTargetException e) {
-			e.printStackTrace();
-		}
+		pm.sendServerPacket(player, pc);
 	}
 
 	/**

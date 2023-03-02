@@ -83,12 +83,6 @@ public class Main extends JavaPlugin {
 	public void onEnable() {
 		plugin = this;
 
-		String ver = getServer().getVersion();
-		if (!ver.contains("1.16")) {
-			Bukkit.getLogger().log(Level.SEVERE, "Server version not supported! (only 1.16 - 1.16.5 are supported)");
-			this.getPluginLoader().disablePlugin(this);
-			return;
-		}
 		new Metrics(this, 12109);
 		if (getServer().getPluginManager().getPlugin("VentureChat") != null) {
 			isVentureChat = true;

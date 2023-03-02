@@ -1,6 +1,5 @@
 package com.nktfh100.AmongUs.utils;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -42,12 +41,8 @@ public class Packets {
 	}
 
 	public static void sendPacket(Player p, PacketContainer packet) {
-		try {
-			if (p.isOnline() && packet != null) {
-				ProtocolLibrary.getProtocolManager().sendServerPacket(p, packet);
-			}
-		} catch (InvocationTargetException e) {
-			e.printStackTrace();
+		if (p.isOnline() && packet != null) {
+			ProtocolLibrary.getProtocolManager().sendServerPacket(p, packet);
 		}
 	}
 

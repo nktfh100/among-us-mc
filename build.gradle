@@ -17,17 +17,11 @@ repositories {
 }
 
 dependencies {
-    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
-    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
-    compileOnly 'org.spigotmc:spigot-api:1.16.5-R0.1-SNAPSHOT'
-    compileOnly group: "com.comphenix.protocol", name: "ProtocolLib", version: "4.8.0"
+    compileOnly 'org.spigotmc:spigot-api:1.19.3-R0.1-SNAPSHOT'
+    compileOnly group: "com.comphenix.protocol", name: "ProtocolLib", version: "5.0.0-SNAPSHOT"
     compileOnly 'me.filoghost.holographicdisplays:holographicdisplays-api:3.0.0'
     compileOnly 'org.black_ixx:playerpoints:3.2.5'
     compileOnly 'me.clip:placeholderapi:2.11.2'
     compileOnly 'com.mojang:authlib:2.1.28'
     compileOnly files('libs/VentureChat-3.5.0.jar')
-}
-
-test {
-    useJUnitPlatform()
 }
