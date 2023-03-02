@@ -3,7 +3,7 @@ plugins {
 }
 
 group 'spigot.gradle.project'
-version '3.0 by Lucaaa'
+version '3.1 by Lucaaa'
 
 repositories {
     mavenCentral()
