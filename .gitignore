@@ -4,7 +4,7 @@
 .classpath
 .idea
 bin/
-README.md
+
 # Ignore Gradle project-specific cache directory
 .gradle
 
