@@ -184,9 +184,9 @@ public void arenaPlayerDeath(AUArenaPlayerDeath ev) {
 ![](https://i.imgur.com/VUrebSs.png)
 
 
-- **HolographicDisplays**
-- **ProtocolLib**
-- **[PlayerPoints](https://www.spigotmc.org/resources/playerpoints.80745/) (For cosmetics)**
+- **[HolographicDisplays](https://dev.bukkit.org/projects/holographic-displays/files)** Minimum 3.0.0 because of the new developer API.
+- **[ProtocolLib](https://ci.dmulloy2.net/job/ProtocolLib/lastSuccessfulBuild/)** Must be latest dev version.
+- **[PlayerPoints](https://www.spigotmc.org/resources/playerpoints.80745/)** Soft dependency, only needed for cosmetics.
 
 
 
@@ -194,7 +194,7 @@ public void arenaPlayerDeath(AUArenaPlayerDeath ev) {
 
 
 <details>
-  <summary>pre-configured arena</summary>
+  <summary>Pre-configured arenas</summary>
 
 There is a Polus map and a Skeld map in here.
 [LINK](https://www.mediafire.com/file/l0eirwwmtrx7epx/AmongUs_Pre_Configured_arena.rar/file)
@@ -202,7 +202,8 @@ There is a Polus map and a Skeld map in here.
 
 
 <details>
-  <summary>PlaceholderAPI</summary>
+<summary>PlaceholderAPI</summary>
+
 ```
 %amongus_games_played%
 %amongus_imposter_wins%
