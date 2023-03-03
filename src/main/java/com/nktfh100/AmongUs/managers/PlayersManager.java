@@ -141,11 +141,11 @@ public class PlayersManager implements Listener {
 				new BukkitRunnable() {
 					@Override
 					public void run() {
-						PacketContainer packet = Packets.REMOVE_PLAYER(player.getUniqueId(), player.getName(), player.getName());
+						PacketContainer packet = Packets.REMOVE_PLAYER(player.getUniqueId());
 						for (Arena arena : Main.getArenaManager().getAllArenas()) {
 							for (Player p : arena.getPlayers()) {
 								Packets.sendPacket(p, packet);
-								Packets.sendPacket(player, Packets.REMOVE_PLAYER(p.getUniqueId(), p.getName(), p.getName()));
+								Packets.sendPacket(player, Packets.REMOVE_PLAYER(p.getUniqueId()));
 							}
 						}
 

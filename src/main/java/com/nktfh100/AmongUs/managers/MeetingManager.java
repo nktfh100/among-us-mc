@@ -86,7 +86,7 @@ public class MeetingManager {
 						continue;
 					}
 					if (pInfo1.isGhost() && pInfo1 != pInfo) {
-						Packets.sendPacket(pInfo.getPlayer(), Packets.REMOVE_PLAYER(pInfo1.getPlayer().getUniqueId(), pInfo1.getPlayer().getName(), pInfo1.getCustomName()));
+						Packets.sendPacket(pInfo.getPlayer(), Packets.REMOVE_PLAYER(pInfo1.getPlayer().getUniqueId()));
 					}
 				}
 			} else {

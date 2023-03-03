@@ -28,6 +28,10 @@ import java.util.logging.Level;
  *         and shared to Spigot by Aurelien30000 on 10/07/2020. 1.8 - 1.12.2
  *         Support dropped to make this library working with 1.13.2+, by
  *         Aurelien30000 on 27/08/2020.
+ *
+ *         nktfh100:
+ *         as of 1.19 this doesn't work anymore
+ *
  */
 public class ScoreboardSign {
 

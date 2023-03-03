@@ -1,9 +1,6 @@
 package com.nktfh100.AmongUs.utils;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -47,30 +44,36 @@ public class Packets {
 	}
 
 	public static PacketContainer UPDATE_DISPLAY_NAME(UUID uuid, String orgName, String newName) {
+
 		PacketContainer packet = new PacketContainer(PacketType.Play.Server.PLAYER_INFO);
-		packet.getPlayerInfoAction().write(0, EnumWrappers.PlayerInfoAction.UPDATE_DISPLAY_NAME);
+		packet.getPlayerInfoActions().write(0, EnumSet.of(EnumWrappers.PlayerInfoAction.UPDATE_DISPLAY_NAME));
+
 		WrappedGameProfile wgp = new WrappedGameProfile(uuid, orgName);
-		packet.getPlayerInfoDataLists().write(0, new ArrayList<PlayerInfoData>(Arrays.asList(new PlayerInfoData(wgp, 50, NativeGameMode.ADVENTURE, WrappedChatComponent.fromText(newName)))));
+		packet.getPlayerInfoDataLists().write(0,
+			Collections.singletonList(new PlayerInfoData(wgp, 50, NativeGameMode.ADVENTURE, WrappedChatComponent.fromText(newName)
+		)));
+
 		return packet;
 	}
 
 	public static PacketContainer ADD_PLAYER(UUID uuid, String name, String displayName, String textureValue, String textureSignature) {
 		PacketContainer packet = new PacketContainer(PacketType.Play.Server.PLAYER_INFO);
-		packet.getPlayerInfoAction().write(0, EnumWrappers.PlayerInfoAction.ADD_PLAYER);
+		packet.getPlayerInfoActions().write(0, EnumSet.of(EnumWrappers.PlayerInfoAction.ADD_PLAYER));
+
 		WrappedGameProfile wgp = new WrappedGameProfile(uuid, name);
 		PlayerInfoData playerInfoData = new PlayerInfoData(wgp, 50, NativeGameMode.ADVENTURE, WrappedChatComponent.fromText(displayName));
-		packet.getPlayerInfoDataLists().write(0, new ArrayList<PlayerInfoData>(Arrays.asList(playerInfoData)));
+		packet.getPlayerInfoDataLists().write(0, Collections.singletonList(playerInfoData));
 
 		wgp.getProperties().get("textures").clear();
 		wgp.getProperties().get("textures").add(new WrappedSignedProperty("textures", textureValue, textureSignature));
 		return packet;
 	}
 
-	public static PacketContainer REMOVE_PLAYER(UUID uuid, String name, String displayName) {
-		PacketContainer packet = new PacketContainer(PacketType.Play.Server.PLAYER_INFO);
-		packet.getPlayerInfoAction().write(0, EnumWrappers.PlayerInfoAction.REMOVE_PLAYER);
-		packet.getPlayerInfoDataLists().write(0,
-				new ArrayList<PlayerInfoData>(Arrays.asList(new PlayerInfoData(new WrappedGameProfile(uuid, name), 50, NativeGameMode.ADVENTURE, WrappedChatComponent.fromText(displayName)))));
+	public static PacketContainer REMOVE_PLAYER(UUID uuid) {
+		PacketContainer packet = new PacketContainer(PacketType.Play.Server.PLAYER_INFO_REMOVE);
+
+		packet.getUUIDLists().write(0, Collections.singletonList(uuid));
+
 		return packet;
 	}
 
@@ -120,9 +123,9 @@ public class Packets {
 		return packet;
 	}
 
-	public static PacketContainer ENTITY_LOOK(int entityid, Location loc) {
+	public static PacketContainer ENTITY_LOOK(int entityId, Location loc) {
 		PacketContainer packet = new PacketContainer(PacketType.Play.Server.ENTITY_LOOK);
-		packet.getIntegers().write(0, entityid);
+		packet.getIntegers().write(0, entityId);
 		packet.getBytes().write(0, toPackedByte(loc.getYaw())).write(1, toPackedByte((loc.getPitch())));
 		packet.getBooleans().write(0, true);
 		return packet;

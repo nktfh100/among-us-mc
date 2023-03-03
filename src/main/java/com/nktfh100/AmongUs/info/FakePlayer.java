@@ -76,7 +76,7 @@ public class FakePlayer {
 		new BukkitRunnable() {
 			@Override
 			public void run() {
-				Packets.sendPacket(player, Packets.REMOVE_PLAYER(fp.getUuid(), fp.getName(), fp.getCustomName()));
+				Packets.sendPacket(player, Packets.REMOVE_PLAYER(fp.getUuid()));
 			}
 		}.runTaskLater(Main.getPlugin(), 2L);
 	}

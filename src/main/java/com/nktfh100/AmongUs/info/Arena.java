@@ -745,13 +745,13 @@ public class Arena {
 				}
 
 				if (!Main.getConfigManager().getBungeecord() && Main.getConfigManager().getHidePlayersOutSideArena()) {
-					PacketContainer packet1 = Packets.REMOVE_PLAYER(pInfo.getPlayer().getUniqueId(), pInfo.getPlayer().getName(), pInfo.getPlayer().getName());
+					PacketContainer packet1 = Packets.REMOVE_PLAYER(pInfo.getPlayer().getUniqueId());
 					PacketContainer packet2 = Packets.ADD_PLAYER(pInfo.getPlayer().getUniqueId(), pInfo.getPlayer().getName(), pInfo.getCustomName(), pInfo.getTextureValue(),
 							pInfo.getTextureSignature());
 					for (PlayerInfo pInfo_ : Main.getPlayersManager().getPlayers()) {
 						if (pInfo != pInfo_) {
 							if (!pInfo_.getIsIngame()) {
-								PacketContainer packet = Packets.REMOVE_PLAYER(pInfo_.getPlayer().getUniqueId(), pInfo_.getPlayer().getName(), pInfo_.getPlayer().getName());
+								PacketContainer packet = Packets.REMOVE_PLAYER(pInfo_.getPlayer().getUniqueId());
 								Packets.sendPacket(player, packet);
 
 								Packets.sendPacket(pInfo_.getPlayer(), packet1);
@@ -967,7 +967,7 @@ public class Arena {
 			}
 
 			PacketContainer packet1 = Packets.ADD_PLAYER(player.getUniqueId(), player.getName(), player.getName(), pInfo.getTextureValue(), pInfo.getTextureSignature());
-			PacketContainer packet2 = Packets.REMOVE_PLAYER(player.getUniqueId(), player.getName(), player.getName());
+			PacketContainer packet2 = Packets.REMOVE_PLAYER(player.getUniqueId());
 
 			if (!isLeaving && Main.getConfigManager().getBungeecord()) {
 				if (Main.getConfigManager().getGameEndSendToLobby() || shouldSendToLobby) {
@@ -987,7 +987,7 @@ public class Arena {
 				}
 
 				for (PlayerInfo pInfo_ : this.getPlayersInfo()) {
-					PacketContainer packet = Packets.REMOVE_PLAYER(pInfo_.getPlayer().getUniqueId(), pInfo_.getPlayer().getName(), pInfo_.getCustomName());
+					PacketContainer packet = Packets.REMOVE_PLAYER(pInfo_.getPlayer().getUniqueId());
 					Packets.sendPacket(player, packet);
 
 					Packets.sendPacket(pInfo_.getPlayer(), packet2);
@@ -1134,7 +1134,7 @@ public class Arena {
 		}
 
 		// if Ejected
-		PacketContainer removePlayerPacket = Packets.REMOVE_PLAYER(pInfo.getPlayer().getUniqueId(), player.getName(), pInfo.getCustomName());
+		PacketContainer removePlayerPacket = Packets.REMOVE_PLAYER(pInfo.getPlayer().getUniqueId());
 
 		// for other ghosts
 		String name = ChatColor.GRAY + "" + ChatColor.ITALIC + player.getName();
@@ -1782,8 +1782,8 @@ public class Arena {
 				for (PlayerInfo pInfo1 : arena.getPlayersInfo()) {
 					for (PlayerInfo pInfo2 : arena.getPlayersInfo()) {
 						if (pInfo1 != pInfo2) {
-							Packets.sendPacket(pInfo1.getPlayer(), Packets.REMOVE_PLAYER(pInfo2.getPlayer().getUniqueId(), pInfo2.getPlayer().getName(), pInfo2.getCustomName()));
-							Packets.sendPacket(pInfo2.getPlayer(), Packets.REMOVE_PLAYER(pInfo1.getPlayer().getUniqueId(), pInfo1.getPlayer().getName(), pInfo1.getCustomName()));
+							Packets.sendPacket(pInfo1.getPlayer(), Packets.REMOVE_PLAYER(pInfo2.getPlayer().getUniqueId()));
+							Packets.sendPacket(pInfo2.getPlayer(), Packets.REMOVE_PLAYER(pInfo1.getPlayer().getUniqueId()));
 						}
 					}
 				}
