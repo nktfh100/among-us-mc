@@ -52,10 +52,10 @@
 
 
 
-- **amongus.admin -**Permission for everything admin related
-- **amongus.admin.setup -**Allows to setup arenas
-- **amongus.admin.startgame -**Allows use of the /aua start command
-- **amongus.admin.endgame -**Allows use of the /aua endgame command
+- **amongus.admin -** Permission for everything admin related
+- **amongus.admin.setup -** Allows to setup arenas
+- **amongus.admin.startgame -** Allows use of the /aua start command
+- **amongus.admin.endgame -** Allows use of the /aua endgame command
 - **amongus.perk.double-imposter-chance** - Players with this permission will have higher chance to become the imposter
 (if enabled in the config)
 
