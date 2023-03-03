@@ -336,6 +336,12 @@ public class AdminCommand implements CommandExecutor {
 							sender.sendMessage(Main.getConfigManager().getPrefix() + ChatColor.RED + "Too many imposters!");
 							return true;
 						}
+
+						if (imposters <= 0) {
+							sender.sendMessage(Main.getConfigManager().getPrefix() + ChatColor.RED + "There must be at least 1 imposter!");
+							return true;
+						}
+
 						// Create the arena config file inside the arenas folder
 						File arenasFolder = Main.getArenaManager().getArenasFolder();
 						File file = new File(arenasFolder, args[1] + ".yml");
