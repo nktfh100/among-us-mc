@@ -1,0 +1,27 @@
+plugins {
+    id 'java'
+}
+
+group 'spigot.gradle.project'
+version '3.1'
+
+repositories {
+    mavenCentral()
+    maven { url 'https://hub.spigotmc.org/nexus/content/repositories/snapshots/' }
+    maven { url "https://repo.dmulloy2.net/repository/public/" }
+    maven { url "https://repo.codemc.io/repository/maven-public/" }
+    maven { url = 'https://repo.rosewooddev.io/repository/public/' }
+    maven { url = 'https://repo.extendedclip.com/content/repositories/placeholderapi/' }
+    // Authlib -> https://papermc.io/repo/service/rest/repository/browse/maven-public/com/mojang/authlib/
+    maven { url = 'https://libraries.minecraft.net/' }
+}
+
+dependencies {
+    compileOnly 'org.spigotmc:spigot-api:1.19.3-R0.1-SNAPSHOT'
+    compileOnly group: "com.comphenix.protocol", name: "ProtocolLib", version: "5.0.0-SNAPSHOT"
+    compileOnly 'me.filoghost.holographicdisplays:holographicdisplays-api:3.0.0'
+    compileOnly 'org.black_ixx:playerpoints:3.2.5'
+    compileOnly 'me.clip:placeholderapi:2.11.2'
+    compileOnly 'com.mojang:authlib:2.1.28'
+    compileOnly files('libs/VentureChat-3.5.0.jar')
+}
