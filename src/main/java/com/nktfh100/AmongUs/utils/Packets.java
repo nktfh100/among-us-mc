@@ -49,7 +49,7 @@ public class Packets {
 		packet.getPlayerInfoActions().write(0, EnumSet.of(EnumWrappers.PlayerInfoAction.UPDATE_DISPLAY_NAME));
 
 		WrappedGameProfile wgp = new WrappedGameProfile(uuid, orgName);
-		packet.getPlayerInfoDataLists().write(0,
+		packet.getPlayerInfoDataLists().write(1,
 			Collections.singletonList(new PlayerInfoData(wgp, 50, NativeGameMode.ADVENTURE, WrappedChatComponent.fromText(newName)
 		)));
 
@@ -62,7 +62,7 @@ public class Packets {
 
 		WrappedGameProfile wgp = new WrappedGameProfile(uuid, name);
 		PlayerInfoData playerInfoData = new PlayerInfoData(wgp, 50, NativeGameMode.ADVENTURE, WrappedChatComponent.fromText(displayName));
-		packet.getPlayerInfoDataLists().write(0, Collections.singletonList(playerInfoData));
+		packet.getPlayerInfoDataLists().write(1, Collections.singletonList(playerInfoData));
 
 		wgp.getProperties().get("textures").clear();
 		wgp.getProperties().get("textures").add(new WrappedSignedProperty("textures", textureValue, textureSignature));
