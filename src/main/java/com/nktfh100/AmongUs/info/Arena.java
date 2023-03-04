@@ -947,7 +947,6 @@ public class Arena {
 				_isTesting = false;
 			}
 
-			this.updateSigns();
 			if (!Main.getConfigManager().getSaveInventory()) {
 				if (Main.getConfigManager().getGiveLobbyItems() && !Main.getConfigManager().getBungeecord()) {
 					ItemInfo item = Main.getItemsManager().getItem("arenasSelector").getItem();
@@ -958,7 +957,6 @@ public class Arena {
 				}
 			}
 
-			Main.getArenaManager().updateArenaSelectorInv();
 			if (this.isInMeeting) {
 				this.meetingManager.updateInv();
 			}
@@ -1018,10 +1016,6 @@ public class Arena {
 
 				Boolean stopTimer = false;
 				if (this.ingamePlayers.size() < this.minPlayers) {
-					if (this.ingamePlayers.size() == 0) {
-						this.endGame(false);
-						return;
-					}
 					stopTimer = true;
 				}
 
@@ -1038,6 +1032,10 @@ public class Arena {
 					Main.getArenaManager().sendBungeUpdate(this);
 				}
 			}
+
+			Main.getArenaManager().updateArenaSelectorInv();
+			this.updateScoreBoard();
+			this.updateSigns();
 		}
 	}
 
