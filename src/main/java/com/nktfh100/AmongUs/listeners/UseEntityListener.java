@@ -5,6 +5,7 @@ import com.comphenix.protocol.events.ListenerPriority;
 import com.comphenix.protocol.events.PacketAdapter;
 import com.comphenix.protocol.events.PacketEvent;
 import com.comphenix.protocol.wrappers.EnumWrappers;
+import com.comphenix.protocol.wrappers.WrappedEnumEntityUseAction;
 import com.nktfh100.AmongUs.enums.GameState;
 import com.nktfh100.AmongUs.info.DeadBody;
 import com.nktfh100.AmongUs.info.FakeArmorStand;
@@ -72,7 +73,10 @@ public class UseEntityListener extends PacketAdapter {
                     victimInfo = Main.getPlayersManager().getPlayerInfo(victim);
                 }
 
-                if (event.getPacket().getEntityUseActions().read(0) == EnumWrappers.EntityUseAction.ATTACK) {
+                final WrappedEnumEntityUseAction wrappedAction = event.getPacket().getEnumEntityUseActions().read(0);
+                final EnumWrappers.EntityUseAction action = wrappedAction.getAction();
+
+                if (action == EnumWrappers.EntityUseAction.ATTACK) {
                     if ((!attackerInfo.getIsIngame() && victimInfo.getIsIngame()) || (attackerInfo.getIsIngame() && !victimInfo.getIsIngame())) {
                         event.setCancelled(true);
                         return;
