@@ -1,5 +1,7 @@
 package com.nktfh100.AmongUs.managers;
 
+import com.comphenix.protocol.wrappers.WrappedDataValue;
+import com.google.common.collect.Lists;
 import me.filoghost.holographicdisplays.api.hologram.VisibilitySettings;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -20,6 +22,9 @@ import com.nktfh100.AmongUs.info.TaskPlayer;
 import com.nktfh100.AmongUs.main.Main;
 import com.nktfh100.AmongUs.utils.Packets;
 import com.nktfh100.AmongUs.utils.Utils;
+
+import java.util.List;
+import java.util.Objects;
 
 public class VisibilityManager {
 
@@ -213,7 +218,15 @@ public class VisibilityManager {
 			if (pInfoToShow.isGhost()) {
 				watcher.setObject(0, serializer, (byte) (0x20));
 			}
-			metadataPacket.getWatchableCollectionModifier().write(0, watcher.getWatchableObjects());
+
+			// If <1.19.3 support is planned, make an if statement and this goes in versions under 1.19.3
+			// metadataPacket.getWatchableCollectionModifier().write(0, watcher.getWatchableObjects());
+			final List<WrappedDataValue> wrappedDataValueList = Lists.newArrayList();
+			watcher.getWatchableObjects().stream().filter(Objects::nonNull).forEach(entry -> {
+				final WrappedDataWatcher.WrappedDataWatcherObject dataWatcherObject = entry.getWatcherObject();
+				wrappedDataValueList.add(new WrappedDataValue(dataWatcherObject.getIndex(), dataWatcherObject.getSerializer(), entry.getRawValue()));
+			});
+			metadataPacket.getDataValueCollectionModifier().write(0, wrappedDataValueList);
 			Packets.sendPacket(pInfoToShowTo.getPlayer(), metadataPacket);
 
 			Packets.sendPacket(pInfoToShowTo.getPlayer(), Packets.ENTITY_LOOK(playerToShow.getPlayer().getEntityId(), loc));

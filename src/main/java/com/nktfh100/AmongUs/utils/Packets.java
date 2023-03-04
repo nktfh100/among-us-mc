@@ -2,6 +2,8 @@ package com.nktfh100.AmongUs.utils;
 
 import java.util.*;
 
+import com.comphenix.protocol.wrappers.*;
+import com.google.common.collect.Lists;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Particle;
@@ -13,19 +15,9 @@ import org.bukkit.inventory.ItemStack;
 import com.comphenix.protocol.PacketType;
 import com.comphenix.protocol.ProtocolLibrary;
 import com.comphenix.protocol.events.PacketContainer;
-import com.comphenix.protocol.wrappers.BlockPosition;
-import com.comphenix.protocol.wrappers.EnumWrappers;
-import com.comphenix.protocol.wrappers.Pair;
-import com.comphenix.protocol.wrappers.PlayerInfoData;
-import com.comphenix.protocol.wrappers.WrappedBlockData;
-import com.comphenix.protocol.wrappers.WrappedChatComponent;
-import com.comphenix.protocol.wrappers.WrappedDataWatcher;
 import com.comphenix.protocol.wrappers.WrappedDataWatcher.Registry;
 import com.comphenix.protocol.wrappers.WrappedDataWatcher.Serializer;
 import com.comphenix.protocol.wrappers.WrappedDataWatcher.WrappedDataWatcherObject;
-import com.comphenix.protocol.wrappers.WrappedGameProfile;
-import com.comphenix.protocol.wrappers.WrappedParticle;
-import com.comphenix.protocol.wrappers.WrappedSignedProperty;
 import com.nktfh100.AmongUs.info.ColorInfo;
 import com.comphenix.protocol.wrappers.EnumWrappers.EntityPose;
 import com.comphenix.protocol.wrappers.EnumWrappers.ItemSlot;
@@ -154,7 +146,7 @@ public class Packets {
 
 	public static PacketContainer DESTROY_ENTITY(int entityId) {
 		PacketContainer packet = new PacketContainer(PacketType.Play.Server.ENTITY_DESTROY);
-		packet.getIntegerArrays().write(0, new int[] { entityId });
+		packet.getIntLists().write(0, Collections.singletonList(entityId));
 		return packet;
 	}
 
@@ -165,7 +157,12 @@ public class Packets {
 		Serializer serializer = Registry.get(EnumWrappers.getEntityPoseClass());
 		WrappedDataWatcherObject object = new WrappedDataWatcherObject(6, serializer);
 		watcher.setObject(object, EntityPose.SLEEPING.toNms());
-		packet.getWatchableCollectionModifier().write(0, watcher.getWatchableObjects());
+		final List<WrappedDataValue> wrappedDataValueList = Lists.newArrayList();
+		watcher.getWatchableObjects().stream().filter(Objects::nonNull).forEach(entry -> {
+			final WrappedDataWatcher.WrappedDataWatcherObject dataWatcherObject = entry.getWatcherObject();
+			wrappedDataValueList.add(new WrappedDataValue(dataWatcherObject.getIndex(), dataWatcherObject.getSerializer(), entry.getRawValue()));
+		});
+		packet.getDataValueCollectionModifier().write(0, wrappedDataValueList);
 		return packet;
 	}
 
@@ -220,7 +217,13 @@ public class Packets {
 		watcher.setObject(16, serializer, (byte) (0x10)); // left pants
 		watcher.setObject(16, serializer, (byte) (0x20)); // right pants
 		watcher.setObject(16, serializer, (byte) (0x40)); // hat
-		packet.getWatchableCollectionModifier().write(0, watcher.getWatchableObjects());
+
+		final List<WrappedDataValue> wrappedDataValueList = Lists.newArrayList();
+		watcher.getWatchableObjects().stream().filter(Objects::nonNull).forEach(entry -> {
+			final WrappedDataWatcher.WrappedDataWatcherObject dataWatcherObject = entry.getWatcherObject();
+			wrappedDataValueList.add(new WrappedDataValue(dataWatcherObject.getIndex(), dataWatcherObject.getSerializer(), entry.getRawValue()));
+		});
+		packet.getDataValueCollectionModifier().write(0, wrappedDataValueList);
 		return packet;
 	}
 	
