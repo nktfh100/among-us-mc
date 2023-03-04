@@ -1018,6 +1018,10 @@ public class Arena {
 
 				Boolean stopTimer = false;
 				if (this.ingamePlayers.size() < this.minPlayers) {
+					if (this.ingamePlayers.size() == 0) {
+						this.endGame(false);
+						return;
+					}
 					stopTimer = true;
 				}
 
