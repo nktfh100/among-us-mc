@@ -7,7 +7,6 @@ enableGlassHelmet: true
 tpToLobbyOnJoin: true
 viewGlassMat: BLACK_STAINED_GLASS
 enablePortalJoin: false
-scoreboardUsePackets: true
 # enableDoubleImposterChance: If player has the permission "amongus.perk.double-imposter-chance" they have double the chance to become imposter
 enableDoubleImposterChance: false
 sneakToVent: false

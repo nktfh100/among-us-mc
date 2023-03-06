@@ -31,7 +31,6 @@ import com.nktfh100.AmongUs.enums.SabotageType;
 import com.nktfh100.AmongUs.main.Main;
 import com.nktfh100.AmongUs.managers.MessagesManager;
 import com.nktfh100.AmongUs.managers.StatsManager;
-import com.nktfh100.AmongUs.utils.ScoreboardSign;
 import com.nktfh100.AmongUs.utils.Utils;
 
 public class PlayerInfo {
@@ -64,7 +63,6 @@ public class PlayerInfo {
 	private DeadBody playerDiedTemp = null;
 	private Location playerCamLocTemp = null;
 
-	private ScoreboardSign scoreboard;
 	// For bukkit API
 	private Scoreboard board;
 	private Objective objective;
@@ -155,22 +153,13 @@ public class PlayerInfo {
 	}
 
 	public void _setMainLobbyScoreboard() {
-		if (Main.getConfigManager().getScoreboardUsePackets()) {
-			if (this.scoreboard != null) {
-				this.scoreboard.destroy();
-			}
-			this.scoreboard = new ScoreboardSign(player, Main.getMessagesManager().getScoreboard("title"));
-			this.scoreboard.create();
-			this.setScoreBoard();
-		} else {
-			this.board = null;
-			this.objective = null;
-			this.board = Bukkit.getScoreboardManager().getNewScoreboard();
-			this.objective = this.board.registerNewObjective(this.player.getName(), "dummy", Main.getMessagesManager().getScoreboard("title"));
-			this.objective.setDisplaySlot(DisplaySlot.SIDEBAR);
-			this.player.setScoreboard(this.board);
-			this.setScoreBoard();
-		}
+		this.board = null;
+		this.objective = null;
+		this.board = Bukkit.getScoreboardManager().getNewScoreboard();
+		this.objective = this.board.registerNewObjective(this.player.getName(), "dummy", Main.getMessagesManager().getScoreboard("title"));
+		this.objective.setDisplaySlot(DisplaySlot.SIDEBAR);
+		this.player.setScoreboard(this.board);
+		this.setScoreBoard();
 	}
 
 	public String getCustomName() {
@@ -199,21 +188,13 @@ public class PlayerInfo {
 			fakeArmorStand.resetAllShownTo();
 		}
 		String title = Main.getMessagesManager().getScoreboard("title");
-		if (Main.getConfigManager().getScoreboardUsePackets()) {
-			if (this.scoreboard != null) {
-				this.scoreboard.destroy();
-			}
-			this.scoreboard = new ScoreboardSign(player, title);
-			this.scoreboard.create();
-			this.setScoreBoard();
-		} else {
-			this.board = null;
-			this.board = Bukkit.getScoreboardManager().getNewScoreboard();
-			this.objective = this.board.registerNewObjective(this.player.getName(), "dummy", title);
-			this.objective.setDisplaySlot(DisplaySlot.SIDEBAR);
-			this.setScoreBoard();
-			this.player.setScoreboard(this.board);
-		}
+
+		this.board = null;
+		this.board = Bukkit.getScoreboardManager().getNewScoreboard();
+		this.objective = this.board.registerNewObjective(this.player.getName(), "dummy", title);
+		this.objective.setDisplaySlot(DisplaySlot.SIDEBAR);
+		this.setScoreBoard();
+		this.player.setScoreboard(this.board);
 	}
 
 	private Boolean isAlreadyRunning = false;
@@ -293,133 +274,103 @@ public class PlayerInfo {
 			this.killCooldownBossBar.setProgress(1);
 			this.killCooldownBossBar.addPlayer(this.player);
 		}
-		if (Main.getConfigManager().getScoreboardUsePackets()) {
-			if (this.scoreboard != null) {
-				this.scoreboard.destroy();
-			}
 
-			this.scoreboard = new ScoreboardSign(player, Main.getMessagesManager().getScoreboard("title"));
+		this.board = null;
+		this.objective = null;
+		this.board = Bukkit.getScoreboardManager().getNewScoreboard();
+		this.objective = this.board.registerNewObjective(this.player.getName(), "dummy", Main.getMessagesManager().getScoreboard("title"));
+		this.objective.setDisplaySlot(DisplaySlot.SIDEBAR);
 
-			this.scoreboard.create();
+		this.setScoreBoard();
 
-			this.setScoreBoard();
+		Team crewmates = this.board.registerNewTeam("crewmates");
+		crewmates.setOption(Team.Option.NAME_TAG_VISIBILITY, Team.OptionStatus.NEVER);
+		crewmates.setOption(Team.Option.COLLISION_RULE, Team.OptionStatus.NEVER);
+		crewmates.setAllowFriendlyFire(false);
+		crewmates.setCanSeeFriendlyInvisibles(false);
+		crewmates.setColor(ChatColor.WHITE);
+		crewmates.setPrefix("");
 
-			this.scoreboard.addTeam("crewmates", ChatColor.WHITE, "never");
+		Team imposters = this.board.registerNewTeam("imposters");
+		imposters.setOption(Team.Option.NAME_TAG_VISIBILITY, Team.OptionStatus.NEVER);
+		imposters.setOption(Team.Option.COLLISION_RULE, Team.OptionStatus.NEVER);
+		imposters.setAllowFriendlyFire(false);
+		imposters.setCanSeeFriendlyInvisibles(false);
+		imposters.setColor(ChatColor.RED);
+		imposters.setPrefix("");
 
-			this.scoreboard.addTeam("imposters", ChatColor.RED, "never");
+		Team ghosts = this.board.registerNewTeam("ghosts");
+		ghosts.setOption(Team.Option.NAME_TAG_VISIBILITY, Team.OptionStatus.FOR_OTHER_TEAMS);
+		ghosts.setOption(Team.Option.COLLISION_RULE, Team.OptionStatus.NEVER);
+		ghosts.setAllowFriendlyFire(false);
+		ghosts.setCanSeeFriendlyInvisibles(true);
+		ghosts.setColor(ChatColor.GRAY);
+		ghosts.setPrefix("");
 
-			this.scoreboard.addTeam("ghosts", ChatColor.GRAY, "for_other_teams");
-			this.addPlayerToTeam(this.getPlayer(), this.getIsImposter() ? "imposters" : "crewmates");
+		this.addPlayerToTeam(this.getPlayer(), this.getIsImposter() ? "imposters" : "crewmates");
+		this.player.setScoreboard(this.board);
 
-		} else {
-			this.board = null;
-			this.objective = null;
-			this.board = Bukkit.getScoreboardManager().getNewScoreboard();
-			this.objective = this.board.registerNewObjective(this.player.getName(), "dummy", Main.getMessagesManager().getScoreboard("title"));
-			this.objective.setDisplaySlot(DisplaySlot.SIDEBAR);
+		this.canReportBody = false;
+	}
 
-			this.setScoreBoard();
+	public void meetingStarted() {
+		if (this.board == null) {
+			return;
+		}
 
-			Team crewmates = this.board.registerNewTeam("crewmates");
+		Team crewmates = this.board.getTeam("crewmates");
+		if (crewmates == null) {
+			crewmates = this.board.registerNewTeam("crewmates");
 			crewmates.setOption(Team.Option.NAME_TAG_VISIBILITY, Team.OptionStatus.NEVER);
 			crewmates.setOption(Team.Option.COLLISION_RULE, Team.OptionStatus.NEVER);
 			crewmates.setAllowFriendlyFire(false);
 			crewmates.setCanSeeFriendlyInvisibles(false);
 			crewmates.setColor(ChatColor.WHITE);
 			crewmates.setPrefix("");
+			return;
+		}
+		crewmates.setOption(Team.Option.NAME_TAG_VISIBILITY, Team.OptionStatus.ALWAYS);
 
-			Team imposters = this.board.registerNewTeam("imposters");
+		Team imposters = this.board.getTeam("imposters");
+		if (imposters == null) {
+			imposters = this.board.registerNewTeam("imposters");
 			imposters.setOption(Team.Option.NAME_TAG_VISIBILITY, Team.OptionStatus.NEVER);
 			imposters.setOption(Team.Option.COLLISION_RULE, Team.OptionStatus.NEVER);
 			imposters.setAllowFriendlyFire(false);
 			imposters.setCanSeeFriendlyInvisibles(false);
 			imposters.setColor(ChatColor.RED);
 			imposters.setPrefix("");
-
-			Team ghosts = this.board.registerNewTeam("ghosts");
-			ghosts.setOption(Team.Option.NAME_TAG_VISIBILITY, Team.OptionStatus.FOR_OTHER_TEAMS);
-			ghosts.setOption(Team.Option.COLLISION_RULE, Team.OptionStatus.NEVER);
-			ghosts.setAllowFriendlyFire(false);
-			ghosts.setCanSeeFriendlyInvisibles(true);
-			ghosts.setColor(ChatColor.GRAY);
-			ghosts.setPrefix("");
-
-			this.addPlayerToTeam(this.getPlayer(), this.getIsImposter() ? "imposters" : "crewmates");
-			this.player.setScoreboard(this.board);
+			return;
 		}
-		this.canReportBody = false;
-	}
-
-	public void meetingStarted() {
-		if (Main.getConfigManager().getScoreboardUsePackets()) {
-			this.scoreboard.updateTeamNameTag("crewmates", ChatColor.WHITE, "always");
-
-			this.scoreboard.updateTeamNameTag("imposters", ChatColor.RED, "always");
-		} else {
-			if (this.board == null) {
-				return;
-			}
-
-			Team crewmates = this.board.getTeam("crewmates");
-			if (crewmates == null) {
-				crewmates = this.board.registerNewTeam("crewmates");
-				crewmates.setOption(Team.Option.NAME_TAG_VISIBILITY, Team.OptionStatus.NEVER);
-				crewmates.setOption(Team.Option.COLLISION_RULE, Team.OptionStatus.NEVER);
-				crewmates.setAllowFriendlyFire(false);
-				crewmates.setCanSeeFriendlyInvisibles(false);
-				crewmates.setColor(ChatColor.WHITE);
-				crewmates.setPrefix("");
-				return;
-			}
-			crewmates.setOption(Team.Option.NAME_TAG_VISIBILITY, Team.OptionStatus.ALWAYS);
-
-			Team imposters = this.board.getTeam("imposters");
-			if (imposters == null) {
-				imposters = this.board.registerNewTeam("imposters");
-				imposters.setOption(Team.Option.NAME_TAG_VISIBILITY, Team.OptionStatus.NEVER);
-				imposters.setOption(Team.Option.COLLISION_RULE, Team.OptionStatus.NEVER);
-				imposters.setAllowFriendlyFire(false);
-				imposters.setCanSeeFriendlyInvisibles(false);
-				imposters.setColor(ChatColor.RED);
-				imposters.setPrefix("");
-				return;
-			}
-			imposters.setOption(Team.Option.NAME_TAG_VISIBILITY, Team.OptionStatus.ALWAYS);
-		}
+		imposters.setOption(Team.Option.NAME_TAG_VISIBILITY, Team.OptionStatus.ALWAYS);
 	}
 
 	public void meetingEnded() {
-		if (Main.getConfigManager().getScoreboardUsePackets()) {
-			this.scoreboard.updateTeamNameTag("imposters", ChatColor.RED, "never");
-
-			this.scoreboard.updateTeamNameTag("crewmates", ChatColor.WHITE, "never");
-		} else {
-			Team crewmates = this.board.getTeam("crewmates");
-			if (crewmates == null) {
-				crewmates = this.board.registerNewTeam("crewmates");
-				crewmates.setOption(Team.Option.NAME_TAG_VISIBILITY, Team.OptionStatus.NEVER);
-				crewmates.setOption(Team.Option.COLLISION_RULE, Team.OptionStatus.NEVER);
-				crewmates.setAllowFriendlyFire(false);
-				crewmates.setCanSeeFriendlyInvisibles(false);
-				crewmates.setColor(ChatColor.WHITE);
-				crewmates.setPrefix("");
-				return;
-			}
+		Team crewmates = this.board.getTeam("crewmates");
+		if (crewmates == null) {
+			crewmates = this.board.registerNewTeam("crewmates");
 			crewmates.setOption(Team.Option.NAME_TAG_VISIBILITY, Team.OptionStatus.NEVER);
-
-			Team imposters = this.board.getTeam("imposters");
-			if (imposters == null) {
-				imposters = this.board.registerNewTeam("imposters");
-				imposters.setOption(Team.Option.NAME_TAG_VISIBILITY, Team.OptionStatus.NEVER);
-				imposters.setOption(Team.Option.COLLISION_RULE, Team.OptionStatus.NEVER);
-				imposters.setAllowFriendlyFire(false);
-				imposters.setCanSeeFriendlyInvisibles(false);
-				imposters.setColor(ChatColor.RED);
-				imposters.setPrefix("");
-				return;
-			}
-			imposters.setOption(Team.Option.NAME_TAG_VISIBILITY, Team.OptionStatus.NEVER);
+			crewmates.setOption(Team.Option.COLLISION_RULE, Team.OptionStatus.NEVER);
+			crewmates.setAllowFriendlyFire(false);
+			crewmates.setCanSeeFriendlyInvisibles(false);
+			crewmates.setColor(ChatColor.WHITE);
+			crewmates.setPrefix("");
+			return;
 		}
+		crewmates.setOption(Team.Option.NAME_TAG_VISIBILITY, Team.OptionStatus.NEVER);
+
+		Team imposters = this.board.getTeam("imposters");
+		if (imposters == null) {
+			imposters = this.board.registerNewTeam("imposters");
+			imposters.setOption(Team.Option.NAME_TAG_VISIBILITY, Team.OptionStatus.NEVER);
+			imposters.setOption(Team.Option.COLLISION_RULE, Team.OptionStatus.NEVER);
+			imposters.setAllowFriendlyFire(false);
+			imposters.setCanSeeFriendlyInvisibles(false);
+			imposters.setColor(ChatColor.RED);
+			imposters.setPrefix("");
+			return;
+		}
+		imposters.setOption(Team.Option.NAME_TAG_VISIBILITY, Team.OptionStatus.NEVER);
 	}
 
 	public void createImposterHolo() {
@@ -440,14 +391,9 @@ public class PlayerInfo {
 		if (player == null) {
 			return;
 		}
-		if (Main.getConfigManager().getScoreboardUsePackets()) {
-			if (this.scoreboard != null) {
-				this.scoreboard.addPlayerToTeam(team, player);
-			}
-		} else {
-			if (this.board != null && this.board.getTeam(team) != null) {
-				this.board.getTeam(team).addPlayer(player);
-			}
+
+		if (this.board != null && this.board.getTeam(team) != null) {
+			this.board.getTeam(team).addPlayer(player);
 		}
 	}
 
@@ -456,14 +402,8 @@ public class PlayerInfo {
 		if (player == null) {
 			return;
 		}
-		if (Main.getConfigManager().getScoreboardUsePackets()) {
-			if (this.scoreboard != null) {
-				this.scoreboard.removePlayerFromTeam(team, player);
-			}
-		} else {
-			if (this.board != null && this.board.getTeam(team) != null) {
-				this.board.getTeam(team).removePlayer(player);
-			}
+		if (this.board != null && this.board.getTeam(team) != null) {
+			this.board.getTeam(team).removePlayer(player);
 		}
 	}
 
@@ -472,7 +412,6 @@ public class PlayerInfo {
 	private void setScoreBoard() {
 		MessagesManager messagesManager = Main.getMessagesManager();
 		this.activeKey = this.getScoreBoardKey();
-		Boolean usePackets = Main.getConfigManager().getScoreboardUsePackets();
 
 		ArrayList<String> lines = new ArrayList<String>();
 		int i = 0;
@@ -481,38 +420,25 @@ public class PlayerInfo {
 			if (line.contains("%tasks%")) {
 				for (TaskPlayer tp : this.getArena().getTasksManager().getTasksForPlayer(this.player)) {
 					String line_ = messagesManager.getScoreboardTaskLine(arena, tp);
-					if (usePackets) {
-						lines.add(line_);
-					} else {
-						Team team_ = this.registerTeam(score);
-						team_.setPrefix(line_);
-						score--;
-					}
-				}
-				i++;
-			} else {
-				String line_ = messagesManager.getScoreboardLine(this.getScoreBoardKey(), i, this);
-				if (usePackets) {
-					lines.add(line_);
-				} else {
+
 					Team team_ = this.registerTeam(score);
 					team_.setPrefix(line_);
 					score--;
 				}
 				i++;
-			}
-		}
+			} else {
+				String line_ = messagesManager.getScoreboardLine(this.getScoreBoardKey(), i, this);
 
-		if (usePackets) {
-			this.scoreboard.setLines(lines);
+				Team team_ = this.registerTeam(score);
+				team_.setPrefix(line_);
+				score--;
+				i++;
+			}
 		}
 	}
 
 	public void updateScoreBoard() {
-		final Boolean usePackets = Main.getConfigManager().getScoreboardUsePackets();
-		if (this.scoreboard == null && usePackets) {
-			return;
-		} else if (this.board == null && !usePackets) {
+		if (this.board == null) {
 			return;
 		}
 		Boolean isCommsDisabled = false;
@@ -521,15 +447,13 @@ public class PlayerInfo {
 				if (this.arena.getSabotageManager().getIsSabotageActive()) {
 					if (this.arena.getSabotageManager().getActiveSabotage().getType() == SabotageType.COMMUNICATIONS) {
 						isCommsDisabled = true;
-						if (!usePackets) {
-							for (Team team : this.board.getTeams()) {
-								if (team.getName().startsWith("team")) {
-									for (String entry : team.getEntries()) {
-										team.removeEntry(entry);
-										this.board.resetScores(entry);
-									}
-									team.unregister();
+						for (Team team : this.board.getTeams()) {
+							if (team.getName().startsWith("team")) {
+								for (String entry : team.getEntries()) {
+									team.removeEntry(entry);
+									this.board.resetScores(entry);
 								}
+								team.unregister();
 							}
 						}
 					}
@@ -546,34 +470,14 @@ public class PlayerInfo {
 				if (!isCommsDisabled) {
 					for (TaskPlayer tp : this.getArena().getTasksManager().getTasksForPlayer(this.getPlayer())) {
 						String line_ = messagesManager.getScoreboardTaskLine(this.getArena(), tp);
-						if (usePackets) {
-							lines.add(line_);
-						} else {
-							if (this.board.getTeam("team" + score) == null) {
-								this.registerTeam(score);
-							}
-							this.board.getTeam("team" + score).setPrefix(line_);
-							score--;
-						}
-					}
-				} else {
-					String line_ = ChatColor.RED + "" + ChatColor.BOLD + Main.getMessagesManager().getSabotageTitle(SabotageType.COMMUNICATIONS);
-					if (usePackets) {
-						lines.add(line_);
-					} else {
 						if (this.board.getTeam("team" + score) == null) {
 							this.registerTeam(score);
 						}
 						this.board.getTeam("team" + score).setPrefix(line_);
 						score--;
 					}
-				}
-				i++;
-			} else {
-				String line_ = messagesManager.getScoreboardLine(this.getScoreBoardKey(), i, this);
-				if (usePackets) {
-					lines.add(line_);
 				} else {
+					String line_ = ChatColor.RED + "" + ChatColor.BOLD + Main.getMessagesManager().getSabotageTitle(SabotageType.COMMUNICATIONS);
 					if (this.board.getTeam("team" + score) == null) {
 						this.registerTeam(score);
 					}
@@ -581,21 +485,25 @@ public class PlayerInfo {
 					score--;
 				}
 				i++;
+			} else {
+				String line_ = messagesManager.getScoreboardLine(this.getScoreBoardKey(), i, this);
+				if (this.board.getTeam("team" + score) == null) {
+					this.registerTeam(score);
+				}
+				this.board.getTeam("team" + score).setPrefix(line_);
+				score--;
+				i++;
 			}
 		}
-		if (usePackets) {
-			this.scoreboard.setLines(lines);
-		}
+
 		if (activeKey != this.getScoreBoardKey()) {
-			if (!usePackets) {
-				for (Team team : this.board.getTeams()) {
-					if (team.getName().startsWith("team")) {
-						for (String entry : team.getEntries()) {
-							team.removeEntry(entry);
-							this.board.resetScores(entry);
-						}
-						team.unregister();
+			for (Team team : this.board.getTeams()) {
+				if (team.getName().startsWith("team")) {
+					for (String entry : team.getEntries()) {
+						team.removeEntry(entry);
+						this.board.resetScores(entry);
 					}
+					team.unregister();
 				}
 			}
 			this.activeKey = this.getScoreBoardKey();
@@ -786,25 +694,22 @@ public class PlayerInfo {
 			fakeArmorStand.resetAllShownTo();
 		}
 		this.useItemState = 0;
-		if (Main.getConfigManager().getScoreboardUsePackets()) {
-			this.scoreboard.destroy();
-		} else {
-			if (this.board != null) {
-				for (Team team : this.board.getTeams()) {
-					for (String entry : team.getEntries()) {
-						team.removeEntry(entry);
-						this.board.resetScores(entry);
-					}
-					team.unregister();
+
+		if (this.board != null) {
+			for (Team team : this.board.getTeams()) {
+				for (String entry : team.getEntries()) {
+					team.removeEntry(entry);
+					this.board.resetScores(entry);
 				}
+				team.unregister();
 			}
-			if (this.objective != null) {
-				this.objective.unregister();
-			}
-			this.board = null;
-			this.objective = null;
-			this.player.setScoreboard(Bukkit.getScoreboardManager().getNewScoreboard());
 		}
+		if (this.objective != null) {
+			this.objective.unregister();
+		}
+		this.board = null;
+		this.objective = null;
+		this.player.setScoreboard(Bukkit.getScoreboardManager().getNewScoreboard());
 		if (!Main.getConfigManager().getBungeecord() && Main.getConfigManager().getEnableLobbyScoreboard()) {
 			this._setMainLobbyScoreboard();
 			this.updateScoreBoard();
@@ -894,7 +799,6 @@ public class PlayerInfo {
 		this.activeCamera = null;
 		this.playerDiedTemp = null;
 		this.playerCamLocTemp = null;
-		this.scoreboard = null;
 		this.board = null;
 		this.objective = null;
 		this.imposterHolo = null;

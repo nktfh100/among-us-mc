@@ -53,7 +53,6 @@ public class ConfigManager {
 	private Boolean tpToLobbyOnJoin = true;
 	private Material viewGlassMat = Material.BLACK_STAINED_GLASS;
 	private Boolean enablePortalJoin = false;
-	private Boolean scoreboardUsePackets = false;
 	private Boolean enableDoubleImposterChance = false;
 	private Boolean sneakToVent = false;
 	private Boolean damageOnSabotage = false;
@@ -122,7 +121,6 @@ public class ConfigManager {
 		this.enableLobbyScoreboard = this.config.getBoolean("enableLobbyScoreboard", false);
 		this.tpToLobbyOnJoin = this.config.getBoolean("tpToLobbyOnJoin", true);
 		this.enablePortalJoin = this.config.getBoolean("enablePortalJoin", false);
-		this.scoreboardUsePackets = this.config.getBoolean("scoreboardUsePackets", false);
 		this.enableDoubleImposterChance = this.config.getBoolean("enableDoubleImposterChance", false);
 		this.sneakToVent = this.config.getBoolean("sneakToVent", false);
 		this.damageOnSabotage = this.config.getBoolean("damageOnSabotage", false);
@@ -440,10 +438,6 @@ public class ConfigManager {
 
 	public Boolean getEnablePortalJoin() {
 		return enablePortalJoin;
-	}
-
-	public Boolean getScoreboardUsePackets() {
-		return scoreboardUsePackets;
 	}
 
 	public Boolean getEnableDoubleImposterChance() {

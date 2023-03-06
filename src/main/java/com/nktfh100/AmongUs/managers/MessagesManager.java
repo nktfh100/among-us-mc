@@ -2,7 +2,6 @@ package com.nktfh100.AmongUs.managers;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Set;
 import java.util.logging.Level;
@@ -73,48 +72,30 @@ public class MessagesManager {
 			for (String line : scoreboardSC.getStringList("main-lobby-lines")) {
 				this.scoreboardLines.get("main-lobby").add(ChatColor.translateAlternateColorCodes('&', line.replaceAll("%prefix%", Main.getConfigManager().getPrefix())));
 			}
-			if(Main.getConfigManager().getScoreboardUsePackets()) {
-				Collections.reverse(this.scoreboardLines.get("main-lobby"));				
-			}
 
 			this.scoreboardLines.put("waiting-lobby", new ArrayList<String>());
 			for (String line : scoreboardSC.getStringList("waiting-lobby-lines")) {
 				this.scoreboardLines.get("waiting-lobby").add(ChatColor.translateAlternateColorCodes('&', line.replaceAll("%prefix%", Main.getConfigManager().getPrefix())));
-			}
-			if(Main.getConfigManager().getScoreboardUsePackets()) {
-				Collections.reverse(this.scoreboardLines.get("waiting-lobby"));
 			}
 
 			this.scoreboardLines.put("crewmate", new ArrayList<String>());
 			for (String line : scoreboardSC.getStringList("crewmate-lines")) {
 				this.scoreboardLines.get("crewmate").add(ChatColor.translateAlternateColorCodes('&', line.replaceAll("%prefix%", Main.getConfigManager().getPrefix())));
 			}
-			if(Main.getConfigManager().getScoreboardUsePackets()) {
-				Collections.reverse(this.scoreboardLines.get("crewmate"));
-			}
 			
 			this.scoreboardLines.put("imposter", new ArrayList<String>());
 			for (String line : scoreboardSC.getStringList("imposter-lines")) {
 				this.scoreboardLines.get("imposter").add(ChatColor.translateAlternateColorCodes('&', line.replaceAll("%prefix%", Main.getConfigManager().getPrefix())));
-			}
-			if(Main.getConfigManager().getScoreboardUsePackets()) {
-				Collections.reverse(this.scoreboardLines.get("imposter"));
 			}
 
 			this.scoreboardLines.put("dead-crewmate", new ArrayList<String>());
 			for (String line : scoreboardSC.getStringList("dead-crewmate-lines")) {
 				this.scoreboardLines.get("dead-crewmate").add(ChatColor.translateAlternateColorCodes('&', line.replaceAll("%prefix%", Main.getConfigManager().getPrefix())));
 			}
-			if(Main.getConfigManager().getScoreboardUsePackets()) {
-				Collections.reverse(this.scoreboardLines.get("dead-crewmate"));
-			}
 			
 			this.scoreboardLines.put("dead-imposter", new ArrayList<String>());
 			for (String line : scoreboardSC.getStringList("dead-imposter-lines")) {
 				this.scoreboardLines.get("dead-imposter").add(ChatColor.translateAlternateColorCodes('&', line.replaceAll("%prefix%", Main.getConfigManager().getPrefix())));
-			}
-			if(Main.getConfigManager().getScoreboardUsePackets()) {
-				Collections.reverse(this.scoreboardLines.get("dead-imposter"));
 			}
 			
 			ConfigurationSection tasksSC = msgsConfig.getConfigurationSection("tasks");
