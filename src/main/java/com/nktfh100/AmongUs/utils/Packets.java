@@ -185,8 +185,8 @@ public class Packets {
 		packet.getDoubles().write(0, loc.getX());
 		packet.getDoubles().write(1, loc.getY()); // location
 		packet.getDoubles().write(2, loc.getZ());
-		packet.getIntegers().write(4, 0); // yaw & pitch ?
-		packet.getIntegers().write(5, 0);
+		packet.getBytes().write(0, (byte) 0); // yaw & pitch ?
+		packet.getBytes().write(1, (byte) 0);
 
 		packet.getEntityTypeModifier().write(0, EntityType.ARMOR_STAND);
 

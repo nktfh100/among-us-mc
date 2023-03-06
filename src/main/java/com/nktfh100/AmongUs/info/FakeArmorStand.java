@@ -1,8 +1,11 @@
 package com.nktfh100.AmongUs.info;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
+import com.google.common.collect.Lists;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -11,6 +14,7 @@ import com.comphenix.protocol.PacketType;
 import com.comphenix.protocol.events.PacketContainer;
 import com.comphenix.protocol.wrappers.Vector3F;
 import com.comphenix.protocol.wrappers.WrappedDataWatcher;
+import com.comphenix.protocol.wrappers.WrappedDataValue;
 import com.comphenix.protocol.wrappers.WrappedDataWatcher.Registry;
 import com.nktfh100.AmongUs.utils.Packets;
 
@@ -49,10 +53,10 @@ public class FakeArmorStand {
 		watcher.setObject(0, Registry.get(Byte.class), (byte) (0x20)); // invis
 		if (headRotation != null) {
 			this.headRotation = headRotation;
-			watcher.setObject(15, Registry.getVectorSerializer(), this.headRotation);
+			watcher.setObject(16, Registry.getVectorSerializer(), this.headRotation);
 		}
 		if (bodyRotation != null) {
-			watcher.setObject(14, Registry.getVectorSerializer(), this.bodyRotation);
+			watcher.setObject(17, Registry.getVectorSerializer(), this.bodyRotation);
 			this.bodyRotation = bodyRotation;
 		}
 		
@@ -71,17 +75,23 @@ public class FakeArmorStand {
 		WrappedDataWatcher watcher = new WrappedDataWatcher();
 		watcher.setObject(0, Registry.get(Byte.class), (byte) (0x20)); // invis
 		if (this.headRotation != null) {
-			watcher.setObject(15, Registry.getVectorSerializer(), this.headRotation);
+			watcher.setObject(16, Registry.getVectorSerializer(), this.headRotation);
 		}
 		if (this.bodyRotation != null) {
-			watcher.setObject(14, Registry.getVectorSerializer(), this.bodyRotation);
+			watcher.setObject(17, Registry.getVectorSerializer(), this.bodyRotation);
 		}
 
 		// for custom name
 //		Optional<?> opt = Optional.of(WrappedChatComponent.fromChatMessage(this.customName)[0].getHandle());
 //		watcher.setObject(new WrappedDataWatcherObject(2, WrappedDataWatcher.Registry.getChatComponentSerializer(true)), opt);
 
-		packet.getWatchableCollectionModifier().write(0, watcher.getWatchableObjects());
+		final List<WrappedDataValue> wrappedDataValueList = Lists.newArrayList();
+		watcher.getWatchableObjects().stream().filter(Objects::nonNull).forEach(entry -> {
+			final WrappedDataWatcher.WrappedDataWatcherObject dataWatcherObject = entry.getWatcherObject();
+			wrappedDataValueList.add(new WrappedDataValue(dataWatcherObject.getIndex(), dataWatcherObject.getSerializer(), entry.getRawValue()));
+		});
+		packet.getDataValueCollectionModifier().write(0, wrappedDataValueList);
+
 		Packets.sendPacket(player, packet);
 
 		Packets.sendPacket(player, Packets.ENTITY_EQUIPMENT_HEAD(this.entityId, Material.LIME_STAINED_GLASS_PANE));
