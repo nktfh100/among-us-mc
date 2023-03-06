@@ -136,6 +136,7 @@ public class PlayersManager implements Listener {
 						pInfo_.updateScoreBoard();
 					}
 				}
+				this.getPlayerInfo(player)._setMainLobbyScoreboard();
 			}
 			if (!Main.getConfigManager().getBungeecord() && !Main.getConfigManager().getBungeecordIsLobby() && Main.getConfigManager().getHidePlayersOutSideArena()) {
 				new BukkitRunnable() {
