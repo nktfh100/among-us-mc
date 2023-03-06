@@ -636,7 +636,7 @@ items:
       # Timer running
       title2: "&fTube"
       # This glass is the anomaly
-      title3: "&clAnomaly"
+      title3: "&cAnomaly"
    inspectSample_selectButton:
       mat: LIGHT_GRAY_CONCRETE
       title: " "
