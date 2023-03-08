@@ -2,7 +2,6 @@ package com.nktfh100.AmongUs.info;
 
 import java.util.ArrayList;
 
-import me.filoghost.holographicdisplays.api.hologram.VisibilitySettings;
 import org.bukkit.ChatColor;
 
 import com.nktfh100.AmongUs.enums.StatInt;
@@ -92,7 +91,7 @@ public class TaskPlayer {
 		if (this.state >= this.tasks.size() || this.pInfo.getIsImposter()) {
 			return;
 		}
-		this.getActiveTask().getHolo().getVisibilitySettings().setIndividualVisibility(this.pInfo.getPlayer(), VisibilitySettings.Visibility.HIDDEN);
+		this.getActiveTask().getHolo().hideTo(this.pInfo.getPlayer());
 		String name_ = Main.getMessagesManager().getTaskName(this.getActiveTask().getTaskType().toString());
 		this.pInfo.getPlayer().sendTitle(Main.getMessagesManager().getGameMsg("finishTaskTitle", this.pInfo.getArena(), name_, this.getActiveTask().getLocationName().getName()),
 				Main.getMessagesManager().getGameMsg("finishTaskSubTitle", this.pInfo.getArena(), name_, this.getActiveTask().getLocationName().getName()), 15, 40, 20);
@@ -100,7 +99,7 @@ public class TaskPlayer {
 		this.pInfo.updateScoreBoard();
 		Main.getSoundsManager().playSound("taskCompleted", this.pInfo.getPlayer(), this.pInfo.getPlayer().getLocation());
 		if (!this.getIsDone()) {
-			this.getActiveTask().getHolo().getVisibilitySettings().setIndividualVisibility(this.pInfo.getPlayer(), VisibilitySettings.Visibility.VISIBLE);
+			this.getActiveTask().getHolo().showTo(this.pInfo.getPlayer());
 			this.updateTasksVars();
 		} else {
 			this.pInfo.getArena().getTasksManager().updateTasksDoneBar(true);

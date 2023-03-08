@@ -1,8 +1,7 @@
 package com.nktfh100.AmongUs.info;
 
+import com.nktfh100.AmongUs.holograms.ImposterHologram;
 import org.bukkit.Location;
-
-import me.filoghost.holographicdisplays.api.hologram.Hologram;
 
 public class Vent implements Comparable<Vent> {
 
@@ -13,7 +12,7 @@ public class Vent implements Comparable<Vent> {
 	private LocationName locName;
 	private Integer id;
 	private String configId;
-	private Hologram holo;
+	private ImposterHologram holo;
 
 	public Vent(Arena arena, VentGroup ventGroup, Location loc, LocationName locName, Integer id, String configId) {
 		this.arena = arena;
@@ -52,11 +51,11 @@ public class Vent implements Comparable<Vent> {
 		return id;
 	}
 
-	public Hologram getHolo() {
+	public ImposterHologram getHolo() {
 		return holo;
 	}
 
-	public void setHolo(Hologram holo) {
+	public void setHolo(ImposterHologram holo) {
 		this.holo = holo;
 	}
 

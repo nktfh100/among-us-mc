@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Stack;
 import java.util.logging.Level;
 
+import com.nktfh100.AmongUs.holograms.ImposterHologram;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Color;
@@ -46,12 +47,6 @@ import org.bukkit.util.Vector;
 
 import com.comphenix.protocol.PacketType;
 import com.comphenix.protocol.events.PacketContainer;
-import me.filoghost.holographicdisplays.api.hologram.Hologram;
-import me.filoghost.holographicdisplays.api.hologram.VisibilitySettings;
-import me.filoghost.holographicdisplays.api.HolographicDisplaysAPI;
-import me.filoghost.holographicdisplays.api.hologram.line.ClickableHologramLine;
-import me.filoghost.holographicdisplays.api.hologram.line.HologramLineClickListener;
-import me.filoghost.holographicdisplays.api.hologram.line.HologramLineClickEvent;
 import com.nktfh100.AmongUs.api.events.AUArenaGameStateChange;
 import com.nktfh100.AmongUs.api.events.AUArenaPlayerDeath;
 import com.nktfh100.AmongUs.api.events.AUArenaPlayerJoin;
@@ -84,7 +79,6 @@ import com.nktfh100.AmongUs.utils.Packets;
 import com.nktfh100.AmongUs.utils.Utils;
 
 public class Arena {
-	private HolographicDisplaysAPI holoApi = HolographicDisplaysAPI.get(Main.getPlugin());
 	private File arenaFile;
 	private FileConfiguration arenaConfig;
 	private String name;
@@ -171,8 +165,8 @@ public class Arena {
 	private BukkitTask gameTimerRunnable = null;
 	private BukkitTask secondRunnable = null;
 
-	private ArrayList<Hologram> holograms = new ArrayList<Hologram>();
-	private Hologram btnHolo;
+	private ArrayList<ImposterHologram> holograms = new ArrayList<ImposterHologram>();
+	private ImposterHologram btnHolo;
 
 	private Boolean enableCameras = false;
 
@@ -399,10 +393,10 @@ public class Arena {
 								}
 								if (!pInfo.getIsImposter()) {
 									for (TaskPlayer tp : tasksManager.getTasksForPlayer(pInfo.getPlayer())) {
-										if (!tp.getIsDone() && tp.getActiveTask().getHolo().getVisibilitySettings().isVisibleTo(pInfo.getPlayer())) {
+										if (!tp.getIsDone() && tp.getActiveTask().getHolo().isVisibleTo(pInfo.getPlayer())) {
 											if (!arena.getEnableReducedVision()
 													|| Utils.isInsideCircle(pInfo.getPlayer().getLocation(), (double) pInfo.getVision(), tp.getActiveTask().getLocation()) != 2) {
-												Packets.sendPacket(pInfo.getPlayer(), Packets.PARTICLES(tp.getActiveTask().getHolo().getPosition().toLocation().add(0, -0.3, 0),
+												Packets.sendPacket(pInfo.getPlayer(), Packets.PARTICLES(tp.getActiveTask().getHolo().getLocation().add(0, -0.3, 0),
 														Main.getConfigManager().getParticlesOnTasksType(), null, 8, 0.4f, 0.3f, 0.4f));
 											}
 										}
@@ -1123,14 +1117,14 @@ public class Arena {
 		pInfo.addPlayerToTeam(player, "ghosts");
 
 		// show all the holograms to the player
-		this.getCamerasManager().getHolo().getVisibilitySettings().setIndividualVisibility(player, VisibilitySettings.Visibility.VISIBLE);
+		this.getCamerasManager().getHolo().showTo(player);
 		if (this.getVisibilityManager() != null && this.getVitalsManager().getHolo() != null) {
-			this.getVitalsManager().getHolo().getVisibilitySettings().setIndividualVisibility(player, VisibilitySettings.Visibility.VISIBLE);
+			this.getVitalsManager().getHolo().showTo(player);
 		}
 		if (!pInfo.getIsImposter()) {
 			for (TaskPlayer taskPlayer : this.getTasksManager().getTasksForPlayer(player)) {
 				if (!taskPlayer.getIsDone()) {
-					taskPlayer.getActiveTask().getHolo().getVisibilitySettings().setIndividualVisibility(player, VisibilitySettings.Visibility.VISIBLE);
+					taskPlayer.getActiveTask().getHolo().showTo(player);
 				}
 			}
 		}
@@ -1147,7 +1141,7 @@ public class Arena {
 				if (!pInfo1.isGhost()) {
 					this.getVisibilityManager().hidePlayer(pInfo1, pInfo, true);
 					if (pInfo.getIsImposter() && pInfo1.getIsImposter()) {
-						pInfo.getImposterHolo().getVisibilitySettings().setIndividualVisibility(player, VisibilitySettings.Visibility.HIDDEN);
+						pInfo.getImposterHolo().hideTo(player);
 					}
 					if (!killed) {
 						Packets.sendPacket(pInfo1.getPlayer(), removePlayerPacket);
@@ -1455,8 +1449,7 @@ public class Arena {
 			this.getDoorsManager().resetDoors();
 
 			for (Task t : this.tasks.values()) {
-				t.getHolo().getVisibilitySettings().clearIndividualVisibilities();
-				t.getHolo().getVisibilitySettings().setGlobalVisibility(VisibilitySettings.Visibility.HIDDEN);
+				t.getHolo().clearVisibility(false);
 			}
 
 			for (PlayerInfo pInfo : this.getPlayersInfo()) {
@@ -1473,18 +1466,15 @@ public class Arena {
 			}
 
 			if (this.camerasManager != null && this.camerasManager.getHolo() != null) {
-				this.camerasManager.getHolo().getVisibilitySettings().clearIndividualVisibilities();
-				this.camerasManager.getHolo().getVisibilitySettings().setGlobalVisibility(VisibilitySettings.Visibility.VISIBLE);
+				this.camerasManager.getHolo().clearVisibility(true);
 			}
 
 			if (this.vitalsManager != null && this.vitalsManager.getHolo() != null) {
-				this.vitalsManager.getHolo().getVisibilitySettings().clearIndividualVisibilities();
-				this.vitalsManager.getHolo().getVisibilitySettings().setGlobalVisibility(VisibilitySettings.Visibility.VISIBLE);
+				this.vitalsManager.getHolo().clearVisibility(true);
 			}
 
 			if (this.btnHolo != null) {
-				this.btnHolo.getVisibilitySettings().clearIndividualVisibilities();
-				this.btnHolo.getVisibilitySettings().setGlobalVisibility(VisibilitySettings.Visibility.VISIBLE);
+				this.btnHolo.clearVisibility(true);
 			}
 
 			this.isInMeeting = false;
@@ -1605,9 +1595,8 @@ public class Arena {
 			this.mapIds.put(id, false);
 		}
 		this.colors_ = Utils.getPlayersColors();
-		for (Hologram holo : this.holograms) {
-			this.camerasManager.getHolo().getVisibilitySettings().clearIndividualVisibilities();
-			this.camerasManager.getHolo().getVisibilitySettings().setGlobalVisibility(VisibilitySettings.Visibility.HIDDEN);
+		for (ImposterHologram holo : this.holograms) {
+			this.camerasManager.getHolo().clearVisibility(false);
 		}
 
 		if (!isReload) {
@@ -1826,8 +1815,7 @@ public class Arena {
 		}
 	}
 
-	private void createLine(Hologram holo, String line, HologramLineClickListener th) {
-		ClickableHologramLine line_ = null;
+	private void createLine(ImposterHologram holo, String line) {
 		if (line.startsWith("@") && line.endsWith("@")) {
 			line = line.replace("@", "");
 			Material mat = Material.getMaterial(line);
@@ -1835,11 +1823,10 @@ public class Arena {
 				Main.getPlugin().getLogger().warning("Hologram item line 'task': " + line + " is not a valid material!");
 				return;
 			}
-			line_ = holo.getLines().appendItem(Utils.createItem(mat, " "));
+			holo.addLineWithItem(Utils.createItem(mat, " "));
 		} else {
-			line_ = holo.getLines().appendText(line);
+			holo.addLineWithText(line);
 		}
-		line_.setClickListener(th);
 	}
 
 	public void createHolograms() {
@@ -1847,11 +1834,11 @@ public class Arena {
 
 		// loop all tasks
 		for (Task task : this.getAllTasks()) {
-			Hologram created = this.holoApi.createHologram(task.getLocation());
+			ImposterHologram created = ImposterHologram.createHologram(task.getLocation(), "taskHologram_" + task.getArena() + "_" + task.getId());
 			for (String line : Main.getMessagesManager().getHologramLines("task", Main.getMessagesManager().getTaskName(task.getTaskType().toString()), task.getLocationName().getName())) {
-				createLine(created, line, task.getTouchHandler());
+				createLine(created, line);
 			}
-			created.getVisibilitySettings().setGlobalVisibility(VisibilitySettings.Visibility.HIDDEN);
+			created.setGlobalVisibility(false);
 			task.setHolo(created);
 			this.holograms.add(created);
 		}
@@ -1865,20 +1852,20 @@ public class Arena {
 			String saboName = Main.getMessagesManager().getTaskName(saboAr.getType().toString());
 			String saboTitle = Main.getMessagesManager().getSabotageTitle(saboAr.getType());
 			for (SabotageTask saboTask : saboTasks) {
-				Hologram created = this.holoApi.createHologram(saboTask.getLocation());
+				ImposterHologram created = ImposterHologram.createHologram(saboTask.getLocation(), "sabotage_" + saboTask.getArena().name + "_" + saboTask.getSabotageType().name() + "_" + saboTask.getId());
 				for (String line : Main.getMessagesManager().getHologramLines("sabotage", saboName, saboTitle)) {
-					createLine(created, line, saboTask.getTouchHandler());
+					createLine(created, line);
 				}
-				created.getVisibilitySettings().setGlobalVisibility(VisibilitySettings.Visibility.HIDDEN);
+				created.setGlobalVisibility(false);
 				saboTask.setHolo(created);
 				this.holograms.add(created);
 			}
 		}
 
 		// meeting button hologram
-		Hologram createdBtn = this.holoApi.createHologram(this.meetingButton);
+		ImposterHologram createdBtn = ImposterHologram.createHologram(this.meetingButton, "meetingButton_" + this.meetingButton.getWorld());
 
-		HologramLineClickListener th = new HologramLineClickListener() {
+		/*HologramLineClickListener th = new HologramLineClickListener() {
 			@Override
 			public void onClick(HologramLineClickEvent event) {
 				Player p = event.getPlayer();
@@ -1892,24 +1879,24 @@ public class Arena {
 					p.openInventory(invHolder.getInventory());
 				}
 			}
-		};
+		};*/
 
 		for (String line : Main.getMessagesManager().getHologramLines("meetingButton", null)) {
-			createLine(createdBtn, line, th);
+			createLine(createdBtn, line);
 		}
 		this.btnHolo = createdBtn;
 
 		// vents holograms
 		for (VentGroup vg : this.getVentsManager().getVentGroups()) {
 			for (Vent v : vg.getVents()) {
-				Hologram created = this.holoApi.createHologram(v.getLoc());
+				ImposterHologram created = ImposterHologram.createHologram(v.getLoc(), "vent_" + vg.getArena().name + "_" + vg.getConfigId() + "_" + Utils.getRandomString(3));
 				String locName = "";
 				if (v.getLocName() != null) {
 					v.getLocName().getName();
 				}
 				final Integer vgId = vg.getId();
 				final Integer vId = v.getId();
-				HologramLineClickListener th_ = new HologramLineClickListener() {
+				/*HologramLineClickListener th_ = new HologramLineClickListener() {
 					@Override
 					public void onClick(HologramLineClickEvent event) {
 						Player player = event.getPlayer();
@@ -1922,11 +1909,11 @@ public class Arena {
 							}
 						}
 					}
-				};
+				};*/
 				for (String line : Main.getMessagesManager().getHologramLines("vent", locName)) {
-					this.createLine(created, line, th_);
+					this.createLine(created, line);
 				}
-				created.getVisibilitySettings().setGlobalVisibility(VisibilitySettings.Visibility.HIDDEN);
+				created.setGlobalVisibility(false);
 				v.setHolo(created);
 				this.holograms.add(created);
 				this.getVentsManager().getHolos().add(created);
@@ -1938,8 +1925,8 @@ public class Arena {
 			for (Camera cam : this.camerasManager.getCameras()) {
 				cam.createArmorStand();
 			}
-			Hologram created = this.holoApi.createHologram(this.camerasLoc);
-			HologramLineClickListener th_ = new HologramLineClickListener() {
+			ImposterHologram created = ImposterHologram.createHologram(this.camerasLoc, "camerasHologram_" + this.camerasLoc.getWorld());
+			/*HologramLineClickListener th_ = new HologramLineClickListener() {
 				@Override
 				public void onClick(HologramLineClickEvent event) { }
 			};
@@ -1954,17 +1941,17 @@ public class Arena {
 						}
 					}
 				};
-			}
+			}*/
 			for (String line : Main.getMessagesManager().getHologramLines("cameras", null)) {
-				this.createLine(created, line, th_);
+				this.createLine(created, line);
 			}
 			this.camerasManager.setHolo(created);
 			this.holograms.add(created);
 		}
 
 		if (this.vitalsLoc != null) {
-			Hologram created = this.holoApi.createHologram(this.vitalsLoc);
-			HologramLineClickListener th_ = new HologramLineClickListener() {
+			ImposterHologram created = ImposterHologram.createHologram(this.vitalsLoc, "vitalsHologram_" + this.vitalsLoc.getWorld());
+			/*HologramLineClickListener th_ = new HologramLineClickListener() {
 				@Override
 				public void onClick(HologramLineClickEvent event) {
 					Player player = event.getPlayer();
@@ -1975,9 +1962,9 @@ public class Arena {
 						}
 					}
 				}
-			};
+			};*/
 			for (String line : Main.getMessagesManager().getHologramLines("vitals", null)) {
-				this.createLine(created, line, th_);
+				this.createLine(created, line);
 			}
 			this.holograms.add(created);
 			this.vitalsManager.setHolo(created);
@@ -1985,12 +1972,12 @@ public class Arena {
 	}
 
 	public void deleteHolograms() {
-		for (Hologram holo : this.holograms) {
-			holo.delete();
+		for (ImposterHologram holo : this.holograms) {
+			holo.deleteHologram();
 		}
 
 		if (this.btnHolo != null) {
-			this.btnHolo.delete();
+			this.btnHolo.deleteHologram();
 		}
 
 		for (Camera cam : this.camerasManager.getCameras()) {
@@ -1998,11 +1985,11 @@ public class Arena {
 		}
 
 		if (this.camerasManager.getHolo() != null) {
-			this.camerasManager.getHolo().delete();
+			this.camerasManager.getHolo().deleteHologram();
 		}
 
 		if (this.vitalsLoc != null && this.vitalsManager != null && this.vitalsManager.getHolo() != null) {
-			this.vitalsManager.getHolo().delete();
+			this.vitalsManager.getHolo().deleteHologram();
 		}
 	}
 
@@ -2142,8 +2129,8 @@ public class Arena {
 		this.gameTimerRunnable = null;
 		this.secondRunnable = null;
 		this.deleteHolograms();
-		for (Hologram holo : this.holograms) {
-			holo.delete();
+		for (ImposterHologram holo : this.holograms) {
+			holo.deleteHologram();
 		}
 		this.holograms = null;
 		this.btnHolo = null;
@@ -2364,11 +2351,11 @@ public class Arena {
 		this.meetingCooldown = meetingCooldown;
 	}
 
-	public ArrayList<Hologram> getHolograms() {
+	public ArrayList<ImposterHologram> getHolograms() {
 		return this.holograms;
 	}
 
-	public void setHolograms(ArrayList<Hologram> holograms) {
+	public void setHolograms(ArrayList<ImposterHologram> holograms) {
 		this.holograms = holograms;
 	}
 
@@ -2428,7 +2415,7 @@ public class Arena {
 		return meetingManager;
 	}
 
-	public Hologram getBtnHolo() {
+	public ImposterHologram getBtnHolo() {
 		return this.btnHolo;
 	}
 

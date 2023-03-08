@@ -4,12 +4,12 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 
+import com.nktfh100.AmongUs.holograms.ImposterHologram;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
-import me.filoghost.holographicdisplays.api.hologram.Hologram;
 import com.nktfh100.AmongUs.enums.GameState;
 import com.nktfh100.AmongUs.enums.SabotageType;
 import com.nktfh100.AmongUs.info.Arena;
@@ -24,7 +24,7 @@ public class CamerasManager {
 
 	private Arena arena;
 	private Location holoLoc;
-	private Hologram holo;
+	private ImposterHologram holo;
 	private ArrayList<Camera> cameras = new ArrayList<Camera>();
 	private ArrayList<PlayerInfo> playersInCameras = new ArrayList<PlayerInfo>();
 
@@ -293,11 +293,11 @@ public class CamerasManager {
 		return this.cameras;
 	}
 
-	public Hologram getHolo() {
+	public ImposterHologram getHolo() {
 		return holo;
 	}
 
-	public void setHolo(Hologram holo) {
+	public void setHolo(ImposterHologram holo) {
 		this.holo = holo;
 	}
 

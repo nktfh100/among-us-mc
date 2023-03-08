@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map.Entry;
 
-import me.filoghost.holographicdisplays.api.hologram.VisibilitySettings;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
@@ -220,8 +219,7 @@ public class MeetingManager {
 			}
 		}.runTaskTimer(Main.getPlugin(), 20L, 20L);
 		this.updateInv();
-		arena.getBtnHolo().getVisibilitySettings().clearIndividualVisibilities();
-		arena.getBtnHolo().getVisibilitySettings().setGlobalVisibility(VisibilitySettings.Visibility.HIDDEN);
+		arena.getBtnHolo().clearVisibility(false);
 	}
 
 	public void startEndMeetingTitle() {
@@ -374,8 +372,7 @@ public class MeetingManager {
 		this.playersVoted.clear();
 		this.skipVotes.clear();
 		this.whoCalled = null;
-		arena.getBtnHolo().getVisibilitySettings().clearIndividualVisibilities();
-		arena.getBtnHolo().getVisibilitySettings().setGlobalVisibility(VisibilitySettings.Visibility.VISIBLE);
+		arena.getBtnHolo().clearVisibility(true);
 
 		if (pInfoEject != null && !isForce) {
 			this.arena.playerDeath(null, pInfoEject, false);

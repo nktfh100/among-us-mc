@@ -3,12 +3,11 @@ package com.nktfh100.AmongUs.info;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import me.filoghost.holographicdisplays.api.hologram.VisibilitySettings;
+import com.nktfh100.AmongUs.holograms.ImposterHologram;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 
-import me.filoghost.holographicdisplays.api.hologram.Hologram;
 import com.nktfh100.AmongUs.enums.SabotageLength;
 import com.nktfh100.AmongUs.enums.SabotageType;
 import com.nktfh100.AmongUs.main.Main;
@@ -81,25 +80,21 @@ public class SabotageArena {
 
 	public void hideHolo(Integer id) {
 		if (id == 0) {
-			Hologram task1Holo = this.task1.getHolo();
-			task1Holo.getVisibilitySettings().clearIndividualVisibilities();
-			task1Holo.getVisibilitySettings().setGlobalVisibility(VisibilitySettings.Visibility.HIDDEN);
+			ImposterHologram task1Holo = this.task1.getHolo();
+			task1Holo.clearVisibility(false);
 		} else if (this.task2 != null) {
-			Hologram task2Holo = this.task2.getHolo();
-			task2Holo.getVisibilitySettings().clearIndividualVisibilities();
-			task2Holo.getVisibilitySettings().setGlobalVisibility(VisibilitySettings.Visibility.HIDDEN);
+			ImposterHologram task2Holo = this.task2.getHolo();
+			task2Holo.clearVisibility(false);
 		}
 	}
 
 	public void showHolos() {
-		Hologram task1Holo = this.task1.getHolo();
-		task1Holo.getVisibilitySettings().clearIndividualVisibilities();
-		task1Holo.getVisibilitySettings().setGlobalVisibility(VisibilitySettings.Visibility.VISIBLE);
+		ImposterHologram task1Holo = this.task1.getHolo();
+		task1Holo.clearVisibility(true);
 
 		if (this.task2 != null) {
-			Hologram task2Holo = this.task2.getHolo();
-			task2Holo.getVisibilitySettings().clearIndividualVisibilities();
-			task2Holo.getVisibilitySettings().setGlobalVisibility(VisibilitySettings.Visibility.VISIBLE);
+			ImposterHologram task2Holo = this.task2.getHolo();
+			task2Holo.clearVisibility(true);
 		}
 	}
 
@@ -147,8 +142,8 @@ public class SabotageArena {
 		this.arena.getSabotageManager().updateBossBar();
 	}
 
-	public ArrayList<Hologram> getHolos() {
-		ArrayList<Hologram> holos = new ArrayList<Hologram>();
+	public ArrayList<ImposterHologram> getHolos() {
+		ArrayList<ImposterHologram> holos = new ArrayList<ImposterHologram>();
 		holos.add(this.task1.getHolo());
 		if (this.task2 != null) {
 			holos.add(this.task2.getHolo());

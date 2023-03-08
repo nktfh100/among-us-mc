@@ -3,15 +3,13 @@ package com.nktfh100.AmongUs.info;
 import java.util.ArrayList;
 import java.util.UUID;
 
-import me.filoghost.holographicdisplays.api.HolographicDisplaysAPI;
-import me.filoghost.holographicdisplays.api.hologram.VisibilitySettings;
+import com.nktfh100.AmongUs.holograms.ImposterHologram;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 
-import me.filoghost.holographicdisplays.api.hologram.Hologram;
 import com.nktfh100.AmongUs.main.Main;
 
 public class DeadBody {
@@ -20,7 +18,7 @@ public class DeadBody {
 	private Player player;
 	private PlayerInfo pInfo;
 	private ColorInfo color;
-	private Hologram holo;
+	private ImposterHologram holo;
 	private Location loc;
 	private FakePlayer fakePlayer;
 
@@ -54,9 +52,8 @@ public class DeadBody {
 	}
 
 	public void create() {
-		HolographicDisplaysAPI holoApi = HolographicDisplaysAPI.get(Main.getPlugin());
-		this.holo = holoApi.createHologram(this.loc.clone().add(0, 1.8, 0));
-		this.holo.getLines().appendItem(pInfo.getHead()); // floating head
+		this.holo = ImposterHologram.createHologram(this.loc.clone().add(0, 1.8, 0), "deadBodyHologram");
+		this.holo.addLineWithItem(pInfo.getHead()); // floating head
 		this.arena.getVisibilityManager().resetBodyVis(this);
 	}
 
@@ -69,7 +66,7 @@ public class DeadBody {
 			this.playersShownTo.add(player);
 		}
 		if (this.holo != null) {
-			this.holo.getVisibilitySettings().setIndividualVisibility(player, VisibilitySettings.Visibility.VISIBLE);
+			this.holo.showTo(player);
 		}
 
 		this.fakePlayer.showPlayerTo(toPInfo, this.loc, true, register);
@@ -83,7 +80,7 @@ public class DeadBody {
 			this.playersShownTo.remove(player);
 		}
 		if (this.holo != null) {
-			this.holo.getVisibilitySettings().setIndividualVisibility(player, VisibilitySettings.Visibility.HIDDEN);
+			this.holo.hideTo(player);
 		}
 		this.fakePlayer.hidePlayerFrom(player, register);
 	}
@@ -97,7 +94,7 @@ public class DeadBody {
 			this.hideFrom(p, false);
 		}
 		this.playersShownTo.clear();
-		this.holo.delete();
+		this.holo.deleteHologram();
 		this.isDeleted = true;
 	}
 
@@ -113,7 +110,7 @@ public class DeadBody {
 		return this.player;
 	}
 
-	public Hologram getHolo() {
+	public ImposterHologram getHolo() {
 		return holo;
 	}
 

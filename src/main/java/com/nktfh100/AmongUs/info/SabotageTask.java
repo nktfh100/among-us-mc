@@ -1,15 +1,9 @@
 package com.nktfh100.AmongUs.info;
 
-import me.filoghost.holographicdisplays.api.hologram.Hologram;
-import me.filoghost.holographicdisplays.api.hologram.line.HologramLineClickEvent;
-import me.filoghost.holographicdisplays.api.hologram.line.HologramLineClickListener;
-import com.nktfh100.AmongUs.enums.GameState;
 import com.nktfh100.AmongUs.enums.SabotageType;
-import com.nktfh100.AmongUs.main.Main;
+import com.nktfh100.AmongUs.holograms.ImposterHologram;
 
-import org.bukkit.ChatColor;
 import org.bukkit.Location;
-import org.bukkit.entity.Player;
 
 public class SabotageTask {
 
@@ -19,8 +13,8 @@ public class SabotageTask {
 	private Integer timer;
 	private Boolean hasTimer;
 	private Arena arena;
-	private Hologram holo;
-	private HologramLineClickListener touchHandler;
+	private ImposterHologram holo;
+	//private HologramLineClickListener touchHandler;
 
 	public SabotageTask(SabotageType sabotageType, Integer id, Integer timer) {
 		this.id = id;
@@ -33,7 +27,7 @@ public class SabotageTask {
 		this.location = location;
 		this.arena = arena;
 		SabotageTask sabotage = this;
-		this.touchHandler = new HologramLineClickListener() {
+		/*this.touchHandler = new HologramLineClickListener() {
 			@Override
 			public void onClick(HologramLineClickEvent event) {
 				Player p = event.getPlayer();
@@ -48,10 +42,10 @@ public class SabotageTask {
 					}
 				}
 			}
-		};
+		};*/
 	}
 
-	public void setHolo(Hologram holo) {
+	public void setHolo(ImposterHologram holo) {
 		this.holo = holo;
 	}
 
@@ -63,7 +57,7 @@ public class SabotageTask {
 		return this.location;
 	}
 
-	public Hologram getHolo() {
+	public ImposterHologram getHolo() {
 		return this.holo;
 	}
 
@@ -71,9 +65,9 @@ public class SabotageTask {
 		return arena;
 	}
 
-	public HologramLineClickListener getTouchHandler() {
+	/*public HologramLineClickListener getTouchHandler() {
 		return touchHandler;
-	}
+	}*/
 
 	public Integer getTimer() {
 		return timer;

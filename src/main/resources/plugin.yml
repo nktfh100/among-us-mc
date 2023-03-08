@@ -3,8 +3,8 @@ main: com.nktfh100.AmongUs.main.Main
 author: nktfh100
 version: 3.0
 api-version: 1.13
-depend: [HolographicDisplays, ProtocolLib]
-softdepend: [PlayerPoints, Multiverse, Multiverse-Core, VentureChat, PlaceholderAPI]
+depend: [ProtocolLib]
+softdepend: [PlayerPoints, Multiverse, Multiverse-Core, VentureChat, PlaceholderAPI, HolographicDisplays, DecentHolograms]
 commands:
    aua:
       description: Among us admin command

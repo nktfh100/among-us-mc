@@ -3,19 +3,19 @@ package com.nktfh100.AmongUs.managers;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import com.nktfh100.AmongUs.holograms.ImposterHologram;
 import org.bukkit.entity.Player;
 
 import com.nktfh100.AmongUs.info.Arena;
 import com.nktfh100.AmongUs.info.PlayerInfo;
 import com.nktfh100.AmongUs.info.VitalsPlayerInfo;
 import com.nktfh100.AmongUs.inventory.VitalsInv;
-import me.filoghost.holographicdisplays.api.hologram.Hologram;
 
 public class VitalsManager {
 
 	private Arena arena;
 	private ArrayList<VitalsPlayerInfo> players = new ArrayList<VitalsPlayerInfo>();
-	private Hologram holo;
+	private ImposterHologram holo;
 
 	public VitalsManager(Arena arena) {
 		this.arena = arena;
@@ -57,11 +57,11 @@ public class VitalsManager {
 		return players;
 	}
 
-	public Hologram getHolo() {
+	public ImposterHologram getHolo() {
 		return holo;
 	}
 
-	public void setHolo(Hologram holo) {
+	public void setHolo(ImposterHologram holo) {
 		this.holo = holo;
 	}
 

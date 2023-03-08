@@ -1,18 +1,13 @@
 package com.nktfh100.AmongUs.info;
 
-import me.filoghost.holographicdisplays.api.hologram.Hologram;
-import me.filoghost.holographicdisplays.api.hologram.line.HologramLineClickEvent;
-import me.filoghost.holographicdisplays.api.hologram.line.HologramLineClickListener;
-import com.nktfh100.AmongUs.enums.GameState;
 import com.nktfh100.AmongUs.enums.TaskType;
+import com.nktfh100.AmongUs.holograms.ImposterHologram;
 import com.nktfh100.AmongUs.main.Main;
 import com.nktfh100.AmongUs.utils.Utils;
 
 import java.util.ArrayList;
 
-import org.bukkit.ChatColor;
 import org.bukkit.Location;
-import org.bukkit.entity.Player;
 
 public class Task implements Comparable<Task> {
 
@@ -23,8 +18,8 @@ public class Task implements Comparable<Task> {
 	private Location location;
 	private TaskType taskType;
 	private Arena arena;
-	private Hologram holo;
-	private HologramLineClickListener touchHandler;
+	private ImposterHologram holo;
+	//private HologramLineClickListener touchHandler;
 
 	// For all visual tasks
 	private Boolean enableVisuals = true;
@@ -50,7 +45,7 @@ public class Task implements Comparable<Task> {
 		this.isEnabled = isEnabled;
 		this.enableVisuals = enableVisuals;
 		Task task = this;
-		this.touchHandler = new HologramLineClickListener() {
+		/*this.touchHandler = new HologramLineClickListener() {
 			@Override
 			public void onClick(HologramLineClickEvent event) {
 				Player p = event.getPlayer();
@@ -65,7 +60,7 @@ public class Task implements Comparable<Task> {
 					}
 				}
 			}
-		};
+		};*/
 	}
 
 	public void setAsteroidsInfo(Location cannon1, Location cannon2) {
@@ -119,7 +114,7 @@ public class Task implements Comparable<Task> {
 		this.taskType = null;
 		this.arena = null;
 		this.holo = null;
-		this.touchHandler = null;
+		//this.touchHandler = null;
 		this.enableVisuals = true;
 		this.cannon1 = null;
 		this.cannon2 = null;
@@ -130,7 +125,7 @@ public class Task implements Comparable<Task> {
 		return this.queuedTasksVariants;
 	}
 
-	public void setHolo(Hologram holo) {
+	public void setHolo(ImposterHologram holo) {
 		this.holo = holo;
 	}
 
@@ -158,7 +153,7 @@ public class Task implements Comparable<Task> {
 		this.location = loc;
 	}
 
-	public Hologram getHolo() {
+	public ImposterHologram getHolo() {
 		return this.holo;
 	}
 
@@ -174,9 +169,9 @@ public class Task implements Comparable<Task> {
 		this.isEnabled = is;
 	}
 
-	public HologramLineClickListener getTouchHandler() {
+	/*public HologramLineClickListener getTouchHandler() {
 		return touchHandler;
-	}
+	}*/
 
 	public Boolean getEnableVisuals() {
 		return enableVisuals;

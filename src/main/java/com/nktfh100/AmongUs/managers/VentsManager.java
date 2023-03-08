@@ -3,7 +3,7 @@ package com.nktfh100.AmongUs.managers;
 import java.util.ArrayList;
 import java.util.Collections;
 
-import me.filoghost.holographicdisplays.api.hologram.VisibilitySettings;
+import com.nktfh100.AmongUs.holograms.ImposterHologram;
 import org.bukkit.Material;
 import org.bukkit.Particle;
 import org.bukkit.entity.Player;
@@ -12,7 +12,6 @@ import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
-import me.filoghost.holographicdisplays.api.hologram.Hologram;
 import com.nktfh100.AmongUs.info.Arena;
 import com.nktfh100.AmongUs.info.PlayerInfo;
 import com.nktfh100.AmongUs.info.Vent;
@@ -24,7 +23,7 @@ public class VentsManager {
 
 	private Arena arena;
 	private ArrayList<VentGroup> ventGroups = new ArrayList<VentGroup>();
-	private ArrayList<Hologram> holos = new ArrayList<Hologram>();
+	private ArrayList<ImposterHologram> holos = new ArrayList<ImposterHologram>();
 
 	public VentsManager(Arena arena) {
 		this.arena = arena;
@@ -140,7 +139,7 @@ public class VentsManager {
 	public void hideAllHolos(Player player) {
 		for (VentGroup vg : this.ventGroups) {
 			for (Vent v : vg.getVents()) {
-				v.getHolo().getVisibilitySettings().setIndividualVisibility(player, VisibilitySettings.Visibility.HIDDEN);
+				v.getHolo().hideTo(player);
 			}
 		}
 	}
@@ -148,7 +147,7 @@ public class VentsManager {
 	public void showAllHolos(Player player) {
 		for (VentGroup vg : this.ventGroups) {
 			for (Vent v : vg.getVents()) {
-				v.getHolo().getVisibilitySettings().setIndividualVisibility(player, VisibilitySettings.Visibility.VISIBLE);
+				v.getHolo().showTo(player);
 			}
 		}
 	}
@@ -180,8 +179,8 @@ public class VentsManager {
 			vg.delete();
 		}
 		this.ventGroups = null;
-		for(Hologram holo : holos) {
-			holo.delete();
+		for(ImposterHologram holo : holos) {
+			holo.deleteHologram();
 		}
 		this.holos = null;
 	}
@@ -194,7 +193,7 @@ public class VentsManager {
 		return ventGroups;
 	}
 
-	public ArrayList<Hologram> getHolos() {
+	public ArrayList<ImposterHologram> getHolos() {
 		return holos;
 	}
 

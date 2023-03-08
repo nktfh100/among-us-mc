@@ -3,6 +3,7 @@ package com.nktfh100.AmongUs.info;
 import java.util.ArrayList;
 import java.util.UUID;
 
+import com.nktfh100.AmongUs.holograms.ImposterHologram;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
@@ -21,9 +22,6 @@ import org.bukkit.scoreboard.Team;
 
 import com.comphenix.protocol.wrappers.Vector3F;
 import com.comphenix.protocol.wrappers.WrappedBlockData;
-import me.filoghost.holographicdisplays.api.hologram.Hologram;
-import me.filoghost.holographicdisplays.api.hologram.VisibilitySettings;
-import me.filoghost.holographicdisplays.api.HolographicDisplaysAPI;
 import com.nktfh100.AmongUs.enums.CosmeticType;
 import com.nktfh100.AmongUs.enums.GameState;
 import com.nktfh100.AmongUs.enums.RoleType;
@@ -72,7 +70,7 @@ public class PlayerInfo {
 
 	private String originalPlayerListName;
 
-	private Hologram imposterHolo = null;
+	private ImposterHologram imposterHolo = null;
 
 	private BossBar killCooldownBossBar = null;
 
@@ -374,14 +372,12 @@ public class PlayerInfo {
 	}
 
 	public void createImposterHolo() {
-		HolographicDisplaysAPI holoApi = HolographicDisplaysAPI.get(Main.getPlugin());
-		this.imposterHolo = holoApi.createHologram(this.getPlayer().getLocation().add(0, 2.8, 0));
-		this.imposterHolo.getLines().appendItem(Utils.createItem(Material.RED_CONCRETE, " "));
-		VisibilitySettings visManager = this.imposterHolo.getVisibilitySettings();
-		visManager.setGlobalVisibility(VisibilitySettings.Visibility.HIDDEN);
+		this.imposterHolo = ImposterHologram.createHologram(this.getPlayer().getLocation().add(0, 2.8, 0), "imposterHolo");
+		this.imposterHolo.addLineWithItem(Utils.createItem(Material.RED_CONCRETE, " "));
+		this.imposterHolo.setGlobalVisibility(false);
 		for (PlayerInfo pInfo1 : this.arena.getGameImposters()) {
 			if (pInfo1 != this) {
-				visManager.setIndividualVisibility(pInfo1.getPlayer(), VisibilitySettings.Visibility.VISIBLE);
+				this.imposterHolo.showTo(pInfo1.getPlayer());
 			}
 		}
 	}
@@ -680,7 +676,7 @@ public class PlayerInfo {
 			this.killCooldownBossBar = null;
 		}
 		if (this.imposterHolo != null) {
-			this.imposterHolo.delete();
+			this.imposterHolo.deleteHologram();
 			this.imposterHolo = null;
 		}
 		this.arena = null;
@@ -725,7 +721,7 @@ public class PlayerInfo {
 
 	public void teleportImposterHolo() {
 		if (this.getImposterHolo() != null) {
-			this.getImposterHolo().setPosition(this.getPlayer().getLocation().add(0, 2.8, 0));
+			this.getImposterHolo().setLocation(this.getPlayer().getLocation().add(0, 2.8, 0));
 		}
 	}
 
@@ -871,7 +867,7 @@ public class PlayerInfo {
 		return originalPlayerListName;
 	}
 
-	public Hologram getImposterHolo() {
+	public ImposterHologram getImposterHolo() {
 		return imposterHolo;
 	}
 

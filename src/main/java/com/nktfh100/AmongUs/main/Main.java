@@ -47,10 +47,23 @@ public class Main extends JavaPlugin {
 	private static Boolean isVentureChat = false;
 	private static Boolean isPlaceHolderAPI = false;
 	private static Boolean isPlayerPoints = false;
+
+	private static Boolean isDecentHologram = false;
+	private static Boolean isHolographicDisplays = false;
+
 	private static PlayerPointsAPI playerPointsApi = null;
 
 	public void onEnable() {
 		plugin = this;
+
+		if (getServer().getPluginManager().getPlugin("DecentHolograms") != null) {
+			isDecentHologram = true;
+		} else if (getServer().getPluginManager().getPlugin("HolographicDisplays") != null) {
+			isHolographicDisplays = true;
+		} else {
+			getLogger().log(Level.SEVERE, "You must have a holograms plugin installed. Please install the latest version of DecentHolograms or HolographicDisplays");
+			getServer().getPluginManager().disablePlugin(this);
+		}
 
 		new Metrics(this, 12109);
 		if (getServer().getPluginManager().getPlugin("VentureChat") != null) {
@@ -144,6 +157,14 @@ public class Main extends JavaPlugin {
 		protocolManager.addPacketListener(new NamedSoundEffectListener(this, ListenerPriority.NORMAL));
 		protocolManager.addPacketListener(new NamedEntitySpawnListener(this, ListenerPriority.NORMAL));
 		protocolManager.addPacketListener(new EntityListeners(this, ListenerPriority.HIGHEST));
+	}
+
+	public static String getHologramsPlugin() {
+		if (isDecentHologram) {
+			return "DecentHolograms";
+		} else {
+			return "HolographicDisplays";
+		}
 	}
 
 	public static void sendPlayerToLobby(Player player) {

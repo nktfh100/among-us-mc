@@ -2,7 +2,7 @@ package com.nktfh100.AmongUs.managers;
 
 import com.comphenix.protocol.wrappers.WrappedDataValue;
 import com.google.common.collect.Lists;
-import me.filoghost.holographicdisplays.api.hologram.VisibilitySettings;
+import com.nktfh100.AmongUs.holograms.ImposterHologram;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
@@ -11,7 +11,6 @@ import com.comphenix.protocol.events.PacketContainer;
 import com.comphenix.protocol.wrappers.WrappedDataWatcher;
 import com.comphenix.protocol.wrappers.WrappedDataWatcher.Registry;
 import com.comphenix.protocol.wrappers.WrappedDataWatcher.Serializer;
-import me.filoghost.holographicdisplays.api.hologram.Hologram;
 import com.nktfh100.AmongUs.enums.GameState;
 import com.nktfh100.AmongUs.enums.SabotageType;
 import com.nktfh100.AmongUs.info.Arena;
@@ -57,21 +56,21 @@ public class VisibilityManager {
 		}
 	}
 
-	public void checkPlayerHoloVis(PlayerInfo pInfo, Hologram holo) {
+	public void checkPlayerHoloVis(PlayerInfo pInfo, ImposterHologram holo) {
 		if (holo == null || holo.isDeleted()) {
 			return;
 		}
 		if (this.arena.getEnableReducedVision()) {
-			Integer state = Utils.isInsideCircle(pInfo.getPlayer().getLocation(), (double) pInfo.getVision(), holo.getPosition().toLocation());
-			Boolean canSee = holo.getVisibilitySettings().isVisibleTo(pInfo.getPlayer());
+			Integer state = Utils.isInsideCircle(pInfo.getPlayer().getLocation(), (double) pInfo.getVision(), holo.getLocation());
+			Boolean canSee = holo.isVisibleTo(pInfo.getPlayer());
 			if (canSee && state == 2) {
-				holo.getVisibilitySettings().setIndividualVisibility(pInfo.getPlayer(), VisibilitySettings.Visibility.HIDDEN);
+				holo.hideTo(pInfo.getPlayer());
 			} else if (!canSee && state != 2) {
-				holo.getVisibilitySettings().setIndividualVisibility(pInfo.getPlayer(), VisibilitySettings.Visibility.VISIBLE);
+				holo.showTo(pInfo.getPlayer());
 			}
 		} else {
-			if (!holo.getVisibilitySettings().isVisibleTo(pInfo.getPlayer())) {
-				holo.getVisibilitySettings().setIndividualVisibility(pInfo.getPlayer(), VisibilitySettings.Visibility.VISIBLE);
+			if (!holo.isVisibleTo(pInfo.getPlayer())) {
+				holo.showTo(pInfo.getPlayer());
 			}
 		}
 	}
@@ -105,12 +104,12 @@ public class VisibilityManager {
 			// holograms
 			if (this.arena.getHideHologramsOutOfView()) {
 				if (this.arena.getSabotageManager().getIsSabotageActive()) {
-					for (Hologram holo : this.arena.getSabotageManager().getActiveSabotage().getHolos()) {
+					for (ImposterHologram holo : this.arena.getSabotageManager().getActiveSabotage().getHolos()) {
 						this.checkPlayerHoloVis(pInfo, holo);
 					}
 				}
 				if (pInfo.getIsImposter() && !pInfo.isGhost()) {
-					for (Hologram holo : this.arena.getVentsManager().getHolos()) {
+					for (ImposterHologram holo : this.arena.getVentsManager().getHolos()) {
 						this.checkPlayerHoloVis(pInfo, holo);
 					}
 				}
@@ -238,7 +237,7 @@ public class VisibilityManager {
 		}
 		if (pInfoToShow.getIsImposter() && pInfoToShowTo.getIsImposter()) {
 			if (pInfoToShow.getImposterHolo() != null) {
-				pInfoToShow.getImposterHolo().getVisibilitySettings().setIndividualVisibility(pInfoToShow.getPlayer(), VisibilitySettings.Visibility.VISIBLE);
+				pInfoToShow.getImposterHolo().showTo(pInfoToShow.getPlayer());
 			}
 		}
 	}
@@ -258,7 +257,7 @@ public class VisibilityManager {
 			Packets.sendPacket(pInfoToHideTo.getPlayer(), Packets.DESTROY_ENTITY(pInfoToHide.getPlayer().getEntityId()));
 		}
 		if (pInfoToHide.getIsImposter() && pInfoToHideTo.getIsImposter() && pInfoToHide.getImposterHolo() != null) {
-			pInfoToHide.getImposterHolo().getVisibilitySettings().setIndividualVisibility(pInfoToHideTo.getPlayer(), VisibilitySettings.Visibility.HIDDEN);
+			pInfoToHide.getImposterHolo().hideTo(pInfoToHideTo.getPlayer());
 		}
 	}
 
@@ -266,24 +265,24 @@ public class VisibilityManager {
 		if (this.arena.getHideHologramsOutOfView()) {
 			Player player = pInfo.getPlayer();
 			if (this.arena.getSabotageManager().getIsSabotageActive()) {
-				for (Hologram holo : this.arena.getSabotageManager().getActiveSabotage().getHolos()) {
-					holo.getVisibilitySettings().setIndividualVisibility(player, VisibilitySettings.Visibility.VISIBLE);
+				for (ImposterHologram holo : this.arena.getSabotageManager().getActiveSabotage().getHolos()) {
+					holo.showTo(player);
 				}
 			}
 			if (pInfo.getIsImposter() && !pInfo.isGhost()) {
-				for (Hologram holo : this.arena.getVentsManager().getHolos()) {
-					holo.getVisibilitySettings().setIndividualVisibility(player, VisibilitySettings.Visibility.VISIBLE);
+				for (ImposterHologram holo : this.arena.getVentsManager().getHolos()) {
+					holo.showTo(player);
 				}
 			}
 			for (TaskPlayer tp : this.arena.getTasksManager().getTasksForPlayer(player)) {
 				if (!tp.getIsDone()) {
-					tp.getActiveTask().getHolo().getVisibilitySettings().setIndividualVisibility(player, VisibilitySettings.Visibility.VISIBLE);
+					tp.getActiveTask().getHolo().showTo(player);
 				}
 			}
 			if (this.arena.getCamerasManager().getHolo() != null) {
-				this.arena.getCamerasManager().getHolo().getVisibilitySettings().setIndividualVisibility(player, VisibilitySettings.Visibility.VISIBLE);
+				this.arena.getCamerasManager().getHolo().showTo(player);
 			}
-			this.arena.getBtnHolo().getVisibilitySettings().setIndividualVisibility(player, VisibilitySettings.Visibility.VISIBLE);
+			this.arena.getBtnHolo().showTo(player);
 		}
 	}
 
