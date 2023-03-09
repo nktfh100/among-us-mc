@@ -1,12 +1,20 @@
 package com.nktfh100.AmongUs.holograms;
 
+import com.nktfh100.AmongUs.main.Main;
 import eu.decentsoftware.holograms.api.DHAPI;
+import eu.decentsoftware.holograms.event.HologramClickEvent;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
 
-public class DecentHolograms implements ImposterHologram {
+import java.util.ArrayList;
+
+public class DecentHolograms implements ImposterHologram, Listener {
     private final eu.decentsoftware.holograms.api.holograms.Hologram hologram;
+    private final ArrayList<HologramClickListener> listeners = new ArrayList<>();
 
     public DecentHolograms(Location location, String name) {
         this.hologram = DHAPI.createHologram(name, location);
@@ -68,5 +76,18 @@ public class DecentHolograms implements ImposterHologram {
     @Override
     public void addLineWithItem(ItemStack item) {
         DHAPI.addHologramLine(this.hologram, item);
+    }
+
+    @Override
+    public void setHologramClickListener(HologramClickListener listener) {
+        this.listeners.add(listener);
+        Bukkit.getServer().getPluginManager().registerEvents(this, Main.getPlugin());
+    }
+
+    @EventHandler
+    public void onHologramClick(HologramClickEvent event) {
+        for (HologramClickListener listener: listeners) {
+            listener.onClick(event);
+        }
     }
 }

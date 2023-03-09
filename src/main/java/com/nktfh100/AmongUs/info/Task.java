@@ -1,13 +1,19 @@
 package com.nktfh100.AmongUs.info;
 
+import com.nktfh100.AmongUs.enums.GameState;
 import com.nktfh100.AmongUs.enums.TaskType;
+import com.nktfh100.AmongUs.holograms.HologramClickListener;
 import com.nktfh100.AmongUs.holograms.ImposterHologram;
 import com.nktfh100.AmongUs.main.Main;
 import com.nktfh100.AmongUs.utils.Utils;
 
 import java.util.ArrayList;
 
+import eu.decentsoftware.holograms.event.HologramClickEvent;
+import me.filoghost.holographicdisplays.api.hologram.line.HologramLineClickEvent;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
+import org.bukkit.entity.Player;
 
 public class Task implements Comparable<Task> {
 
@@ -19,7 +25,7 @@ public class Task implements Comparable<Task> {
 	private TaskType taskType;
 	private Arena arena;
 	private ImposterHologram holo;
-	//private HologramLineClickListener touchHandler;
+	private HologramClickListener clickListener;
 
 	// For all visual tasks
 	private Boolean enableVisuals = true;
@@ -45,7 +51,7 @@ public class Task implements Comparable<Task> {
 		this.isEnabled = isEnabled;
 		this.enableVisuals = enableVisuals;
 		Task task = this;
-		/*this.touchHandler = new HologramLineClickListener() {
+		this.clickListener = new HologramClickListener() {
 			@Override
 			public void onClick(HologramLineClickEvent event) {
 				Player p = event.getPlayer();
@@ -60,7 +66,22 @@ public class Task implements Comparable<Task> {
 					}
 				}
 			}
-		};*/
+
+			@Override
+			public void onClick(HologramClickEvent event) {
+				Player p = event.getPlayer();
+				if (task.getArena().getGameState() == GameState.RUNNING) {
+					task.getArena().getTasksManager().taskHoloClick(p, task);
+				} else {
+					if (p.hasPermission("amongus.admin")) {
+						PlayerInfo pInfo = Main.getPlayersManager().getPlayerInfo(p);
+						if (!pInfo.getIsIngame()) {
+							p.sendMessage(Main.getConfigManager().getPrefix() + ChatColor.GREEN + "Task holo click " + task.getTaskType().toString());
+						}
+					}
+				}
+			}
+		};
 	}
 
 	public void setAsteroidsInfo(Location cannon1, Location cannon2) {
@@ -169,9 +190,9 @@ public class Task implements Comparable<Task> {
 		this.isEnabled = is;
 	}
 
-	/*public HologramLineClickListener getTouchHandler() {
-		return touchHandler;
-	}*/
+	public HologramClickListener getTouchHandler() {
+		return clickListener;
+	}
 
 	public Boolean getEnableVisuals() {
 		return enableVisuals;

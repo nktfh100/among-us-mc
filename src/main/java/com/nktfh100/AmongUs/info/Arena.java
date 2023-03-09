@@ -13,7 +13,10 @@ import java.util.List;
 import java.util.Stack;
 import java.util.logging.Level;
 
+import com.nktfh100.AmongUs.holograms.HologramClickListener;
 import com.nktfh100.AmongUs.holograms.ImposterHologram;
+import eu.decentsoftware.holograms.event.HologramClickEvent;
+import me.filoghost.holographicdisplays.api.hologram.line.HologramLineClickEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Color;
@@ -1839,6 +1842,7 @@ public class Arena {
 				createLine(created, line);
 			}
 			created.setGlobalVisibility(false);
+			created.setHologramClickListener(task.getTouchHandler());
 			task.setHolo(created);
 			this.holograms.add(created);
 		}
@@ -1857,6 +1861,7 @@ public class Arena {
 					createLine(created, line);
 				}
 				created.setGlobalVisibility(false);
+				created.setHologramClickListener(saboTask.getTouchHandler());
 				saboTask.setHolo(created);
 				this.holograms.add(created);
 			}
@@ -1865,7 +1870,7 @@ public class Arena {
 		// meeting button hologram
 		ImposterHologram createdBtn = ImposterHologram.createHologram(this.meetingButton, "meetingButton_" + this.meetingButton.getWorld());
 
-		/*HologramLineClickListener th = new HologramLineClickListener() {
+		HologramClickListener meetingBtnClickListener = new HologramClickListener() {
 			@Override
 			public void onClick(HologramLineClickEvent event) {
 				Player p = event.getPlayer();
@@ -1879,11 +1884,26 @@ public class Arena {
 					p.openInventory(invHolder.getInventory());
 				}
 			}
-		};*/
+
+			@Override
+			public void onClick(HologramClickEvent event) {
+				Player p = event.getPlayer();
+				PlayerInfo pInfo = Main.getPlayersManager().getPlayerInfo(p);
+				if (!pInfo.getIsIngame()) {
+					return;
+				}
+				if (pInfo.getArena().getGameState() == GameState.RUNNING && !pInfo.getArena().getIsInMeeting() && !pInfo.isGhost()) {
+					MeetingBtnInv invHolder = new MeetingBtnInv(pInfo.getArena(), pInfo);
+					Main.getSoundsManager().playSound("meetingBtnInvOpen", p, p.getLocation());
+					p.openInventory(invHolder.getInventory());
+				}
+			}
+		};
 
 		for (String line : Main.getMessagesManager().getHologramLines("meetingButton", null)) {
 			createLine(createdBtn, line);
 		}
+		createdBtn.setHologramClickListener(meetingBtnClickListener);
 		this.btnHolo = createdBtn;
 
 		// vents holograms
@@ -1896,7 +1916,8 @@ public class Arena {
 				}
 				final Integer vgId = vg.getId();
 				final Integer vId = v.getId();
-				/*HologramLineClickListener th_ = new HologramLineClickListener() {
+
+				HologramClickListener clickListener = new HologramClickListener() {
 					@Override
 					public void onClick(HologramLineClickEvent event) {
 						Player player = event.getPlayer();
@@ -1909,11 +1930,26 @@ public class Arena {
 							}
 						}
 					}
-				};*/
+
+					@Override
+					public void onClick(HologramClickEvent event) {
+						Player player = event.getPlayer();
+						PlayerInfo pInfo = Main.getPlayersManager().getPlayerInfo(player);
+						if (pInfo.getIsIngame() && pInfo.getIsImposter() && !pInfo.isGhost() && !pInfo.getIsInVent() && !pInfo.getArena().getIsInMeeting()) {
+							pInfo.getArena().getVentsManager().ventHoloClick(pInfo, vgId, vId);
+						} else if (!pInfo.getIsIngame()) {
+							if (player.hasPermission("amongus.admin")) {
+								player.sendMessage(Main.getConfigManager().getPrefix() + ChatColor.GREEN + "Vent holo click group: " + vgId + " id: " + vId);
+							}
+						}
+					}
+				};
+
 				for (String line : Main.getMessagesManager().getHologramLines("vent", locName)) {
 					this.createLine(created, line);
 				}
 				created.setGlobalVisibility(false);
+				created.setHologramClickListener(clickListener);
 				v.setHolo(created);
 				this.holograms.add(created);
 				this.getVentsManager().getHolos().add(created);
@@ -1926,12 +1962,15 @@ public class Arena {
 				cam.createArmorStand();
 			}
 			ImposterHologram created = ImposterHologram.createHologram(this.camerasLoc, "camerasHologram_" + this.camerasLoc.getWorld());
-			/*HologramLineClickListener th_ = new HologramLineClickListener() {
+			HologramClickListener camerasHologramClickListener = new HologramClickListener() {
 				@Override
 				public void onClick(HologramLineClickEvent event) { }
+
+				@Override
+				public void onClick(HologramClickEvent event) { }
 			};
 			if (this.camerasManager.getCameras().size() > 0) {
-				th_ = new HologramLineClickListener() {
+				camerasHologramClickListener = new HologramClickListener() {
 					@Override
 					public void onClick(HologramLineClickEvent event) {
 						Player player = event.getPlayer();
@@ -1940,18 +1979,29 @@ public class Arena {
 							pInfo.getArena().getCamerasManager().camerasHoloClick(pInfo);
 						}
 					}
+
+					@Override
+					public void onClick(HologramClickEvent event) {
+						Player player = event.getPlayer();
+						PlayerInfo pInfo = Main.getPlayersManager().getPlayerInfo(player);
+						if (pInfo.getIsIngame() && !pInfo.getIsInVent() && !pInfo.getArena().getIsInMeeting()) {
+							pInfo.getArena().getCamerasManager().camerasHoloClick(pInfo);
+						}
+					}
 				};
-			}*/
+			}
+
 			for (String line : Main.getMessagesManager().getHologramLines("cameras", null)) {
 				this.createLine(created, line);
 			}
+			created.setHologramClickListener(camerasHologramClickListener);
 			this.camerasManager.setHolo(created);
 			this.holograms.add(created);
 		}
 
 		if (this.vitalsLoc != null) {
 			ImposterHologram created = ImposterHologram.createHologram(this.vitalsLoc, "vitalsHologram_" + this.vitalsLoc.getWorld());
-			/*HologramLineClickListener th_ = new HologramLineClickListener() {
+			HologramClickListener vitalsHologramClickListener = new HologramClickListener() {
 				@Override
 				public void onClick(HologramLineClickEvent event) {
 					Player player = event.getPlayer();
@@ -1962,10 +2012,23 @@ public class Arena {
 						}
 					}
 				}
-			};*/
+
+				@Override
+				public void onClick(HologramClickEvent event) {
+					Player player = event.getPlayer();
+					PlayerInfo pInfo = Main.getPlayersManager().getPlayerInfo(player);
+					if (pInfo != null) {
+						if (pInfo.getIsIngame() && !pInfo.getIsInVent() && !pInfo.getArena().getIsInMeeting() && pInfo.getArena().getGameState() == GameState.RUNNING) {
+							pInfo.getArena().getVitalsManager().openInventory(player);
+						}
+					}
+				}
+			};
+
 			for (String line : Main.getMessagesManager().getHologramLines("vitals", null)) {
 				this.createLine(created, line);
 			}
+			created.setHologramClickListener(vitalsHologramClickListener);
 			this.holograms.add(created);
 			this.vitalsManager.setHolo(created);
 		}

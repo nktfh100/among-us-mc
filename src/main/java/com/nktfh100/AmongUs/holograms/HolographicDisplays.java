@@ -3,12 +3,15 @@ package com.nktfh100.AmongUs.holograms;
 import com.nktfh100.AmongUs.main.Main;
 import me.filoghost.holographicdisplays.api.HolographicDisplaysAPI;
 import me.filoghost.holographicdisplays.api.hologram.VisibilitySettings;
+import me.filoghost.holographicdisplays.api.hologram.Hologram;
+import me.filoghost.holographicdisplays.api.hologram.line.ClickableHologramLine;
+import me.filoghost.holographicdisplays.api.hologram.line.HologramLineClickListener;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 public class HolographicDisplays implements ImposterHologram {
-    private final me.filoghost.holographicdisplays.api.hologram.Hologram hologram;
+    private final Hologram hologram;
 
     public HolographicDisplays(Location location) {
         this.hologram = HolographicDisplaysAPI.get(Main.getPlugin()).createHologram(location);
@@ -77,5 +80,18 @@ public class HolographicDisplays implements ImposterHologram {
     @Override
     public void addLineWithItem(ItemStack item) {
         this.hologram.getLines().appendItem(item);
+    }
+
+    @Override
+    public void setHologramClickListener(HologramClickListener listener) {
+        int hologramLine = 0;
+        while (hologramLine < this.hologram.getLines().size()) {
+            ClickableHologramLine line = (ClickableHologramLine) this.hologram.getLines().get(hologramLine);
+
+            HologramLineClickListener clickListener = listener::onClick;
+
+            line.setClickListener(clickListener);
+            hologramLine++;
+        }
     }
 }

@@ -35,4 +35,6 @@ public interface ImposterHologram {
     void addLineWithText(String text);
 
     void addLineWithItem(ItemStack item);
+
+    void setHologramClickListener(HologramClickListener listener);
 }
