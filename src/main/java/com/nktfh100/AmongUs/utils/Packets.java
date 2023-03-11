@@ -50,7 +50,7 @@ public class Packets {
 
 	public static PacketContainer ADD_PLAYER(UUID uuid, String name, String displayName, String textureValue, String textureSignature) {
 		PacketContainer packet = new PacketContainer(PacketType.Play.Server.PLAYER_INFO);
-		packet.getPlayerInfoActions().write(0, EnumSet.of(EnumWrappers.PlayerInfoAction.ADD_PLAYER));
+		packet.getPlayerInfoActions().write(0, EnumSet.of(EnumWrappers.PlayerInfoAction.ADD_PLAYER, EnumWrappers.PlayerInfoAction.UPDATE_DISPLAY_NAME, EnumWrappers.PlayerInfoAction.UPDATE_LISTED));
 
 		WrappedGameProfile wgp = new WrappedGameProfile(uuid, name);
 		PlayerInfoData playerInfoData = new PlayerInfoData(wgp, 50, NativeGameMode.ADVENTURE, WrappedChatComponent.fromText(displayName));
