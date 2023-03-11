@@ -899,7 +899,10 @@ public class Arena {
 					this.sabotageManager.getSabotageCooldownBossBar(player).removePlayer(player);
 				}
 				this.sabotageManager.removeImposter(player.getUniqueId().toString());
-				pInfo.getKillCooldownBossBar().removePlayer(pInfo.getPlayer());
+
+				if (this.killCooldown > 0) {
+					pInfo.getKillCooldownBossBar().removePlayer(pInfo.getPlayer());
+				}
 			}
 			pInfo.leaveGame();
 			for (PotionEffect effect : player.getActivePotionEffects()) {
