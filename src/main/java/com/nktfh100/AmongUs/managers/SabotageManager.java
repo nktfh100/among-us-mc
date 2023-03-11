@@ -67,6 +67,7 @@ public class SabotageManager {
 			this.setSabotageCoolDownTimer(uuid, this.arena.getSabotageCooldown());
 		}
 		this.activeSabotage = sabo;
+		this.activeSabotage.resetTasksDone();
 		String name = Main.getMessagesManager().getTaskName(this.getActiveSabotage().getType().toString());
 		String saboTitle = Main.getMessagesManager().getGameMsg("sabotageTitle", this.arena, name);
 		String saboSubTitle = Main.getMessagesManager().getGameMsg("sabotageSubTitle", this.arena, name);

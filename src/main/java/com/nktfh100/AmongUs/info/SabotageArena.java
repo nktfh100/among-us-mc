@@ -101,6 +101,11 @@ public class SabotageArena {
 	public Boolean getTaskDone(Integer i) {
 		return this.isTaskDone.get(i);
 	}
+	public void resetTasksDone() {
+		this.isTaskDone.clear();
+		this.isTaskDone.add(false);
+		this.isTaskDone.add(false);
+	}
 
 	public Boolean getTaskActive(Integer i) {
 		return this.isTaskActive.get(i);
