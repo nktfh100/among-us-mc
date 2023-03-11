@@ -913,11 +913,11 @@ public class Arena {
 			pInfo.removeVisionBlocks();
 			updateScoreBoard();
 
-			//PacketContainer tabNamePacket = Packets.ADD_PLAYER(pInfo.getPlayer().getUniqueId(), player.getName(), pInfo.getOriginalPlayerListName(), pInfo.getTextureValue(),
-			//		pInfo.getTextureSignature());
+			PacketContainer tabNamePacket = Packets.ADD_PLAYER(pInfo.getPlayer().getUniqueId(), player.getName(), pInfo.getOriginalPlayerListName(), pInfo.getTextureValue(),
+					pInfo.getTextureSignature());
 			for (Player p : Bukkit.getOnlinePlayers()) {
 				PlayerInfo pInfo1 = Main.getPlayersManager().getPlayerInfo(p);
-				//Packets.sendPacket(p, tabNamePacket);
+				Packets.sendPacket(p, tabNamePacket);
 				Packets.sendPacket(player, Packets.UPDATE_DISPLAY_NAME(p.getUniqueId(), p.getName(), pInfo1.getOriginalPlayerListName()));
 				Packets.sendPacket(p, Packets.UPDATE_DISPLAY_NAME(player.getUniqueId(), player.getName(), pInfo.getOriginalPlayerListName()));
 				if (pInfo.getPlayer() != null) {
@@ -1777,10 +1777,11 @@ public class Arena {
 			public void run() {
 
 				for (PlayerInfo pInfo : arena.getPlayersInfo()) {
-					/*PacketContainer tabNamePacket = Packets.ADD_PLAYER(pInfo.getPlayer().getUniqueId(), pInfo.getPlayer().getName(), pInfo.getOriginalPlayerListName(), pInfo.getTextureValue(),
-							pInfo.getTextureSignature());
-					Packets.sendPacket(pInfo.getPlayer(), tabNamePacket);*/
-					Packets.sendPacket(pInfo.getPlayer(), Packets.UPDATE_DISPLAY_NAME(pInfo.getPlayer().getUniqueId(), pInfo.getPlayer().getName(), pInfo.getOriginalPlayerListName()));
+					for (PlayerInfo pInfo1 : arena.getPlayersInfo()) {
+						Packets.sendPacket(pInfo.getPlayer(), Packets.ADD_PLAYER(pInfo1.getPlayer().getUniqueId(), pInfo1.getPlayer().getName(), pInfo1.getOriginalPlayerListName(), pInfo1.getTextureValue(),
+								pInfo.getTextureSignature()));
+						Packets.sendPacket(pInfo.getPlayer(), Packets.UPDATE_DISPLAY_NAME(pInfo1.getPlayer().getUniqueId(), pInfo1.getPlayer().getName(), pInfo1.getOriginalPlayerListName()));
+					}
 				}
 			}
 		}.runTaskLater(Main.getPlugin(), 2L);
