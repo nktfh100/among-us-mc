@@ -913,9 +913,12 @@ public class Arena {
 			pInfo.removeVisionBlocks();
 			updateScoreBoard();
 
-			PacketContainer tabNamePacket = Packets.ADD_PLAYER(pInfo.getPlayer().getUniqueId(), player.getName(), pInfo.getOriginalPlayerListName(), pInfo.getTextureValue(),
-					pInfo.getTextureSignature());
-			for (PlayerInfo pInfo1 : this.getPlayersInfo()) {
+			//PacketContainer tabNamePacket = Packets.ADD_PLAYER(pInfo.getPlayer().getUniqueId(), player.getName(), pInfo.getOriginalPlayerListName(), pInfo.getTextureValue(),
+			//		pInfo.getTextureSignature());
+			for (Player p : Bukkit.getOnlinePlayers()) {
+				PlayerInfo pInfo1 = Main.getPlayersManager().getPlayerInfo(p);
+				//Packets.sendPacket(p, tabNamePacket);
+				Packets.sendPacket(p, Packets.UPDATE_DISPLAY_NAME(player.getUniqueId(), player.getName(), pInfo.getOriginalPlayerListName()));
 				if (pInfo.getPlayer() != null) {
 					if (pInfo1.getFakePlayer() != null) {
 						pInfo1.getFakePlayer().hidePlayerFrom(pInfo.getPlayer(), true);
@@ -923,7 +926,6 @@ public class Arena {
 					if (pInfo.getFakePlayer() != null) {
 						pInfo.getFakePlayer().hidePlayerFrom(pInfo1.getPlayer(), true);
 					}
-					Packets.sendPacket(pInfo1.getPlayer(), tabNamePacket);
 					if (pInfo != pInfo1) {
 						Packets.sendPacket(player, Packets.ADD_PLAYER(pInfo1.getPlayer().getUniqueId(), pInfo1.getPlayer().getName(), pInfo1.getOriginalPlayerListName(), pInfo1.getTextureValue(),
 								pInfo1.getTextureSignature()));
@@ -933,7 +935,6 @@ public class Arena {
 					}
 				}
 			}
-			Packets.sendPacket(player, Packets.UPDATE_DISPLAY_NAME(player.getUniqueId(), player.getName(), pInfo.getOriginalPlayerListName()));
 
 			this.getTasksManager().removeTasksForPlayer(player);
 			if (!endGame) {
@@ -1773,15 +1774,13 @@ public class Arena {
 		new BukkitRunnable() {
 			@Override
 			public void run() {
-				for (PlayerInfo pInfo1 : arena.getPlayersInfo()) {
-					for (PlayerInfo pInfo2 : arena.getPlayersInfo()) {
-						if (pInfo1 != pInfo2) {
-							Packets.sendPacket(pInfo1.getPlayer(), Packets.REMOVE_PLAYER(pInfo2.getPlayer().getUniqueId()));
-							Packets.sendPacket(pInfo2.getPlayer(), Packets.REMOVE_PLAYER(pInfo1.getPlayer().getUniqueId()));
-						}
-					}
-				}
 
+				for (PlayerInfo pInfo : arena.getPlayersInfo()) {
+					/*PacketContainer tabNamePacket = Packets.ADD_PLAYER(pInfo.getPlayer().getUniqueId(), pInfo.getPlayer().getName(), pInfo.getOriginalPlayerListName(), pInfo.getTextureValue(),
+							pInfo.getTextureSignature());
+					Packets.sendPacket(pInfo.getPlayer(), tabNamePacket);*/
+					Packets.sendPacket(pInfo.getPlayer(), Packets.UPDATE_DISPLAY_NAME(pInfo.getPlayer().getUniqueId(), pInfo.getPlayer().getName(), pInfo.getOriginalPlayerListName()));
+				}
 			}
 		}.runTaskLater(Main.getPlugin(), 2L);
 	}
