@@ -267,7 +267,7 @@ public class PlayerInfo {
 
 	public void startGame(RoleType givenRole) {
 		this.role = givenRole;
-		if (this.getIsImposter()) {
+		if (this.getIsImposter() && arena.getKillCooldown() > 0) {
 			this.killCooldownBossBar = Bukkit.createBossBar(Main.getMessagesManager().getGameMsg("killCooldownBossBar", this.getArena(), ""), BarColor.RED, BarStyle.SOLID);
 			this.killCooldownBossBar.setProgress(1);
 			this.killCooldownBossBar.addPlayer(this.player);
@@ -671,7 +671,7 @@ public class PlayerInfo {
 	}
 
 	public void leaveGame() {
-		if (this.getIsImposter()) {
+		if (this.getIsImposter() && this.killCoolDown > 0) {
 			this.killCooldownBossBar.removePlayer(this.player);
 			this.killCooldownBossBar = null;
 		}

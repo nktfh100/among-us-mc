@@ -895,7 +895,7 @@ public class Arena {
 			if (pInfo.getIsImposter()) {
 				this.impostersAlive.remove(pInfo);
 				this.gameImposters.remove(pInfo);
-				if (this.sabotageManager.getSabotageCooldownBossBar(player) != null) {
+				if (this.sabotageManager.getSabotageCooldownBossBar(player) != null && this.sabotageCooldown > 0) {
 					this.sabotageManager.getSabotageCooldownBossBar(player).removePlayer(player);
 				}
 				this.sabotageManager.removeImposter(player.getUniqueId().toString());
@@ -1372,7 +1372,10 @@ public class Arena {
 				if (isImposter) {
 					pInfo.setKillCoolDown(this.killCooldown);
 					pInfo.setVision(this.imposterVision);
-					this.sabotageManager.getSabotageCooldownBossBar(player).addPlayer(player);
+
+					if (this.sabotageCooldown > 0) {
+						this.sabotageManager.getSabotageCooldownBossBar(player).addPlayer(player);
+					}
 					this.sabotageManager.setSabotageCoolDownTimer(player.getUniqueId().toString(), this.sabotageCooldown);
 				} else {
 					pInfo.setVision(this.crewmateVision);
