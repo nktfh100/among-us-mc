@@ -1,16 +1,10 @@
 package com.nktfh100.AmongUs.managers;
 
-import com.comphenix.protocol.wrappers.WrappedDataValue;
-import com.google.common.collect.Lists;
-import com.nktfh100.AmongUs.holograms.ImposterHologram;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
 import com.comphenix.protocol.PacketType;
 import com.comphenix.protocol.events.PacketContainer;
-import com.comphenix.protocol.wrappers.WrappedDataWatcher;
-import com.comphenix.protocol.wrappers.WrappedDataWatcher.Registry;
-import com.comphenix.protocol.wrappers.WrappedDataWatcher.Serializer;
 import com.nktfh100.AmongUs.enums.GameState;
 import com.nktfh100.AmongUs.enums.SabotageType;
 import com.nktfh100.AmongUs.info.Arena;
@@ -21,9 +15,7 @@ import com.nktfh100.AmongUs.info.TaskPlayer;
 import com.nktfh100.AmongUs.main.Main;
 import com.nktfh100.AmongUs.utils.Packets;
 import com.nktfh100.AmongUs.utils.Utils;
-
-import java.util.List;
-import java.util.Objects;
+import com.nktfh100.AmongUs.holograms.ImposterHologram;
 
 public class VisibilityManager {
 
@@ -206,7 +198,7 @@ public class VisibilityManager {
 			Packets.sendPacket(pInfoToShowTo.getPlayer(), Packets.ENTITY_LOOK(playerToShow.getPlayer().getEntityId(), loc));
 			Packets.sendPacket(pInfoToShowTo.getPlayer(), Packets.ENTITY_HEAD_ROTATION(playerToShow.getPlayer().getEntityId(), loc));
 
-			if (pInfoToShow.getColor() != null) {
+			if (pInfoToShow.getColor() != null && arena.getGameState() != GameState.FINISHING) {
 				Packets.sendPacket(pInfoToShowTo.getPlayer(), Packets.PLAYER_ARMOR(pInfoToShow.getColor(), playerToShow.getPlayer().getEntityId()));
 			}
 		}
