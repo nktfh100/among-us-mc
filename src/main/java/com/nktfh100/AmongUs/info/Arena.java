@@ -895,11 +895,14 @@ public class Arena {
 			if (pInfo.getIsImposter()) {
 				this.impostersAlive.remove(pInfo);
 				this.gameImposters.remove(pInfo);
-				if (this.sabotageManager.getSabotageCooldownBossBar(player) != null) {
+				if (this.sabotageManager.getSabotageCooldownBossBar(player) != null && this.sabotageCooldown > 0) {
 					this.sabotageManager.getSabotageCooldownBossBar(player).removePlayer(player);
 				}
 				this.sabotageManager.removeImposter(player.getUniqueId().toString());
-				pInfo.getKillCooldownBossBar().removePlayer(pInfo.getPlayer());
+
+				if (this.killCooldown > 0) {
+					pInfo.getKillCooldownBossBar().removePlayer(pInfo.getPlayer());
+				}
 			}
 			pInfo.leaveGame();
 			for (PotionEffect effect : player.getActivePotionEffects()) {
@@ -915,7 +918,11 @@ public class Arena {
 
 			PacketContainer tabNamePacket = Packets.ADD_PLAYER(pInfo.getPlayer().getUniqueId(), player.getName(), pInfo.getOriginalPlayerListName(), pInfo.getTextureValue(),
 					pInfo.getTextureSignature());
-			for (PlayerInfo pInfo1 : this.getPlayersInfo()) {
+			for (Player p : Bukkit.getOnlinePlayers()) {
+				PlayerInfo pInfo1 = Main.getPlayersManager().getPlayerInfo(p);
+				Packets.sendPacket(p, tabNamePacket);
+				Packets.sendPacket(player, Packets.UPDATE_DISPLAY_NAME(p.getUniqueId(), p.getName(), pInfo1.getOriginalPlayerListName()));
+				Packets.sendPacket(p, Packets.UPDATE_DISPLAY_NAME(player.getUniqueId(), player.getName(), pInfo.getOriginalPlayerListName()));
 				if (pInfo.getPlayer() != null) {
 					if (pInfo1.getFakePlayer() != null) {
 						pInfo1.getFakePlayer().hidePlayerFrom(pInfo.getPlayer(), true);
@@ -923,17 +930,17 @@ public class Arena {
 					if (pInfo.getFakePlayer() != null) {
 						pInfo.getFakePlayer().hidePlayerFrom(pInfo1.getPlayer(), true);
 					}
-					Packets.sendPacket(pInfo1.getPlayer(), tabNamePacket);
+
+					if (!endGame) {
+						pInfo1.updateScoreBoard();
+					}
+
 					if (pInfo != pInfo1) {
 						Packets.sendPacket(player, Packets.ADD_PLAYER(pInfo1.getPlayer().getUniqueId(), pInfo1.getPlayer().getName(), pInfo1.getOriginalPlayerListName(), pInfo1.getTextureValue(),
 								pInfo1.getTextureSignature()));
 					}
-					if (!endGame) {
-						pInfo1.updateScoreBoard();
-					}
 				}
 			}
-			Packets.sendPacket(player, Packets.UPDATE_DISPLAY_NAME(player.getUniqueId(), player.getName(), pInfo.getOriginalPlayerListName()));
 
 			this.getTasksManager().removeTasksForPlayer(player);
 			if (!endGame) {
@@ -1033,6 +1040,24 @@ public class Arena {
 			Main.getArenaManager().updateArenaSelectorInv();
 			this.updateScoreBoard();
 			this.updateSigns();
+		}
+
+		if (Main.getConfigManager().getHidePlayersOutSideArena()) {
+			new BukkitRunnable() {
+				@Override
+				public void run() {
+					for (Player p : Bukkit.getOnlinePlayers()) {
+						PlayerInfo pInfo = Main.getPlayersManager().getPlayerInfo(p);
+						if (!pInfo.getIsIngame()) {
+							player.hidePlayer(Main.getPlugin(), p);
+							player.showPlayer(Main.getPlugin(), p);
+
+							p.hidePlayer(Main.getPlugin(), player);
+							p.showPlayer(Main.getPlugin(), player);
+						}
+					}
+				}
+			}.runTaskLater(Main.getPlugin(), 5L);
 		}
 	}
 
@@ -1370,7 +1395,10 @@ public class Arena {
 				if (isImposter) {
 					pInfo.setKillCoolDown(this.killCooldown);
 					pInfo.setVision(this.imposterVision);
-					this.sabotageManager.getSabotageCooldownBossBar(player).addPlayer(player);
+
+					if (this.sabotageCooldown > 0) {
+						this.sabotageManager.getSabotageCooldownBossBar(player).addPlayer(player);
+					}
 					this.sabotageManager.setSabotageCoolDownTimer(player.getUniqueId().toString(), this.sabotageCooldown);
 				} else {
 					pInfo.setVision(this.crewmateVision);
@@ -1773,15 +1801,14 @@ public class Arena {
 		new BukkitRunnable() {
 			@Override
 			public void run() {
-				for (PlayerInfo pInfo1 : arena.getPlayersInfo()) {
-					for (PlayerInfo pInfo2 : arena.getPlayersInfo()) {
-						if (pInfo1 != pInfo2) {
-							Packets.sendPacket(pInfo1.getPlayer(), Packets.REMOVE_PLAYER(pInfo2.getPlayer().getUniqueId()));
-							Packets.sendPacket(pInfo2.getPlayer(), Packets.REMOVE_PLAYER(pInfo1.getPlayer().getUniqueId()));
-						}
+
+				for (PlayerInfo pInfo : arena.getPlayersInfo()) {
+					for (PlayerInfo pInfo1 : arena.getPlayersInfo()) {
+						Packets.sendPacket(pInfo.getPlayer(), Packets.ADD_PLAYER(pInfo1.getPlayer().getUniqueId(), pInfo1.getPlayer().getName(), pInfo1.getOriginalPlayerListName(), pInfo1.getTextureValue(),
+								pInfo.getTextureSignature()));
+						Packets.sendPacket(pInfo.getPlayer(), Packets.UPDATE_DISPLAY_NAME(pInfo1.getPlayer().getUniqueId(), pInfo1.getPlayer().getName(), pInfo1.getOriginalPlayerListName()));
 					}
 				}
-
 			}
 		}.runTaskLater(Main.getPlugin(), 2L);
 	}

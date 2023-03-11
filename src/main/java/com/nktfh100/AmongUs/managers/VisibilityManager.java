@@ -1,16 +1,10 @@
 package com.nktfh100.AmongUs.managers;
 
-import com.comphenix.protocol.wrappers.WrappedDataValue;
-import com.google.common.collect.Lists;
-import com.nktfh100.AmongUs.holograms.ImposterHologram;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
 import com.comphenix.protocol.PacketType;
 import com.comphenix.protocol.events.PacketContainer;
-import com.comphenix.protocol.wrappers.WrappedDataWatcher;
-import com.comphenix.protocol.wrappers.WrappedDataWatcher.Registry;
-import com.comphenix.protocol.wrappers.WrappedDataWatcher.Serializer;
 import com.nktfh100.AmongUs.enums.GameState;
 import com.nktfh100.AmongUs.enums.SabotageType;
 import com.nktfh100.AmongUs.info.Arena;
@@ -21,9 +15,7 @@ import com.nktfh100.AmongUs.info.TaskPlayer;
 import com.nktfh100.AmongUs.main.Main;
 import com.nktfh100.AmongUs.utils.Packets;
 import com.nktfh100.AmongUs.utils.Utils;
-
-import java.util.List;
-import java.util.Objects;
+import com.nktfh100.AmongUs.holograms.ImposterHologram;
 
 public class VisibilityManager {
 
@@ -201,37 +193,12 @@ public class VisibilityManager {
 			Packets.sendPacket(pInfoToShowTo.getPlayer(), spawnPacket);
 
 			// metadata packet
-			PacketContainer metadataPacket = new PacketContainer(PacketType.Play.Server.ENTITY_METADATA);
-			metadataPacket.getIntegers().write(0, pInfoToShow.getPlayer().getEntityId());
-			WrappedDataWatcher watcher = new WrappedDataWatcher();
-			Serializer serializer = Registry.get(Byte.class);
-			watcher.setEntity(pInfoToShow.getPlayer());
-
-			watcher.setObject(16, serializer, (byte) (0x01)); // cape
-			watcher.setObject(16, serializer, (byte) (0x02)); // jacket
-			watcher.setObject(16, serializer, (byte) (0x04)); // left sleeve
-			watcher.setObject(16, serializer, (byte) (0x08)); // right sleeve
-			watcher.setObject(16, serializer, (byte) (0x10)); // left pants
-			watcher.setObject(16, serializer, (byte) (0x20)); // right pants
-			watcher.setObject(16, serializer, (byte) (0x40)); // hat
-			if (pInfoToShow.isGhost()) {
-				watcher.setObject(0, serializer, (byte) (0x20));
-			}
-
-			// If <1.19.3 support is planned, make an if statement and this goes in versions under 1.19.3
-			// metadataPacket.getWatchableCollectionModifier().write(0, watcher.getWatchableObjects());
-			final List<WrappedDataValue> wrappedDataValueList = Lists.newArrayList();
-			watcher.getWatchableObjects().stream().filter(Objects::nonNull).forEach(entry -> {
-				final WrappedDataWatcher.WrappedDataWatcherObject dataWatcherObject = entry.getWatcherObject();
-				wrappedDataValueList.add(new WrappedDataValue(dataWatcherObject.getIndex(), dataWatcherObject.getSerializer(), entry.getRawValue()));
-			});
-			metadataPacket.getDataValueCollectionModifier().write(0, wrappedDataValueList);
-			Packets.sendPacket(pInfoToShowTo.getPlayer(), metadataPacket);
+			Packets.sendPacket(pInfoToShowTo.getPlayer(), Packets.METADATA_SKIN(pInfoToShow.getPlayer().getEntityId(), pInfoToShow.getPlayer(), pInfoToShow.isGhost()));
 
 			Packets.sendPacket(pInfoToShowTo.getPlayer(), Packets.ENTITY_LOOK(playerToShow.getPlayer().getEntityId(), loc));
 			Packets.sendPacket(pInfoToShowTo.getPlayer(), Packets.ENTITY_HEAD_ROTATION(playerToShow.getPlayer().getEntityId(), loc));
 
-			if (pInfoToShow.getColor() != null) {
+			if (pInfoToShow.getColor() != null && arena.getGameState() != GameState.FINISHING) {
 				Packets.sendPacket(pInfoToShowTo.getPlayer(), Packets.PLAYER_ARMOR(pInfoToShow.getColor(), playerToShow.getPlayer().getEntityId()));
 			}
 		}
