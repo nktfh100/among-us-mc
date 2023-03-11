@@ -1048,7 +1048,6 @@ public class Arena {
 				public void run() {
 					for (Player p : Bukkit.getOnlinePlayers()) {
 						PlayerInfo pInfo = Main.getPlayersManager().getPlayerInfo(p);
-						Bukkit.getLogger().warning(String.valueOf(pInfo.getIsIngame()));
 						if (!pInfo.getIsIngame()) {
 							player.hidePlayer(Main.getPlugin(), p);
 							player.showPlayer(Main.getPlugin(), p);
