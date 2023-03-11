@@ -918,6 +918,7 @@ public class Arena {
 			for (Player p : Bukkit.getOnlinePlayers()) {
 				PlayerInfo pInfo1 = Main.getPlayersManager().getPlayerInfo(p);
 				//Packets.sendPacket(p, tabNamePacket);
+				Packets.sendPacket(player, Packets.UPDATE_DISPLAY_NAME(p.getUniqueId(), p.getName(), pInfo1.getOriginalPlayerListName()));
 				Packets.sendPacket(p, Packets.UPDATE_DISPLAY_NAME(player.getUniqueId(), player.getName(), pInfo.getOriginalPlayerListName()));
 				if (pInfo.getPlayer() != null) {
 					if (pInfo1.getFakePlayer() != null) {
