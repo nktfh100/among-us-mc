@@ -930,12 +930,14 @@ public class Arena {
 					if (pInfo.getFakePlayer() != null) {
 						pInfo.getFakePlayer().hidePlayerFrom(pInfo1.getPlayer(), true);
 					}
+
+					if (!endGame) {
+						pInfo1.updateScoreBoard();
+					}
+
 					if (pInfo != pInfo1) {
 						Packets.sendPacket(player, Packets.ADD_PLAYER(pInfo1.getPlayer().getUniqueId(), pInfo1.getPlayer().getName(), pInfo1.getOriginalPlayerListName(), pInfo1.getTextureValue(),
 								pInfo1.getTextureSignature()));
-					}
-					if (!endGame) {
-						pInfo1.updateScoreBoard();
 					}
 				}
 			}
@@ -1038,6 +1040,25 @@ public class Arena {
 			Main.getArenaManager().updateArenaSelectorInv();
 			this.updateScoreBoard();
 			this.updateSigns();
+		}
+
+		if (Main.getConfigManager().getHidePlayersOutSideArena()) {
+			new BukkitRunnable() {
+				@Override
+				public void run() {
+					for (Player p : Bukkit.getOnlinePlayers()) {
+						PlayerInfo pInfo = Main.getPlayersManager().getPlayerInfo(p);
+						Bukkit.getLogger().warning(String.valueOf(pInfo.getIsIngame()));
+						if (!pInfo.getIsIngame()) {
+							player.hidePlayer(Main.getPlugin(), p);
+							player.showPlayer(Main.getPlugin(), p);
+
+							p.hidePlayer(Main.getPlugin(), player);
+							p.showPlayer(Main.getPlugin(), player);
+						}
+					}
+				}
+			}.runTaskLater(Main.getPlugin(), 5L);
 		}
 	}
 
