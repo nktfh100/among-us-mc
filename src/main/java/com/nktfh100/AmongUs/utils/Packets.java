@@ -210,13 +210,9 @@ public class Packets {
 		if (player != null) {
 			watcher.setEntity(player);
 		}
-		watcher.setObject(17, serializer, (byte) (0x01)); // cape
-		watcher.setObject(17, serializer, (byte) (0x02)); // jacket
-		watcher.setObject(17, serializer, (byte) (0x04)); // left sleeve
-		watcher.setObject(17, serializer, (byte) (0x08)); // right sleeve
-		watcher.setObject(17, serializer, (byte) (0x10)); // left pants
-		watcher.setObject(17, serializer, (byte) (0x20)); // right pants
-		watcher.setObject(17, serializer, (byte) (0x40)); // hat
+
+		// To show all the skin overlay parts
+		watcher.setObject(17, serializer, (byte) (0x01 | 0x02 | 0x04 | 0x08 | 0x10 | 0x20 | 0x40));
 
 		if (isGhost) {
 			watcher.setObject(0, serializer, (byte) (0x20));
