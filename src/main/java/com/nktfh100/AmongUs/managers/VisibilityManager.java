@@ -201,32 +201,7 @@ public class VisibilityManager {
 			Packets.sendPacket(pInfoToShowTo.getPlayer(), spawnPacket);
 
 			// metadata packet
-			PacketContainer metadataPacket = new PacketContainer(PacketType.Play.Server.ENTITY_METADATA);
-			metadataPacket.getIntegers().write(0, pInfoToShow.getPlayer().getEntityId());
-			WrappedDataWatcher watcher = new WrappedDataWatcher();
-			Serializer serializer = Registry.get(Byte.class);
-			watcher.setEntity(pInfoToShow.getPlayer());
-
-			watcher.setObject(16, serializer, (byte) (0x01)); // cape
-			watcher.setObject(16, serializer, (byte) (0x02)); // jacket
-			watcher.setObject(16, serializer, (byte) (0x04)); // left sleeve
-			watcher.setObject(16, serializer, (byte) (0x08)); // right sleeve
-			watcher.setObject(16, serializer, (byte) (0x10)); // left pants
-			watcher.setObject(16, serializer, (byte) (0x20)); // right pants
-			watcher.setObject(16, serializer, (byte) (0x40)); // hat
-			if (pInfoToShow.isGhost()) {
-				watcher.setObject(0, serializer, (byte) (0x20));
-			}
-
-			// If <1.19.3 support is planned, make an if statement and this goes in versions under 1.19.3
-			// metadataPacket.getWatchableCollectionModifier().write(0, watcher.getWatchableObjects());
-			final List<WrappedDataValue> wrappedDataValueList = Lists.newArrayList();
-			watcher.getWatchableObjects().stream().filter(Objects::nonNull).forEach(entry -> {
-				final WrappedDataWatcher.WrappedDataWatcherObject dataWatcherObject = entry.getWatcherObject();
-				wrappedDataValueList.add(new WrappedDataValue(dataWatcherObject.getIndex(), dataWatcherObject.getSerializer(), entry.getRawValue()));
-			});
-			metadataPacket.getDataValueCollectionModifier().write(0, wrappedDataValueList);
-			Packets.sendPacket(pInfoToShowTo.getPlayer(), metadataPacket);
+			Packets.sendPacket(pInfoToShowTo.getPlayer(), Packets.METADATA_SKIN(pInfoToShow.getPlayer().getEntityId(), pInfoToShow.getPlayer(), pInfoToShow.isGhost()));
 
 			Packets.sendPacket(pInfoToShowTo.getPlayer(), Packets.ENTITY_LOOK(playerToShow.getPlayer().getEntityId(), loc));
 			Packets.sendPacket(pInfoToShowTo.getPlayer(), Packets.ENTITY_HEAD_ROTATION(playerToShow.getPlayer().getEntityId(), loc));

@@ -202,7 +202,7 @@ public class Packets {
 		return packet;
 	}
 
-	public static PacketContainer METADATA_SKIN(int entityId, Player player) {
+	public static PacketContainer METADATA_SKIN(int entityId, Player player, boolean isGhost) {
 		PacketContainer packet = new PacketContainer(PacketType.Play.Server.ENTITY_METADATA);
 		packet.getIntegers().write(0, entityId);
 		WrappedDataWatcher watcher = new WrappedDataWatcher();
@@ -210,14 +210,20 @@ public class Packets {
 		if (player != null) {
 			watcher.setEntity(player);
 		}
-		watcher.setObject(16, serializer, (byte) (0x01)); // cape
-		watcher.setObject(16, serializer, (byte) (0x02)); // jacket
-		watcher.setObject(16, serializer, (byte) (0x04)); // left sleeve
-		watcher.setObject(16, serializer, (byte) (0x08)); // right sleeve
-		watcher.setObject(16, serializer, (byte) (0x10)); // left pants
-		watcher.setObject(16, serializer, (byte) (0x20)); // right pants
-		watcher.setObject(16, serializer, (byte) (0x40)); // hat
+		watcher.setObject(17, serializer, (byte) (0x01)); // cape
+		watcher.setObject(17, serializer, (byte) (0x02)); // jacket
+		watcher.setObject(17, serializer, (byte) (0x04)); // left sleeve
+		watcher.setObject(17, serializer, (byte) (0x08)); // right sleeve
+		watcher.setObject(17, serializer, (byte) (0x10)); // left pants
+		watcher.setObject(17, serializer, (byte) (0x20)); // right pants
+		watcher.setObject(17, serializer, (byte) (0x40)); // hat
 
+		if (isGhost) {
+			watcher.setObject(0, serializer, (byte) (0x20));
+		}
+
+		// If <1.19.3 support is planned, make an if statement and this goes in versions under 1.19.3
+		// metadataPacket.getWatchableCollectionModifier().write(0, watcher.getWatchableObjects());
 		final List<WrappedDataValue> wrappedDataValueList = Lists.newArrayList();
 		watcher.getWatchableObjects().stream().filter(Objects::nonNull).forEach(entry -> {
 			final WrappedDataWatcher.WrappedDataWatcherObject dataWatcherObject = entry.getWatcherObject();
