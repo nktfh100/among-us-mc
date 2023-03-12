@@ -56,10 +56,10 @@ public class Main extends JavaPlugin {
 	public void onEnable() {
 		plugin = this;
 
-		if (getServer().getPluginManager().getPlugin("DecentHolograms") != null) {
-			isDecentHologram = true;
-		} else if (getServer().getPluginManager().getPlugin("HolographicDisplays") != null) {
+		if (getServer().getPluginManager().getPlugin("HolographicDisplays") != null) {
 			isHolographicDisplays = true;
+		} else if (getServer().getPluginManager().getPlugin("DecentHolograms") != null) {
+			isDecentHologram = true;
 		} else {
 			getLogger().log(Level.SEVERE, "You must have a holograms plugin installed. Please install the latest version of DecentHolograms or HolographicDisplays");
 			getServer().getPluginManager().disablePlugin(this);
@@ -160,10 +160,10 @@ public class Main extends JavaPlugin {
 	}
 
 	public static String getHologramsPlugin() {
-		if (isDecentHologram) {
-			return "DecentHolograms";
-		} else {
+		if (isHolographicDisplays) {
 			return "HolographicDisplays";
+		} else {
+			return "DecentHolograms";
 		}
 	}
 
