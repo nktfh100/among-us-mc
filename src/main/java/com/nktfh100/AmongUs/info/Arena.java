@@ -1042,7 +1042,7 @@ public class Arena {
 			this.updateSigns();
 		}
 
-		if (Main.getConfigManager().getHidePlayersOutSideArena()) {
+		if (Main.getConfigManager().getHidePlayersOutSideArena() && Main.getPlugin().isEnabled()) {
 			new BukkitRunnable() {
 				@Override
 				public void run() {
