@@ -2,6 +2,7 @@ package com.nktfh100.AmongUs.main;
 
 import java.util.logging.Level;
 
+import com.nktfh100.AmongUs.holograms.DecentHologramClickListeners;
 import com.nktfh100.AmongUs.listeners.*;
 import org.black_ixx.playerpoints.PlayerPoints;
 import org.black_ixx.playerpoints.PlayerPointsAPI;
@@ -34,7 +35,7 @@ import com.nktfh100.AmongUs.utils.Metrics;
 
 public class Main extends JavaPlugin {
 	private static Plugin plugin;
-
+	private static DecentHologramClickListeners dhClickListeners;
 	private static ConfigManager configManager;
 	private static PlayersManager playersManager;
 	private static ArenaManager arenaManager;
@@ -83,7 +84,7 @@ public class Main extends JavaPlugin {
 			Bukkit.getLogger().log(Level.WARNING, "The plugin 'PlayerPoints' is not preset, cosmetics will not work!");
 		}
 		cosmeticsManager = new CosmeticsManager();
-
+		dhClickListeners = new DecentHologramClickListeners();
 		configManager = new ConfigManager(plugin.getConfig());
 
 		configManager.loadConfig();
@@ -144,6 +145,7 @@ public class Main extends JavaPlugin {
 		getServer().getPluginManager().registerEvents(new com.nktfh100.AmongUs.events.ArmorStandManipulate(), this);
 		getServer().getPluginManager().registerEvents(new com.nktfh100.AmongUs.events.ServerPingEvent(), this);
 		getServer().getPluginManager().registerEvents(new com.nktfh100.AmongUs.events.PlayerEnterPortal(), this);
+		getServer().getPluginManager().registerEvents(new DecentHologramClickListeners(), this);
 
 		Bukkit.getLogger().info("[AmongUs] Plugin made by nktfh100");
 		Bukkit.getLogger().info("[AmongUs] Made with love in israel!");
@@ -157,6 +159,10 @@ public class Main extends JavaPlugin {
 		protocolManager.addPacketListener(new NamedSoundEffectListener(this, ListenerPriority.NORMAL));
 		protocolManager.addPacketListener(new NamedEntitySpawnListener(this, ListenerPriority.NORMAL));
 		protocolManager.addPacketListener(new EntityListeners(this, ListenerPriority.HIGHEST));
+	}
+
+	public static DecentHologramClickListeners getHologramListener() {
+		return dhClickListeners;
 	}
 
 	public static String getHologramsPlugin() {

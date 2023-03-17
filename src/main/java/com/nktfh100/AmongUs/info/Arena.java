@@ -1864,7 +1864,7 @@ public class Arena {
 
 		// loop all tasks
 		for (Task task : this.getAllTasks()) {
-			ImposterHologram created = ImposterHologram.createHologram(task.getLocation(), "taskHologram_" + task.getArena() + "_" + task.getId());
+			ImposterHologram created = ImposterHologram.createHologram(task.getLocation(), "taskHologram_" + task.getArena().getName() + "_" + task.getId());
 			for (String line : Main.getMessagesManager().getHologramLines("task", Main.getMessagesManager().getTaskName(task.getTaskType().toString()), task.getLocationName().getName())) {
 				createLine(created, line);
 			}
@@ -1883,7 +1883,7 @@ public class Arena {
 			String saboName = Main.getMessagesManager().getTaskName(saboAr.getType().toString());
 			String saboTitle = Main.getMessagesManager().getSabotageTitle(saboAr.getType());
 			for (SabotageTask saboTask : saboTasks) {
-				ImposterHologram created = ImposterHologram.createHologram(saboTask.getLocation(), "sabotage_" + saboTask.getArena().name + "_" + saboTask.getSabotageType().name() + "_" + saboTask.getId());
+				ImposterHologram created = ImposterHologram.createHologram(saboTask.getLocation(), "sabotage_" + saboTask.getArena().getName() + "_" + saboTask.getSabotageType().name() + "_" + saboTask.getId());
 				for (String line : Main.getMessagesManager().getHologramLines("sabotage", saboName, saboTitle)) {
 					createLine(created, line);
 				}
@@ -1895,7 +1895,7 @@ public class Arena {
 		}
 
 		// meeting button hologram
-		ImposterHologram createdBtn = ImposterHologram.createHologram(this.meetingButton, "meetingButton_" + this.meetingButton.getWorld());
+		ImposterHologram createdBtn = ImposterHologram.createHologram(this.meetingButton, "meetingButton_" + this.meetingButton.getWorld().getName());
 
 		HologramClickListener meetingBtnClickListener = new HologramClickListener() {
 			@Override
@@ -1936,7 +1936,7 @@ public class Arena {
 		// vents holograms
 		for (VentGroup vg : this.getVentsManager().getVentGroups()) {
 			for (Vent v : vg.getVents()) {
-				ImposterHologram created = ImposterHologram.createHologram(v.getLoc(), "vent_" + vg.getArena().name + "_" + vg.getConfigId() + "_" + Utils.getRandomString(3));
+				ImposterHologram created = ImposterHologram.createHologram(v.getLoc(), "vent_" + vg.getArena().getName() + "_" + vg.getConfigId() + "_" + Utils.getRandomString(3));
 				String locName = "";
 				if (v.getLocName() != null) {
 					v.getLocName().getName();
@@ -1988,7 +1988,7 @@ public class Arena {
 			for (Camera cam : this.camerasManager.getCameras()) {
 				cam.createArmorStand();
 			}
-			ImposterHologram created = ImposterHologram.createHologram(this.camerasLoc, "camerasHologram_" + this.camerasLoc.getWorld());
+			ImposterHologram created = ImposterHologram.createHologram(this.camerasLoc, "camerasHologram_" + this.camerasLoc.getWorld().getName());
 			HologramClickListener camerasHologramClickListener = new HologramClickListener() {
 				@Override
 				public void onClick(HologramLineClickEvent event) { }
@@ -2027,7 +2027,7 @@ public class Arena {
 		}
 
 		if (this.vitalsLoc != null) {
-			ImposterHologram created = ImposterHologram.createHologram(this.vitalsLoc, "vitalsHologram_" + this.vitalsLoc.getWorld());
+			ImposterHologram created = ImposterHologram.createHologram(this.vitalsLoc, "vitalsHologram_" + this.vitalsLoc.getWorld().getName());
 			HologramClickListener vitalsHologramClickListener = new HologramClickListener() {
 				@Override
 				public void onClick(HologramLineClickEvent event) {
