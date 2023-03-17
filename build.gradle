@@ -25,5 +25,5 @@ dependencies {
     compileOnly 'me.clip:placeholderapi:2.11.2'
     compileOnly 'com.mojang:authlib:2.1.28'
     compileOnly files('libs/VentureChat-3.5.0.jar')
-    compileOnly 'com.github.decentsoftware-eu:decentholograms:2.7.12'
+    compileOnly 'com.github.decentsoftware-eu:decentholograms:2.8.0'
 }
