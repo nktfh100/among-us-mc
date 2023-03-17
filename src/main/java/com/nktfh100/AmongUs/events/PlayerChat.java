@@ -49,18 +49,27 @@ public class PlayerChat implements Listener {
 			}
 			return;
 		}
-		ev.getRecipients().clear();
+
+		// Cancels the event so the message isn't sent  to players
+		ev.setCancelled(true);
+
+		// The message format to get from the messages.yml file depending on if the user is a ghost or not.
 		String key = "chat";
 		if (pInfo.isGhost() && arena.getGameState() != GameState.FINISHING) {
 			key = "ghostsChat";
 		}
 
-		String msg = Main.getMessagesManager().getGameMsg(key, arena, "%1\\$s", pInfo.getColor().getChatColor() + "", pInfo.getColor().getName(), "%2\\$s");
-		ev.setFormat(msg);
+		// Gets the message format from the messages.yaml file replacing the placeholders.
+		String msg = Main.getMessagesManager().getGameMsg(key, arena, pInfo.getPlayer().getDisplayName(), pInfo.getColor().getChatColor() + "", pInfo.getColor().getName(), ev.getMessage());
+
+		// If the game is finishing, send the message to everyone
 		if (arena.getGameState() == GameState.FINISHING) {
 			for (PlayerInfo pInfo1 : arena.getPlayersInfo()) {
-				ev.getRecipients().add(pInfo1.getPlayer());
+				pInfo1.getPlayer().sendMessage(msg);
 			}
+
+		// If the game is running (but players are in a meeting) and the player who sent the message is a ghost, only other
+		// ghosts will see the message. Otherwise, everybody will see the message.
 		} else {
 			for (PlayerInfo pInfo1 : arena.getPlayersInfo()) {
 				if (pInfo1 == null) {
@@ -68,12 +77,11 @@ public class PlayerChat implements Listener {
 				}
 				if (pInfo.isGhost() && pInfo1.isGhost()) {
 					// only ghosts chat
-					ev.getRecipients().add(pInfo1.getPlayer());
+					pInfo1.getPlayer().sendMessage(msg);
 				} else if (!pInfo.isGhost()) {
-					ev.getRecipients().add(pInfo1.getPlayer());
+					pInfo1.getPlayer().sendMessage(msg);
 				}
 			}
 		}
-		ev.setCancelled(false);
 	}
 }
