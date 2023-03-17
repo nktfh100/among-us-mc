@@ -9,6 +9,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.attribute.Attribute;
 import org.bukkit.boss.BarColor;
 import org.bukkit.boss.BarStyle;
 import org.bukkit.boss.BossBar;
@@ -104,7 +105,9 @@ public class PlayerInfo {
 	private long portalCooldown = System.currentTimeMillis();
 
 	private GameMode gameModeBefore = GameMode.SURVIVAL;
-	private Float expBefore = 0f;
+	private Float expBefore;
+	private int lvlBefore;
+	private double healthBefore;
 	private ItemStack[] inventoryBefore = null;
 	private ItemStack[] inventoryExtraBefore = null;
 	private ItemStack[] inventoryArmorBefore = null;
@@ -178,6 +181,8 @@ public class PlayerInfo {
 		if (Main.getConfigManager().getSaveInventory()) {
 			this.setGameModeBefore(player.getGameMode());
 			this.setExpBefore(player.getExp());
+			this.setLevelBefore(player.getLevel());
+			this.setHealthBefore(player.getHealth());
 			this.setInventoryBefore(player.getInventory().getStorageContents().clone());
 			this.setInventoryExtraBefore(player.getInventory().getExtraContents().clone());
 			this.setInventoryArmorBefore(player.getInventory().getArmorContents().clone());
@@ -713,9 +718,16 @@ public class PlayerInfo {
 		if (Main.getConfigManager().getSaveInventory()) {
 			this.player.setGameMode(this.gameModeBefore);
 			this.player.setExp(this.expBefore);
+			this.player.setLevel(this.lvlBefore);
+			this.player.setHealth(this.healthBefore);
 			this.player.getInventory().setContents(this.inventoryBefore);
 			this.player.getInventory().setExtraContents(this.inventoryExtraBefore);
 			this.player.getInventory().setArmorContents(this.inventoryArmorBefore);
+		} else {
+			this.player.setGameMode(GameMode.ADVENTURE);
+			this.player.setExp(0F);
+			this.player.setLevel(0);
+			this.player.setHealth(player.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue());
 		}
 	}
 
@@ -1145,6 +1157,22 @@ public class PlayerInfo {
 
 	public void setExpBefore(Float expBefore) {
 		this.expBefore = expBefore;
+	}
+
+	public int getLevelBefore () {
+		return lvlBefore;
+	}
+
+	public void setLevelBefore(int lvlBefore) {
+		this.lvlBefore = lvlBefore;
+	}
+
+	public double getHealthBefore () {
+		return healthBefore;
+	}
+
+	public void setHealthBefore(double healthBefore) {
+		this.healthBefore = healthBefore;
 	}
 
 	public RoleType getRole() {

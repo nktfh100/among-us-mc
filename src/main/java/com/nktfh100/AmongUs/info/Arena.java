@@ -870,17 +870,6 @@ public class Arena {
 			this.updatePlayersJoinedID();
 			this.bossBar.removePlayer(player);
 			this.sabotageManager.removePlayerFromBossBar(player);
-			player.setHealth(player.getMaxHealth());
-			if (!Main.getConfigManager().getSaveInventory()) {
-				player.setGameMode(GameMode.ADVENTURE);
-				player.setExp(0F);
-			}
-			player.getInventory().clear();
-			player.setLevel(0);
-			player.setFoodLevel(20);
-			player.setFlySpeed(0.2F);
-			player.setWalkSpeed(0.2f);
-			player.setAllowFlight(false);
 
 			this.colors_.add(pInfo.getColor());
 			Collections.sort(this.colors_);
