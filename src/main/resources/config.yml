@@ -71,6 +71,7 @@ blockedCommands:
    - /msg
    - /r
    - /whisper
+   - /tell
 
 asteroidsParticleColor: 255,0,0 # RGB
 asteroidsParticleMaterial: REDSTONE_BLOCK 
