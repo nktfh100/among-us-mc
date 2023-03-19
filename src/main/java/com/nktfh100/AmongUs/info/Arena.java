@@ -754,6 +754,8 @@ public class Arena {
 				}
 
 				if (!Main.getConfigManager().getBungeecord() && Main.getConfigManager().getHidePlayersOutSideArena()) {
+					PacketContainer packet_ = Packets.UPDATE_DISPLAY_NAME(pInfo.getPlayer().getUniqueId(), pInfo.getPlayer().getName(), pInfo.getCustomName());
+					Packets.sendPacket(player, packet_);
 					PacketContainer packet1 = Packets.REMOVE_PLAYER(pInfo.getPlayer().getUniqueId());
 					PacketContainer packet2 = Packets.ADD_PLAYER(pInfo.getPlayer().getUniqueId(), pInfo.getPlayer().getName(), pInfo.getCustomName(), pInfo.getTextureValue(),
 							pInfo.getTextureSignature());
