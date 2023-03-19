@@ -24,8 +24,7 @@ public class TaskAcceptDivertedPowerInv extends TaskInvHolder {
 	private Boolean isDone = false;
 
 	public TaskAcceptDivertedPowerInv(Arena arena, TaskPlayer taskPlayer) {
-		super(45, Main.getMessagesManager().getGameMsg("taskInvTitle", arena, Main.getMessagesManager().getTaskName(taskPlayer.getActiveTask().getTaskType().toString()),
-				taskPlayer.getActiveTask().getLocationName().getName()), arena, taskPlayer);
+		super(45, Main.getMessagesManager().getGameMsg("taskInvTitle", arena, Utils.getTaskPlaceholders(taskPlayer)), arena, taskPlayer);
 		Utils.fillInv(this.inv);
 
 		this.update();

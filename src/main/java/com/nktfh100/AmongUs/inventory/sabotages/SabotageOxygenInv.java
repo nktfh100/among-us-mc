@@ -2,6 +2,7 @@ package com.nktfh100.AmongUs.inventory.sabotages;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -22,12 +23,21 @@ public class SabotageOxygenInv extends SabotageInvHolder {
 	private Boolean canClick = true;
 
 	public SabotageOxygenInv(SabotageArena saboArena, Integer taskNum, ArrayList<Integer> code) {
-		super(54, Main.getMessagesManager().getGameMsg("sabotageOxygenInvTitle", saboArena.getArena(), Main.getMessagesManager().getTaskName(SabotageType.OXYGEN.toString()),
-				Main.getMessagesManager().getSabotageTitle(SabotageType.OXYGEN), codeToStr(code), ""), saboArena.getArena(), saboArena);
+
+		super(54, Main.getMessagesManager().getGameMsg("sabotageOxygenInvTitle", saboArena.getArena(), getPlaceholders(codeToStr(code), "")), saboArena.getArena(), saboArena);
 		Utils.fillInv(this.inv);
 		this.taskNum = taskNum;
 		this.code = code;
 		this.update();
+	}
+
+	private static HashMap<String, String> getPlaceholders(String codeToday, String userCode) {
+		HashMap<String, String> placeholders = new HashMap<>();
+		placeholders.put("%sabotage_name%", Main.getMessagesManager().getTaskName(SabotageType.OXYGEN.toString()));
+		placeholders.put("%sabotage_title%", Main.getMessagesManager().getSabotageTitle(SabotageType.OXYGEN));
+		placeholders.put("%code_today%", codeToday);
+		placeholders.put("%user_code%", userCode);
+		return placeholders;
 	}
 
 	private static String codeToStr(ArrayList<Integer> code_) {
@@ -46,8 +56,7 @@ public class SabotageOxygenInv extends SabotageInvHolder {
 			this.activeCode.add(num);
 			Main.getSoundsManager().playSound("sabotageOxygenNumberClick", p, p.getLocation());
 		}
-		this.changeTitle(Main.getMessagesManager().getGameMsg("sabotageOxygenInvTitle", this.arena, Main.getMessagesManager().getTaskName(SabotageType.OXYGEN.toString()),
-				Main.getMessagesManager().getSabotageTitle(SabotageType.OXYGEN), codeToStr(this.code), codeToStr(this.activeCode)));
+		this.changeTitle(Main.getMessagesManager().getGameMsg("sabotageOxygenInvTitle", this.arena, getPlaceholders(codeToStr(this.code), codeToStr(this.activeCode))));
 		Utils.fillInv(this.inv);
 		this.update();
 		p.openInventory(this.getInventory());
@@ -83,8 +92,7 @@ public class SabotageOxygenInv extends SabotageInvHolder {
 			}
 		}
 		this.activeCode.clear();
-		this.changeTitle(Main.getMessagesManager().getGameMsg("sabotageOxygenInvTitle", this.arena, Main.getMessagesManager().getTaskName(SabotageType.OXYGEN.toString()),
-				Main.getMessagesManager().getSabotageTitle(SabotageType.OXYGEN), codeToStr(this.code), codeToStr(this.activeCode)));
+		this.changeTitle(Main.getMessagesManager().getGameMsg("sabotageOxygenInvTitle", this.arena, getPlaceholders(codeToStr(this.code), codeToStr(this.activeCode))));
 		Utils.fillInv(this.inv);
 		this.update();
 		p.openInventory(this.getInventory());
@@ -96,8 +104,7 @@ public class SabotageOxygenInv extends SabotageInvHolder {
 		}
 		Main.getSoundsManager().playSound("sabotageOxygenCancelClick", p, p.getLocation());
 		this.activeCode.clear();
-		this.changeTitle(Main.getMessagesManager().getGameMsg("sabotageOxygenInvTitle", this.arena, Main.getMessagesManager().getTaskName(SabotageType.OXYGEN.toString()),
-				Main.getMessagesManager().getSabotageTitle(SabotageType.OXYGEN), codeToStr(this.code), codeToStr(this.activeCode)));
+		this.changeTitle(Main.getMessagesManager().getGameMsg("sabotageOxygenInvTitle", this.arena, getPlaceholders(codeToStr(this.code), codeToStr(this.activeCode))));
 		Utils.fillInv(this.inv);
 		this.update();
 		p.openInventory(this.getInventory());

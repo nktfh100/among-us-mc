@@ -3,11 +3,10 @@ package com.nktfh100.AmongUs.utils;
 import java.io.InputStreamReader;
 import java.lang.reflect.Field;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Random;
-import java.util.UUID;
+import java.util.*;
 
+import com.nktfh100.AmongUs.enums.SabotageType;
+import com.nktfh100.AmongUs.info.TaskPlayer;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -38,6 +37,20 @@ import net.md_5.bungee.api.chat.TextComponent;
 public class Utils {
 
 	final public static String ABC = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
+	public static HashMap<String, String> getTaskPlaceholders(TaskPlayer task) {
+		HashMap<String, String> placeholders = new HashMap<>();
+		placeholders.put("%task_name%", Main.getMessagesManager().getTaskName(task.getActiveTask().getTaskType().toString()));
+		placeholders.put("%task_location%", task.getActiveTask().getLocationName().getName());
+		return placeholders;
+	}
+
+	public static HashMap<String, String> getSabotagePlaceholders(SabotageType sabotage) {
+		HashMap<String, String> placeholders = new HashMap<>();
+		placeholders.put("%sabotage_name%", Main.getMessagesManager().getTaskName(sabotage.toString()));
+		placeholders.put("%sabotage_title%", Main.getMessagesManager().getSabotageTitle(sabotage));
+		return placeholders;
+	}
 
 	public static Material getStateBlock(GameState state) {
 		switch (state) {

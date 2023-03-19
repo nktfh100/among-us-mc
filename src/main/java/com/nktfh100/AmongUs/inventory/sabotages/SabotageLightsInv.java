@@ -24,8 +24,7 @@ public class SabotageLightsInv extends SabotageInvHolder {
 	private HashMap<Player, Boolean> canClick = new HashMap<Player, Boolean>();
 
 	public SabotageLightsInv(SabotageArena saboArena) {
-		super(27, Main.getMessagesManager().getGameMsg("sabotageLightsInvTitle", saboArena.getArena(), Main.getMessagesManager().getTaskName(SabotageType.LIGHTS.toString()),
-				Main.getMessagesManager().getSabotageTitle(SabotageType.LIGHTS)), saboArena.getArena(), saboArena);
+		super(27, Main.getMessagesManager().getGameMsg("sabotageLightsInvTitle", saboArena.getArena(), Utils.getSabotagePlaceholders(SabotageType.LIGHTS)), saboArena.getArena(), saboArena);
 		Utils.fillInv(this.inv);
 		this.lightsSwitches = Utils.generateLights();
 		this.update();

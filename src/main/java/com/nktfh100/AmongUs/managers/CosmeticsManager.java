@@ -81,7 +81,9 @@ public class CosmeticsManager {
 		if (Main.getIsPlayerPoints()) {
 			if (this.coins.get(key) != null && this.coins.get(key) != 0) {
 				Main.getPlayerPointsApi().give(player.getUniqueId(), this.coins.get(key));
-				player.sendMessage(Main.getMessagesManager().getGameMsg("playerCoins", null, "" + this.coins.get(key)));
+				HashMap<String, String> placeholders = new HashMap<>();
+				placeholders.put("%coins%", String.valueOf(this.coins.get(key)));
+				player.sendMessage(Main.getMessagesManager().getGameMsg("playerCoins", null, placeholders));
 			}
 		}
 	}

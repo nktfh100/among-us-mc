@@ -33,7 +33,7 @@ public class TaskWiringInv extends TaskInvHolder {
 	private String activeWire = "";
 
 	public TaskWiringInv(Arena arena, TaskPlayer taskPlayer) {
-		super(54, Main.getMessagesManager().getGameMsg("taskInvTitle", arena, Main.getMessagesManager().getTaskName(taskPlayer.getActiveTask().getTaskType().toString()), taskPlayer.getActiveTask().getLocationName().getName()), arena, taskPlayer);
+		super(54, Main.getMessagesManager().getGameMsg("taskInvTitle", arena, Utils.getTaskPlaceholders(taskPlayer)), arena, taskPlayer);
 		Utils.fillInv(this.inv);
 
 		TaskWiringInv inv = this;

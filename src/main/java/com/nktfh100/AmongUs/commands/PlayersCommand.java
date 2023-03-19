@@ -11,6 +11,8 @@ import com.nktfh100.AmongUs.info.PlayerInfo;
 import com.nktfh100.AmongUs.inventory.CosmeticSelectorInv;
 import com.nktfh100.AmongUs.main.Main;
 
+import java.util.HashMap;
+
 public class PlayersCommand implements CommandExecutor {
 
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
@@ -27,18 +29,20 @@ public class PlayersCommand implements CommandExecutor {
 			if (args[0].equalsIgnoreCase("join")) {
 				if (!pInfo.getIsIngame()) {
 					if (args.length > 1) {
+						HashMap<String, String> arenaPlaceholder = new HashMap<>();
+						arenaPlaceholder.put("%arena%", args[1]);
 						if (Main.getConfigManager().getBungeecord()) {
 							if (Main.getBungeArenaManager().getArenaByServer(args[1]) != null) {
 								Main.sendPlayerToArena(player, args[1]);
 							} else {
-								player.sendMessage(Main.getMessagesManager().getGameMsg("arenaNotFound", null, args[1]));
+								player.sendMessage(Main.getMessagesManager().getGameMsg("arenaNotFound", null, arenaPlaceholder));
 							}
 						} else {
 							if (Main.getArenaManager().getArenaByName(args[1]) != null) {
 								Arena arena = Main.getArenaManager().getArenaByName(args[1]);
 								arena.playerJoin(player);
 							} else {
-								player.sendMessage(Main.getMessagesManager().getGameMsg("arenaNotFound", null, args[1]));
+								player.sendMessage(Main.getMessagesManager().getGameMsg("arenaNotFound", null, arenaPlaceholder));
 							}
 						}
 					} else {
@@ -60,7 +64,9 @@ public class PlayersCommand implements CommandExecutor {
 						}
 					}
 				} else {
-					player.sendMessage(Main.getMessagesManager().getGameMsg("alreadyInGame", null, pInfo.getArena().getDisplayName()));
+					HashMap<String, String> placeholders = new HashMap<>();
+					placeholders.put("%arena%", pInfo.getArena().getDisplayName());
+					player.sendMessage(Main.getMessagesManager().getGameMsg("alreadyInGame", null, placeholders));
 				}
 			} else if (args[0].equalsIgnoreCase("joinrandom")) {
 				if (!pInfo.getIsIngame()) {
@@ -81,7 +87,9 @@ public class PlayersCommand implements CommandExecutor {
 						}
 					}
 				} else {
-					player.sendMessage(Main.getMessagesManager().getGameMsg("alreadyInGame", null, pInfo.getArena().getDisplayName()));
+					HashMap<String, String> placeholders = new HashMap<>();
+					placeholders.put("%arena%", pInfo.getArena().getDisplayName());
+					player.sendMessage(Main.getMessagesManager().getGameMsg("alreadyInGame", null, placeholders));
 				}
 			} else if (args.length >= 1) {
 				if (args[0].equalsIgnoreCase("leave") && pInfo.getIsIngame()) {
@@ -94,9 +102,7 @@ public class PlayersCommand implements CommandExecutor {
 					}
 				} else if (args[0].equalsIgnoreCase("cosmetics")) {
 					if(!pInfo.getIsIngame()) {
-						if(Main.getIsPlaceHolderAPI()) {
-							player.openInventory(new CosmeticSelectorInv(pInfo).getInventory());							
-						}
+						player.openInventory(new CosmeticSelectorInv(pInfo).getInventory());
 					}
 				}
 			}

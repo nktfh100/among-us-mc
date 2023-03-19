@@ -3,6 +3,7 @@ package com.nktfh100.AmongUs.managers;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 import java.util.logging.Level;
 
@@ -143,25 +144,17 @@ public class MessagesManager {
 		}
 	}
 
-	private String replaceExtra(String line, String extra, String extra1, String extra2, String extra3, String extra4) {
+	private String replaceExtra(String line, HashMap<String, String> placeholders) {
 		if (line == null) {
 			return "";
 		}
-		if (extra != null) {
-			line = line.replaceAll("%value%", extra);
+
+		if (placeholders != null) {
+			for (Map.Entry<String, String> placeholder : placeholders.entrySet()) {
+				line = line.replaceAll(placeholder.getKey(), placeholder.getValue());
+			}
 		}
-		if (extra1 != null) {
-			line = line.replaceAll("%value1%", extra1);
-		}
-		if (extra2 != null) {
-			line = line.replaceAll("%value2%", extra2);
-		}
-		if (extra3 != null) {
-			line = line.replaceAll("%value3%", extra3);
-		}
-		if (extra4 != null) {
-			line = line.replaceAll("%value4%", extra4);
-		}
+
 		return line;
 	}
 
@@ -191,7 +184,7 @@ public class MessagesManager {
 		return line;
 	}
 
-	public String getGameMsg(String key, Arena arena, String extra, String extra1, String extra2, String extra3, String extra4) {
+	public String getGameMsg(String key, Arena arena, HashMap<String, String> placeholders) {
 		if (this.msgsGame == null) {
 			return "";
 		}
@@ -203,22 +196,7 @@ public class MessagesManager {
 		if (arena != null) {
 			output = output.replaceAll("%arena%", arena.getDisplayName());
 		}
-		return replaceExtra(output, extra, extra1, extra2, extra3, extra4);
-	}
-
-	public String getGameMsg(String key, Arena arena, String extra, String extra1, String extra2, String extra3) {
-		String output = getGameMsg(key, arena, extra, extra1, extra2, extra3, null);
-		return output;
-	}
-
-	public String getGameMsg(String key, Arena arena, String extra) {
-		String output = getGameMsg(key, arena, extra, null, null, null, null);
-		return output;
-	}
-
-	public String getGameMsg(String key, Arena arena, String extra, String extra1) {
-		String output = getGameMsg(key, arena, extra, extra1, null, null, null);
-		return output;
+		return replaceExtra(output, placeholders);
 	}
 
 	public String getTaskName(String task) {
@@ -324,7 +302,7 @@ public class MessagesManager {
 		return (ArrayList<String>) out.clone();
 	}
 
-	public ArrayList<String> getHologramLines(String key, String value, String value1, String value2) {
+	public ArrayList<String> getHologramLines(String key, HashMap<String, String> placeholders) {
 		ArrayList<String> lines = this.holograms.get(key);
 		ArrayList<String> out = new ArrayList<String>();
 		if (lines == null) {
@@ -332,17 +310,9 @@ public class MessagesManager {
 			return out;
 		}
 		for (String line : lines) {
-			out.add(this.replaceExtra(line, value, value1, value2, null, null));
+			out.add(this.replaceExtra(line, placeholders));
 		}
 		return out;
-	}
-
-	public ArrayList<String> getHologramLines(String key, String value, String value1) {
-		return getHologramLines(key, value, value1, null);
-	}
-
-	public ArrayList<String> getHologramLines(String key, String value) {
-		return getHologramLines(key, value, null, null);
 	}
 
 	public ArrayList<String> getEstimatedTimes() {

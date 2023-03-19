@@ -2,8 +2,8 @@
 # %arena% Arena's display name
 # /n New line
 game:
-   # %value% Time before the game starts
-   gameStartingTime: '%prefix%&eGame starting in %value% seconds'
+   # %time% - Time before the game starts
+   gameStartingTime: '%prefix%&eGame starting in %time% seconds'
    gameStarting: '%prefix%&eGame starting now!'
    arenaFull: '%prefix%&cArena is full!'
    notEnoughPlayers: '%prefix%&cNot enough players!'
@@ -15,108 +15,122 @@ game:
    # Message at the start of the game
    gameStartImposters: ""
    gameStartCrewmates: ""
-   # %value% Player name
-   # %value1% Player's chat color
-   # %value2% Player's color name
-   # %value3% Arena players
-   # %value4% Arena maximum players
-   playerJoin: '%prefix%%value1%%value% &ejoined.'
-   playerLeave: '%prefix%%value1%%value% &eleft.'
-   # %value% Player name
-   # %value1% Player's chat color
-   # %value2% Player's color name
-   tabName: "%value1%%value2%&f %value%"
-   # %value3% The message
-   chat: '&6%value1%%value%: &f%value3%'
-   ghostsChat: '&6[Ghost] %value1%%value%: &f%value3%'
-   # %value% The imposters of the game
-   impostersWonMsg: '&4&lImposters won!/n%value%'
-   crewmatesWonMsg: '&4&lCrewmates won!/n%value%'
-   # %value% Voter Color
-   voteSymbol: '%value%█ '
-   # %value% - Player Name, %value1% - player color, %value2% - votes
-   playerLine: '%value1%&l%value%: %value2%'
-   # %value% Votes
-   skipVoteLine: '&f&lSkipped Voting: %value%'
-   # %value% - All Player Lines
-   votingResults: '&c&lVoting Results:/n%value%'
-   # %value% - Player, %value1% - Player color
-   playerVoted: "&a%value% has voted."
+   # %player_name% - The name of the player that joined.
+   # %player_color% - The color of the player that joined.
+   # %player_color_name% - The name of the color of the player that joined.
+   # %players% - Number of players in-game.
+   # %max_players% - Maximum players that can be in-game.
+   playerJoin: '%prefix%%player_color%%player_name% &ejoined.'
+   playerLeave: '%prefix%%player_color%%player_name% &eleft.'
+   # %player_name% - The name of the player that was voted.
+   # %player_color% - The color of the player that was voted.
+   # %player_color_name% - The name of the color of the player that was voted.
+   tabName: "%player_color%%player_color_name%&f %player_name%"
+   # %message% - The message
+   chat: '&6%player_color%%player_name%: &f%message%'
+   ghostsChat: '&6[Ghost] %player_color%%player_name%: &f%message%'
+   # %imposters% - The imposters of the game
+   impostersWonMsg: '&4&lImposters won!/n%imposters%'
+   crewmatesWonMsg: '&4&lCrewmates won!/n%imposters%'
+   # %voter_color% - The color of the vote.
+   voteSymbol: '%voter_color%█ '
+   # %voted_player_name% - The name of the player that was voted.
+   # %voted_player_color% - The color of the player that was voted.
+   # %voted_player_color_name% - The name of the color of the player that was voted.
+   # %votes% - The votes of the player that was voted.
+   playerLine: '%voted_player_color%&l%voted_player_name%: %votes%'
+   # %votes% - The votes to skip the voting.
+   skipVoteLine: '&f&lSkipped Voting: %votes%'
+   # %results% - All the votes.
+   votingResults: '&c&lVoting Results:/n%results%'
+   # %voter_name% - The name of the player who voted.
+   # %voter_color% - The color of the player who voted.
+   # %voter_color_name% - The name of the color of the player who voted.
+   playerVoted: "&a%voter_name% has voted."
    skipped: "Skipped"
    tie: "Tie"
    cantTalk: "&cYou can only talk on Meetings or being a Ghost!"
    
    # --- Titles Section ---
    # When game starts
-   # %value% Imposters count
-   # %value1% Imposters of the game
+   # %imposters_number% - The number of imposters.
+   # %imposters% - The players that are imposters.
    crewmateTitle: "&9&lCrewmate"
    crewmateTitleEngineer: "&9&lEngineer"
    crewmateTitleScientist: "&9&lScientist"
    crewmateTitleGuardianAngel: "&9&lGuardian Angel"
-   crewmateSubTitle: "&fThere are %value% imposters among us"
+   crewmateSubTitle: "&fThere are %imposters_number% imposters among us"
    imposterTitle: "&c&lImposter"
    imposterTitleShapeshifter: "&c&lShapeshifter"
-   imposterSubTitle: "%value1%"
+   imposterSubTitle: "%imposters%"
    # When there is only 1 imposter
    imposterTitle1: "&c&lImposter"
    imposterTitle1S1hapeshifter: "&c&lShapeshifter"
-   imposterSubTitle1: "%value1%"
+   imposterSubTitle1: "%imposters%"
    crewmateTitle1: "&9&lCrewmate"
    crewmateTitle1Engineer: "&9&lEngineer"
    crewmateTitle1Scientist: "&9&lScientist"
    crewmateTitle1GuardianAngel: "&9&lGuardian Angel"
-   crewmateSubTitle1: "&fThere is %value% imposter among us"
-   # %value% Sabotage name
+   crewmateSubTitle1: "&fThere is %imposters_number% imposter among us"
+   # %sabotage% - Sabotage name
    sabotageTitle: '&4Sabotage:'
-   sabotageSubTitle: '&4&l%value%'
-   # %value% The imposters of the game
+   sabotageSubTitle: '&4&l%sabotage%'
+   # %imposters% - The imposters of the game
    winTitle: '&9&lVictory'
-   winSubTitle: '&4%value%'
+   winSubTitle: '&4%imposters%'
    defeatTitle: '&4&lDefeat'
-   defeatSubTitle: '&4%value%'
-   # %value% - Player died name
-   # %value1% - Player died color
-   # %value2% - Player died color name
-   # %value3% - Called color
-   # %value4% - Called color name
-   bodyFoundTitle: "%value1%%value%"
+   defeatSubTitle: '&4%imposters%'
+   # %dead_player_name% - The name of the player who died.
+   # %dead_player_color% - The color of the player who died.
+   # %dead_player_color_name% - The name of the color of the player who died.
+   # %caller_name% - The name of the player that called the meeting / found the body.
+   # %caller_color% - The color of the player who called the meeting / found the body.
+   # %caller_color_name% - The name of the color of the player who called the meeting / found the body.
+   # %called_player_name% - The name of the player who was called.
+   # %called_player_color% - The color of the player who was called.
+   # %called_player_color_name% - The name of the color of the player who was called.
+   bodyFoundTitle: "%dead_player_color%%dead_player_name%"
    bodyFoundSubTitle: "&cDEAD BODY REPORTED"
-   # %value% - Caller name
-   # %value1% - Caller color
-   # %value2% - Caller color name
+   # If a meeting was called by pressing the button. Only %caller_name%, %caller_color% and %caller_color_name% work here.
    emergencyMeetingTitle: "&fEMERGENCY MEETING"
-   emergencyMeetingSubTitle: "%value1%%value%"
-   # %value% Cause (Skipped, Tie)
-   # %value1% Imposters remains
-   noOneEjectedTitle: "%value1% imposters remains."
-   noOneEjectedSubTitle: "No one was ejected. (%value%)"
+   emergencyMeetingSubTitle: "%caller_color%%caller_name%"
+   # %cause% - Why nobody was ejected (Skipped, Tie).
+   # %remaining_imposters% - The number of imposters left in the game.
+   noOneEjectedTitle: "%remaining_imposters% imposters remains."
+   noOneEjectedSubTitle: "No one was ejected. (%cause%)"
    # Confirm ejects off
    noOneEjectedTitle1: ""
-   noOneEjectedSubTitle1: "No one was ejected. (%value%)"
-   # %value% - Player name, %value1% - Player color, %value2% Imposters remaining
-   playerWasTheImposterTitle: "%value2% imposters remains."
-   playerWasTheImposterSubTitle: "%value% was the imposter."
-   playerWasNotTheImposterTitle: "%value2% imposters remains."
-   playerWasNotTheImposterSubTitle: "%value% was not the imposter."
+   noOneEjectedSubTitle1: "No one was ejected. (%cause%)"
+   # %ejected_player_name% - The name of the player that was ejected.
+   # %ejected_player_color% - The color of the player that was ejected.
+   # %ejected_player_color_name% - The name of color of the player that was ejected.
+   # %remaining_imposters% - The number of imposters left in the game.
+   playerWasTheImposterTitle: "%remaining_imposters% imposters remains."
+   playerWasTheImposterSubTitle: "%ejected_player_name% was the imposter."
+   playerWasNotTheImposterTitle: "%remaining_imposters% imposters remains."
+   playerWasNotTheImposterSubTitle: "%ejected_player_name% was not the imposter."
    # when there is more than 1 imposter
-   playerWasAnImposterTitle: "%value2% imposters remain."
-   playerWasAnImposterSubTitle: "%value% was an imposter."
-   playerWasNotAnImposterTitle: "%value2% imposters remain."
-   playerWasNotAnImposterSubTitle: "%value% was not an imposter."
+   playerWasAnImposterTitle: "%remaining_imposters% imposters remain."
+   playerWasAnImposterSubTitle: "%ejected_player_name% was an imposter."
+   playerWasNotAnImposterTitle: "%remaining_imposters% imposters remain."
+   playerWasNotAnImposterSubTitle: "%ejected_player_name% was not an imposter."
    # Confirm ejects off
    playerEjectedTitle: ""
-   playerEjectedSubTitle: "%value% was ejected."
-   # %value% killer name, %value1% killer color, %value2% killer color name eg (blue, red)
+   playerEjectedSubTitle: "%ejected_player_name% was ejected."
+   # %victim_name% - The name of the player who died.
+   # %victim_color% - The color of the player who died.
+   # %victim_color_name% - The name of the color of the player who died.
+   # %killer_name% - The name of the player who killed the other player.
+   # %killer_color% - The color of the player who killed the other player.
+   # %killer_color_name% - The name of the color of the player who killed the other player.
    playerDiedTitle: "&cYou died!"
-   playerDiedSubTitle: "&fKilled by: %value1%&l%value%"
-   # %value% victim name, %value1% victim color, %value2% victim color name
+   playerDiedSubTitle: "&fKilled by: %killer_color%&l%killer_color_name%"
    playerKilledTitle: ""
-   playerKilledSubTitle: "&fKilled: %value1%&l%value%"
+   playerKilledSubTitle: "&fKilled: %victim_color%&l%victim_name%"
    sabotageFixedTitle: "&aSabotage Fixed."
    sabotageFixedSubTitle: ""
-   # %value% Task name
-   # %value1% Task location name
+   # %name% - Task name
+   # %location% - Task location name
    finishTaskTitle: ''
    finishTaskSubTitle: '&fTask Completed!'
    # --- End ---
@@ -127,76 +141,80 @@ game:
    meetingButtonInvTitle: "&4&lEmergency Meeting"
    votingInvTitle: "&eWho is the imposter ?"
    votingInvTitle1: "&eVoting Results"
-   # %value% Task's name
-   # %value1% Task's location name
-   taskInvTitle: "&e%value1%: %value%"
-   # %value% Sabotage's name - found below 'tasks'
-   # %value1% Sabotage's title
-   sabotageLightsInvTitle: "&c%value%"
-   sabotageCommsInvTitle: "&c%value%"
-   # %value2% Today's code
-   # %value3% Code typed by player
-   sabotageOxygenInvTitle: "&c%value% (%value3%) (Today's code: %value2%)"
-   sabotageReactorsInvTitle: "&c%value%: Click To Stop Meltdown"
-   sabotageReactorsInvTitle1: "&c%value%: Waiting For Second User"
-   sabotageReactorsInvTitle2: "&c%value%: Reactor Normal"
+   # %task_name% - Task's name
+   # %task_location% - Task's location name
+   taskInvTitle: "&e%task_location%: %task_name%"
+   # %sabotage_name% - Sabotage's name - (tasks.<sabotage>.name)
+   # %sabotage_title% - Sabotage's title - (tasks.<sabotage>.title)
+   sabotageLightsInvTitle: "&c%sabotage_name%"
+   sabotageCommsInvTitle: "&c%sabotage_name%"
+   # %code_today% Today's code
+   # %user_code% Code typed by player
+   sabotageOxygenInvTitle: "&c%sabotage_name% (%user_code%) (Today's code: %code_today%)"
+   sabotageReactorsInvTitle: "&c%sabotage_name%: Click To Stop Meltdown"
+   sabotageReactorsInvTitle1: "&c%sabotage_name%: Waiting For Second User"
+   sabotageReactorsInvTitle2: "&c%sabotage_name%: Reactor Normal"
    vitalsInvTitle: "&eVitals"
    cosmeticsSelectorInvTitle: "&eSelect kill item cosmetic"
    # --- End ---
    
    # --- Action Bars ---
-   # %value% Players ingame
-   # %value1% Maximum players ingame
-   # %value2% Chance to get imposter 
-   lobbyActionBar: "&f&l%value%/%value1% players"
+   # %players% - Number of players in-game.
+   # %max_players% - Maximum players that can be in-game.
+   # %imposter_chance% - Chance to get imposter.
+   lobbyActionBar: "&f&l%players%/%max_players% players"
    # Action bar sent to all the imposters
-   # %value% All imposters
-   impostersActionBar: "&c&lImposters: %value%"
-   # %value% Seconds left
-   votingBeginsInActionBar: "&lVoting Begins In %value%s"
-   votingEndsInActionBar: "&lVoting Ends In %value%s" 
-   proceedingInActionBar: "&lProceeding In %value%s"
-   killCooldownActionBar: "&c&lKill Cooldown: %value%s"
-   # %value% Location name
-   ventActionBar: "&c&lVent: %value%"
-   cameraActionBar: "&c&lCamera: %value%"
+   # %imposters% - The players that are imposters
+   impostersActionBar: "&c&lImposters: %imposters%"
+   # %time% - Seconds left
+   votingBeginsInActionBar: "&lVoting Begins In %time%s"
+   votingEndsInActionBar: "&lVoting Ends In %time%s"
+   proceedingInActionBar: "&lProceeding In %time%s"
+   killCooldownActionBar: "&c&lKill Cooldown: %time%s"
+   # %location% Location name
+   ventActionBar: "&c&lVent: %location%"
+   cameraActionBar: "&c&lCamera: %location%"
    # When location name is none
    ventActionBar1: "&c&lVent"
    cameraActionBar1: "&c&lCamera"
    # --- End ---
    
    # --- Boss Bars ---   
-   # %value% Seconds left
-   killCooldownBossBar: "&c&lKill Cooldown: %value%s"
-   sabotageCooldownBossBar: "&c&lSabotage Cooldown: %value%s"
-   # %value% Sabotage title
-   # %value1% Sabotage name
-   sabotageBossBar: "&4&l%value%"
+   # %time% Seconds left
+   killCooldownBossBar: "&c&lKill Cooldown: %time%s"
+   sabotageCooldownBossBar: "&c&lSabotage Cooldown: %time%s"
+   # %title% - Sabotage title
+   # %name% - Sabotage name
+   sabotageBossBar: "&4&l%title%"
    # Sabotage with a timer
-   # %value% Sabotage title
-   # %value1% Sabotage name
-   # %value2% Seconds left
-   # %value3% - Extra "(0/2)" for oxygen / reactor
-   sabotageBossBarTimer: "&4&l%value%: %value2%s %value3%"
+   # %time% - Seconds left
+   # %sabotages_fixed% - Extra "(0/2)" for oxygen / reactor
+   sabotageBossBarTimer: "&4&l%title%: %time%s %sabotages_fixed%"
    # --- End ---
    
    votingBeginsInMsg: ""
-   votingEndsInMsg: "Voting Ends In %value%s" 
+   votingEndsInMsg: "Voting Ends In %time%s"
    proceedingInMsg: ""
-   # %value% killer name, %value1% killer color, %value2% killer color name eg (blue, red)
-   # Leave the msg empty if you dont want to send it
+
+   # %victim_name% - The name of the player who died.
+   # %victim_color% - The color of the player who died.
+   # %victim_color_name% - The name of the color of the player who died.
+   # %killer_name% - The name of the player who killed the other player.
+   # %killer_color% - The color of the player who killed the other player.
+   # %killer_color_name% - The name of the color of the player who killed the other player.
+   # Leave the message empty if you don't want to send it
    playerDiedMsg: "&cYou died!/n&cFinish your tasks to win."
    playerEjectedMsg: "&cYou were ejected!/n&cFinish your tasks to win."
    imposterEjectedMsg: "&cYou were ejected!/n&cYou can still sabotage."
    # Cosmetics stuff
-   # %value% The cosmetic name
-   # %value1% Player coins
-   selectedCosmetic: "%prefix%&aSelected %value%"
-   # %value2% Coins 
-   playerBoughtCosmetic: "%prefix%&aSuccessfully bought %value% for %value2% coins."
+   # %cosmetic_name% - The name of the cosmetic
+   # %player_coins% - Player coins
+   selectedCosmetic: "%prefix%&aSelected %cosmetic_name%"
+   # %cosmetic_price% - The price of the cosmetic
+   playerBoughtCosmetic: "%prefix%&aSuccessfully bought %cosmetic_name% for %cosmetic_price% coins."
    notEnoughCoins: "%prefix%&cYou dont have enough coins to do that!"
-   # %value% Coins the player got
-   playerCoins: "&a+%value% coins"
+   # %coins% - Coins the player has
+   playerCoins: "&a+%coins% coins"
    
 # For download / upload task
 # Updates every second
@@ -307,20 +325,20 @@ holograms:
       - "&cEmergency"
       - "&cMeeting"
       - "@REDSTONE_BLOCK@"
-   # %value% Task's name
-   # %value1% Task's location name
+   # %name% - Task's name
+   # %location% - Task's location name
    task:
-      - "&e%value1%:"
-      - "&e%value%"
+      - "&e%location%:"
+      - "&e%name%"
    cameras:
       - "&c-----"
       - "&cCameras"
       - "&c-----"
-   # %value% Sabotage name
-   # %value1% Sabotage title
+   # %sabotage_name% - The name of the sabotage (tasks.<sabotage>.name).
+   # %sabotage_title% - The title of the sabotage (tasks.<sabotage>.title).
    sabotage:
-      - "&c%value%"
-   # %value% Vent's location name (if it has one)
+      - "&c%sabotage_name%"
+   # %location% - Vent's location name (if it has one).
    vent: 
       - "&c-----"
       - "&cVent"
@@ -440,4 +458,3 @@ scoreboard:
       - '&4&lYou can still sabotage'
       - '%emptyline%'
       - '&awww.example.com'
-      

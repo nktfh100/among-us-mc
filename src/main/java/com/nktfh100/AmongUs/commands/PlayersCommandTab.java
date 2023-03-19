@@ -22,6 +22,7 @@ public class PlayersCommandTab implements TabCompleter {
 			COMMANDS.add("leave");
 			COMMANDS.add("arenas");
 			COMMANDS.add("joinrandom");
+			COMMANDS.add("cosmetics");
 			arg = 0;
 
 		} else if (args.length == 2) {

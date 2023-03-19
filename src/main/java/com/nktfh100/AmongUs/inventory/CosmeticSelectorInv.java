@@ -1,6 +1,7 @@
 package com.nktfh100.AmongUs.inventory;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
@@ -108,19 +109,24 @@ public class CosmeticSelectorInv extends CustomHolder {
 						if (isUnlocked_) {
 							pInfo.getStatsManager().selectCosmetic(CosmeticType.KILL_SWORD, cosmeticItem.getKey());
 							inv.update();
-							player.sendMessage(Main.getMessagesManager().getGameMsg("selectedCosmetic", null, cosmeticItem.getName(), "" + Main.getPlayerPointsApi().look(player.getUniqueId())));
+							HashMap<String, String> placeholders = new HashMap<>();
+							placeholders.put("%cosmetic_name%", cosmeticItem.getName());
+							placeholders.put("%player_coins%", String.valueOf(Main.getPlayerPointsApi().look(player.getUniqueId())));
+							player.sendMessage(Main.getMessagesManager().getGameMsg("selectedCosmetic", null, placeholders));
 						} else {
+							HashMap<String, String> placeholders = new HashMap<>();
+							placeholders.put("%cosmetic_name%", cosmeticItem.getName());
+							placeholders.put("%player_coins%", String.valueOf(Main.getPlayerPointsApi().look(player.getUniqueId()) - cosmeticItem.getPrice()));
+							placeholders.put("%cosmetic_price%", String.valueOf(cosmeticItem.getPrice()));
 							if (cosmeticItem.getPermission().isEmpty()) {
 								if (Main.getPlayerPointsApi().look(player.getUniqueId()) >= cosmeticItem.getPrice()) {
 									pInfo.getStatsManager().unlockCosmetic(CosmeticType.KILL_SWORD, cosmeticItem.getKey());
 									pInfo.getStatsManager().selectCosmetic(CosmeticType.KILL_SWORD, cosmeticItem.getKey());
 									Main.getPlayerPointsApi().take(player.getUniqueId(), cosmeticItem.getPrice());
 									inv.update();
-									player.sendMessage(Main.getMessagesManager().getGameMsg("playerBoughtCosmetic", null, cosmeticItem.getName(),
-											(Main.getPlayerPointsApi().look(player.getUniqueId()) - cosmeticItem.getPrice()) + "", cosmeticItem.getPrice() + "", null));
+									player.sendMessage(Main.getMessagesManager().getGameMsg("playerBoughtCosmetic", null, placeholders));
 								} else {
-									player.sendMessage(Main.getMessagesManager().getGameMsg("notEnoughCoins", null, cosmeticItem.getName(), "" + Main.getPlayerPointsApi().look(player.getUniqueId()),
-											cosmeticItem.getPrice() + "", null));
+									player.sendMessage(Main.getMessagesManager().getGameMsg("notEnoughCoins", null, placeholders));
 								}
 							} else if (player.hasPermission(cosmeticItem.getPermission())) {
 								if (cosmeticItem.getPrice() > 0) {
@@ -129,17 +135,18 @@ public class CosmeticSelectorInv extends CustomHolder {
 										pInfo.getStatsManager().selectCosmetic(CosmeticType.KILL_SWORD, cosmeticItem.getKey());
 										Main.getPlayerPointsApi().take(player.getUniqueId(), cosmeticItem.getPrice());
 										inv.update();
-										player.sendMessage(Main.getMessagesManager().getGameMsg("playerBoughtCosmetic", null, cosmeticItem.getName(),
-												(Main.getPlayerPointsApi().look(player.getUniqueId()) - cosmeticItem.getPrice()) + "", cosmeticItem.getPrice() + "", null));
+										player.sendMessage(Main.getMessagesManager().getGameMsg("playerBoughtCosmetic", null, placeholders));
 									} else {
-										player.sendMessage(Main.getMessagesManager().getGameMsg("notEnoughCoins", null, cosmeticItem.getName(),
-												"" + Main.getPlayerPointsApi().look(player.getUniqueId()), cosmeticItem.getPrice() + "", null));
+										player.sendMessage(Main.getMessagesManager().getGameMsg("notEnoughCoins", null, placeholders));
 									}
 								} else {
 									pInfo.getStatsManager().selectCosmetic(CosmeticType.KILL_SWORD, cosmeticItem.getKey());
 									inv.update();
+									HashMap<String, String> placeholders1 = new HashMap<>();
+									placeholders1.put("%cosmetic_name%", cosmeticItem.getName());
+									placeholders1.put("%player_coins%", String.valueOf(Main.getPlayerPointsApi().look(player.getUniqueId())));
 									player.sendMessage(
-											Main.getMessagesManager().getGameMsg("selectedCosmetic", null, cosmeticItem.getName(), "" + Main.getPlayerPointsApi().look(player.getUniqueId())));
+											Main.getMessagesManager().getGameMsg("selectedCosmetic", null, placeholders1));
 								}
 							}
 						}

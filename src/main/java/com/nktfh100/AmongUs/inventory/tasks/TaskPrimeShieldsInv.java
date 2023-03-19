@@ -34,8 +34,7 @@ public class TaskPrimeShieldsInv extends TaskInvHolder {
 	private Boolean isDone = false;
 
 	public TaskPrimeShieldsInv(Arena arena, TaskPlayer taskPlayer, ArrayList<Boolean> squares_) {
-		super(54, Main.getMessagesManager().getGameMsg("taskInvTitle", arena, Main.getMessagesManager().getTaskName(taskPlayer.getActiveTask().getTaskType().toString()),
-				taskPlayer.getActiveTask().getLocationName().getName()), arena, taskPlayer);
+		super(54, Main.getMessagesManager().getGameMsg("taskInvTitle", arena, Utils.getTaskPlaceholders(taskPlayer)), arena, taskPlayer);
 		Utils.fillInv(this.inv);
 
 		if (squares_ == null || squares_.size() == 0) {

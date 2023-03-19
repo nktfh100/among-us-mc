@@ -2,6 +2,7 @@ package com.nktfh100.AmongUs.managers;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Iterator;
 
 import com.nktfh100.AmongUs.holograms.ImposterHologram;
@@ -263,7 +264,9 @@ public class CamerasManager {
 		if (camera.getLocName() == null) {
 			return Main.getMessagesManager().getGameMsg("cameraActionBar1", arena, null);
 		} else {
-			return Main.getMessagesManager().getGameMsg("cameraActionBar", arena, camera.getLocName().getName());
+			HashMap<String, String> placeholders = new HashMap<>();
+			placeholders.put("%location%", camera.getLocName().getName());
+			return Main.getMessagesManager().getGameMsg("cameraActionBar", arena, placeholders);
 		}
 	}
 

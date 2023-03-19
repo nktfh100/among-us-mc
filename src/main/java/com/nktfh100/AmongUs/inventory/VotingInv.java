@@ -1,9 +1,6 @@
 package com.nktfh100.AmongUs.inventory;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Comparator;
+import java.util.*;
 
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -116,7 +113,9 @@ public class VotingInv extends CustomHolder {
 			StringBuilder votesLine = new StringBuilder();
 			for (PlayerInfo voterPInfo : votedForSkip) {
 				if (voterPInfo != null && voterPInfo.getColor() != null) {
-					votesLine.append(Main.getMessagesManager().getGameMsg("voteSymbol", arena, "" + voterPInfo.getColor().getChatColor()));
+					HashMap<String, String> placeholders = new HashMap<>();
+					placeholders.put("%voter_color%", voterPInfo.getColor().getChatColor() + "");
+					votesLine.append(Main.getMessagesManager().getGameMsg("voteSymbol", arena, placeholders));
 				}
 			}
 			votedSkipLine = votesLine.toString();
@@ -152,7 +151,9 @@ public class VotingInv extends CustomHolder {
 				StringBuilder votesLine = new StringBuilder();
 				for (PlayerInfo voterPInfo : votedForP) {
 					if (voterPInfo != null && voterPInfo.getColor() != null && arena != null) {
-						votesLine.append(Main.getMessagesManager().getGameMsg("voteSymbol", arena, "" + voterPInfo.getColor().getChatColor()));
+						HashMap<String, String> placeholders = new HashMap<>();
+						placeholders.put("%voter_color%", voterPInfo.getColor().getChatColor() + "");
+						votesLine.append(Main.getMessagesManager().getGameMsg("voteSymbol", arena, placeholders));
 					}
 				}
 				lore.add(votesLine.toString());

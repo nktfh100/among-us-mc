@@ -24,8 +24,7 @@ public class TaskUnlockManifoldsInv extends TaskInvHolder {
 	private Boolean isRed = false;
 
 	public TaskUnlockManifoldsInv(Arena arena, TaskPlayer taskPlayer, ArrayList<Integer> numbers_) {
-		super(36, Main.getMessagesManager().getGameMsg("taskInvTitle", arena, Main.getMessagesManager().getTaskName(taskPlayer.getActiveTask().getTaskType().toString()),
-				taskPlayer.getActiveTask().getLocationName().getName()), arena, taskPlayer);
+		super(36, Main.getMessagesManager().getGameMsg("taskInvTitle", arena, Utils.getTaskPlaceholders(taskPlayer)), arena, taskPlayer);
 		Utils.fillInv(this.inv);
 		if (numbers_ == null) {
 			this.numbers = generateNumbers();

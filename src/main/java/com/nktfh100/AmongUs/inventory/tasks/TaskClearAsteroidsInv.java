@@ -33,7 +33,7 @@ public class TaskClearAsteroidsInv extends TaskInvHolder {
 	private DustOptions dust = new DustOptions(Main.getConfigManager().getAsteroidsParticleColor(), 1.5F);
 
 	public TaskClearAsteroidsInv(Arena arena, TaskPlayer taskPlayer) {
-		super(54, Main.getMessagesManager().getGameMsg("taskInvTitle", arena, Main.getMessagesManager().getTaskName(taskPlayer.getActiveTask().getTaskType().toString()), taskPlayer.getActiveTask().getLocationName().getName()), arena, taskPlayer);
+		super(54, Main.getMessagesManager().getGameMsg("taskInvTitle", arena, Utils.getTaskPlaceholders(taskPlayer)), arena, taskPlayer);
 		Utils.fillInv(this.inv);
 		this.inv.setItem(8, Main.getItemsManager().getItem("clearAsteroids_info").getItem().getItem());
 		TaskClearAsteroidsInv inv = this;

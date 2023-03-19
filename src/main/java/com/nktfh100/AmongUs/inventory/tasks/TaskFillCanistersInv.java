@@ -30,7 +30,7 @@ public class TaskFillCanistersInv extends TaskInvHolder {
 	private BukkitTask runnable = null;
 
 	public TaskFillCanistersInv(Arena arena, TaskPlayer taskPlayer) {
-		super(45, Main.getMessagesManager().getGameMsg("taskInvTitle", arena, Main.getMessagesManager().getTaskName(taskPlayer.getActiveTask().getTaskType().toString()), taskPlayer.getActiveTask().getLocationName().getName()), arena, taskPlayer);
+		super(45, Main.getMessagesManager().getGameMsg("taskInvTitle", arena, Utils.getTaskPlaceholders(taskPlayer)), arena, taskPlayer);
 		Utils.fillInv(this.inv);
 
 		ItemStack item = Main.getItemsManager().getItem("fillCanisters_leftCanister").getItem().getItem();

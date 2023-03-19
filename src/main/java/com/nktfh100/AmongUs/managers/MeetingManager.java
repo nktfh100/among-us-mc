@@ -120,19 +120,28 @@ public class MeetingManager {
 			player.teleport(this.arena.getPlayerSpawns().get(si));
 			player.setAllowFlight(false);
 
+			HashMap<String, String> placeholders = new HashMap<>();
+			placeholders.put("%caller_name%", player.getName());
+			placeholders.put("%caller_color%", callerInfo.getColor().getChatColor() + "");
+			placeholders.put("%caller_color_name%", callerInfo.getColor().getName());
+
 			if (isBodyFound && db != null) {
+				placeholders.put("%dead_player_name%", db.getPlayer().getName());
+				placeholders.put("%dead_player_color%", db.getColor().getChatColor() + "");
+				placeholders.put("%dead_player_color_name%", db.getColor().getName());
+				placeholders.put("%called_player_name%", pInfo.getPlayer().getName());
+				placeholders.put("%called_player_color%", pInfo.getColor().getChatColor() + "");
+				placeholders.put("%called_player_color_name%", pInfo.getColor().getName());
 				player.sendTitle(
-						Main.getMessagesManager().getGameMsg("bodyFoundTitle", arena, db.getPlayer().getName(), db.getColor().getChatColor() + "", db.getColor().getName(),
-								pInfo.getColor().getChatColor() + "", pInfo.getColor().getName()),
-						Main.getMessagesManager().getGameMsg("bodyFoundSubTitle", arena, db.getPlayer().getName(), db.getColor().getChatColor() + "", db.getColor().getName(),
-								pInfo.getColor().getChatColor() + "", pInfo.getColor().getName()),
+						Main.getMessagesManager().getGameMsg("bodyFoundTitle", arena, placeholders),
+						Main.getMessagesManager().getGameMsg("bodyFoundSubTitle", arena, placeholders),
 						15, 80, 15);
 
 			} else {
 				player.sendTitle(
-						Main.getMessagesManager().getGameMsg("emergencyMeetingTitle", arena, caller.getName(), callerInfo.getColor().getChatColor() + "", callerInfo.getColor().getName(), null),
-						Main.getMessagesManager().getGameMsg("emergencyMeetingSubTitle", arena, caller.getName(), callerInfo.getColor().getChatColor() + "", callerInfo.getColor().getName(), null), 15,
-						80, 15);
+						Main.getMessagesManager().getGameMsg("emergencyMeetingTitle", arena, placeholders),
+						Main.getMessagesManager().getGameMsg("emergencyMeetingSubTitle", arena, placeholders),
+						15, 80, 15);
 			}
 
 			if (pInfo.getIsImposter()) {
@@ -255,10 +264,11 @@ public class MeetingManager {
 			if (highestPlayer == "skip") {
 				cause = "skipped";
 			}
-			title_ = Main.getMessagesManager().getGameMsg("noOneEjectedTitle" + (arena.getConfirmEjects() ? "" : "1"), arena, Main.getMessagesManager().getGameMsg(cause, arena, null),
-					"" + this.arena.getImpostersAlive().size());
-			subTitle_ = Main.getMessagesManager().getGameMsg("noOneEjectedSubTitle" + (arena.getConfirmEjects() ? "" : "1"), arena, Main.getMessagesManager().getGameMsg(cause, arena, null),
-					"" + this.arena.getImpostersAlive().size());
+			HashMap<String, String> placeholders = new HashMap<>();
+			placeholders.put("%cause%", Main.getMessagesManager().getGameMsg(cause, arena, null));
+			placeholders.put("%remaining_imposters%", String.valueOf(arena.getImpostersAlive().size()));
+			title_ = Main.getMessagesManager().getGameMsg("noOneEjectedTitle" + (arena.getConfirmEjects() ? "" : "1"), arena, placeholders);
+			subTitle_ = Main.getMessagesManager().getGameMsg("noOneEjectedSubTitle" + (arena.getConfirmEjects() ? "" : "1"), arena, placeholders);
 		} else {
 			if (highestPlayer != "skip") {
 				pInfoEject_ = Main.getPlayersManager().getPlayerByUUID(highestPlayer);
@@ -287,8 +297,13 @@ public class MeetingManager {
 					titleKey = "playerEjectedTitle";
 					subTitleKey = "playerEjectedSubTitle";
 				}
-				title_ = Main.getMessagesManager().getGameMsg(titleKey, arena, pInfoEject_.getPlayer().getName(), "" + pInfoEject_.getColor().getChatColor(), numImposters + "", null);
-				subTitle_ = Main.getMessagesManager().getGameMsg(subTitleKey, arena, pInfoEject_.getPlayer().getName(), "" + pInfoEject_.getColor().getChatColor(), numImposters + "", null);
+				HashMap<String, String> placeholders = new HashMap<>();
+				placeholders.put("%ejected_player_name%", pInfoEject_.getPlayer().getName());
+				placeholders.put("%ejected_player_color%", pInfoEject_.getColor().getChatColor() + "");
+				placeholders.put("%ejected_player_color_name%", pInfoEject_.getColor().getName());
+				placeholders.put("%remaining_imposters%", String.valueOf(numImposters));
+				title_ = Main.getMessagesManager().getGameMsg(titleKey, arena, placeholders);
+				subTitle_ = Main.getMessagesManager().getGameMsg(subTitleKey, arena, placeholders);
 			}
 		}
 
@@ -428,21 +443,35 @@ public class MeetingManager {
 			if (this.votes.get(uuid1).size() > 0) {
 				String symbols = "";
 				for (PlayerInfo voterInfo : this.votes.get(pInfo1.getPlayer().getUniqueId().toString())) {
-					String symbol_ = messagesManager.getGameMsg("voteSymbol", arena, voterInfo.getColor().getChatColor() + "");
+					HashMap<String, String> placeholders = new HashMap<>();
+					placeholders.put("%voter_color%", voterInfo.getColor().getChatColor() + "" );
+					String symbol_ = messagesManager.getGameMsg("voteSymbol", arena, placeholders);
 					symbols = symbols + symbol_;
 				}
-				String line_ = messagesManager.getGameMsg("playerLine", arena, pInfo1.getPlayer().getName(), pInfo1.getColor().getChatColor() + "", symbols, null);
+				HashMap<String, String> placeholders = new HashMap<>();
+				placeholders.put("%voted_player_name%", pInfo1.getPlayer().getName());
+				placeholders.put("%voted_player_color%", pInfo1.getColor().getChatColor() + "");
+				placeholders.put("%voted_player_color_name%", pInfo1.getColor().getName());
+				placeholders.put("%votes%", symbols);
+				String line_ = messagesManager.getGameMsg("playerLine", arena, placeholders);
 				outputB.append(line_ + "\n");
 			}
 		}
 
 		String symbols = "";
 		for (PlayerInfo voterInfo : this.skipVotes) {
-			String symbol_ = messagesManager.getGameMsg("voteSymbol", arena, voterInfo.getColor().getChatColor() + "");
+			HashMap<String, String> placeholders = new HashMap<>();
+			placeholders.put("%voter_color%", voterInfo.getColor().getChatColor() + "");
+			String symbol_ = messagesManager.getGameMsg("voteSymbol", arena, placeholders);
 			symbols = symbols + symbol_;
 		}
-		outputB.append(messagesManager.getGameMsg("skipVoteLine", arena, symbols));
-		return messagesManager.getGameMsg("votingResults", arena, outputB.toString());
+		HashMap<String, String> placeholders = new HashMap<>();
+		placeholders.put("%votes%", symbols);
+		outputB.append(messagesManager.getGameMsg("skipVoteLine", arena, placeholders));
+
+		HashMap<String, String> placeholders2 = new HashMap<>();
+		placeholders2.put("%results%", outputB.toString());
+		return messagesManager.getGameMsg("votingResults", arena, placeholders2);
 	}
 
 	public void updateInv() {
@@ -492,7 +521,11 @@ public class MeetingManager {
 				this.votes.get(voted.getPlayer().getUniqueId().toString()).add(voter);
 			}
 			this.playersVoted.add(voter.getPlayer());
-			this.arena.sendMessage(Main.getMessagesManager().getGameMsg("playerVoted", arena, voter.getPlayer().getName(), voter.getColor().getChatColor() + ""));
+			HashMap<String, String> placeholders = new HashMap<>();
+			placeholders.put("%voter_name%", voter.getPlayer().getName());
+			placeholders.put("%voter_color%", voter.getColor().getChatColor() + "");
+			placeholders.put("%voter_color_name%", voter.getColor().getName());
+			this.arena.sendMessage(Main.getMessagesManager().getGameMsg("playerVoted", arena, placeholders));
 			this.updateInv();
 			this.didEveryoneVote();
 			for (Player player : this.arena.getPlayers()) {
@@ -505,7 +538,11 @@ public class MeetingManager {
 		if (this.state == meetingState.VOTING && this.canVote(voter)) {
 			this.skipVotes.add(voter);
 			this.playersVoted.add(voter.getPlayer());
-			this.arena.sendMessage(Main.getMessagesManager().getGameMsg("playerVoted", arena, voter.getPlayer().getName(), voter.getColor().getChatColor() + ""));
+			HashMap<String, String> placeholders = new HashMap<>();
+			placeholders.put("%voter_name%", voter.getPlayer().getName());
+			placeholders.put("%voter_color%", voter.getColor().getChatColor() + "");
+			placeholders.put("%voter_color_name%", voter.getColor().getName());
+			this.arena.sendMessage(Main.getMessagesManager().getGameMsg("playerVoted", arena, placeholders));
 			this.updateInv();
 			this.didEveryoneVote();
 			for (Player player : this.arena.getPlayers()) {

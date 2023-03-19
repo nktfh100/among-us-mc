@@ -2,6 +2,7 @@ package com.nktfh100.AmongUs.managers;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 
 import com.nktfh100.AmongUs.holograms.ImposterHologram;
 import org.bukkit.Material;
@@ -156,7 +157,9 @@ public class VentsManager {
 		if (vent.getLocName() == null) {
 			return Main.getMessagesManager().getGameMsg("ventActionBar1", arena, null);
 		} else {
-			return Main.getMessagesManager().getGameMsg("ventActionBar", arena, vent.getLocName().getName());
+			HashMap<String, String> placeholders = new HashMap<>();
+			placeholders.put("%location%", vent.getLocName().getName());
+			return Main.getMessagesManager().getGameMsg("ventActionBar", arena, placeholders);
 		}
 	}
 

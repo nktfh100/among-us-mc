@@ -1,5 +1,6 @@
 package com.nktfh100.AmongUs.events;
 
+import java.util.HashMap;
 import java.util.Set;
 
 import org.bukkit.entity.Player;
@@ -60,7 +61,12 @@ public class PlayerChat implements Listener {
 		}
 
 		// Gets the message format from the messages.yaml file replacing the placeholders.
-		String msg = Main.getMessagesManager().getGameMsg(key, arena, pInfo.getPlayer().getDisplayName(), pInfo.getColor().getChatColor() + "", pInfo.getColor().getName(), ev.getMessage());
+		HashMap<String, String> placeholders = new HashMap<>();
+		placeholders.put("%player_name%", pInfo.getPlayer().getDisplayName());
+		placeholders.put("%player_color%", pInfo.getColor().getChatColor() + "");
+		placeholders.put("%player_color_name%", pInfo.getColor().getName());
+		placeholders.put("%message%", ev.getMessage());
+		String msg = Main.getMessagesManager().getGameMsg(key, arena, placeholders);
 
 		// If the game is finishing, send the message to everyone
 		if (arena.getGameState() == GameState.FINISHING) {

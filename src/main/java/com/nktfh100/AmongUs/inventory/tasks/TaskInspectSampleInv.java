@@ -24,8 +24,7 @@ public class TaskInspectSampleInv extends TaskInvHolder {
 	private BukkitTask runnable = null;
 
 	public TaskInspectSampleInv(Arena arena, TaskPlayer taskPlayer) {
-		super(36, Main.getMessagesManager().getGameMsg("taskInvTitle", arena, Main.getMessagesManager().getTaskName(taskPlayer.getActiveTask().getTaskType().toString()),
-				taskPlayer.getActiveTask().getLocationName().getName()), arena, taskPlayer);
+		super(36, Main.getMessagesManager().getGameMsg("taskInvTitle", arena, Utils.getTaskPlaceholders(taskPlayer)), arena, taskPlayer);
 		Utils.fillInv(this.inv);
 		TaskInspectSampleInv inv = this;
 		this.runnable = new BukkitRunnable() {

@@ -1,6 +1,7 @@
 package com.nktfh100.AmongUs.info;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.bukkit.ChatColor;
 
@@ -92,9 +93,11 @@ public class TaskPlayer {
 			return;
 		}
 		this.getActiveTask().getHolo().hideTo(this.pInfo.getPlayer());
-		String name_ = Main.getMessagesManager().getTaskName(this.getActiveTask().getTaskType().toString());
-		this.pInfo.getPlayer().sendTitle(Main.getMessagesManager().getGameMsg("finishTaskTitle", this.pInfo.getArena(), name_, this.getActiveTask().getLocationName().getName()),
-				Main.getMessagesManager().getGameMsg("finishTaskSubTitle", this.pInfo.getArena(), name_, this.getActiveTask().getLocationName().getName()), 15, 40, 20);
+		HashMap<String, String> placeholders = new HashMap<>();
+		placeholders.put("%name%", Main.getMessagesManager().getTaskName(this.getActiveTask().getTaskType().toString()));
+		placeholders.put("%location%", this.getActiveTask().getLocationName().getName());
+		this.pInfo.getPlayer().sendTitle(Main.getMessagesManager().getGameMsg("finishTaskTitle", this.pInfo.getArena(), placeholders),
+				Main.getMessagesManager().getGameMsg("finishTaskSubTitle", this.pInfo.getArena(), placeholders), 15, 40, 20);
 		this.state++;
 		this.pInfo.updateScoreBoard();
 		Main.getSoundsManager().playSound("taskCompleted", this.pInfo.getPlayer(), this.pInfo.getPlayer().getLocation());
