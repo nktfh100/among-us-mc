@@ -757,7 +757,7 @@ public class Arena {
 					PacketContainer packet1 = Packets.REMOVE_PLAYER(pInfo.getPlayer().getUniqueId());
 					PacketContainer packet2 = Packets.ADD_PLAYER(pInfo.getPlayer().getUniqueId(), pInfo.getPlayer().getName(), pInfo.getCustomName(), pInfo.getTextureValue(),
 							pInfo.getTextureSignature());
-					for (PlayerInfo pInfo_ : Main.getPlayersManager().getPlayers()) {
+					for (PlayerInfo pInfo_ : Main.getPlayersManager().getPlayers().values()) {
 						if (pInfo != pInfo_) {
 							if (!pInfo_.getIsIngame()) {
 								PacketContainer packet = Packets.REMOVE_PLAYER(pInfo_.getPlayer().getUniqueId());
@@ -984,7 +984,7 @@ public class Arena {
 			}
 
 			if (!Main.getConfigManager().getBungeecord() && Main.getConfigManager().getHidePlayersOutSideArena()) {
-				for (PlayerInfo pInfo_ : Main.getPlayersManager().getPlayers()) {
+				for (PlayerInfo pInfo_ : Main.getPlayersManager().getPlayers().values()) {
 					if (!pInfo_.getIsIngame()) {
 						PacketContainer packet = Packets.ADD_PLAYER(pInfo_.getPlayer().getUniqueId(), pInfo_.getPlayer().getName(), pInfo_.getCustomName(), pInfo_.getTextureValue(),
 								pInfo_.getTextureSignature());
@@ -1594,7 +1594,7 @@ public class Arena {
 		if ((!Main.getConfigManager().getBungeecord() && !isReload) || (Main.getConfigManager().getGameEndSendToLobby() && !isReload)) {
 			for (Player player : players_) {
 				if (!player.isOnline()) {
-					Main.getPlayersManager().deletePlayer(player.getUniqueId().toString());
+					Main.getPlayersManager().deletePlayer(player);
 					continue;
 				}
 				PlayerInfo pInfo = Main.getPlayersManager().getPlayerInfo(player);
@@ -1626,7 +1626,7 @@ public class Arena {
 
 		for (Player p : this._playersToDelete) {
 			if (!p.isOnline()) {
-				Main.getPlayersManager().deletePlayer(p.getUniqueId().toString());
+				Main.getPlayersManager().deletePlayer(p);
 			}
 		}
 		this._playersToDelete.clear();

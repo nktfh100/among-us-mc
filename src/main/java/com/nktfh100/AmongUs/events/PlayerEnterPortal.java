@@ -24,7 +24,7 @@ public class PlayerEnterPortal implements Listener {
 			final Player player = (Player) ev.getEntity();
 			PlayerInfo pInfo = Main.getPlayersManager().getPlayerInfo(player);
 			if (pInfo == null) {
-				pInfo = Main.getPlayersManager()._addPlayer(player);
+				pInfo = Main.getPlayersManager().addPlayer(player);
 			}
 			if (pInfo.getIsIngame()) {
 				return;

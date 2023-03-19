@@ -23,7 +23,7 @@ public class PlayersCommand implements CommandExecutor {
 				return false;
 			}
 			if (pInfo == null) {
-				pInfo = Main.getPlayersManager()._addPlayer(player);
+				pInfo = Main.getPlayersManager().addPlayer(player);
 			}
 
 			if (args[0].equalsIgnoreCase("join")) {

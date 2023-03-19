@@ -2,6 +2,7 @@ package com.nktfh100.AmongUs.main;
 
 import java.util.logging.Level;
 
+import com.nktfh100.AmongUs.events.*;
 import com.nktfh100.AmongUs.holograms.DecentHologramClickListeners;
 import com.nktfh100.AmongUs.listeners.*;
 import org.black_ixx.playerpoints.PlayerPoints;
@@ -20,7 +21,6 @@ import com.nktfh100.AmongUs.commands.AdminCommand;
 import com.nktfh100.AmongUs.commands.AdminCommandTab;
 import com.nktfh100.AmongUs.commands.PlayersCommand;
 import com.nktfh100.AmongUs.commands.PlayersCommandTab;
-import com.nktfh100.AmongUs.events.VentureChatEvent_;
 import com.nktfh100.AmongUs.info.Arena;
 import com.nktfh100.AmongUs.info.Camera;
 import com.nktfh100.AmongUs.managers.ArenaManager;
@@ -60,6 +60,7 @@ public class Main extends JavaPlugin {
 		if (getServer().getPluginManager().getPlugin("HolographicDisplays") != null) {
 			isHolographicDisplays = true;
 		} else if (getServer().getPluginManager().getPlugin("DecentHolograms") != null) {
+			getServer().getPluginManager().registerEvents(new DecentHologramClickListeners(), this);
 			isDecentHologram = true;
 		} else {
 			getLogger().log(Level.SEVERE, "You must have a holograms plugin installed. Please install the latest version of DecentHolograms or HolographicDisplays");
@@ -125,27 +126,29 @@ public class Main extends JavaPlugin {
 
 		this.getCommand("au").setExecutor(new PlayersCommand());
 		this.getCommand("au").setTabCompleter(new PlayersCommandTab());
-		getServer().getPluginManager().registerEvents(playersManager, this);
-		getServer().getPluginManager().registerEvents(new com.nktfh100.AmongUs.events.PlayerDamage(), this);
-		getServer().getPluginManager().registerEvents(new com.nktfh100.AmongUs.events.BlockBreak(), this);
-		getServer().getPluginManager().registerEvents(new com.nktfh100.AmongUs.events.BlockPlace(), this);
-		getServer().getPluginManager().registerEvents(new com.nktfh100.AmongUs.events.HungerChange(), this);
-		getServer().getPluginManager().registerEvents(new com.nktfh100.AmongUs.events.PlayerDrop(), this);
-		getServer().getPluginManager().registerEvents(new com.nktfh100.AmongUs.events.PlayerRightClick(), this);
-		getServer().getPluginManager().registerEvents(new com.nktfh100.AmongUs.events.PlayerChat(), this);
-		getServer().getPluginManager().registerEvents(new com.nktfh100.AmongUs.events.InvClick(), this);
-		getServer().getPluginManager().registerEvents(new com.nktfh100.AmongUs.events.PlayerPickUp(), this);
-		getServer().getPluginManager().registerEvents(new com.nktfh100.AmongUs.events.PlayerSwapHand(), this);
-		getServer().getPluginManager().registerEvents(new com.nktfh100.AmongUs.events.SignChange(), this);
-		getServer().getPluginManager().registerEvents(new com.nktfh100.AmongUs.events.InvClose(), this);
-		getServer().getPluginManager().registerEvents(new com.nktfh100.AmongUs.events.PlayerMove(), this);
-		getServer().getPluginManager().registerEvents(new com.nktfh100.AmongUs.events.EntityInteract(), this);
-		getServer().getPluginManager().registerEvents(new com.nktfh100.AmongUs.events.PlayerSneak(), this);
-		getServer().getPluginManager().registerEvents(new com.nktfh100.AmongUs.events.PlayerCommand(), this);
-		getServer().getPluginManager().registerEvents(new com.nktfh100.AmongUs.events.ArmorStandManipulate(), this);
-		getServer().getPluginManager().registerEvents(new com.nktfh100.AmongUs.events.ServerPingEvent(), this);
-		getServer().getPluginManager().registerEvents(new com.nktfh100.AmongUs.events.PlayerEnterPortal(), this);
-		getServer().getPluginManager().registerEvents(new DecentHologramClickListeners(), this);
+
+		getServer().getPluginManager().registerEvents(new PlayerJoin(), this);
+		getServer().getPluginManager().registerEvents(new PlayerQuit(), this);
+		getServer().getPluginManager().registerEvents(new PlayerLogin(), this);
+		getServer().getPluginManager().registerEvents(new PlayerDamage(), this);
+		getServer().getPluginManager().registerEvents(new BlockBreak(), this);
+		getServer().getPluginManager().registerEvents(new BlockPlace(), this);
+		getServer().getPluginManager().registerEvents(new HungerChange(), this);
+		getServer().getPluginManager().registerEvents(new PlayerDrop(), this);
+		getServer().getPluginManager().registerEvents(new PlayerRightClick(), this);
+		getServer().getPluginManager().registerEvents(new PlayerChat(), this);
+		getServer().getPluginManager().registerEvents(new InvClick(), this);
+		getServer().getPluginManager().registerEvents(new PlayerPickUp(), this);
+		getServer().getPluginManager().registerEvents(new PlayerSwapHand(), this);
+		getServer().getPluginManager().registerEvents(new SignChange(), this);
+		getServer().getPluginManager().registerEvents(new InvClose(), this);
+		getServer().getPluginManager().registerEvents(new PlayerMove(), this);
+		getServer().getPluginManager().registerEvents(new EntityInteract(), this);
+		getServer().getPluginManager().registerEvents(new PlayerSneak(), this);
+		getServer().getPluginManager().registerEvents(new PlayerCommand(), this);
+		getServer().getPluginManager().registerEvents(new ArmorStandManipulate(), this);
+		getServer().getPluginManager().registerEvents(new ServerPingEvent(), this);
+		getServer().getPluginManager().registerEvents(new PlayerEnterPortal(), this);
 
 		Bukkit.getLogger().info("[AmongUs] Plugin made by nktfh100");
 		Bukkit.getLogger().info("[AmongUs] Made with love in israel!");
