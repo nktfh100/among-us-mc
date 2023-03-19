@@ -37,6 +37,12 @@ public class PlayerRightClick implements Listener {
 							for (JoinSign joinSign : arena.getJoinSigns()) {
 								if (joinSign.getBlock().equals(block)) {
 									if (!arena.isPlayerInArena(player)) {
+										if (Main.getConfigManager().getBungeecord()) {
+											Main.sendPlayerToArena(player, arena.getName());
+										} else {
+											arena.playerJoin(player);
+										}
+
 										arena.playerJoin(player);
 										return;
 									}
