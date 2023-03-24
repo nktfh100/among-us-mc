@@ -65,6 +65,7 @@ public class Main extends JavaPlugin {
 		} else {
 			getLogger().log(Level.SEVERE, "You must have a holograms plugin installed. Please install the latest version of DecentHolograms or HolographicDisplays");
 			getServer().getPluginManager().disablePlugin(this);
+			return;
 		}
 
 		new Metrics(this, 12109);
