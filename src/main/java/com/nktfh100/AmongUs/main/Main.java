@@ -2,6 +2,8 @@ package com.nktfh100.AmongUs.main;
 
 import java.util.logging.Level;
 
+import com.nktfh100.AmongUs.enums.GameEndReasons;
+import com.nktfh100.AmongUs.enums.GameEndWinners;
 import com.nktfh100.AmongUs.events.*;
 import com.nktfh100.AmongUs.holograms.DecentHologramClickListeners;
 import com.nktfh100.AmongUs.listeners.*;
@@ -204,7 +206,6 @@ public class Main extends JavaPlugin {
 	public static void reloadConfigs() {
 		for (Arena arena : arenaManager.getAllArenas()) {
 			arena.deleteHolograms();
-			arena.endGame(false);
 			for (Camera cam : arena.getCamerasManager().getCameras()) {
 				cam.deleteArmorStands();
 			}
@@ -223,7 +224,7 @@ public class Main extends JavaPlugin {
 		if (arenaManager != null) {
 			for (Arena arena : arenaManager.getAllArenas()) {
 				arena.deleteHolograms();
-				arena.endGame(true);
+				arena.endGame(true, GameEndReasons.DISABLE, GameEndWinners.NOBODY);
 				arena.delete();
 			}
 		}

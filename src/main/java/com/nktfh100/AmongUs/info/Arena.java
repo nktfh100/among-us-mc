@@ -13,6 +13,8 @@ import java.util.List;
 import java.util.Stack;
 import java.util.logging.Level;
 
+import com.nktfh100.AmongUs.api.events.*;
+import com.nktfh100.AmongUs.enums.*;
 import com.nktfh100.AmongUs.holograms.HologramClickListener;
 import com.nktfh100.AmongUs.holograms.ImposterHologram;
 import eu.decentsoftware.holograms.event.HologramClickEvent;
@@ -50,18 +52,6 @@ import org.bukkit.util.Vector;
 
 import com.comphenix.protocol.PacketType;
 import com.comphenix.protocol.events.PacketContainer;
-import com.nktfh100.AmongUs.api.events.AUArenaGameStateChange;
-import com.nktfh100.AmongUs.api.events.AUArenaPlayerDeath;
-import com.nktfh100.AmongUs.api.events.AUArenaPlayerJoin;
-import com.nktfh100.AmongUs.api.events.AUArenaPlayerLeave;
-import com.nktfh100.AmongUs.api.events.AUArenaStart;
-import com.nktfh100.AmongUs.enums.GameState;
-import com.nktfh100.AmongUs.enums.RoleType;
-import com.nktfh100.AmongUs.enums.SabotageLength;
-import com.nktfh100.AmongUs.enums.SabotageType;
-import com.nktfh100.AmongUs.enums.StatInt;
-import com.nktfh100.AmongUs.enums.TaskLength;
-import com.nktfh100.AmongUs.enums.TaskType;
 import com.nktfh100.AmongUs.inventory.ColorSelectorInv;
 import com.nktfh100.AmongUs.inventory.MeetingBtnInv;
 import com.nktfh100.AmongUs.inventory.tasks.TaskInvHolder;
@@ -1534,7 +1524,10 @@ public class Arena {
 		}
 	}
 
-	public void endGame(Boolean isReload) {
+	public void endGame(Boolean isReload, GameEndReasons reason, GameEndWinners winners) {
+		AUArenaEnd ev = new AUArenaEnd(this, reason, winners);
+		Bukkit.getPluginManager().callEvent(ev);
+
 		Arena arena = this;
 		if (this.gameState == GameState.STARTING && gameTimerRunnable != null) {
 			gameTimerRunnable.cancel();
@@ -1666,6 +1659,7 @@ public class Arena {
 	// isImposters - who won
 	public void gameWin(Boolean isImposters) {
 		this.setGameState(GameState.FINISHING);
+
 		if (Main.getConfigManager().getBungeecord() && !Main.getConfigManager().getBungeecordIsLobby()) {
 			Main.getArenaManager().sendBungeUpdate(this);
 		}
@@ -1785,7 +1779,14 @@ public class Arena {
 					if (Main.getConfigManager().getBungeecord() && !Main.getConfigManager().getBungeecordIsLobby()) {
 						Main.getArenaManager().sendBungeUpdate(arena.getName(), GameState.WAITING, 0, 10);
 					}
-					arena.endGame(false);
+
+					GameEndWinners winners;
+					if (isImposters) {
+						winners = GameEndWinners.IMPOSTERS;
+					} else {
+						winners = GameEndWinners.CREWMATES;
+					}
+					arena.endGame(false, GameEndReasons.PLAYERS_WIN, winners);
 				}
 			}
 		}.runTaskLater(Main.getPlugin(), 20L * 10L);
@@ -2220,7 +2221,7 @@ public class Arena {
 	}
 
 	public void delete() {
-		this.endGame(true);
+		this.endGame(true, GameEndReasons.RELOAD, GameEndWinners.NOBODY);
 		this.playersSpawns = null;
 		this.ingamePlayers = null;
 		this.gameImposters = null;

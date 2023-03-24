@@ -12,6 +12,7 @@ import java.util.Set;
 import java.util.StringJoiner;
 import java.util.logging.Level;
 
+import com.nktfh100.AmongUs.enums.*;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -25,10 +26,6 @@ import org.bukkit.map.MapView.Scale;
 
 import com.comphenix.protocol.wrappers.WrappedBlockData;
 import com.google.common.collect.Iterables;
-import com.nktfh100.AmongUs.enums.GameState;
-import com.nktfh100.AmongUs.enums.SabotageLength;
-import com.nktfh100.AmongUs.enums.SabotageType;
-import com.nktfh100.AmongUs.enums.TaskType;
 import com.nktfh100.AmongUs.info.Arena;
 import com.nktfh100.AmongUs.info.Camera;
 import com.nktfh100.AmongUs.info.Door;
@@ -191,7 +188,6 @@ public class ArenaManager {
 
 	public void loadArenas() {
 		for (Arena arena : this.arenas.values()) {
-			arena.endGame(true);
 			arena.delete();
 		}
 		this.arenaSelectorInv = new ArenaSelectorInv();

@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import com.nktfh100.AmongUs.enums.GameEndReasons;
+import com.nktfh100.AmongUs.enums.GameEndWinners;
 import org.apache.commons.lang3.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -297,7 +299,7 @@ public class AdminCommand implements CommandExecutor {
 			else if (args[0].equalsIgnoreCase("endgame") && (sender.hasPermission("amongus.admin.endgame") || sender.hasPermission("amongus.admin"))) {
 				if (args.length == 2) {
 					if (Main.getArenaManager().getArenaByName(args[1]) != null) {
-						Main.getArenaManager().getArenaByName(args[1]).endGame(true);
+						Main.getArenaManager().getArenaByName(args[1]).endGame(true, GameEndReasons.COMMAND, GameEndWinners.NOBODY);
 						sender.sendMessage(Main.getConfigManager().getPrefix() + ChatColor.GREEN + "Ending game!");
 					} else {
 						sender.sendMessage(Main.getConfigManager().getPrefix() + ChatColor.RED + "Arena doesn't exist!");
@@ -308,7 +310,7 @@ public class AdminCommand implements CommandExecutor {
 						PlayerInfo pInfo = Main.getPlayersManager().getPlayerInfo(player);
 						if (pInfo.getIsIngame()) {
 							if (pInfo.getArena().getGameState() != GameState.WAITING) {
-								Main.getPlayersManager().getPlayerInfo(player).getArena().endGame(true);
+								Main.getPlayersManager().getPlayerInfo(player).getArena().endGame(true, GameEndReasons.COMMAND, GameEndWinners.NOBODY);
 								sender.sendMessage(Main.getConfigManager().getPrefix() + ChatColor.GREEN + "Ending game!");
 							} else {
 								sender.sendMessage(Main.getConfigManager().getPrefix() + ChatColor.RED + "Arena is not playing!");

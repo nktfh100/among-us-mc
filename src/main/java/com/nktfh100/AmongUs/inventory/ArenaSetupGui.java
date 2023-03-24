@@ -3,6 +3,7 @@ package com.nktfh100.AmongUs.inventory;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.nktfh100.AmongUs.enums.*;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -12,9 +13,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import com.comphenix.protocol.wrappers.WrappedBlockData;
-import com.nktfh100.AmongUs.enums.SabotageLength;
-import com.nktfh100.AmongUs.enums.SabotageType;
-import com.nktfh100.AmongUs.enums.TaskType;
 import com.nktfh100.AmongUs.info.Arena;
 import com.nktfh100.AmongUs.info.Camera;
 import com.nktfh100.AmongUs.info.Door;
@@ -185,7 +183,7 @@ public class ArenaSetupGui {
 			icon.addClickAction(new ClickAction() {
 				@Override
 				public void execute(Player player) {
-					arena.endGame(false);
+					arena.endGame(false, GameEndReasons.RELOAD, GameEndWinners.NOBODY);
 					Location loc = player.getLocation();
 					String centerLoc = loc.getWorld().getName() + "," + loc.getBlockX() + "," + loc.getBlockY() + ","
 							+ loc.getBlockZ();
@@ -205,7 +203,7 @@ public class ArenaSetupGui {
 			icon.addClickAction(new ClickAction() {
 				@Override
 				public void execute(Player player) {
-					arena.endGame(false);
+					arena.endGame(false, GameEndReasons.RELOAD, GameEndWinners.NOBODY);
 					Location loc = player.getLocation();
 					String holoLoc = loc.getWorld().getName() + "," + (loc.getX()) + "," + (loc.getBlockY() + 1.25)
 							+ "," + (loc.getZ());
@@ -339,7 +337,7 @@ public class ArenaSetupGui {
 				public void execute(Player player) {
 					arena.getArenaConfig().set("enablereducedvision", !arena.getEnableReducedVision());
 
-					arena.endGame(false);
+					arena.endGame(false, GameEndReasons.RELOAD, GameEndWinners.NOBODY);
 
 					arena.saveConfig();
 					arena.setEnableReducedVision(!arena.getEnableReducedVision());
@@ -358,7 +356,7 @@ public class ArenaSetupGui {
 				public void execute(Player player) {
 					arena.getArenaConfig().set("confirmejects", !arena.getConfirmEjects());
 
-					arena.endGame(false);
+					arena.endGame(false, GameEndReasons.RELOAD, GameEndWinners.NOBODY);
 
 					arena.saveConfig();
 					arena.setConfirmEjects(!arena.getConfirmEjects());
@@ -426,7 +424,7 @@ public class ArenaSetupGui {
 			icon.addClickAction(new ClickAction() {
 				@Override
 				public void execute(Player player) {
-					arena.endGame(false);
+					arena.endGame(false, GameEndReasons.RELOAD, GameEndWinners.NOBODY);
 					Location loc = player.getLocation();
 					String holoLoc = loc.getWorld().getName() + "," + (loc.getX()) + "," + (loc.getBlockY() + 1.25)
 							+ "," + (loc.getZ());
@@ -509,7 +507,7 @@ public class ArenaSetupGui {
 				@Override
 				public void execute(Player player) {
 					List<String> allSpawns = arena.getArenaConfig().getStringList("spawnpoints");
-					arena.endGame(false);
+					arena.endGame(false, GameEndReasons.RELOAD, GameEndWinners.NOBODY);
 					allSpawns.remove(num);
 					arena.removePlayerSpawn(num);
 					arena.getArenaConfig().set("spawnpoints", allSpawns);
@@ -529,7 +527,7 @@ public class ArenaSetupGui {
 			@Override
 			public void execute(Player player) {
 				player.closeInventory();
-				arena.endGame(false);
+				arena.endGame(false, GameEndReasons.RELOAD, GameEndWinners.NOBODY);
 				Location loc = player.getLocation();
 				String spawnLoc = loc.getWorld().getName() + "," + (loc.getBlockX() + 0.5) + "," + loc.getBlockY() + ","
 						+ (loc.getBlockZ() + 0.5) + "," + loc.getYaw() + "," + loc.getPitch();
@@ -743,7 +741,7 @@ public class ArenaSetupGui {
 		icon.addClickAction(new ClickAction() {
 			@Override
 			public void execute(Player player) {
-				arena.endGame(false);
+				arena.endGame(false, GameEndReasons.RELOAD, GameEndWinners.NOBODY);
 				Location loc = player.getLocation();
 				String taskLoc = loc.getWorld().getName() + "," + (loc.getX()) + "," + (loc.getBlockY() + 1.85) + ","
 						+ (loc.getZ());
@@ -1131,7 +1129,7 @@ public class ArenaSetupGui {
 			icon.addClickAction(new ClickAction() {
 				@Override
 				public void execute(Player player) {
-					arena.endGame(false);
+					arena.endGame(false, GameEndReasons.RELOAD, GameEndWinners.NOBODY);
 					ConfigurationSection tasksSC = arena.getArenaConfig().getConfigurationSection("tasks");
 					ConfigurationSection taskSC = tasksSC.getConfigurationSection(taskId + "");
 
@@ -1310,7 +1308,7 @@ public class ArenaSetupGui {
 		icon.addClickAction(new ClickAction() {
 			@Override
 			public void execute(Player player) {
-				arena.endGame(false);
+				arena.endGame(false, GameEndReasons.RELOAD, GameEndWinners.NOBODY);
 				String configId_ = Utils.getRandomString(4);
 				ConfigurationSection tasksSC = arena.getArenaConfig().getConfigurationSection("tasks");
 				ConfigurationSection taskSC = tasksSC.getConfigurationSection(taskId + "");
@@ -1373,7 +1371,7 @@ public class ArenaSetupGui {
 			icon.addClickAction(new ClickAction() {
 				@Override
 				public void execute(Player player) {
-					arena.endGame(false);
+					arena.endGame(false, GameEndReasons.RELOAD, GameEndWinners.NOBODY);
 					ConfigurationSection tasksSC = arena.getArenaConfig().getConfigurationSection("tasks");
 					ConfigurationSection taskSC = tasksSC.getConfigurationSection(taskId + "");
 
@@ -1409,7 +1407,7 @@ public class ArenaSetupGui {
 		icon.addClickAction(new ClickAction() {
 			@Override
 			public void execute(Player player) {
-				arena.endGame(false);
+				arena.endGame(false, GameEndReasons.RELOAD, GameEndWinners.NOBODY);
 				ConfigurationSection tasksSC = arena.getArenaConfig().getConfigurationSection("tasks");
 				ConfigurationSection taskSC = tasksSC.getConfigurationSection(taskId + "");
 
@@ -1607,7 +1605,7 @@ public class ArenaSetupGui {
 			icon.addClickAction(new ClickAction() {
 				@Override
 				public void execute(Player player) {
-					arena.endGame(false);
+					arena.endGame(false, GameEndReasons.RELOAD, GameEndWinners.NOBODY);
 					ConfigurationSection tasksSC = arena.getArenaConfig().getConfigurationSection("tasks");
 					ConfigurationSection taskSC = tasksSC.getConfigurationSection(taskId + "");
 
@@ -1782,7 +1780,7 @@ public class ArenaSetupGui {
 		icon.addClickAction(new ClickAction() {
 			@Override
 			public void execute(Player player) {
-				arena.endGame(false);
+				arena.endGame(false, GameEndReasons.RELOAD, GameEndWinners.NOBODY);
 				Integer locId = 1;
 
 				ConfigurationSection sabotagesSC = arena.getArenaConfig().getConfigurationSection("sabotages");
@@ -1814,7 +1812,7 @@ public class ArenaSetupGui {
 			icon.addClickAction(new ClickAction() {
 				@Override
 				public void execute(Player player) {
-					arena.endGame(false);
+					arena.endGame(false, GameEndReasons.RELOAD, GameEndWinners.NOBODY);
 					Integer locId = 2;
 
 					ConfigurationSection sabotagesSC = arena.getArenaConfig().getConfigurationSection("sabotages");
@@ -2089,7 +2087,7 @@ public class ArenaSetupGui {
 		icon.addClickAction(new ClickAction() {
 			@Override
 			public void execute(Player player) {
-				arena.endGame(false);
+				arena.endGame(false, GameEndReasons.RELOAD, GameEndWinners.NOBODY);
 				ConfigurationSection ventGroupsSec = arena.getArenaConfig().getConfigurationSection("ventgroups");
 				ConfigurationSection ventsSec = ventGroupsSec
 						.getConfigurationSection(ventGroup.getConfigId() + ".vents");
@@ -2931,7 +2929,7 @@ public class ArenaSetupGui {
 		icon.addClickAction(new ClickAction() {
 			@Override
 			public void execute(Player player) {
-				arena.endGame(false);
+				arena.endGame(false, GameEndReasons.RELOAD, GameEndWinners.NOBODY);
 				ConfigurationSection camSec = arena.getArenaConfig()
 						.getConfigurationSection("cameras.cams." + cam.getConfigKey());
 
@@ -3043,7 +3041,7 @@ public class ArenaSetupGui {
 		icon.addClickAction(new ClickAction() {
 			@Override
 			public void execute(Player player) {
-				arena.endGame(false);
+				arena.endGame(false, GameEndReasons.RELOAD, GameEndWinners.NOBODY);
 				ConfigurationSection camSec = arena.getArenaConfig()
 						.getConfigurationSection("cameras.cams." + cam.getConfigKey());
 
@@ -3236,7 +3234,7 @@ public class ArenaSetupGui {
 		icon.addClickAction(new ClickAction() {
 			@Override
 			public void execute(Player player) {
-				arena.endGame(false);
+				arena.endGame(false, GameEndReasons.RELOAD, GameEndWinners.NOBODY);
 				ConfigurationSection doorGroupsSec = arena.getArenaConfig().getConfigurationSection("doorgroups");
 				ConfigurationSection doorGroupSec = doorGroupsSec.getConfigurationSection(doorGroup.getConfigId());
 				ConfigurationSection doorsSec = doorGroupSec.getConfigurationSection("doors");
@@ -3487,7 +3485,7 @@ public class ArenaSetupGui {
 		icon.addClickAction(new ClickAction() {
 			@Override
 			public void execute(Player player) {
-				arena.endGame(false);
+				arena.endGame(false, GameEndReasons.RELOAD, GameEndWinners.NOBODY);
 				ConfigurationSection doorGroupsSec = arena.getArenaConfig().getConfigurationSection("doorgroups");
 				ConfigurationSection doorGroupSec = doorGroupsSec.getConfigurationSection(doorGroup.getConfigId());
 				ConfigurationSection doorsSec = doorGroupSec.getConfigurationSection("doors");
@@ -3523,7 +3521,7 @@ public class ArenaSetupGui {
 		icon.addClickAction(new ClickAction() {
 			@Override
 			public void execute(Player player) {
-				arena.endGame(false);
+				arena.endGame(false, GameEndReasons.RELOAD, GameEndWinners.NOBODY);
 				ConfigurationSection doorGroupsSec = arena.getArenaConfig().getConfigurationSection("doorgroups");
 				ConfigurationSection doorGroupSec = doorGroupsSec.getConfigurationSection(doorGroup.getConfigId());
 				ConfigurationSection doorsSec = doorGroupSec.getConfigurationSection("doors");
