@@ -733,6 +733,7 @@ public class PlayerInfo {
 			this.player.setExp(0F);
 			this.player.setLevel(0);
 			this.player.setHealth(player.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue());
+			this.player.getInventory().clear();
 		}
 	}
 
