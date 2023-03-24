@@ -2,7 +2,7 @@ name: AmongUs
 main: com.nktfh100.AmongUs.main.Main
 author: nktfh100
 version: 3.0
-api-version: 1.13
+api-version: 1.19
 depend: [ProtocolLib]
 softdepend: [PlayerPoints, Multiverse, Multiverse-Core, VentureChat, PlaceholderAPI, HolographicDisplays, DecentHolograms]
 commands:
