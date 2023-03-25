@@ -36,7 +36,7 @@ public class VitalsManager {
 	}
 
 	public void openInventory(Player player) {
-		player.openInventory(new VitalsInv(this).getInventory());
+		player.openInventory(new VitalsInv(this, player).getInventory());
 	}
 
 	public void updateInventory() {

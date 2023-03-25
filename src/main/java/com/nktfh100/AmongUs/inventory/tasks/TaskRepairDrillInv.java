@@ -29,7 +29,7 @@ public class TaskRepairDrillInv extends TaskInvHolder {
 	private Boolean isDone = false;
 
 	public TaskRepairDrillInv(Arena arena, TaskPlayer taskPlayer, Boolean isHot) {
-		super(54, Main.getMessagesManager().getGameMsg("taskInvTitle", arena, Utils.getTaskPlaceholders(taskPlayer)), arena, taskPlayer);
+		super(54, Main.getMessagesManager().getGameMsg("taskInvTitle", arena, Utils.getTaskPlaceholders(taskPlayer), taskPlayer.getPlayerInfo().getPlayer()), arena, taskPlayer);
 		Utils.fillInv(this.inv);
 		this.update();
 	}

@@ -18,6 +18,7 @@ import com.nktfh100.AmongUs.enums.*;
 import com.nktfh100.AmongUs.holograms.HologramClickListener;
 import com.nktfh100.AmongUs.holograms.ImposterHologram;
 import eu.decentsoftware.holograms.event.HologramClickEvent;
+import me.clip.placeholderapi.PlaceholderAPI;
 import me.filoghost.holographicdisplays.api.hologram.line.HologramLineClickEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -192,7 +193,7 @@ public class Arena {
 	public Arena(String name) {
 		this.name = name;
 
-		this.bossBar = Bukkit.createBossBar(Main.getMessagesManager().getGameMsg("tasksBar", this, null), BarColor.GREEN, BarStyle.SEGMENTED_20);
+		this.bossBar = Bukkit.createBossBar(Main.getMessagesManager().getGameMsg("tasksBar", this, null, null), BarColor.GREEN, BarStyle.SEGMENTED_20);
 		this.bossBar.setProgress(0);
 	}
 
@@ -322,16 +323,14 @@ public class Arena {
 
 						HashMap<String, String> placeholders = new HashMap<>();
 						placeholders.put("%time%", String.valueOf(timer));
-						String msg = Main.getMessagesManager().getGameMsg(msgKey + "Msg", arena, placeholders);
-						String actionBar = Main.getMessagesManager().getGameMsg(msgKey + "ActionBar", arena, placeholders);
-						if (!actionBar.isEmpty()) {
+						if (!Main.getMessagesManager().getGameMsg(msgKey + "ActionBar", arena, placeholders, null).isEmpty()) {
 							for (Player p : arena.getPlayers()) {
-								Utils.sendActionBar(p, actionBar);
+								Utils.sendActionBar(p, Main.getMessagesManager().getGameMsg(msgKey + "ActionBar", arena, placeholders, p));
 							}
 						}
-						if (!msg.isEmpty()) {
+						if (!Main.getMessagesManager().getGameMsg(msgKey + "Msg", arena, placeholders, null).isEmpty()) {
 							if ((timer > 0 && timer <= 5) || timer == 10) {
-								arena.sendMessage(msg);
+								arena.sendMessage(msgKey + "Msg", placeholders);
 							}
 						}
 
@@ -443,11 +442,11 @@ public class Arena {
 
 						HashMap<String, String> placeholders = new HashMap<>();
 						placeholders.put("%imposters%", imposters_);
-						String impostersActionBar = Main.getMessagesManager().getGameMsg("impostersActionBar", arena, placeholders);
 
 						for (PlayerInfo pInfo : arena.getGameImposters()) {
+							String impostersActionBar = Main.getMessagesManager().getGameMsg("impostersActionBar", arena, placeholders, pInfo.getPlayer());
 							if (pInfo.getIsInVent()) {
-								Utils.sendActionBar(pInfo.getPlayer(), arena.getVentsManager().getVentActionBar(pInfo.getVent()));
+								Utils.sendActionBar(pInfo.getPlayer(), arena.getVentsManager().getVentActionBar(pInfo.getVent(), pInfo.getPlayer()));
 							} else if (!pInfo.getIsInCameras()) {
 								Utils.sendActionBar(pInfo.getPlayer(), impostersActionBar);
 							}
@@ -463,7 +462,7 @@ public class Arena {
 						}
 						for (PlayerInfo pInfo : arena.getPlayersInfo()) {
 							if (pInfo.getIsInCameras()) {
-								Utils.sendActionBar(pInfo.getPlayer(), arena.getCamerasManager().getCameraActionBar(pInfo.getActiveCamera()));
+								Utils.sendActionBar(pInfo.getPlayer(), arena.getCamerasManager().getCameraActionBar(pInfo.getActiveCamera(), pInfo.getPlayer()));
 							}
 						}
 					}
@@ -498,10 +497,9 @@ public class Arena {
 							HashMap<String, String> normalChancePl = new HashMap<>(placeholders);
 							normalChancePl.put("%imposter_chance%", String.valueOf(imposterChance.intValue()));
 
-							String msg = Main.getMessagesManager().getGameMsg("lobbyActionBar", arena, normalChancePl);
-							String msg1 = Main.getMessagesManager().getGameMsg("lobbyActionBar", arena, doubleChancePl);
-
 							for (Player player : arena.getPlayers()) {
+								String msg = Main.getMessagesManager().getGameMsg("lobbyActionBar", arena, normalChancePl, player);
+								String msg1 = Main.getMessagesManager().getGameMsg("lobbyActionBar", arena, doubleChancePl, player);
 								if (player.hasPermission("amongus.perk.double-imposter-chance")) {
 									Utils.sendActionBar(player, msg1);
 								} else {
@@ -516,8 +514,8 @@ public class Arena {
 								imposterChance = 0D;
 							}
 							placeholders.put("%imposter_chance%", String.valueOf(imposterChance.intValue()));
-							String msg = Main.getMessagesManager().getGameMsg("lobbyActionBar", arena, placeholders);
 							for (PlayerInfo pInfo : arena.getPlayersInfo()) {
+								String msg = Main.getMessagesManager().getGameMsg("lobbyActionBar", arena, placeholders, pInfo.getPlayer());
 								Utils.sendActionBar(pInfo.getPlayer(), msg);
 							}
 						}
@@ -647,9 +645,10 @@ public class Arena {
 		}
 	}
 
-	public void sendMessage(String message) {
-		for (String str : message.split("/n")) {
-			for (Player player : this.getPlayers()) {
+	public void sendMessage(String key, HashMap<String, String> placeholders) {
+		for (Player player : this.getPlayers()) {
+			String message = Main.getMessagesManager().getGameMsg(key, this, placeholders, player);
+			for (String str : message.split("/n")) {
 				player.sendMessage(str);
 			}
 		}
@@ -733,7 +732,7 @@ public class Arena {
 				placeholders.put("%player_color_name%", pInfo.getColor().getName());
 				placeholders.put("%players%", String.valueOf(this.ingamePlayers.size()));
 				placeholders.put("%max_players%", String.valueOf(this.maxPlayers));
-				this.sendMessage(Main.getMessagesManager().getGameMsg("playerJoin", this, placeholders));
+				this.sendMessage("playerJoin", placeholders);
 				this.updateScoreBoard();
 				this.updateSigns();
 
@@ -813,12 +812,12 @@ public class Arena {
 					}
 				}
 			} else {
-				for (String str : Main.getMessagesManager().getGameMsg("arenaInGame", this, null).split("/n")) {
+				for (String str : Main.getMessagesManager().getGameMsg("arenaInGame", this, null, player).split("/n")) {
 					player.sendMessage(str);
 				}
 			}
 		} else if (this.getPlayers().size() >= this.maxPlayers) {
-			for (String str : Main.getMessagesManager().getGameMsg("arenaFull", this, null).split("/n")) {
+			for (String str : Main.getMessagesManager().getGameMsg("arenaFull", this, null, player).split("/n")) {
 				player.sendMessage(str);
 			}
 		}
@@ -840,7 +839,7 @@ public class Arena {
 			placeholders.put("%player_color_name%", pInfo.getColor().getName());
 			placeholders.put("%players%", String.valueOf(this.ingamePlayers.size() - 1));
 			placeholders.put("%max_players%", String.valueOf(this.maxPlayers));
-			this.sendMessage(Main.getMessagesManager().getGameMsg("playerLeave", this, placeholders));
+			this.sendMessage("playerLeave", placeholders);
 
 			if (!endGame && this.gameState == GameState.RUNNING && this.vitalsManager != null) {
 				VitalsPlayerInfo vpi = this.vitalsManager.getVitalsPInfo(player);
@@ -877,6 +876,9 @@ public class Arena {
 
 			this.ingamePlayers.remove(player.getUniqueId().toString());
 			this.updatePlayersJoinedID();
+			if (Main.getIsPlaceHolderAPI()) {
+				this.bossBar.setTitle(PlaceholderAPI.setPlaceholders(player, this.bossBar.getTitle()));
+			}
 			this.bossBar.removePlayer(player);
 			this.sabotageManager.removePlayerFromBossBar(player);
 
@@ -1026,7 +1028,7 @@ public class Arena {
 						this.gameTimerRunnable.cancel();
 					}
 					this.setGameState(GameState.WAITING);
-					this.sendMessage(Main.getMessagesManager().getGameMsg("notEnoughPlayers", this, null));
+					this.sendMessage("notEnoughPlayers",null);
 				}
 			}
 			if (!endGame) {
@@ -1084,7 +1086,7 @@ public class Arena {
 			placeholders.put("%victim_color%", pInfo.getColor().getChatColor() + "");
 			placeholders.put("%victim_color_name%", pInfo.getColor().getName());
 
-			String msg = Main.getMessagesManager().getGameMsg("playerDiedMsg", this, placeholders);
+			String msg = Main.getMessagesManager().getGameMsg("playerDiedMsg", this, placeholders, player);
 			if (!msg.isEmpty()) {
 				for (String line : msg.split("/n")) {
 					player.sendMessage(line);
@@ -1092,29 +1094,29 @@ public class Arena {
 			}
 
 			// Victim title
-			String title = Main.getMessagesManager().getGameMsg("playerDiedTitle", this, placeholders);
-			String subTitle = Main.getMessagesManager().getGameMsg("playerDiedSubTitle", this, placeholders);
+			String title = Main.getMessagesManager().getGameMsg("playerDiedTitle", this, placeholders, pInfo.getPlayer());
+			String subTitle = Main.getMessagesManager().getGameMsg("playerDiedSubTitle", this, placeholders, pInfo.getPlayer());
 			if (!(title.isEmpty() && subTitle.isEmpty())) {
 				pInfo.sendTitle(title, subTitle, 15, 60, 15);
 			}
 
 			// Killer title
-			String title1 = Main.getMessagesManager().getGameMsg("playerKilledTitle", this, placeholders);
-			String subTitle1 = Main.getMessagesManager().getGameMsg("playerKilledSubTitle", this, placeholders);
+			String title1 = Main.getMessagesManager().getGameMsg("playerKilledTitle", this, placeholders, killerInfo.getPlayer());
+			String subTitle1 = Main.getMessagesManager().getGameMsg("playerKilledSubTitle", this, placeholders, killerInfo.getPlayer());
 			if (!(title1.isEmpty() && subTitle1.isEmpty())) {
 				killerInfo.sendTitle(title1, subTitle1, 15, 40, 15);
 			}
 
 		} else {
 			if (pInfo.getIsImposter()) {
-				if (!Main.getMessagesManager().getGameMsg("imposterEjectedMsg", this, null).isEmpty()) {
-					for (String line : Main.getMessagesManager().getGameMsg("imposterEjectedMsg", this, null).split("/n")) {
+				if (!Main.getMessagesManager().getGameMsg("imposterEjectedMsg", this, null, player).isEmpty()) {
+					for (String line : Main.getMessagesManager().getGameMsg("imposterEjectedMsg", this, null, player).split("/n")) {
 						player.sendMessage(line);
 					}
 				}
 			} else {
-				if (!Main.getMessagesManager().getGameMsg("playerEjectedMsg", this, null).isEmpty()) {
-					for (String line : Main.getMessagesManager().getGameMsg("playerEjectedMsg", this, null).split("/n")) {
+				if (!Main.getMessagesManager().getGameMsg("playerEjectedMsg", this, null, player).isEmpty()) {
+					for (String line : Main.getMessagesManager().getGameMsg("playerEjectedMsg", this, null, player).split("/n")) {
 						player.sendMessage(line);
 					}
 				}
@@ -1256,9 +1258,9 @@ public class Arena {
 							Main.getSoundsManager().playSound("gameTimerTick", player, player.getLocation());
 							HashMap<String, String> placeholders = new HashMap<>();
 							placeholders.put("%time%", String.valueOf(gameTimer_));
-							player.sendMessage(Main.getMessagesManager().getGameMsg("gameStartingTime", arena_, placeholders));
+							player.sendMessage(Main.getMessagesManager().getGameMsg("gameStartingTime", arena_, placeholders, player));
 							if (gameTimer_ <= 0) {
-								player.sendMessage(Main.getMessagesManager().getGameMsg("gameStarting", arena_, null));
+								player.sendMessage(Main.getMessagesManager().getGameMsg("gameStarting", arena_, null, player));
 							}
 						}
 						if (gameTimer_ >= 0) {
@@ -1448,8 +1450,8 @@ public class Arena {
 				HashMap<String, String> placeholders = new HashMap<>();
 				placeholders.put("%imposters_number%", String.valueOf(this.numImposters));
 				placeholders.put("%imposters%", allImpostersStr);
-				pInfo.sendTitle(Main.getMessagesManager().getGameMsg(key + "Title" + (this.numImposters == 1 ? "1" : "") + pInfo.getRole().getName(), this, placeholders),
-						Main.getMessagesManager().getGameMsg(key + "SubTitle" + (this.numImposters == 1 ? "1" : ""), this, placeholders));
+				pInfo.sendTitle(Main.getMessagesManager().getGameMsg(key + "Title" + (this.numImposters == 1 ? "1" : "") + pInfo.getRole().getName(), this, placeholders, pInfo.getPlayer()),
+						Main.getMessagesManager().getGameMsg(key + "SubTitle" + (this.numImposters == 1 ? "1" : ""), this, placeholders, pInfo.getPlayer()));
 
 				// teams
 				for (PlayerInfo pInfo1 : this.getPlayersInfo()) {
@@ -1462,7 +1464,7 @@ public class Arena {
 
 				if (pInfo.getIsImposter()) {
 					Main.getSoundsManager().playSound("gameStartedImposter", pInfo.getPlayer(), pInfo.getPlayer().getLocation());
-					String msg_ = Main.getMessagesManager().getGameMsg("gameStartImposters", this, null);
+					String msg_ = Main.getMessagesManager().getGameMsg("gameStartImposters", this, null, pInfo.getPlayer());
 					if (!msg_.isEmpty()) {
 						for (String line : msg_.split("/n")) {
 							pInfo.getPlayer().sendMessage(line);
@@ -1471,7 +1473,7 @@ public class Arena {
 					Main.getConfigManager().executeCommands("gameStartImposter", pInfo.getPlayer());
 				} else {
 					Main.getSoundsManager().playSound("gameStartedCrewmate", pInfo.getPlayer(), pInfo.getPlayer().getLocation());
-					String msg_ = Main.getMessagesManager().getGameMsg("gameStartCrewmates", this, null);
+					String msg_ = Main.getMessagesManager().getGameMsg("gameStartCrewmates", this, null, pInfo.getPlayer());
 					if (!msg_.isEmpty()) {
 						for (String line : msg_.split("/n")) {
 							pInfo.getPlayer().sendMessage(line);
@@ -1517,7 +1519,7 @@ public class Arena {
 			this.isInMeeting = false;
 			this.getMeetingManager().setMeetingCooldownTimer(this.meetingCooldown);
 			this.getTasksManager().giveTasks();
-			this.sendMessage(Main.getMessagesManager().getGameMsg("gameStarting", this, null));
+			this.sendMessage("gameStarting",null);
 			this.updateScoreBoard();
 			this.updateSigns();
 			Main.getArenaManager().updateArenaSelectorInv();
@@ -1674,10 +1676,10 @@ public class Arena {
 		String impostersStr = impostersStrB.toString();
 		HashMap<String, String> placeholders = new HashMap<>();
 		placeholders.put("%imposters%", impostersStr);
-		String[] msg_ = Main.getMessagesManager().getGameMsg(isImposters ? "impostersWonMsg" : "crewmatesWonMsg", this, placeholders).split("/n");
 		int si = 0;
 		for (PlayerInfo pInfo : this.ingamePlayers.values()) {
 			Player player = pInfo.getPlayer();
+			String[] msg_ = Main.getMessagesManager().getGameMsg(isImposters ? "impostersWonMsg" : "crewmatesWonMsg", this, placeholders, player).split("/n");
 
 			if (pInfo.getIsImposter()) {
 				if (isImposters) {
@@ -1716,18 +1718,18 @@ public class Arena {
 			Integer fadeOut = 20;
 			if (isImposters) {
 				if (pInfo.getIsImposter()) {
-					player.sendTitle(Main.getMessagesManager().getGameMsg("winTitle", this, placeholders), Main.getMessagesManager().getGameMsg("winSubTitle", this, placeholders), fadeIn, stay,
+					player.sendTitle(Main.getMessagesManager().getGameMsg("winTitle", this, placeholders, player), Main.getMessagesManager().getGameMsg("winSubTitle", this, placeholders, player), fadeIn, stay,
 							fadeOut);
 				} else {
-					player.sendTitle(Main.getMessagesManager().getGameMsg("defeatTitle", this, placeholders), Main.getMessagesManager().getGameMsg("defeatSubTitle", this, placeholders), fadeIn, stay,
+					player.sendTitle(Main.getMessagesManager().getGameMsg("defeatTitle", this, placeholders, player), Main.getMessagesManager().getGameMsg("defeatSubTitle", this, placeholders, player), fadeIn, stay,
 							fadeOut);
 				}
 			} else {
 				if (pInfo.getIsImposter()) {
-					player.sendTitle(Main.getMessagesManager().getGameMsg("defeatTitle", this, placeholders), Main.getMessagesManager().getGameMsg("defeatSubTitle", this, placeholders), fadeIn, stay,
+					player.sendTitle(Main.getMessagesManager().getGameMsg("defeatTitle", this, placeholders, player), Main.getMessagesManager().getGameMsg("defeatSubTitle", this, placeholders, player), fadeIn, stay,
 							fadeOut);
 				} else {
-					player.sendTitle(Main.getMessagesManager().getGameMsg("winTitle", this, placeholders), Main.getMessagesManager().getGameMsg("winSubTitle", this, placeholders), fadeIn, stay,
+					player.sendTitle(Main.getMessagesManager().getGameMsg("winTitle", this, placeholders, player), Main.getMessagesManager().getGameMsg("winSubTitle", this, placeholders, player), fadeIn, stay,
 							fadeOut);
 				}
 			}
@@ -2166,11 +2168,13 @@ public class Arena {
 		}
 	}
 
-	public void sendTitle(String title, String subTitle) {
-		if (title.isEmpty() && subTitle.isEmpty()) {
+	public void sendTitle(String key, HashMap<String, String> placeholders) {
+		if (Main.getMessagesManager().getGameMsg(key, this, placeholders, null).isEmpty()) {
 			return;
 		}
 		for (Player p : this.getPlayers()) {
+			String title = Main.getMessagesManager().getGameMsg(key, this, placeholders, p);
+			String subTitle = Main.getMessagesManager().getGameMsg(key, this, placeholders, p);
 			p.sendTitle(title, subTitle, 15, 80, 15);
 		}
 	}
@@ -2180,7 +2184,13 @@ public class Arena {
 			return;
 		}
 		for (Player p : this.getPlayers()) {
-			p.sendTitle(title, subTitle, fadeIn, stay, fadeOut);
+			String parsedTitle = title;
+			String parsedSubtitle = subTitle;
+			if (Main.getIsPlaceHolderAPI()) {
+				parsedTitle = PlaceholderAPI.setPlaceholders(p, title);
+				parsedSubtitle = PlaceholderAPI.setPlaceholders(p, subTitle);
+			}
+			p.sendTitle(parsedTitle, parsedSubtitle, fadeIn, stay, fadeOut);
 		}
 	}
 
@@ -2660,7 +2670,10 @@ public class Arena {
 		return this.colors_;
 	}
 
-	public ColorSelectorInv getColorSelectorInv() {
+	public ColorSelectorInv getColorSelectorInv(Player p) {
+		if (Main.getIsPlaceHolderAPI()) {
+			colorSelectorInv.changeTitle(PlaceholderAPI.setPlaceholders(p, colorSelectorInv.getOriginalTitle()));
+		}
 		return colorSelectorInv;
 	}
 

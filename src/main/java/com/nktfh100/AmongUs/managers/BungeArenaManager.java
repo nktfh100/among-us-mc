@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 
+import com.nktfh100.AmongUs.main.Main;
+import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.messaging.PluginMessageListener;
 
@@ -118,6 +120,9 @@ public class BungeArenaManager implements PluginMessageListener {
 
 	public void openArenaSelector(PlayerInfo pInfo) {
 		if (this.arenaSelectorInv != null) {
+			if (Main.getIsPlaceHolderAPI()) {
+				this.arenaSelectorInv.changeTitle(PlaceholderAPI.setPlaceholders(pInfo.getPlayer(), this.arenaSelectorInv.getOriginalTitle()));
+			}
 			pInfo.getPlayer().openInventory(this.arenaSelectorInv.getInventory());
 		}
 	}

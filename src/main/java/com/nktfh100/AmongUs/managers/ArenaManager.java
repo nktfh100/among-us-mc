@@ -13,6 +13,7 @@ import java.util.StringJoiner;
 import java.util.logging.Level;
 
 import com.nktfh100.AmongUs.enums.*;
+import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -50,7 +51,12 @@ public class ArenaManager {
 	private ArenaSelectorInv arenaSelectorInv;
 
 	public void openArenaSelector(PlayerInfo pInfo) {
-		pInfo.getPlayer().openInventory(this.arenaSelectorInv.getInventory());
+		if (this.arenaSelectorInv != null) {
+			if (Main.getIsPlaceHolderAPI()) {
+				this.arenaSelectorInv.changeTitle(PlaceholderAPI.setPlaceholders(pInfo.getPlayer(), this.arenaSelectorInv.getOriginalTitle()));
+			}
+			pInfo.getPlayer().openInventory(this.arenaSelectorInv.getInventory());
+		}
 	}
 
 	public void updateArenaSelectorInv() {

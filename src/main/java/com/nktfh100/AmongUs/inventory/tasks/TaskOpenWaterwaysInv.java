@@ -26,7 +26,7 @@ public class TaskOpenWaterwaysInv extends TaskInvHolder {
 	private Boolean isDone = false;
 
 	public TaskOpenWaterwaysInv(Arena arena, TaskPlayer taskPlayer) {
-		super(45, Main.getMessagesManager().getGameMsg("taskInvTitle", arena, Utils.getTaskPlaceholders(taskPlayer)), arena, taskPlayer);
+		super(45, Main.getMessagesManager().getGameMsg("taskInvTitle", arena, Utils.getTaskPlaceholders(taskPlayer), taskPlayer.getPlayerInfo().getPlayer()), arena, taskPlayer);
 		Utils.fillInv(this.inv);
 		this.update();
 	}

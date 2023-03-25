@@ -133,14 +133,14 @@ public class MeetingManager {
 				placeholders.put("%called_player_color%", pInfo.getColor().getChatColor() + "");
 				placeholders.put("%called_player_color_name%", pInfo.getColor().getName());
 				player.sendTitle(
-						Main.getMessagesManager().getGameMsg("bodyFoundTitle", arena, placeholders),
-						Main.getMessagesManager().getGameMsg("bodyFoundSubTitle", arena, placeholders),
+						Main.getMessagesManager().getGameMsg("bodyFoundTitle", arena, placeholders, player),
+						Main.getMessagesManager().getGameMsg("bodyFoundSubTitle", arena, placeholders, player),
 						15, 80, 15);
 
 			} else {
 				player.sendTitle(
-						Main.getMessagesManager().getGameMsg("emergencyMeetingTitle", arena, placeholders),
-						Main.getMessagesManager().getGameMsg("emergencyMeetingSubTitle", arena, placeholders),
+						Main.getMessagesManager().getGameMsg("emergencyMeetingTitle", arena, placeholders, player),
+						Main.getMessagesManager().getGameMsg("emergencyMeetingSubTitle", arena, placeholders, player),
 						15, 80, 15);
 			}
 
@@ -214,7 +214,7 @@ public class MeetingManager {
 								manager.openVoteInv(pInfo);
 							}
 						}
-						manager.getArena().sendMessage(manager.getVotingResults());
+						manager.sendVotingResults();
 						return;
 					case VOTING_RESULTS:
 //						manager.endMeeting(false);
@@ -265,10 +265,10 @@ public class MeetingManager {
 				cause = "skipped";
 			}
 			HashMap<String, String> placeholders = new HashMap<>();
-			placeholders.put("%cause%", Main.getMessagesManager().getGameMsg(cause, arena, null));
+			placeholders.put("%cause%", Main.getMessagesManager().getGameMsg(cause, arena, null, null));
 			placeholders.put("%remaining_imposters%", String.valueOf(arena.getImpostersAlive().size()));
-			title_ = Main.getMessagesManager().getGameMsg("noOneEjectedTitle" + (arena.getConfirmEjects() ? "" : "1"), arena, placeholders);
-			subTitle_ = Main.getMessagesManager().getGameMsg("noOneEjectedSubTitle" + (arena.getConfirmEjects() ? "" : "1"), arena, placeholders);
+			title_ = Main.getMessagesManager().getGameMsg("noOneEjectedTitle" + (arena.getConfirmEjects() ? "" : "1"), arena, placeholders, null);
+			subTitle_ = Main.getMessagesManager().getGameMsg("noOneEjectedSubTitle" + (arena.getConfirmEjects() ? "" : "1"), arena, placeholders, null);
 		} else {
 			if (highestPlayer != "skip") {
 				pInfoEject_ = Main.getPlayersManager().getPlayerByUUID(highestPlayer);
@@ -302,8 +302,8 @@ public class MeetingManager {
 				placeholders.put("%ejected_player_color%", pInfoEject_.getColor().getChatColor() + "");
 				placeholders.put("%ejected_player_color_name%", pInfoEject_.getColor().getName());
 				placeholders.put("%remaining_imposters%", String.valueOf(numImposters));
-				title_ = Main.getMessagesManager().getGameMsg(titleKey, arena, placeholders);
-				subTitle_ = Main.getMessagesManager().getGameMsg(subTitleKey, arena, placeholders);
+				title_ = Main.getMessagesManager().getGameMsg(titleKey, arena, placeholders, null);
+				subTitle_ = Main.getMessagesManager().getGameMsg(subTitleKey, arena, placeholders, null);
 			}
 		}
 
@@ -435,7 +435,7 @@ public class MeetingManager {
 		}
 	}
 
-	public String getVotingResults() {
+	public void sendVotingResults() {
 		MessagesManager messagesManager = Main.getMessagesManager();
 		StringBuilder outputB = new StringBuilder();
 		for (String uuid1 : this.votes.keySet()) {
@@ -445,7 +445,7 @@ public class MeetingManager {
 				for (PlayerInfo voterInfo : this.votes.get(pInfo1.getPlayer().getUniqueId().toString())) {
 					HashMap<String, String> placeholders = new HashMap<>();
 					placeholders.put("%voter_color%", voterInfo.getColor().getChatColor() + "" );
-					String symbol_ = messagesManager.getGameMsg("voteSymbol", arena, placeholders);
+					String symbol_ = messagesManager.getGameMsg("voteSymbol", arena, placeholders, null);
 					symbols = symbols + symbol_;
 				}
 				HashMap<String, String> placeholders = new HashMap<>();
@@ -453,7 +453,7 @@ public class MeetingManager {
 				placeholders.put("%voted_player_color%", pInfo1.getColor().getChatColor() + "");
 				placeholders.put("%voted_player_color_name%", pInfo1.getColor().getName());
 				placeholders.put("%votes%", symbols);
-				String line_ = messagesManager.getGameMsg("playerLine", arena, placeholders);
+				String line_ = messagesManager.getGameMsg("playerLine", arena, placeholders, null);
 				outputB.append(line_ + "\n");
 			}
 		}
@@ -462,16 +462,17 @@ public class MeetingManager {
 		for (PlayerInfo voterInfo : this.skipVotes) {
 			HashMap<String, String> placeholders = new HashMap<>();
 			placeholders.put("%voter_color%", voterInfo.getColor().getChatColor() + "");
-			String symbol_ = messagesManager.getGameMsg("voteSymbol", arena, placeholders);
+			String symbol_ = messagesManager.getGameMsg("voteSymbol", arena, placeholders, null);
 			symbols = symbols + symbol_;
 		}
 		HashMap<String, String> placeholders = new HashMap<>();
 		placeholders.put("%votes%", symbols);
-		outputB.append(messagesManager.getGameMsg("skipVoteLine", arena, placeholders));
+		outputB.append(messagesManager.getGameMsg("skipVoteLine", arena, placeholders, null));
 
 		HashMap<String, String> placeholders2 = new HashMap<>();
 		placeholders2.put("%results%", outputB.toString());
-		return messagesManager.getGameMsg("votingResults", arena, placeholders2);
+
+		this.getArena().sendMessage("votingResults", placeholders2);
 	}
 
 	public void updateInv() {
@@ -508,7 +509,7 @@ public class MeetingManager {
 					this.openVoteInv(pInfo);
 				}
 			}
-			this.getArena().sendMessage(this.getVotingResults());
+			this.sendVotingResults();
 		}
 	}
 
@@ -525,7 +526,7 @@ public class MeetingManager {
 			placeholders.put("%voter_name%", voter.getPlayer().getName());
 			placeholders.put("%voter_color%", voter.getColor().getChatColor() + "");
 			placeholders.put("%voter_color_name%", voter.getColor().getName());
-			this.arena.sendMessage(Main.getMessagesManager().getGameMsg("playerVoted", arena, placeholders));
+			this.arena.sendMessage("playerVoted", placeholders);
 			this.updateInv();
 			this.didEveryoneVote();
 			for (Player player : this.arena.getPlayers()) {
@@ -542,7 +543,7 @@ public class MeetingManager {
 			placeholders.put("%voter_name%", voter.getPlayer().getName());
 			placeholders.put("%voter_color%", voter.getColor().getChatColor() + "");
 			placeholders.put("%voter_color_name%", voter.getColor().getName());
-			this.arena.sendMessage(Main.getMessagesManager().getGameMsg("playerVoted", arena, placeholders));
+			this.arena.sendMessage("playerVoted", placeholders);
 			this.updateInv();
 			this.didEveryoneVote();
 			for (Player player : this.arena.getPlayers()) {

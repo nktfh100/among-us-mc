@@ -22,9 +22,9 @@ public class SabotageOxygenInv extends SabotageInvHolder {
 	private ArrayList<Integer> activeCode = new ArrayList<Integer>();
 	private Boolean canClick = true;
 
-	public SabotageOxygenInv(SabotageArena saboArena, Integer taskNum, ArrayList<Integer> code) {
+	public SabotageOxygenInv(SabotageArena saboArena, Integer taskNum, ArrayList<Integer> code, Player p) {
 
-		super(54, Main.getMessagesManager().getGameMsg("sabotageOxygenInvTitle", saboArena.getArena(), getPlaceholders(codeToStr(code), "")), saboArena.getArena(), saboArena);
+		super(54, Main.getMessagesManager().getGameMsg("sabotageOxygenInvTitle", saboArena.getArena(), getPlaceholders(codeToStr(code), ""), p), saboArena.getArena(), saboArena);
 		Utils.fillInv(this.inv);
 		this.taskNum = taskNum;
 		this.code = code;
@@ -56,7 +56,7 @@ public class SabotageOxygenInv extends SabotageInvHolder {
 			this.activeCode.add(num);
 			Main.getSoundsManager().playSound("sabotageOxygenNumberClick", p, p.getLocation());
 		}
-		this.changeTitle(Main.getMessagesManager().getGameMsg("sabotageOxygenInvTitle", this.arena, getPlaceholders(codeToStr(this.code), codeToStr(this.activeCode))));
+		this.changeTitle(Main.getMessagesManager().getGameMsg("sabotageOxygenInvTitle", this.arena, getPlaceholders(codeToStr(this.code), codeToStr(this.activeCode)), p));
 		Utils.fillInv(this.inv);
 		this.update();
 		p.openInventory(this.getInventory());
@@ -92,7 +92,7 @@ public class SabotageOxygenInv extends SabotageInvHolder {
 			}
 		}
 		this.activeCode.clear();
-		this.changeTitle(Main.getMessagesManager().getGameMsg("sabotageOxygenInvTitle", this.arena, getPlaceholders(codeToStr(this.code), codeToStr(this.activeCode))));
+		this.changeTitle(Main.getMessagesManager().getGameMsg("sabotageOxygenInvTitle", this.arena, getPlaceholders(codeToStr(this.code), codeToStr(this.activeCode)), p));
 		Utils.fillInv(this.inv);
 		this.update();
 		p.openInventory(this.getInventory());
@@ -104,7 +104,7 @@ public class SabotageOxygenInv extends SabotageInvHolder {
 		}
 		Main.getSoundsManager().playSound("sabotageOxygenCancelClick", p, p.getLocation());
 		this.activeCode.clear();
-		this.changeTitle(Main.getMessagesManager().getGameMsg("sabotageOxygenInvTitle", this.arena, getPlaceholders(codeToStr(this.code), codeToStr(this.activeCode))));
+		this.changeTitle(Main.getMessagesManager().getGameMsg("sabotageOxygenInvTitle", this.arena, getPlaceholders(codeToStr(this.code), codeToStr(this.activeCode)), p));
 		Utils.fillInv(this.inv);
 		this.update();
 		p.openInventory(this.getInventory());

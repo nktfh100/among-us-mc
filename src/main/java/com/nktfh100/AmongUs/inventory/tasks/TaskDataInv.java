@@ -27,7 +27,7 @@ public class TaskDataInv extends TaskInvHolder {
 	private BukkitTask runnable;
 
 	public TaskDataInv(Arena arena, TaskPlayer taskPlayer) {
-		super(27, Main.getMessagesManager().getGameMsg("taskInvTitle", arena, Utils.getTaskPlaceholders(taskPlayer)), arena, taskPlayer);
+		super(27, Main.getMessagesManager().getGameMsg("taskInvTitle", arena, Utils.getTaskPlaceholders(taskPlayer), taskPlayer.getPlayerInfo().getPlayer()), arena, taskPlayer);
 
 		this.estimatedTimes = Main.getMessagesManager().getEstimatedTimes();
 		Utils.fillInv(this.inv);

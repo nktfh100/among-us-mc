@@ -27,7 +27,7 @@ public class VotingInv extends CustomHolder {
 	private ArrayList<PlayerInfo> players = new ArrayList<PlayerInfo>();
 
 	public VotingInv(Arena arena, PlayerInfo pInfo) {
-		super(54, arena.getMeetingManager().getState() == meetingState.VOTING_RESULTS ? Main.getMessagesManager().getGameMsg("votingInvTitle1", arena, null) : Main.getMessagesManager().getGameMsg("votingInvTitle", arena, null));
+		super(54, arena.getMeetingManager().getState() == meetingState.VOTING_RESULTS ? Main.getMessagesManager().getGameMsg("votingInvTitle1", arena, null, pInfo.getPlayer()) : Main.getMessagesManager().getGameMsg("votingInvTitle", arena, null, pInfo.getPlayer()));
 		this.arena = arena;
 		this.pInfo = pInfo;
 		Utils.fillInv(this.inv);
@@ -115,7 +115,7 @@ public class VotingInv extends CustomHolder {
 				if (voterPInfo != null && voterPInfo.getColor() != null) {
 					HashMap<String, String> placeholders = new HashMap<>();
 					placeholders.put("%voter_color%", voterPInfo.getColor().getChatColor() + "");
-					votesLine.append(Main.getMessagesManager().getGameMsg("voteSymbol", arena, placeholders));
+					votesLine.append(Main.getMessagesManager().getGameMsg("voteSymbol", arena, placeholders, this.pInfo.getPlayer()));
 				}
 			}
 			votedSkipLine = votesLine.toString();
@@ -153,7 +153,7 @@ public class VotingInv extends CustomHolder {
 					if (voterPInfo != null && voterPInfo.getColor() != null && arena != null) {
 						HashMap<String, String> placeholders = new HashMap<>();
 						placeholders.put("%voter_color%", voterPInfo.getColor().getChatColor() + "");
-						votesLine.append(Main.getMessagesManager().getGameMsg("voteSymbol", arena, placeholders));
+						votesLine.append(Main.getMessagesManager().getGameMsg("voteSymbol", arena, placeholders, this.pInfo.getPlayer()));
 					}
 				}
 				lore.add(votesLine.toString());

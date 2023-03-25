@@ -44,7 +44,7 @@ public class PlayerChat implements Listener {
 
 		if (!arena.getIsInMeeting() && !pInfo.isGhost() && arena.getGameState() == GameState.RUNNING) {
 			ev.setCancelled(true);
-			String msg = Main.getMessagesManager().getGameMsg("cantTalk", arena, null);
+			String msg = Main.getMessagesManager().getGameMsg("cantTalk", arena, null, player);
 			if (!msg.isEmpty()) {
 				player.sendMessage(msg);
 			}
@@ -66,7 +66,7 @@ public class PlayerChat implements Listener {
 		placeholders.put("%player_color%", pInfo.getColor().getChatColor() + "");
 		placeholders.put("%player_color_name%", pInfo.getColor().getName());
 		placeholders.put("%message%", ev.getMessage());
-		String msg = Main.getMessagesManager().getGameMsg(key, arena, placeholders);
+		String msg = Main.getMessagesManager().getGameMsg(key, arena, placeholders, player);
 
 		// If the game is finishing, send the message to everyone
 		if (arena.getGameState() == GameState.FINISHING) {

@@ -23,6 +23,7 @@ import com.nktfh100.AmongUs.main.Main;
 import com.nktfh100.AmongUs.utils.Utils;
 
 import me.clip.placeholderapi.PlaceholderAPI;
+import org.bukkit.entity.Player;
 
 public class MessagesManager {
 
@@ -144,7 +145,7 @@ public class MessagesManager {
 		}
 	}
 
-	private String replaceExtra(String line, HashMap<String, String> placeholders) {
+	private String replacePlaceholders(String line, HashMap<String, String> placeholders, Player player) {
 		if (line == null) {
 			return "";
 		}
@@ -153,6 +154,10 @@ public class MessagesManager {
 			for (Map.Entry<String, String> placeholder : placeholders.entrySet()) {
 				line = line.replaceAll(placeholder.getKey(), placeholder.getValue());
 			}
+		}
+
+		if (player != null && Main.getIsPlaceHolderAPI()) {
+			line = PlaceholderAPI.setPlaceholders(player, line);
 		}
 
 		return line;
@@ -184,7 +189,7 @@ public class MessagesManager {
 		return line;
 	}
 
-	public String getGameMsg(String key, Arena arena, HashMap<String, String> placeholders) {
+	public String getGameMsg(String key, Arena arena, HashMap<String, String> placeholders, Player player) {
 		if (this.msgsGame == null) {
 			return "";
 		}
@@ -196,7 +201,7 @@ public class MessagesManager {
 		if (arena != null) {
 			output = output.replaceAll("%arena%", arena.getDisplayName());
 		}
-		return replaceExtra(output, placeholders);
+		return replacePlaceholders(output, placeholders, player);
 	}
 
 	public String getTaskName(String task) {
@@ -310,7 +315,7 @@ public class MessagesManager {
 			return out;
 		}
 		for (String line : lines) {
-			out.add(this.replaceExtra(line, placeholders));
+			out.add(this.replacePlaceholders(line, placeholders, null));
 		}
 		return out;
 	}

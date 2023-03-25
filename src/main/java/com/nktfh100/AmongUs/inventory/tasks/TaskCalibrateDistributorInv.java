@@ -28,7 +28,7 @@ public class TaskCalibrateDistributorInv extends TaskInvHolder {
 	private BukkitTask runnable = null;
 
 	public TaskCalibrateDistributorInv(Arena arena, TaskPlayer taskPlayer) {
-		super(45, Main.getMessagesManager().getGameMsg("taskInvTitle", arena, Utils.getTaskPlaceholders(taskPlayer)), arena, taskPlayer);
+		super(45, Main.getMessagesManager().getGameMsg("taskInvTitle", arena, Utils.getTaskPlaceholders(taskPlayer), taskPlayer.getPlayerInfo().getPlayer()), arena, taskPlayer);
 		Utils.fillInv(this.inv);
 		
 		this.inv.setItem(8, Main.getItemsManager().getItem("calibrateDistributor_info").getItem().getItem());

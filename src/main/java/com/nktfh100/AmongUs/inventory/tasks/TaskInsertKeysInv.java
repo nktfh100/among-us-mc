@@ -23,7 +23,7 @@ public class TaskInsertKeysInv extends TaskInvHolder {
 	private Boolean isDone = false;
 
 	public TaskInsertKeysInv(Arena arena, TaskPlayer taskPlayer) {
-		super(36, Main.getMessagesManager().getGameMsg("taskInvTitle", arena, Utils.getTaskPlaceholders(taskPlayer)), arena, taskPlayer);
+		super(36, Main.getMessagesManager().getGameMsg("taskInvTitle", arena, Utils.getTaskPlaceholders(taskPlayer), taskPlayer.getPlayerInfo().getPlayer()), arena, taskPlayer);
 		Utils.fillInv(this.inv);
 
 		this.update();

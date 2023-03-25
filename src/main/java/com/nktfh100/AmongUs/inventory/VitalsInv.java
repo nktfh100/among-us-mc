@@ -31,8 +31,8 @@ public class VitalsInv extends CustomHolder {
 	private VitalsManager vitalsManager;
 	private Integer currentPage = 1;
 
-	public VitalsInv(VitalsManager vitalsManager) {
-		super(54, Main.getMessagesManager().getGameMsg("vitalsInvTitle", null, null));
+	public VitalsInv(VitalsManager vitalsManager, Player player) {
+		super(54, Main.getMessagesManager().getGameMsg("vitalsInvTitle", null, null, player));
 		this.vitalsManager = vitalsManager;
 		Utils.fillInv(this.inv);
 		this.update();

@@ -23,7 +23,7 @@ public class TaskFixWeatherNodeInv extends TaskInvHolder {
 	private Boolean isDone = false;
 
 	public TaskFixWeatherNodeInv(Arena arena, TaskPlayer taskPlayer) {
-		super(54, Main.getMessagesManager().getGameMsg("taskInvTitle", arena, Utils.getTaskPlaceholders(taskPlayer)), arena, taskPlayer);
+		super(54, Main.getMessagesManager().getGameMsg("taskInvTitle", arena, Utils.getTaskPlaceholders(taskPlayer), taskPlayer.getPlayerInfo().getPlayer()), arena, taskPlayer);
 		Utils.fillInv(this.inv);
 		this.update();
 	}

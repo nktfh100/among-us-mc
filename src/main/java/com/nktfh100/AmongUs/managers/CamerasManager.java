@@ -197,7 +197,7 @@ public class CamerasManager {
 				}
 			}
 		}.runTaskLater(Main.getPlugin(), 5L);
-		Utils.sendActionBar(pInfo.getPlayer(), this.getCameraActionBar(pInfo.getActiveCamera()));
+		Utils.sendActionBar(pInfo.getPlayer(), this.getCameraActionBar(pInfo.getActiveCamera(), pInfo.getPlayer()));
 		Main.getSoundsManager().playSound("playerNextCamera", pInfo.getPlayer(), pInfo.getActiveCamera().getViewLoc());
 
 		for (PlayerInfo pInfo1 : pInfo.getArena().getPlayersInfo()) {
@@ -243,7 +243,7 @@ public class CamerasManager {
 				}
 			}
 		}.runTaskLater(Main.getPlugin(), 5L);
-		Utils.sendActionBar(pInfo.getPlayer(), this.getCameraActionBar(pInfo.getActiveCamera()));
+		Utils.sendActionBar(pInfo.getPlayer(), this.getCameraActionBar(pInfo.getActiveCamera(), pInfo.getPlayer()));
 		Main.getSoundsManager().playSound("playerNextCamera", pInfo.getPlayer(), pInfo.getActiveCamera().getViewLoc());
 
 		for (PlayerInfo pInfo1 : pInfo.getArena().getPlayersInfo()) {
@@ -260,13 +260,13 @@ public class CamerasManager {
 		}
 	}
 
-	public String getCameraActionBar(Camera camera) {
+	public String getCameraActionBar(Camera camera, Player p) {
 		if (camera.getLocName() == null) {
-			return Main.getMessagesManager().getGameMsg("cameraActionBar1", arena, null);
+			return Main.getMessagesManager().getGameMsg("cameraActionBar1", arena, null, p);
 		} else {
 			HashMap<String, String> placeholders = new HashMap<>();
 			placeholders.put("%location%", camera.getLocName().getName());
-			return Main.getMessagesManager().getGameMsg("cameraActionBar", arena, placeholders);
+			return Main.getMessagesManager().getGameMsg("cameraActionBar", arena, placeholders, p);
 		}
 	}
 

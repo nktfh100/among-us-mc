@@ -23,7 +23,7 @@ public class CosmeticSelectorInv extends CustomHolder {
 	private Integer page = 1;
 
 	public CosmeticSelectorInv(PlayerInfo pInfo) {
-		super(54, Main.getMessagesManager().getGameMsg("cosmeticsSelectorInvTitle", null, null));
+		super(54, Main.getMessagesManager().getGameMsg("cosmeticsSelectorInvTitle", null, null, pInfo.getPlayer()));
 		this.pInfo = pInfo;
 		Utils.addBorder(this.inv, 54, Main.getItemsManager().getItem("cosmeticsSelector_border").getItem().getMat());
 		this.update();
@@ -112,7 +112,7 @@ public class CosmeticSelectorInv extends CustomHolder {
 							HashMap<String, String> placeholders = new HashMap<>();
 							placeholders.put("%cosmetic_name%", cosmeticItem.getName());
 							placeholders.put("%player_coins%", String.valueOf(Main.getPlayerPointsApi().look(player.getUniqueId())));
-							player.sendMessage(Main.getMessagesManager().getGameMsg("selectedCosmetic", null, placeholders));
+							player.sendMessage(Main.getMessagesManager().getGameMsg("selectedCosmetic", null, placeholders, player));
 						} else {
 							HashMap<String, String> placeholders = new HashMap<>();
 							placeholders.put("%cosmetic_name%", cosmeticItem.getName());
@@ -124,9 +124,9 @@ public class CosmeticSelectorInv extends CustomHolder {
 									pInfo.getStatsManager().selectCosmetic(CosmeticType.KILL_SWORD, cosmeticItem.getKey());
 									Main.getPlayerPointsApi().take(player.getUniqueId(), cosmeticItem.getPrice());
 									inv.update();
-									player.sendMessage(Main.getMessagesManager().getGameMsg("playerBoughtCosmetic", null, placeholders));
+									player.sendMessage(Main.getMessagesManager().getGameMsg("playerBoughtCosmetic", null, placeholders, player));
 								} else {
-									player.sendMessage(Main.getMessagesManager().getGameMsg("notEnoughCoins", null, placeholders));
+									player.sendMessage(Main.getMessagesManager().getGameMsg("notEnoughCoins", null, placeholders, player));
 								}
 							} else if (player.hasPermission(cosmeticItem.getPermission())) {
 								if (cosmeticItem.getPrice() > 0) {
@@ -135,9 +135,9 @@ public class CosmeticSelectorInv extends CustomHolder {
 										pInfo.getStatsManager().selectCosmetic(CosmeticType.KILL_SWORD, cosmeticItem.getKey());
 										Main.getPlayerPointsApi().take(player.getUniqueId(), cosmeticItem.getPrice());
 										inv.update();
-										player.sendMessage(Main.getMessagesManager().getGameMsg("playerBoughtCosmetic", null, placeholders));
+										player.sendMessage(Main.getMessagesManager().getGameMsg("playerBoughtCosmetic", null, placeholders, player));
 									} else {
-										player.sendMessage(Main.getMessagesManager().getGameMsg("notEnoughCoins", null, placeholders));
+										player.sendMessage(Main.getMessagesManager().getGameMsg("notEnoughCoins", null, placeholders, player));
 									}
 								} else {
 									pInfo.getStatsManager().selectCosmetic(CosmeticType.KILL_SWORD, cosmeticItem.getKey());
@@ -146,7 +146,7 @@ public class CosmeticSelectorInv extends CustomHolder {
 									placeholders1.put("%cosmetic_name%", cosmeticItem.getName());
 									placeholders1.put("%player_coins%", String.valueOf(Main.getPlayerPointsApi().look(player.getUniqueId())));
 									player.sendMessage(
-											Main.getMessagesManager().getGameMsg("selectedCosmetic", null, placeholders1));
+											Main.getMessagesManager().getGameMsg("selectedCosmetic", null, placeholders1, player));
 								}
 							}
 						}

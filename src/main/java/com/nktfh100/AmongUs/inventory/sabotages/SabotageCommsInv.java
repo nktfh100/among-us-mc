@@ -41,8 +41,8 @@ public class SabotageCommsInv extends SabotageInvHolder {
 	private Integer activeLocation = 5;
 	private Integer rightLocation = 0;
 
-	public SabotageCommsInv(SabotageArena saboArena) {
-		super(54, Main.getMessagesManager().getGameMsg("sabotageCommsInvTitle", saboArena.getArena(), Utils.getSabotagePlaceholders(SabotageType.COMMUNICATIONS)), saboArena.getArena(), saboArena);
+	public SabotageCommsInv(SabotageArena saboArena, Player p) {
+		super(54, Main.getMessagesManager().getGameMsg("sabotageCommsInvTitle", saboArena.getArena(), Utils.getSabotagePlaceholders(SabotageType.COMMUNICATIONS), p), saboArena.getArena(), saboArena);
 		Utils.fillInv(this.inv);
 		Boolean isOk = false;
 		while (!isOk) {

@@ -18,7 +18,7 @@ public class MeetingBtnInv extends CustomHolder {
 	private PlayerInfo pInfo;
 
 	public MeetingBtnInv(Arena arena, PlayerInfo pInfo) {
-		super(45, Main.getMessagesManager().getGameMsg("meetingButtonInvTitle", arena, null));
+		super(45, Main.getMessagesManager().getGameMsg("meetingButtonInvTitle", arena, null, pInfo.getPlayer()));
 		this.arena = arena;
 		this.pInfo = pInfo;
 		Utils.fillInv(this.inv);

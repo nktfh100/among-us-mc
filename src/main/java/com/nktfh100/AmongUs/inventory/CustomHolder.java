@@ -12,12 +12,14 @@ public class CustomHolder implements InventoryHolder {
 	protected Inventory inv;
 	protected Integer size;
 	protected String title;
+	protected String originalTitle;
 	protected final HashMap<Integer, Icon> icons = new HashMap<>();
 
 	public CustomHolder(Integer size, String title) {
 		this.inv = Bukkit.createInventory(this, size, title);
 		this.size = size;
 		this.title = title;
+		this.originalTitle = title;
 	}
 
 	public void changeTitle(String newTitle) {
@@ -26,6 +28,10 @@ public class CustomHolder implements InventoryHolder {
 		for (Integer i : this.icons.keySet()) {
 			this.inv.setItem(i, this.icons.get(i).itemStack);
 		}
+	}
+
+	public String getOriginalTitle() {
+		return this.originalTitle;
 	}
 
 	public void changeSize(int newSize) {
@@ -66,6 +72,10 @@ public class CustomHolder implements InventoryHolder {
 	@Override
 	public Inventory getInventory() {
 		return this.inv;
+	}
+
+	public String getTitle() {
+		return this.title;
 	}
 
 }

@@ -29,7 +29,7 @@ public class TaskScanInv extends TaskInvHolder {
 	private Boolean removeFromQueue = true;
 
 	public TaskScanInv(Arena arena, TaskPlayer taskPlayer) {
-		super(arena.getScanQueue().size() == 0 ? 54 : 9, Main.getMessagesManager().getGameMsg("taskInvTitle", arena, Utils.getTaskPlaceholders(taskPlayer)), arena, taskPlayer);
+		super(arena.getScanQueue().size() == 0 ? 54 : 9, Main.getMessagesManager().getGameMsg("taskInvTitle", arena, Utils.getTaskPlaceholders(taskPlayer), taskPlayer.getPlayerInfo().getPlayer()), arena, taskPlayer);
 		Utils.fillInv(this.inv);
 
 		this.color = this.pInfo.getColor();

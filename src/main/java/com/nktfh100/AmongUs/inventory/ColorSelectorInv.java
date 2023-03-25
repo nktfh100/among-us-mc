@@ -16,7 +16,7 @@ public class ColorSelectorInv extends CustomHolder {
 	private Arena arena;
 
 	public ColorSelectorInv(Arena arena) {
-		super(18, Main.getMessagesManager().getGameMsg("colorSelectorInvTitle", null, null));
+		super(18, Main.getMessagesManager().getGameMsg("colorSelectorInvTitle", null, null, null));
 		this.arena = arena;
 		Utils.fillInv(this.inv);
 	}

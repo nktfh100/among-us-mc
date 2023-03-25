@@ -67,7 +67,7 @@ public class PlayerRightClick implements Listener {
 					return;
 				} else if (displayName.equals(itemsManager.getItem("colorSelector").getItem().getTitle())) {
 					ev.setCancelled(true);
-					player.openInventory(pInfo.getArena().getColorSelectorInv().getInventory());
+					player.openInventory(pInfo.getArena().getColorSelectorInv(player).getInventory());
 					return;
 				} else if (displayName.equals(itemsManager.getItem("use").getItem2().getTitle())) {
 					ev.setCancelled(true);

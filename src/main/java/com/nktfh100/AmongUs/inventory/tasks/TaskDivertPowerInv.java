@@ -31,7 +31,7 @@ public class TaskDivertPowerInv extends TaskInvHolder {
 	private Boolean isDone = false;
 
 	public TaskDivertPowerInv(Arena arena, TaskPlayer taskPlayer, ArrayList<String> locations_, String activeLocation_, Integer activeLever_) {
-		super(36, Main.getMessagesManager().getGameMsg("taskInvTitle", arena, Utils.getTaskPlaceholders(taskPlayer)), arena, taskPlayer);
+		super(36, Main.getMessagesManager().getGameMsg("taskInvTitle", arena, Utils.getTaskPlaceholders(taskPlayer), taskPlayer.getPlayerInfo().getPlayer()), arena, taskPlayer);
 		Utils.fillInv(this.inv);
 
 		if (activeLocation == null) {

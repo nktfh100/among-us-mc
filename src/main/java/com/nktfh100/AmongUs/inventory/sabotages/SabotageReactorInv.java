@@ -2,7 +2,6 @@ package com.nktfh100.AmongUs.inventory.sabotages;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -28,7 +27,7 @@ public class SabotageReactorInv extends SabotageInvHolder {
 	private Boolean removePlayerOnClose = true;
 
 	public SabotageReactorInv(SabotageArena saboArena, Integer taskNum, Player player) {
-		super(54, Main.getMessagesManager().getGameMsg("sabotageReactorsInvTitle", saboArena.getArena(), Utils.getSabotagePlaceholders(SabotageType.REACTOR_MELTDOWN)), saboArena.getArena(), saboArena);
+		super(54, Main.getMessagesManager().getGameMsg("sabotageReactorsInvTitle", saboArena.getArena(), Utils.getSabotagePlaceholders(SabotageType.REACTOR_MELTDOWN), player), saboArena.getArena(), saboArena);
 		Utils.fillInv(this.inv);
 		this.taskNum = taskNum;
 		this.arena = saboArena.getArena();
@@ -88,7 +87,7 @@ public class SabotageReactorInv extends SabotageInvHolder {
 		}
 		if (!activeTitle.equals(newTitleKey)) {
 			removePlayerOnClose = false;
-			this.changeTitle(Main.getMessagesManager().getGameMsg(newTitleKey, this.arena, Utils.getSabotagePlaceholders(SabotageType.REACTOR_MELTDOWN)));
+			this.changeTitle(Main.getMessagesManager().getGameMsg(newTitleKey, this.arena, Utils.getSabotagePlaceholders(SabotageType.REACTOR_MELTDOWN), this.player));
 			Utils.fillInv(this.inv);
 			this.player.openInventory(this.inv);
 			this.tempActiveTitle = newTitleKey;

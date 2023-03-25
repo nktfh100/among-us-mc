@@ -35,14 +35,14 @@ public class PlayersCommand implements CommandExecutor {
 							if (Main.getBungeArenaManager().getArenaByServer(args[1]) != null) {
 								Main.sendPlayerToArena(player, args[1]);
 							} else {
-								player.sendMessage(Main.getMessagesManager().getGameMsg("arenaNotFound", null, arenaPlaceholder));
+								player.sendMessage(Main.getMessagesManager().getGameMsg("arenaNotFound", null, arenaPlaceholder, player));
 							}
 						} else {
 							if (Main.getArenaManager().getArenaByName(args[1]) != null) {
 								Arena arena = Main.getArenaManager().getArenaByName(args[1]);
 								arena.playerJoin(player);
 							} else {
-								player.sendMessage(Main.getMessagesManager().getGameMsg("arenaNotFound", null, arenaPlaceholder));
+								player.sendMessage(Main.getMessagesManager().getGameMsg("arenaNotFound", null, arenaPlaceholder, player));
 							}
 						}
 					} else {
@@ -52,21 +52,21 @@ public class PlayersCommand implements CommandExecutor {
 							if (arena_ != null) {
 								Main.sendPlayerToArena(player, arena_.getServer());
 							} else {
-								player.sendMessage(Main.getMessagesManager().getGameMsg("noArenasAvailable", null, null));
+								player.sendMessage(Main.getMessagesManager().getGameMsg("noArenasAvailable", null, null, player));
 							}
 						} else {
 							Arena arena = Main.getArenaManager().getArenaWithMostPlayers();
 							if (arena != null) {
 								arena.playerJoin(player);
 							} else {
-								player.sendMessage(Main.getMessagesManager().getGameMsg("noArenasAvailable", null, null));
+								player.sendMessage(Main.getMessagesManager().getGameMsg("noArenasAvailable", null, null, player));
 							}
 						}
 					}
 				} else {
 					HashMap<String, String> placeholders = new HashMap<>();
 					placeholders.put("%arena%", pInfo.getArena().getDisplayName());
-					player.sendMessage(Main.getMessagesManager().getGameMsg("alreadyInGame", null, placeholders));
+					player.sendMessage(Main.getMessagesManager().getGameMsg("alreadyInGame", null, placeholders, player));
 				}
 			} else if (args[0].equalsIgnoreCase("joinrandom")) {
 				if (!pInfo.getIsIngame()) {
@@ -76,20 +76,20 @@ public class PlayersCommand implements CommandExecutor {
 						if (arena_ != null) {
 							Main.sendPlayerToArena(player, arena_.getServer());
 						} else {
-							player.sendMessage(Main.getMessagesManager().getGameMsg("noArenasAvailable", null, null));
+							player.sendMessage(Main.getMessagesManager().getGameMsg("noArenasAvailable", null, null, player));
 						}
 					} else {
 						Arena arena = Main.getArenaManager().getRandomArena();
 						if (arena != null) {
 							arena.playerJoin(player);
 						} else {
-							player.sendMessage(Main.getMessagesManager().getGameMsg("noArenasAvailable", null, null));
+							player.sendMessage(Main.getMessagesManager().getGameMsg("noArenasAvailable", null, null, player));
 						}
 					}
 				} else {
 					HashMap<String, String> placeholders = new HashMap<>();
 					placeholders.put("%arena%", pInfo.getArena().getDisplayName());
-					player.sendMessage(Main.getMessagesManager().getGameMsg("alreadyInGame", null, placeholders));
+					player.sendMessage(Main.getMessagesManager().getGameMsg("alreadyInGame", null, placeholders, player));
 				}
 			} else if (args.length >= 1) {
 				if (args[0].equalsIgnoreCase("leave") && pInfo.getIsIngame()) {

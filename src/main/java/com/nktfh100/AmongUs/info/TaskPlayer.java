@@ -96,8 +96,8 @@ public class TaskPlayer {
 		HashMap<String, String> placeholders = new HashMap<>();
 		placeholders.put("%name%", Main.getMessagesManager().getTaskName(this.getActiveTask().getTaskType().toString()));
 		placeholders.put("%location%", this.getActiveTask().getLocationName().getName());
-		this.pInfo.getPlayer().sendTitle(Main.getMessagesManager().getGameMsg("finishTaskTitle", this.pInfo.getArena(), placeholders),
-				Main.getMessagesManager().getGameMsg("finishTaskSubTitle", this.pInfo.getArena(), placeholders), 15, 40, 20);
+		this.pInfo.getPlayer().sendTitle(Main.getMessagesManager().getGameMsg("finishTaskTitle", this.pInfo.getArena(), placeholders, this.pInfo.getPlayer()),
+				Main.getMessagesManager().getGameMsg("finishTaskSubTitle", this.pInfo.getArena(), placeholders, this.pInfo.getPlayer()), 15, 40, 20);
 		this.state++;
 		this.pInfo.updateScoreBoard();
 		Main.getSoundsManager().playSound("taskCompleted", this.pInfo.getPlayer(), this.pInfo.getPlayer().getLocation());

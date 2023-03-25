@@ -107,7 +107,7 @@ public class VentsManager {
 				}
 			}
 		}.runTaskLater(Main.getPlugin(), 5L);
-		Utils.sendActionBar(pInfo.getPlayer(), arena.getVentsManager().getVentActionBar(pInfo.getVent()));
+		Utils.sendActionBar(pInfo.getPlayer(), arena.getVentsManager().getVentActionBar(pInfo.getVent(), pInfo.getPlayer()));
 		pInfo.getArena().getVisibilityManager().playerMoved(pInfo, pInfo.getVent().getPlayerLoc());
 	}
 
@@ -133,7 +133,7 @@ public class VentsManager {
 				}
 			}
 		}.runTaskLater(Main.getPlugin(), 5L);
-		Utils.sendActionBar(pInfo.getPlayer(), arena.getVentsManager().getVentActionBar(pInfo.getVent()));
+		Utils.sendActionBar(pInfo.getPlayer(), arena.getVentsManager().getVentActionBar(pInfo.getVent(), pInfo.getPlayer()));
 		pInfo.getArena().getVisibilityManager().playerMoved(pInfo, pInfo.getVent().getPlayerLoc());
 	}
 
@@ -153,13 +153,13 @@ public class VentsManager {
 		}
 	}
 
-	public String getVentActionBar(Vent vent) {
+	public String getVentActionBar(Vent vent, Player p) {
 		if (vent.getLocName() == null) {
-			return Main.getMessagesManager().getGameMsg("ventActionBar1", arena, null);
+			return Main.getMessagesManager().getGameMsg("ventActionBar1", arena, null, p);
 		} else {
 			HashMap<String, String> placeholders = new HashMap<>();
 			placeholders.put("%location%", vent.getLocName().getName());
-			return Main.getMessagesManager().getGameMsg("ventActionBar", arena, placeholders);
+			return Main.getMessagesManager().getGameMsg("ventActionBar", arena, placeholders, p);
 		}
 	}
 

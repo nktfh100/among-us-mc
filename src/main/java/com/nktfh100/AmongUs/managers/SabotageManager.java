@@ -70,9 +70,9 @@ public class SabotageManager {
 		this.activeSabotage.resetTasksDone();
 		HashMap<String, String> placeholders = new HashMap<>();
 		placeholders.put("%sabotage%", Main.getMessagesManager().getTaskName(this.getActiveSabotage().getType().toString()));
-		String saboTitle = Main.getMessagesManager().getGameMsg("sabotageTitle", this.arena, placeholders);
-		String saboSubTitle = Main.getMessagesManager().getGameMsg("sabotageSubTitle", this.arena, placeholders);
 		for (Player p : this.arena.getPlayers()) {
+			String saboTitle = Main.getMessagesManager().getGameMsg("sabotageTitle", this.arena, placeholders, p);
+			String saboSubTitle = Main.getMessagesManager().getGameMsg("sabotageSubTitle", this.arena, placeholders, p);
 			this.bossbar.addPlayer(p);
 			p.sendTitle(saboTitle, saboSubTitle, 15, 40, 15);
 		}
@@ -138,7 +138,6 @@ public class SabotageManager {
 //					}
 //				}.runTaskTimer(Main.getPlugin(), 7L, 7L);
 //			}
-			this.saboInvHolder = new SabotageLightsInv(this.getActiveSabotage());
 
 			for (PlayerInfo pInfo : this.arena.getPlayersInfo()) {
 				if (!pInfo.isGhost() && !pInfo.getIsImposter()) {
@@ -223,11 +222,7 @@ public class SabotageManager {
 		}
 
 		if (didFix && !isForce) {
-			String title = Main.getMessagesManager().getGameMsg("sabotageFixedTitle", this.arena, null);
-			String subTitle = Main.getMessagesManager().getGameMsg("sabotageFixedSubTitle", this.arena, null);
-			if (!(title.isEmpty() && subTitle.isEmpty())) {
-				this.arena.sendTitle(title, subTitle);
-			}
+			this.arena.sendTitle("sabotageFixedTitle", null);
 		}
 
 		if (!didFix && this.activeSabotage != null) {
@@ -323,12 +318,15 @@ public class SabotageManager {
 			HashMap<String, String> placeholders = new HashMap<>();
 			placeholders.put("%title%", Main.getMessagesManager().getSabotageTitle(this.activeSabotage.getType()));
 			placeholders.put("%name%", Main.getMessagesManager().getTaskName(this.activeSabotage.getType().toString()));
-			if (this.isTimerActive) {
-				placeholders.put("%time%", timeLeft);
-				placeholders.put("%sabotages_fixed%", ext);
-				this.bossbar.setTitle(Main.getMessagesManager().getGameMsg("sabotageBossBarTimer", arena, placeholders));
-			} else {
-				this.bossbar.setTitle(Main.getMessagesManager().getGameMsg("sabotageBossBar", arena, placeholders));
+
+			for (PlayerInfo imposter : this.arena.getGameImposters()) {
+				if (this.isTimerActive) {
+					placeholders.put("%time%", timeLeft);
+					placeholders.put("%sabotages_fixed%", ext);
+					this.bossbar.setTitle(Main.getMessagesManager().getGameMsg("sabotageBossBarTimer", arena, placeholders, imposter.getPlayer()));
+				} else {
+					this.bossbar.setTitle(Main.getMessagesManager().getGameMsg("sabotageBossBar", arena, placeholders, imposter.getPlayer()));
+				}
 			}
 		}
 	}
@@ -348,19 +346,19 @@ public class SabotageManager {
 		switch (this.activeSabotage.getType()) {
 		case LIGHTS:
 			if (this.saboInvHolder == null) {
-				this.saboInvHolder = new SabotageLightsInv(this.getActiveSabotage());
+				this.saboInvHolder = new SabotageLightsInv(this.getActiveSabotage(), player);
 			}
 
 			player.openInventory(this.saboInvHolder.getInventory());
 			return;
 		case COMMUNICATIONS:
-			player.openInventory(new SabotageCommsInv(this.getActiveSabotage()).getInventory());
+			player.openInventory(new SabotageCommsInv(this.getActiveSabotage(), player).getInventory());
 			return;
 		case REACTOR_MELTDOWN:
 			player.openInventory(new SabotageReactorInv(this.getActiveSabotage(), clickedTaskId, player).getInventory());
 			return;
 		case OXYGEN:
-			player.openInventory(new SabotageOxygenInv(this.getActiveSabotage(), clickedTaskId, this.oxygenCode).getInventory());
+			player.openInventory(new SabotageOxygenInv(this.getActiveSabotage(), clickedTaskId, this.oxygenCode, player).getInventory());
 			return;
 		default:
 			this.activeSabotage.taskDone(player);
@@ -395,7 +393,7 @@ public class SabotageManager {
 			sabotageCooldownBossBarP.setProgress(progress);
 			HashMap<String, String> placeholders = new HashMap<>();
 			placeholders.put("%time%", String.valueOf(sabotageCoolDownTimer));
-			sabotageCooldownBossBarP.setTitle(Main.getMessagesManager().getGameMsg("sabotageCooldownBossBar", arena, placeholders));
+			sabotageCooldownBossBarP.setTitle(Main.getMessagesManager().getGameMsg("sabotageCooldownBossBar", arena, placeholders, player));
 		}
 
 		if (!arena.getIsInMeeting()) {
@@ -445,7 +443,7 @@ public class SabotageManager {
 	public void addImposter(Player player) {
 		String uuid = player.getUniqueId().toString();
 		this.sabotageCoolDownTimer.put(uuid, 0);
-		this.sabotageCooldownBossBar.put(uuid, Bukkit.createBossBar(Main.getMessagesManager().getGameMsg("sabotageCooldownBossBar", this.arena, null), BarColor.RED, BarStyle.SOLID));
+		this.sabotageCooldownBossBar.put(uuid, Bukkit.createBossBar(Main.getMessagesManager().getGameMsg("sabotageCooldownBossBar", this.arena, null, player), BarColor.RED, BarStyle.SOLID));
 	}
 
 	public void removeImposter(String uuid) {

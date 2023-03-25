@@ -83,7 +83,7 @@ public class CosmeticsManager {
 				Main.getPlayerPointsApi().give(player.getUniqueId(), this.coins.get(key));
 				HashMap<String, String> placeholders = new HashMap<>();
 				placeholders.put("%coins%", String.valueOf(this.coins.get(key)));
-				player.sendMessage(Main.getMessagesManager().getGameMsg("playerCoins", null, placeholders));
+				player.sendMessage(Main.getMessagesManager().getGameMsg("playerCoins", null, placeholders, player));
 			}
 		}
 	}

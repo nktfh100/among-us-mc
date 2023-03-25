@@ -170,7 +170,7 @@ public class PlayerInfo {
 			placeholders.put("%player_name%", this.player.getName());
 			placeholders.put("%player_color%", this.color.getChatColor() + "");
 			placeholders.put("%player_color_name%", this.color.getName());
-			return Main.getMessagesManager().getGameMsg("tabName", this.getArena(), placeholders);
+			return Main.getMessagesManager().getGameMsg("tabName", this.getArena(), placeholders, this.player);
 		} else {
 			return this.player.getName();
 		}
@@ -278,7 +278,7 @@ public class PlayerInfo {
 	public void startGame(RoleType givenRole) {
 		this.role = givenRole;
 		if (this.getIsImposter() && arena.getKillCooldown() > 0) {
-			this.killCooldownBossBar = Bukkit.createBossBar(Main.getMessagesManager().getGameMsg("killCooldownBossBar", this.getArena(), null), BarColor.RED, BarStyle.SOLID);
+			this.killCooldownBossBar = Bukkit.createBossBar(Main.getMessagesManager().getGameMsg("killCooldownBossBar", this.getArena(), null, this.player), BarColor.RED, BarStyle.SOLID);
 			this.killCooldownBossBar.setProgress(1);
 			this.killCooldownBossBar.addPlayer(this.player);
 		}
@@ -756,7 +756,7 @@ public class PlayerInfo {
 			this.killCooldownBossBar.setProgress(progress);
 			HashMap<String, String> placeholders = new HashMap<>();
 			placeholders.put("%time%", String.valueOf(killCoolDown));
-			this.killCooldownBossBar.setTitle(Main.getMessagesManager().getGameMsg("killCooldownBossBar", arena, placeholders));
+			this.killCooldownBossBar.setTitle(Main.getMessagesManager().getGameMsg("killCooldownBossBar", arena, placeholders, this.player));
 		}
 		if (!arena.getIsInMeeting() && !this.isGhost() && !this.getIsInVent() && !this.getIsInCameras()) {
 			this.giveKillItem(killCoolDown);

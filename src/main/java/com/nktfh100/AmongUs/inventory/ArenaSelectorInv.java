@@ -14,7 +14,7 @@ import com.nktfh100.AmongUs.utils.Utils;
 public class ArenaSelectorInv extends CustomHolder {
 
 	public ArenaSelectorInv() {
-		super(45, Main.getMessagesManager().getGameMsg("arenasSelectorInvTitle", null, null));
+		super(45, Main.getMessagesManager().getGameMsg("arenasSelectorInvTitle", null, null, null));
 	}
 
 	public void update() {
