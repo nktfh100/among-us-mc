@@ -98,7 +98,7 @@ public class ConfigManager {
 		if (mainLobbyWorld == null) {
 			mainLobbyWorld = Bukkit.getWorlds().get(0);
 		}
-		this.mainLobby = new Location(mainLobbyWorld, this.config.getDouble("mainLobby.x"), this.config.getDouble("mainLobby.y"), this.config.getDouble("mainLobby.z"));
+		this.mainLobby = new Location(mainLobbyWorld, this.config.getDouble("mainLobby.x"), this.config.getDouble("mainLobby.y"), this.config.getDouble("mainLobby.z"), (float) this.config.getDouble("mainLobby.yaw"), (float) this.config.getDouble("mainLobby.pitch"));
 
 		this.prefix = ChatColor.translateAlternateColorCodes('&', this.config.getString("prefix"));
 

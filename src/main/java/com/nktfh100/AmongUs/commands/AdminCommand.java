@@ -459,9 +459,11 @@ public class AdminCommand implements CommandExecutor {
 					sender.sendMessage(Main.getConfigManager().getPrefix() + ChatColor.YELLOW + "Main lobby is set.");
 					Location lobby_ = ((Player) sender).getLocation();
 					config.set("mainLobby.world", lobby_.getWorld().getName());
-					config.set("mainLobby.x", (double) lobby_.getBlockX());
-					config.set("mainLobby.y", (double) lobby_.getBlockY());
-					config.set("mainLobby.z", (double) lobby_.getBlockZ());
+					config.set("mainLobby.x", lobby_.getX());
+					config.set("mainLobby.y", lobby_.getY());
+					config.set("mainLobby.z", lobby_.getZ());
+					config.set("mainLobby.yaw", lobby_.getYaw());
+					config.set("mainLobby.pitch", lobby_.getPitch());
 					Main.getPlugin().saveConfig();
 				}
 			}
