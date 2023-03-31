@@ -15,6 +15,10 @@ public class DecentHologramClickListeners implements Listener {
         listeners.put(hologramName, listener);
     }
 
+    public void removeListener(String hologramName) {
+        listeners.remove(hologramName);
+    }
+
     @EventHandler
     public void onHologramClick(HologramClickEvent event) {
         new BukkitRunnable() {

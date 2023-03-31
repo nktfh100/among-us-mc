@@ -27,6 +27,7 @@ public class DecentHolograms implements ImposterHologram, Listener {
     @Override
     public void deleteHologram() {
         this.hologram.delete();
+        Main.getHologramListener().removeListener(this.hologram.getName());
     }
 
     @Override
