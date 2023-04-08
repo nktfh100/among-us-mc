@@ -109,6 +109,8 @@ public class VentsManager {
 		}.runTaskLater(Main.getPlugin(), 5L);
 		Utils.sendActionBar(pInfo.getPlayer(), arena.getVentsManager().getVentActionBar(pInfo.getVent(), pInfo.getPlayer()));
 		pInfo.getArena().getVisibilityManager().playerMoved(pInfo, pInfo.getVent().getPlayerLoc());
+		// Hides the hologram so the user can use the items in the inventory
+		pInfo.getVent().getHolo().hideTo(pInfo.getPlayer());
 	}
 
 	public void playerNextVent(PlayerInfo pInfo) {
@@ -135,6 +137,8 @@ public class VentsManager {
 		}.runTaskLater(Main.getPlugin(), 5L);
 		Utils.sendActionBar(pInfo.getPlayer(), arena.getVentsManager().getVentActionBar(pInfo.getVent(), pInfo.getPlayer()));
 		pInfo.getArena().getVisibilityManager().playerMoved(pInfo, pInfo.getVent().getPlayerLoc());
+		// Hides the hologram so the user can use the items in the inventory
+		pInfo.getVent().getHolo().hideTo(pInfo.getPlayer());
 	}
 
 	public void hideAllHolos(Player player) {
