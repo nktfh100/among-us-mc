@@ -32,8 +32,10 @@ public class InvClick implements Listener {
 				if (icon != null) {
 					icon.executeActions(player);
 				}
-				return;
+			} else if (player.getOpenInventory().getTopInventory().getHolder() instanceof CustomHolder) {
+				ev.setCancelled(true);
 			}
+
 		} else {
 			ev.setCancelled(true);
 			if (ev.getView().getTopInventory().getHolder() instanceof CustomHolder) {
@@ -80,11 +82,8 @@ public class InvClick implements Listener {
 						pInfo.getArena().getDoorsManager().closeDoorGroup(player, doorGroupClicked.getId());
 						Main.getSoundsManager().playSound("imposterCloseDoor", player, player.getLocation());
 					}
-					return;
 				}
-
 			}
-
 		}
 	}
 }
