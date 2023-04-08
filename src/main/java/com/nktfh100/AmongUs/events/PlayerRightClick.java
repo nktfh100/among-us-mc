@@ -64,76 +64,57 @@ public class PlayerRightClick implements Listener {
 				if (displayName.equals(itemsManager.getItem("leave").getItem().getTitle())) {
 					ev.setCancelled(true);
 					pInfo.getArena().playerLeave(player, false, false, true);
-					return;
 				} else if (displayName.equals(itemsManager.getItem("colorSelector").getItem().getTitle())) {
 					ev.setCancelled(true);
 					player.openInventory(pInfo.getArena().getColorSelectorInv(player).getInventory());
-					return;
 				} else if (displayName.equals(itemsManager.getItem("use").getItem2().getTitle())) {
 					ev.setCancelled(true);
 					switch (pInfo.getUseItemState()) {
-					case 1:
-						Main.getSoundsManager().playSound("meetingBtnInvOpen", pInfo.getPlayer(), pInfo.getPlayer().getLocation());
-						pInfo.getPlayer().openInventory(new MeetingBtnInv(pInfo.getArena(), pInfo).getInventory());
-						return;
-					case 2:
-						pInfo.getArena().getTasksManager().taskHoloClick(pInfo.getPlayer(), pInfo.getUseItemTask().getActiveTask());
-						return;
-					case 3:
-						pInfo.getArena().getSabotageManager().sabotageHoloClick(pInfo.getPlayer(), pInfo.getUseItemSabotage().getId());
-						return;
-					case 4:
-						pInfo.getArena().getVentsManager().ventHoloClick(pInfo, pInfo.getUseItemVent().getVentGroup().getId(), pInfo.getUseItemVent().getId());
-						return;
-					case 5:
-						pInfo.getArena().getCamerasManager().camerasHoloClick(pInfo);
-						return;
-					case 6:
-						pInfo.getArena().getVitalsManager().openInventory(player);
-						return;
-					default:
-						return;
+						case 1 -> {
+							Main.getSoundsManager().playSound("meetingBtnInvOpen", pInfo.getPlayer(), pInfo.getPlayer().getLocation());
+							pInfo.getPlayer().openInventory(new MeetingBtnInv(pInfo.getArena(), pInfo).getInventory());
+						}
+						case 2 -> pInfo.getArena().getTasksManager().taskHoloClick(pInfo.getPlayer(), pInfo.getUseItemTask().getActiveTask());
+						case 3 -> pInfo.getArena().getSabotageManager().sabotageHoloClick(pInfo.getPlayer(), pInfo.getUseItemSabotage().getId());
+						case 4 -> pInfo.getArena().getVentsManager().ventHoloClick(pInfo, pInfo.getUseItemVent().getVentGroup().getId(), pInfo.getUseItemVent().getId());
+						case 5 -> pInfo.getArena().getCamerasManager().camerasHoloClick(pInfo);
+						case 6 -> pInfo.getArena().getVitalsManager().openInventory(player);
+						default -> {
+							return;
+						}
 					}
 
 				} else if (pInfo.getArena().getIsInMeeting() && displayName.equals(itemsManager.getItem("vote").getItem().getTitle())) {
 					ev.setCancelled(true);
 					Main.getSoundsManager().playSound("votingInvOpen", player, player.getLocation());
 					pInfo.getArena().getMeetingManager().openVoteInv(pInfo);
-					return;
 				} else if (pInfo.getIsInVent() && displayName.equals(itemsManager.getItem("vent_left").getItem().getTitle())) {
 					ev.setCancelled(true);
 					pInfo.getArena().getVentsManager().playerPrevVent(pInfo);
-					return;
 				} else if (pInfo.getIsInVent() && displayName.equals(itemsManager.getItem("vent_leave").getItem().getTitle())) {
 					ev.setCancelled(true);
 					pInfo.getArena().getVentsManager().playerLeaveVent(pInfo, false, false);
-					return;
 				} else if (pInfo.getIsInVent() && displayName.equals(itemsManager.getItem("vent_right").getItem().getTitle())) {
 					ev.setCancelled(true);
 					pInfo.getArena().getVentsManager().playerNextVent(pInfo);
-					return;
 				} else if (pInfo.getIsInCameras() && displayName.equals(itemsManager.getItem("cameras_left").getItem().getTitle())) {
 					ev.setCancelled(true);
 					pInfo.getArena().getCamerasManager().playerPrevCamera(pInfo);
-					return;
 				} else if (pInfo.getIsInCameras() && displayName.equals(itemsManager.getItem("cameras_right").getItem().getTitle())) {
 					ev.setCancelled(true);
 					pInfo.getArena().getCamerasManager().playerNextCamera(pInfo);
-					return;
 				} else if (pInfo.getIsInCameras() && displayName.equals(itemsManager.getItem("cameras_leave").getItem().getTitle())) {
 					ev.setCancelled(true);
 					pInfo.getArena().getCamerasManager().playerLeaveCameras(pInfo, false);
-					return;
 				} else if (pInfo.getPlayerDiedTemp() != null && pInfo.getArena().getGameState() == GameState.RUNNING && !pInfo.isGhost()) {
 					String playerName = pInfo.getPlayerDiedTemp().getPlayer().getName();
 					String playerColorName = pInfo.getPlayerDiedTemp().getColor().getName();
-					String playerColor = pInfo.getPlayerDiedTemp().getColor().getChatColor() + "";
+					String playerColor = String.valueOf(pInfo.getPlayerDiedTemp().getColor().getChatColor());
 
 					if (displayName.equals(itemsManager.getItem("report").getItem().getTitle())
 							|| displayName.equals(itemsManager.getItem("report").getItem2().getTitle(playerName, playerColorName, playerColor, null, null))) {
 						ev.setCancelled(true);
 						pInfo.getArena().getMeetingManager().callMeeting(player, true, pInfo.getPlayerDiedTemp());
-						return;
 					}
 				}
 			} else {
