@@ -6,7 +6,7 @@ With a huge list of features this is the best free among us plugin!
 
 ## Dependencies
 
-- [HolographicDisplays](https://dev.bukkit.org/projects/holographic-displays/files) Minimum 3.0.0.
+- [HolographicDisplays](https://dev.bukkit.org/projects/holographic-displays/files) Minimum 3.0.0 **OR** [DecentHolograms](https://www.spigotmc.org/resources/decentholograms-1-8-1-19-4-papi-support-no-dependencies.96927/) Minimum 2.8.1
 - [ProtocolLib](https://ci.dmulloy2.net/job/ProtocolLib/lastSuccessfulBuild/) Must be latest dev version.
 - [PlayerPoints](https://www.spigotmc.org/resources/playerpoints.80745/) Soft dependency, only needed for cosmetics.
 - <span style="color:red">Warning!</span> Using commands such as /say or /tell with the config option "hidePlayersOutSideArena" set to true can kick the players inside the arena. To prevent this, you can use the [NoEncryption](https://github.com/Doclic/NoEncryption) plugin.
