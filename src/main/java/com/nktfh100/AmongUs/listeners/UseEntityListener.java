@@ -62,7 +62,7 @@ public class UseEntityListener extends PacketAdapter {
                         return;
                     }
                 } else if (!(victimEnt instanceof Player)) {
-                    if (attackerInfo.getIsIngame() && event.getPacket().getEntityUseActions().read(0) == EnumWrappers.EntityUseAction.ATTACK) {
+                    if (attackerInfo.getIsIngame() && event.getPacket().getEnumEntityUseActions().read(0).getAction() == EnumWrappers.EntityUseAction.ATTACK) {
                         event.setCancelled(true);
                     }
                     return;
