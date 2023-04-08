@@ -9,15 +9,14 @@ import com.nktfh100.AmongUs.info.PlayerInfo;
 import com.nktfh100.AmongUs.main.Main;
 
 public class EntityInteract implements Listener {
-	@SuppressWarnings("deprecation")
 	@EventHandler
 	public void onClick(PlayerInteractEntityEvent ev) {
 		Player player = ev.getPlayer();
 		PlayerInfo pInfo = Main.getPlayersManager().getPlayerInfo(player);
 		// if player click on camera armorstand while in cameras
-		if (pInfo.getIsIngame() && pInfo.getIsInCameras() && pInfo.getIsInCameras() && player.getItemInHand() != null && player.getItemInHand().getItemMeta() != null) {
+		if (pInfo.getIsIngame() && pInfo.getIsInCameras() && pInfo.getIsInCameras() && player.getInventory().getItemInMainHand() != null && player.getInventory().getItemInMainHand().getItemMeta() != null) {
 			ev.setCancelled(true);
-			String displayName = player.getItemInHand().getItemMeta().getDisplayName();
+			String displayName = player.getInventory().getItemInMainHand().getItemMeta().getDisplayName();
 			if (displayName.equals(Main.getItemsManager().getItem("cameras_left").getItem().getTitle())) {
 				pInfo.getArena().getCamerasManager().playerPrevCamera(pInfo);
 			}
@@ -26,7 +25,6 @@ public class EntityInteract implements Listener {
 			} else if (displayName.equals(Main.getItemsManager().getItem("cameras_leave").getItem().getTitle())) {
 				pInfo.getArena().getCamerasManager().playerLeaveCameras(pInfo, false);
 			}
-			return;
 		}
 	}
 }
