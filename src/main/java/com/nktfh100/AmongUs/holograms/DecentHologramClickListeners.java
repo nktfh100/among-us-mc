@@ -21,6 +21,10 @@ public class DecentHologramClickListeners implements Listener {
 
     @EventHandler
     public void onHologramClick(HologramClickEvent event) {
+        if (!listeners.containsKey(event.getHologram().getName())) {
+            return;
+        }
+
         new BukkitRunnable() {
             @Override
             public void run() {
