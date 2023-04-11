@@ -2292,6 +2292,19 @@ public class Arena {
 		}
 	}
 
+	// Placeholders for PAPI
+	public HashMap<String, String> getArenaPlaceholders() {
+		HashMap<String, String> placeholders = new HashMap<>();
+		placeholders.put("state", this.gameState.name());
+		placeholders.put("lowerCaseState", this.gameState.name().toLowerCase());
+		placeholders.put("maxPlayers", String.valueOf(this.maxPlayers));
+		placeholders.put("minPlayers", String.valueOf(this.minPlayers));
+		placeholders.put("playerCount", String.valueOf(this.ingamePlayers.size()));
+		placeholders.put("imposterCount", String.valueOf(this.gameImposters.size()));
+
+		return placeholders;
+	}
+
 	/* ------- Getters / Setters ------- */
 
 	public void addTask(Task t) {

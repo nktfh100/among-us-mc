@@ -6,7 +6,11 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Objects;
+import java.util.logging.Level;
 
+import com.nktfh100.AmongUs.info.Arena;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
@@ -126,17 +130,33 @@ public class SomeExpansion extends PlaceholderExpansion {
 	 * We specify the value identifier in this method. <br>
 	 * Since version 2.9.1 can you use OfflinePlayers in your requests.
 	 *
-	 * @param player     A {@link org.bukkit.Player Player}.
+	 * @param player     A {@link org.bukkit.entity.Player Player}.
 	 * @param identifier A String containing the identifier/value.
 	 *
 	 * @return possibly-null String of the requested identifier.
 	 */
 	@Override
 	public String onPlaceholderRequest(Player player, String identifier) {
+		if (identifier.toLowerCase().contains("arena_")) {
+			if (identifier.split("_").length == 2) {
+				return "Must provide placeholder to search for";
+			}
+
+			Arena arena = Main.getArenaManager().getArenaByName(identifier.split("_")[1]);
+
+			if (arena == null) {
+				return "Arena not found";
+			} else {
+				String placeholder = arena.getArenaPlaceholders().get(identifier.split("_")[2]);
+				return Objects.requireNonNullElse(placeholder, "Placeholder not found");
+			}
+		}
+
+		identifier = identifier.toLowerCase();
+
 		if (player == null) {
 			return null;
 		}
-		identifier = identifier.toLowerCase();
 
 		Boolean isValid = false;
 		StatInt statInt_ = null;
