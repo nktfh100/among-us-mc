@@ -6,6 +6,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Arrays;
 import java.util.Objects;
 import java.util.logging.Level;
 
@@ -147,7 +148,8 @@ public class SomeExpansion extends PlaceholderExpansion {
 			if (arena == null) {
 				return "Arena not found";
 			} else {
-				String placeholder = arena.getArenaPlaceholders().get(identifier.split("_")[2]);
+				// Gets the text from the 3rd property to the last. For example: arena_Skeld_player_count -> Gets player_count
+				String placeholder = arena.getArenaPlaceholders().get(String.join("_", Arrays.copyOfRange(identifier.split("_"), 2, identifier.split("_").length)));
 				return Objects.requireNonNullElse(placeholder, "Placeholder not found");
 			}
 		}

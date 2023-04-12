@@ -2296,11 +2296,11 @@ public class Arena {
 	public HashMap<String, String> getArenaPlaceholders() {
 		HashMap<String, String> placeholders = new HashMap<>();
 		placeholders.put("state", this.gameState.name());
-		placeholders.put("lowerCaseState", this.gameState.name().toLowerCase());
-		placeholders.put("maxPlayers", String.valueOf(this.maxPlayers));
-		placeholders.put("minPlayers", String.valueOf(this.minPlayers));
-		placeholders.put("playerCount", String.valueOf(this.ingamePlayers.size()));
-		placeholders.put("imposterCount", String.valueOf(this.gameImposters.size()));
+		placeholders.put("lowercase_state", this.gameState.name().toLowerCase());
+		placeholders.put("players_min", String.valueOf(this.maxPlayers));
+		placeholders.put("players_max", String.valueOf(this.minPlayers));
+		placeholders.put("players_count", String.valueOf(this.ingamePlayers.size()));
+		placeholders.put("imposter_count", String.valueOf(this.gameImposters.size()));
 
 		return placeholders;
 	}
