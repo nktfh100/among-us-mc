@@ -9,6 +9,7 @@ import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.Objects;
 
+import com.nktfh100.AmongUs.enums.GameState;
 import com.nktfh100.AmongUs.info.Arena;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -146,6 +147,9 @@ public class SomeExpansion extends PlaceholderExpansion {
 				if (identifier.contains("arena")) {
 					return this.getArenaPlaceholders(pInfo.getArena().getName(), String.join("_", Arrays.copyOfRange(identifier.split("_"), 2, identifier.split("_").length)));
 				} else if (identifier.endsWith("_role")) {
+					if (pInfo.getArena().getGameState() != GameState.RUNNING) {
+						return "";
+					}
 					return (pInfo.getIsImposter()) ? Main.getMessagesManager().getGameMsg("imposter", pInfo.getArena(), null, player) : Main.getMessagesManager().getGameMsg("crewmate", pInfo.getArena(), null, player);
 
 				} else if (identifier.contains("color")) {
