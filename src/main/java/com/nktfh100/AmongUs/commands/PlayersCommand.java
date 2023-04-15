@@ -1,5 +1,7 @@
 package com.nktfh100.AmongUs.commands;
 
+import com.nktfh100.AmongUs.enums.GameState;
+import com.nktfh100.AmongUs.info.ColorInfo;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -12,6 +14,7 @@ import com.nktfh100.AmongUs.inventory.CosmeticSelectorInv;
 import com.nktfh100.AmongUs.main.Main;
 
 import java.util.HashMap;
+import java.util.Objects;
 
 public class PlayersCommand implements CommandExecutor {
 
@@ -91,6 +94,36 @@ public class PlayersCommand implements CommandExecutor {
 					placeholders.put("%arena%", pInfo.getArena().getDisplayName());
 					player.sendMessage(Main.getMessagesManager().getGameMsg("alreadyInGame", null, placeholders, player));
 				}
+			} else if (args[0].equalsIgnoreCase("selectColor")) {
+				if (!pInfo.getIsIngame() || pInfo.getArena().getGameState() == GameState.RUNNING) {
+					player.sendMessage(Main.getMessagesManager().getGameMsg("not-waiting", null, null, player));
+					return true;
+				}
+
+				if (args.length == 1) {
+					player.openInventory(pInfo.getArena().getColorSelectorInv(player).getInventory());
+				} else {
+					ColorInfo color = Main.getConfigManager().getColorByKey(args[1]);
+					HashMap<String, String> placeholders = new HashMap<>();
+
+					if (color == null) {
+						placeholders.put("%color%", args[1]);
+						player.sendMessage(Main.getMessagesManager().getGameMsg("no-such-color", null, placeholders, player));
+					} else if (!pInfo.getArena().getColors_().stream().anyMatch(c -> Objects.equals(c.getKey(), args[1]))) {
+						placeholders.put("%color_name%", color.getName());
+						placeholders.put("%color_code%", color.getChatColor() + "");
+						player.sendMessage(Main.getMessagesManager().getGameMsg("already picked", null, placeholders, player));
+					} else {
+						pInfo.getArena().updatePlayerColor(pInfo, color);
+						Main.getSoundsManager().playSound("playerChangeColor", pInfo.getPlayer(), pInfo.getPlayer().getLocation());
+						pInfo.setPreferredColor(color);
+						pInfo.getArena().getColorSelectorInv(player).update();
+						placeholders.put("%color_name%", pInfo.getColor().getName());
+						placeholders.put("%color_code%", pInfo.getColor().getChatColor() + "");
+						player.sendMessage(Main.getMessagesManager().getGameMsg("changed-color", null, placeholders, player));
+					}
+				}
+
 			} else if (args.length >= 1) {
 				if (args[0].equalsIgnoreCase("leave") && pInfo.getIsIngame()) {
 					pInfo.getArena().playerLeave(player, false, false, true);

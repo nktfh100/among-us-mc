@@ -215,7 +215,7 @@ public class ConfigManager {
 				String height = colorSC.getString("height", "3'6");
 				String weight = colorSC.getString("weight", "92");
 				String bloodType = colorSC.getString("bloodType", "O-");
-				ColorInfo ci = new ColorInfo(colorI, name, chatColor, glass, wool, armorColor, id, height, weight, bloodType);
+				ColorInfo ci = new ColorInfo(key, colorI, name, chatColor, glass, wool, armorColor, id, height, weight, bloodType);
 				this.colors.put(key, ci);
 				colorI++;
 			}
@@ -295,17 +295,15 @@ public class ConfigManager {
 		this.gameServers = null;
 	}
 
-	public ColorInfo getColorByI(Integer i) {
-		for (ColorInfo c : this.colors.values()) {
-			if (c.getI() == i) {
-				return c;
-			}
-		}
-		return null;
+	public ArrayList<ColorInfo> getAllColors() {
+		return new ArrayList<>(this.colors.values());
 	}
 
-	public ArrayList<ColorInfo> getAllColors() {
-		return new ArrayList<ColorInfo>(this.colors.values());
+	public ColorInfo getColorByKey(String key) {
+		if (this.colors.containsKey(key)) {
+			return this.colors.get(key);
+		}
+		return null;
 	}
 
 	public FileConfiguration getConfig() {

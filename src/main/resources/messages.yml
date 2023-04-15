@@ -12,6 +12,14 @@ game:
    alreadyInGame: '%prefix%&cAlready in game'
    arenaNotFound: "%prefix%&cArena doesn't exists!"
    tasksBar: "&a&lTOTAL TASKS COMPLETED"
+   # Select color command
+   not-waiting: "%prefix%&cYou must be in a waiting lobby to use this command!"
+   # %color% - The name of the color
+   no-such-color: "%prefix%&cThe color %color% does not exist!"
+   # %color_name% - The name of the color
+   # %color_code% - The color code
+   already picked: "%prefix%&cThe color %color_code%%color_name% has already been picked."
+   changed-color: "%prefix%&aYou are now %color_code%%color_name%"
    # Message at the start of the game
    gameStartImposters: ""
    gameStartCrewmates: ""
