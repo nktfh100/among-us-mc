@@ -8,10 +8,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.Objects;
-import java.util.logging.Level;
 
 import com.nktfh100.AmongUs.info.Arena;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
@@ -219,7 +217,6 @@ public class SomeExpansion extends PlaceholderExpansion {
 	}
 
 	private String getArenaPlaceholders(String arenaName, String arenaProperties) {
-		Bukkit.getLogger().log(Level.SEVERE, arenaProperties);
 		if (arenaProperties.length() == 0) {
 			return "Must provide placeholder to search for";
 		}
