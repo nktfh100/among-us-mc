@@ -138,19 +138,31 @@ public class SomeExpansion extends PlaceholderExpansion {
 	 */
 	@Override
 	public String onPlaceholderRequest(Player player, String identifier) {
-		if (identifier.toLowerCase().contains("arena_")) {
-			if (identifier.split("_").length == 2) {
-				return "Must provide placeholder to search for";
-			}
+		if (identifier.toLowerCase().startsWith("arena_")) {
+			return this.getArenaPlaceholders(identifier.split("_")[1], String.join("_", Arrays.copyOfRange(identifier.split("_"), 2, identifier.split("_").length)));
+		}
 
-			Arena arena = Main.getArenaManager().getArenaByName(identifier.split("_")[1]);
+		if (identifier.toLowerCase().startsWith("player_")) {
+			PlayerInfo pInfo = Main.getPlayersManager().getPlayerInfo(player);
+			if (pInfo.getIsIngame()) {
+				if (identifier.contains("arena")) {
+					return this.getArenaPlaceholders(pInfo.getArena().getName(), String.join("_", Arrays.copyOfRange(identifier.split("_"), 2, identifier.split("_").length)));
+				} else if (identifier.endsWith("_role")) {
+					return (pInfo.getIsImposter()) ? Main.getMessagesManager().getGameMsg("imposter", pInfo.getArena(), null, player) : Main.getMessagesManager().getGameMsg("crewmate", pInfo.getArena(), null, player);
 
-			if (arena == null) {
-				return "Arena not found";
+				} else if (identifier.contains("color")) {
+					if (identifier.endsWith("_name")) {
+						return pInfo.getColor().getName();
+					} else if (identifier.endsWith("_code")) {
+						return String.valueOf(pInfo.getColor().getChatColor());
+					} else {
+						return "Color placeholder not found";
+					}
+				} else {
+					return "Placeholder not found";
+				}
 			} else {
-				// Gets the text from the 3rd property to the last. For example: arena_Skeld_player_count -> Gets player_count
-				String placeholder = arena.getArenaPlaceholders().get(String.join("_", Arrays.copyOfRange(identifier.split("_"), 2, identifier.split("_").length)));
-				return Objects.requireNonNullElse(placeholder, "Placeholder not found");
+				return "";
 			}
 		}
 
@@ -204,5 +216,22 @@ public class SomeExpansion extends PlaceholderExpansion {
 			}
 		}
 		return 0 + "";
+	}
+
+	private String getArenaPlaceholders(String arenaName, String arenaProperties) {
+		Bukkit.getLogger().log(Level.SEVERE, arenaProperties);
+		if (arenaProperties.length() == 0) {
+			return "Must provide placeholder to search for";
+		}
+
+		Arena arena = Main.getArenaManager().getArenaByName(arenaName);
+
+		if (arena == null) {
+			return "Arena not found";
+		} else {
+			// Gets the text from the 3rd property to the last. For example: arena_Skeld_player_count -> Gets player_count
+			String placeholder = arena.getArenaPlaceholders().get(String.join("_", Arrays.copyOfRange(arenaProperties.split("_"), 0, arenaProperties.split("_").length)));
+			return Objects.requireNonNullElse(placeholder, "Arena placeholder not found");
+		}
 	}
 }

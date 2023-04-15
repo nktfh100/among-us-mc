@@ -2295,6 +2295,8 @@ public class Arena {
 	// Placeholders for PAPI
 	public HashMap<String, String> getArenaPlaceholders() {
 		HashMap<String, String> placeholders = new HashMap<>();
+		placeholders.put("name", this.getName());
+		placeholders.put("display_name", this.getDisplayName());
 		placeholders.put("state", this.gameState.name());
 		placeholders.put("lowercase_state", this.gameState.name().toLowerCase());
 		placeholders.put("players_min", String.valueOf(this.maxPlayers));

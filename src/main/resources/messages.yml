@@ -2,6 +2,11 @@
 # %arena% Arena's display name
 # /n New line
 game:
+   # --- Placeholders ---
+   imposter: "&cImposter"
+   crewmate: "&bCrewmate"
+   # --- End ---
+
    # %time% - Time before the game starts
    gameStartingTime: '%prefix%&eGame starting in %time% seconds'
    gameStarting: '%prefix%&eGame starting now!'
