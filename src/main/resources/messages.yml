@@ -23,7 +23,7 @@ game:
    no-such-color: "%prefix%&cThe color %color% does not exist!"
    # %color_name% - The name of the color
    # %color_code% - The color code
-   already picked: "%prefix%&cThe color %color_code%%color_name% has already been picked."
+   already picked: "%prefix%&cThe color %color_code%%color_name% &chas already been picked."
    changed-color: "%prefix%&aYou are now %color_code%%color_name%"
    # Message at the start of the game
    gameStartImposters: ""
@@ -414,8 +414,8 @@ scoreboard:
       - '&aserver.ip'
    # --------- while in waiting lobby ---------
    # %player% Player's name
-   # %playercolor% Player's color
-   # %playercolorname% Player's color name
+   # %player_color% Player's color
+   # %player_color_name% Player's color name
    # %players% - Current players in arena
    # %minplayers% - Arena minimum players
    # %maxplayers% - Arena maximum players
@@ -438,13 +438,13 @@ scoreboard:
    taskLine: '%taskcolor%&l✘ %task% %state%'
    taskDoneLine: '%taskcolor%&l✔ %task% %state%'
    # %player% Player's name
-   # %playercolor% Player's color
-   # %playercolorname% Player's color name
+   # %player_color% Player's color
+   # %player_color_name% Player's color name
    # %playerteam% Player's teams (imposter, crewmate)
    # %tasks% All player's tasks
    crewmate-lines: 
       - '%emptyline%'
-      - '%playercolor%&lYou are %playercolorname%.'
+      - '%player_color%&lYou are %player_color_name%.'
       - '&7&lTasks:'
       - '%tasks%'
       - '%emptyline%'
@@ -458,7 +458,7 @@ scoreboard:
       - '&awww.example.com'
    dead-crewmate-lines: 
       - '%emptyline%'
-      - '%playercolor%&lYou are %playercolorname%.'
+      - '%player_color%&lYou are %player_color_name%.'
       - "&4&lYou're dead."
       - "&4&lFinish your tasks to win"
       - '%tasks%'
@@ -466,7 +466,7 @@ scoreboard:
       - '&awww.example.com'
    dead-imposter-lines: 
       - '%emptyline%'
-      - '%playercolor%&lYou are %playercolorname%.'
+      - '%player_color%&lYou are %player_color_name%.'
       - "&4&lYou're dead."
       - '&4&lYou can still sabotage'
       - '%emptyline%'
