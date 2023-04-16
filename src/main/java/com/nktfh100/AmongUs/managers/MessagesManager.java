@@ -160,7 +160,7 @@ public class MessagesManager {
 			line = PlaceholderAPI.setPlaceholders(player, line);
 		}
 
-		return line;
+		return Utils.replaceColors(line);
 	}
 
 	private String replaceArena(String output, Arena arena) {
@@ -268,8 +268,8 @@ public class MessagesManager {
 				line = line.replaceAll("%arena%", pInfo.getArena().getDisplayName());
 
 				line = line.replaceAll("%player%", pInfo.getPlayer().getName());
-				line = line.replaceAll("%playercolor%", pInfo.getColor().getChatColor() + "");
-				line = line.replaceAll("%playercolorname%", pInfo.getColor().toString().toLowerCase() + "");
+				line = line.replaceAll("%player_color%", pInfo.getColor().getChatColor() + "");
+				line = line.replaceAll("%player_color_name%", pInfo.getColor().toString().toLowerCase() + "");
 				line = line.replaceAll("%coins%", pInfo.getStatsManager().getCoins() + "");
 				if (pInfo.getArena().getGameState() == GameState.RUNNING || pInfo.getArena().getGameState() == GameState.FINISHING) {
 					line = line.replaceAll("%playerteam%", pInfo.getIsImposter() ? "imposter" : "crewmate");

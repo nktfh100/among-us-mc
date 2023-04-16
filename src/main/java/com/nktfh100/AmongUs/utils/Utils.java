@@ -4,6 +4,8 @@ import java.io.InputStreamReader;
 import java.lang.reflect.Field;
 import java.net.URL;
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import com.nktfh100.AmongUs.enums.SabotageType;
 import com.nktfh100.AmongUs.info.TaskPlayer;
@@ -54,31 +56,31 @@ public class Utils {
 
 	public static Material getStateBlock(GameState state) {
 		switch (state) {
-		case WAITING:
-			return Material.LIME_STAINED_GLASS;
-		case STARTING:
-			return Material.BLUE_STAINED_GLASS;
-		case RUNNING:
-			return Material.RED_STAINED_GLASS;
-		case FINISHING:
-			return Material.YELLOW_STAINED_GLASS;
-		default:
-			return Material.WHITE_STAINED_GLASS;
+			case WAITING:
+				return Material.LIME_STAINED_GLASS;
+			case STARTING:
+				return Material.BLUE_STAINED_GLASS;
+			case RUNNING:
+				return Material.RED_STAINED_GLASS;
+			case FINISHING:
+				return Material.YELLOW_STAINED_GLASS;
+			default:
+				return Material.WHITE_STAINED_GLASS;
 		}
 	}
 
 	public static ChatColor getStateColor(GameState state) {
 		switch (state) {
-		case WAITING:
-			return ChatColor.GREEN;
-		case STARTING:
-			return ChatColor.BLUE;
-		case RUNNING:
-			return ChatColor.RED;
-		case FINISHING:
-			return ChatColor.YELLOW;
-		default:
-			return ChatColor.WHITE;
+			case WAITING:
+				return ChatColor.GREEN;
+			case STARTING:
+				return ChatColor.BLUE;
+			case RUNNING:
+				return ChatColor.RED;
+			case FINISHING:
+				return ChatColor.YELLOW;
+			default:
+				return ChatColor.WHITE;
 		}
 	}
 
@@ -525,4 +527,15 @@ public class Utils {
 		return false;
 	}
 
+	public static String replaceColors(String message) {
+		Pattern HEX_PATTERN = Pattern.compile("#[A-Fa-f0-9]{6}");
+		Matcher match = HEX_PATTERN.matcher(message);
+
+		while (match.find()) {
+			String color = message.substring(match.start(), match.end());
+			message = message.replace(color, net.md_5.bungee.api.ChatColor.of(color));
+		}
+
+		return ChatColor.translateAlternateColorCodes('&', message);
+	}
 }

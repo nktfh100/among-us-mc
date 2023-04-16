@@ -1,6 +1,6 @@
 package com.nktfh100.AmongUs.info;
 
-import org.bukkit.ChatColor;
+import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Color;
 import org.bukkit.Material;
 
@@ -18,7 +18,7 @@ public class ColorInfo implements Comparable<ColorInfo> {
 	private String weight;
 	private String bloodType;
 
-	public ColorInfo(String key, Integer i, String name, ChatColor chatColor, Material glass, Material wool,Color armorColor, String id, String height, String weight, String bloodType) {
+	public ColorInfo(String key, Integer i, String name, ChatColor chatColor, Material glass, Material wool, Color armorColor, String id, String height, String weight, String bloodType) {
 		this.key = key;
 		this.i = i;
 		this.name = name;

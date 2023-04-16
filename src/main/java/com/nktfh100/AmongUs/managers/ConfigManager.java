@@ -200,7 +200,7 @@ public class ConfigManager {
 			for (String key : colorsSC.getKeys(false)) {
 				ConfigurationSection colorSC = colorsSC.getConfigurationSection(key);
 				String name = colorSC.getString("name", "NULL");
-				ChatColor chatColor = ChatColor.valueOf(colorSC.getString("chatColor", "WHITE"));
+				net.md_5.bungee.api.ChatColor chatColor = net.md_5.bungee.api.ChatColor.of(colorSC.getString("chatColor", "WHITE"));
 				Material glass = Material.getMaterial(colorSC.getString("helmetBlock", "BARRIER"));
 				Material wool = Material.getMaterial(colorSC.getString("woolBlock", "BARRIER"));
 				String colorStr = colorSC.getString("armorColor", "0,0,0").replaceAll("\\s+", "");
