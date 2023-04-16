@@ -115,7 +115,6 @@ colors:
       chatColor: AQUA
       helmetBlock: CYAN_STAINED_GLASS
       woolBlock: LIGHT_BLUE_WOOL
-      concreteBlock: LIGHT_BLUE_CONCRETE
       armorColor: "0,255,255"
       id: "CYAP"
       height: "3'6"
