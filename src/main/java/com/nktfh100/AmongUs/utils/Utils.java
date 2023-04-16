@@ -533,7 +533,7 @@ public class Utils {
 
 		while (match.find()) {
 			String color = message.substring(match.start(), match.end());
-			message = message.replace(color, net.md_5.bungee.api.ChatColor.of(color));
+			message = message.replace(color, net.md_5.bungee.api.ChatColor.of(color) + "");
 		}
 
 		return ChatColor.translateAlternateColorCodes('&', message);
