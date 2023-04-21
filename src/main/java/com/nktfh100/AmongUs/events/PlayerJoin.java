@@ -1,6 +1,5 @@
 package com.nktfh100.AmongUs.events;
 
-import com.comphenix.protocol.events.PacketContainer;
 import com.nktfh100.AmongUs.enums.GameState;
 import com.nktfh100.AmongUs.info.Arena;
 import com.nktfh100.AmongUs.info.ItemInfo;
@@ -69,11 +68,10 @@ public class PlayerJoin implements Listener {
                 new BukkitRunnable() {
                     @Override
                     public void run() {
-                        PacketContainer packet = Packets.REMOVE_PLAYER(player.getUniqueId());
                         for (Arena arena : Main.getArenaManager().getAllArenas()) {
                             for (Player p : arena.getPlayers()) {
-                                Packets.sendPacket(p, packet);
-                                Packets.sendPacket(player, Packets.REMOVE_PLAYER(p.getUniqueId()));
+                                Packets.sendPacket(p, Packets.REMOVE_PLAYER(p, player.getUniqueId()));
+                                Packets.sendPacket(player, Packets.REMOVE_PLAYER(player, p.getUniqueId()));
                             }
                         }
 

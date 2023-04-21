@@ -4,6 +4,7 @@ import java.util.*;
 
 import com.comphenix.protocol.wrappers.*;
 import com.google.common.collect.Lists;
+import com.nktfh100.AmongUs.main.Main;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Particle;
@@ -42,29 +43,40 @@ public class Packets {
 
 		WrappedGameProfile wgp = new WrappedGameProfile(uuid, orgName);
 		packet.getPlayerInfoDataLists().write(1,
-			Collections.singletonList(new PlayerInfoData(wgp, 50, NativeGameMode.ADVENTURE, WrappedChatComponent.fromText(newName)
+			Collections.singletonList(new PlayerInfoData(wgp, 50, NativeGameMode.ADVENTURE, WrappedChatComponent.fromLegacyText(newName)
 		)));
 
 		return packet;
 	}
 
-	public static PacketContainer ADD_PLAYER(UUID uuid, String name, String displayName, String textureValue, String textureSignature) {
+	public static PacketContainer ADD_PLAYER(Player player, UUID playerToAdd, String name, String displayName, String textureValue, String textureSignature, boolean... isFakePlayer) {
 		PacketContainer packet = new PacketContainer(PacketType.Play.Server.PLAYER_INFO);
 		packet.getPlayerInfoActions().write(0, EnumSet.of(EnumWrappers.PlayerInfoAction.ADD_PLAYER, EnumWrappers.PlayerInfoAction.UPDATE_DISPLAY_NAME, EnumWrappers.PlayerInfoAction.UPDATE_LISTED));
 
-		WrappedGameProfile wgp = new WrappedGameProfile(uuid, name);
+		WrappedGameProfile wgp = new WrappedGameProfile(playerToAdd, name);
 		PlayerInfoData playerInfoData = new PlayerInfoData(wgp, 50, NativeGameMode.ADVENTURE, WrappedChatComponent.fromText(displayName));
 		packet.getPlayerInfoDataLists().write(1, Collections.singletonList(playerInfoData));
 
 		wgp.getProperties().get("textures").clear();
 		wgp.getProperties().get("textures").add(new WrappedSignedProperty("textures", textureValue, textureSignature));
+
+		boolean fakePlayer = isFakePlayer.length >= 1 && isFakePlayer[0];
+		if (Main.getIsTab() && !fakePlayer) {
+			Main.getTabApi().getTeamManager().showNametag(Main.getTabApi().getPlayer(playerToAdd), Main.getTabApi().getPlayer(player.getUniqueId()));
+		}
+
 		return packet;
 	}
 
-	public static PacketContainer REMOVE_PLAYER(UUID uuid) {
+	public static PacketContainer REMOVE_PLAYER(Player player, UUID playerToHide, boolean... isFakePlayer) {
 		PacketContainer packet = new PacketContainer(PacketType.Play.Server.PLAYER_INFO_REMOVE);
 
-		packet.getUUIDLists().write(0, Collections.singletonList(uuid));
+		packet.getUUIDLists().write(0, Collections.singletonList(playerToHide));
+
+		boolean fakePlayer = isFakePlayer.length >= 1 && isFakePlayer[0];
+		if (Main.getIsTab() && !fakePlayer) {
+			Main.getTabApi().getTeamManager().hideNametag(Main.getTabApi().getPlayer(playerToHide), Main.getTabApi().getPlayer(player.getUniqueId()));
+		}
 
 		return packet;
 	}

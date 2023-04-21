@@ -7,6 +7,7 @@ import com.nktfh100.AmongUs.enums.GameEndWinners;
 import com.nktfh100.AmongUs.events.*;
 import com.nktfh100.AmongUs.holograms.DecentHologramClickListeners;
 import com.nktfh100.AmongUs.listeners.*;
+import me.neznamy.tab.api.TabAPI;
 import org.black_ixx.playerpoints.PlayerPoints;
 import org.black_ixx.playerpoints.PlayerPointsAPI;
 import org.bukkit.Bukkit;
@@ -50,11 +51,12 @@ public class Main extends JavaPlugin {
 	private static Boolean isVentureChat = false;
 	private static Boolean isPlaceHolderAPI = false;
 	private static Boolean isPlayerPoints = false;
-
 	private static Boolean isDecentHologram = false;
 	private static Boolean isHolographicDisplays = false;
+	private static Boolean isTab = false;
 
 	private static PlayerPointsAPI playerPointsApi = null;
+	private static TabAPI tabApi = null;
 
 	public void onEnable() {
 		plugin = this;
@@ -68,6 +70,11 @@ public class Main extends JavaPlugin {
 			getLogger().log(Level.SEVERE, "You must have a holograms plugin installed. Please install the latest version of DecentHolograms or HolographicDisplays");
 			getServer().getPluginManager().disablePlugin(this);
 			return;
+		}
+
+		if (getServer().getPluginManager().getPlugin("TAB") != null) {
+			isTab = true;
+			tabApi = TabAPI.getInstance();
 		}
 
 		new Metrics(this, 12109);
@@ -302,5 +309,13 @@ public class Main extends JavaPlugin {
 
 	public static CosmeticsManager getCosmeticsManager() {
 		return cosmeticsManager;
+	}
+
+	public static Boolean getIsTab() {
+		return isTab;
+	}
+
+	public static TabAPI getTabApi() {
+		return tabApi;
 	}
 }

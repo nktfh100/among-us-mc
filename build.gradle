@@ -15,6 +15,8 @@ repositories {
     // Authlib -> https://papermc.io/repo/service/rest/repository/browse/maven-public/com/mojang/authlib/
     maven { url = 'https://libraries.minecraft.net/' }
     maven { url 'https://jitpack.io' }
+    maven { url 'https://repo.kryptonmc.org/releases' }
+
 }
 
 dependencies {
@@ -25,6 +27,7 @@ dependencies {
     compileOnly 'me.clip:placeholderapi:2.11.3'
     compileOnly 'com.mojang:authlib:2.1.28'
     compileOnly 'com.github.decentsoftware-eu:decentholograms:2.8.1'
+    compileOnly 'me.neznamy:tab-api:3.2.4'
 
     compileOnly files('libs/VentureChat.jar') // 3.5.0
     //compileOnly files('libs/CMI-API.jar') // 9.0.0.0

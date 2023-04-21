@@ -4,7 +4,7 @@ author: nktfh100
 version: 3.2
 api-version: 1.19
 depend: [ProtocolLib]
-softdepend: [PlayerPoints, Multiverse, Multiverse-Core, VentureChat, PlaceholderAPI, HolographicDisplays, DecentHolograms]
+softdepend: [PlayerPoints, Multiverse, Multiverse-Core, VentureChat, PlaceholderAPI, HolographicDisplays, DecentHolograms, TAB]
 commands:
    aua:
       description: Among us admin command

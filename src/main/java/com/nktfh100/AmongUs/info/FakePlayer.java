@@ -57,7 +57,7 @@ public class FakePlayer {
 		if (this.playerShownTo.contains(player)) {
 			return;
 		}
-		Packets.sendPacket(player, Packets.ADD_PLAYER(this.uuid, this.name, this.customName, this.textureValue, this.textureSignature));
+		Packets.sendPacket(player, Packets.ADD_PLAYER(player, this.uuid, this.name, this.customName, this.textureValue, this.textureSignature, true));
 
 		Packets.sendPacket(player, Packets.SPAWN_PLAYER(loc, this.entityId, this.uuid));
 		Packets.sendPacket(player, Packets.METADATA_SKIN(this.entityId, pInfo.getPlayer(), false));
@@ -76,7 +76,7 @@ public class FakePlayer {
 		new BukkitRunnable() {
 			@Override
 			public void run() {
-				Packets.sendPacket(player, Packets.REMOVE_PLAYER(fp.getUuid()));
+				Packets.sendPacket(player, Packets.REMOVE_PLAYER(player, fp.getUuid(), true));
 			}
 		}.runTaskLater(Main.getPlugin(), 2L);
 	}
