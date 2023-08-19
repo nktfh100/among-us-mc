@@ -62,7 +62,7 @@ public class Packets {
 
 		boolean fakePlayer = isFakePlayer.length >= 1 && isFakePlayer[0];
 		if (Main.getIsTab() && !fakePlayer) {
-			Main.getTabApi().getTeamManager().showNametag(Main.getTabApi().getPlayer(playerToAdd), Main.getTabApi().getPlayer(player.getUniqueId()));
+			Main.getTabApi().getNameTagManager().showNameTag(Main.getTabApi().getPlayer(playerToAdd), Main.getTabApi().getPlayer(player.getUniqueId()));
 		}
 
 		return packet;
@@ -75,7 +75,7 @@ public class Packets {
 
 		boolean fakePlayer = isFakePlayer.length >= 1 && isFakePlayer[0];
 		if (Main.getIsTab() && !fakePlayer) {
-			Main.getTabApi().getTeamManager().hideNametag(Main.getTabApi().getPlayer(playerToHide), Main.getTabApi().getPlayer(player.getUniqueId()));
+			Main.getTabApi().getNameTagManager().showNameTag(Main.getTabApi().getPlayer(playerToHide), Main.getTabApi().getPlayer(player.getUniqueId()));
 		}
 
 		return packet;
