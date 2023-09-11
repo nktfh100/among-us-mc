@@ -8,7 +8,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.logging.Level;
 
+import com.nktfh100.AmongUs.utils.Logger;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -213,7 +215,7 @@ public class StatsManager {
 
 					Boolean status = configManager.mysql_checkConnection();
 					if (!status) {
-						System.out.println("Something is wrong with your MySQL server!");
+						Logger.log(Level.SEVERE, "Something is wrong with your MySQL server!");
 						return;
 					}
 
@@ -358,7 +360,11 @@ public class StatsManager {
 	}
 
 	public void plusOneStatInt(StatInt key) {
-		this.statsInt.put(key, this.statsInt.get(key) + 1);
+		if (!this.statsInt.containsKey(key)) {
+			this.statsInt.put(key, 1);
+		} else {
+			this.statsInt.put(key, this.statsInt.get(key) + 1);
+		}
 	}
 
 	public void setStatInt(StatInt key, Integer value) {
