@@ -1,4 +1,6 @@
 prefix: '&4&lAmong&c&lUs&9&lMC&7&l► '
+# If a player's name is not found in the Mojang servers (because he is using cracked Minecraft), an error message will appear.
+hidePlayerSkinNotFoundMessage: false
 giveLobbyItems: true
 showRunningArenas: true
 ghostsFly: true

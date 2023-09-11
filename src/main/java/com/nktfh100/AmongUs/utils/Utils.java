@@ -1,15 +1,16 @@
 package com.nktfh100.AmongUs.utils;
 
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.lang.reflect.Field;
 import java.net.URL;
 import java.util.*;
+import java.util.logging.Level;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import com.nktfh100.AmongUs.enums.SabotageType;
 import com.nktfh100.AmongUs.info.TaskPlayer;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -325,7 +326,7 @@ public class Utils {
 			item.setItemMeta(skull);
 			return item;
 		} catch (Exception e) {
-			Bukkit.getLogger().info("Couldnt get " + player + "'s head");
+			Logger.log(Level.INFO,"Couldnt get " + player + "'s head");
 			e.printStackTrace();
 			return item;
 		}
@@ -475,15 +476,13 @@ public class Utils {
 			String signature = textureProperty.get("signature").getAsString();
 
 			return new String[] { texture, signature };
-		} catch (IllegalStateException e) {
-			System.err.println(name + " is not a real player!");
-			return new String[] { "", "" };
-		} catch (Exception e) {
-			System.err.println("Could not get skin data for " + name);
-			e.printStackTrace();
-			return new String[] { "", "" };
-		}
-	}
+		} catch (IOException e) {
+			if (!Main.getConfigManager().getHidePlayerSkinNotFoundMessage()) {
+				Logger.log(Level.WARNING, "Could not get skin data for: " + name);
+			}
+            return new String[] {"", ""};
+        }
+    }
 
 	public static ArrayList<Block> blocksFromTwoPoints(Location loc1, Location loc2) {
 		ArrayList<Block> blocks = new ArrayList<Block>();
