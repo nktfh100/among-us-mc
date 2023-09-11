@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.logging.Level;
 
-import org.bukkit.Bukkit;
+import com.nktfh100.AmongUs.utils.Logger;
 import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -72,7 +72,7 @@ public class CosmeticsManager {
 
 		} catch (Exception e) {
 			e.printStackTrace();
-			Bukkit.getLogger().log(Level.SEVERE, "Something is wrong with your cosmetics.yml file!");
+			Logger.log(Level.SEVERE, "Something is wrong with your cosmetics.yml file!");
 			Main.getPlugin().getPluginLoader().disablePlugin(Main.getPlugin());
 		}
 	}

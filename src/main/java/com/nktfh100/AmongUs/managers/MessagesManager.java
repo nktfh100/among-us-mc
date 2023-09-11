@@ -7,7 +7,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.logging.Level;
 
-import org.bukkit.Bukkit;
+import com.nktfh100.AmongUs.utils.Logger;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -140,7 +140,7 @@ public class MessagesManager {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			Bukkit.getLogger().log(Level.SEVERE, "Something is wrong with your messages.yml file!");
+			Logger.log(Level.SEVERE, "Something is wrong with your messages.yml file!");
 			Main.getPlugin().getPluginLoader().disablePlugin(Main.getPlugin());
 		}
 	}
@@ -195,7 +195,7 @@ public class MessagesManager {
 		}
 		String output = this.msgsGame.get(key);
 		if (output == null) {
-			Main.getPlugin().getLogger().warning("Game msg '" + key + "' is missing from your messages.yml file!");
+			Logger.log(Level.WARNING, "Game msg '" + key + "' is missing from your messages.yml file!");
 			return "";
 		}
 		if (arena != null) {
@@ -311,7 +311,7 @@ public class MessagesManager {
 		ArrayList<String> lines = this.holograms.get(key);
 		ArrayList<String> out = new ArrayList<String>();
 		if (lines == null) {
-			Main.getPlugin().getLogger().warning("Hologram '" + key + "' is missing from your messages.yml file!");
+			Logger.log(Level.WARNING, "Hologram '" + key + "' is missing from your messages.yml file!");
 			return out;
 		}
 		for (String line : lines) {

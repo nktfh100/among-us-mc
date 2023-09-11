@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.Set;
 import java.util.logging.Level;
 
-import org.bukkit.Bukkit;
+import com.nktfh100.AmongUs.utils.Logger;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
@@ -76,14 +76,14 @@ public class ItemsManager {
 					this.items.put(key, new ItemInfoContainer(items.get(0), items.get(1), items.get(2)));
 				} catch (Exception e) {
 					e.printStackTrace();
-					Bukkit.getLogger().log(Level.SEVERE, "Something is wrong with your items.yml file! (" + key + ")");
+					Logger.log(Level.SEVERE, "Something is wrong with your items.yml file! (" + key + ")");
 					Main.getPlugin().getPluginLoader().disablePlugin(Main.getPlugin());
 				}
 			}
 
 		} catch (Exception e) {
 			e.printStackTrace();
-			Bukkit.getLogger().log(Level.SEVERE, "Something is wrong with your items.yml file!");
+			Logger.log(Level.SEVERE, "Something is wrong with your items.yml file!");
 			Main.getPlugin().getPluginLoader().disablePlugin(Main.getPlugin());
 		}
 	}
@@ -91,7 +91,7 @@ public class ItemsManager {
 	public ItemInfoContainer getItem(String key) {
 		ItemInfoContainer out = this.items.get(key);
 		if (out == null) {
-			Main.getPlugin().getLogger().warning("Item '" + key + "' is missing from your items.yml file!");
+			Logger.log(Level.WARNING, "Item '" + key + "' is missing from your items.yml file!");
 			ItemInfo itemInfo = new ItemInfo(0, Material.BARRIER, "ITEM MISSING", new ArrayList<String>());
 			return new ItemInfoContainer(itemInfo, itemInfo, itemInfo);
 		}

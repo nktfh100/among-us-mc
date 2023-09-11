@@ -7,6 +7,7 @@ import com.nktfh100.AmongUs.enums.GameEndWinners;
 import com.nktfh100.AmongUs.events.*;
 import com.nktfh100.AmongUs.holograms.DecentHologramClickListeners;
 import com.nktfh100.AmongUs.listeners.*;
+import com.nktfh100.AmongUs.utils.Logger;
 import me.neznamy.tab.api.TabAPI;
 import org.black_ixx.playerpoints.PlayerPoints;
 import org.black_ixx.playerpoints.PlayerPointsAPI;
@@ -67,7 +68,7 @@ public class Main extends JavaPlugin {
 			getServer().getPluginManager().registerEvents(new DecentHologramClickListeners(), this);
 			isDecentHologram = true;
 		} else {
-			getLogger().log(Level.SEVERE, "You must have a holograms plugin installed. Please install the latest version of DecentHolograms or HolographicDisplays");
+			Logger.log(Level.SEVERE, "You must have a holograms plugin installed. Please install the latest version of DecentHolograms or HolographicDisplays");
 			getServer().getPluginManager().disablePlugin(this);
 			return;
 		}
@@ -92,7 +93,7 @@ public class Main extends JavaPlugin {
 			isPlayerPoints = true;
 			playerPointsApi = PlayerPoints.getInstance().getAPI();
 		} else {
-			Bukkit.getLogger().log(Level.WARNING, "The plugin 'PlayerPoints' is not preset, cosmetics will not work!");
+			Logger.log(Level.WARNING, "The plugin 'PlayerPoints' is not preset, cosmetics will not work!");
 		}
 		cosmeticsManager = new CosmeticsManager();
 		dhClickListeners = new DecentHologramClickListeners();
@@ -160,8 +161,8 @@ public class Main extends JavaPlugin {
 		getServer().getPluginManager().registerEvents(new ServerPingEvent(), this);
 		getServer().getPluginManager().registerEvents(new PlayerEnterPortal(), this);
 
-		Bukkit.getLogger().info("[AmongUs] Plugin made by nktfh100");
-		Bukkit.getLogger().info("[AmongUs] Made with love in israel!");
+		Logger.log(Level.INFO, "[AmongUs] Plugin made by nktfh100");
+		Logger.log(Level.INFO, "[AmongUs] Made with love in israel!");
 
 		ProtocolManager protocolManager = ProtocolLibrary.getProtocolManager();
 
@@ -317,5 +318,18 @@ public class Main extends JavaPlugin {
 
 	public static TabAPI getTabApi() {
 		return tabApi;
+	}
+
+	public static int[] getVersion() {
+		String version = Bukkit.getServer().getBukkitVersion().split("-")[0];
+		int majorNumber = Integer.parseInt(version.split("\\.")[1]);
+		int minorNumber;
+		try {
+			minorNumber = Integer.parseInt(version.split("\\.")[2]);
+		} catch (ArrayIndexOutOfBoundsException e) {
+			minorNumber = 0;
+		}
+
+		return new int[] {majorNumber, minorNumber};
 	}
 }

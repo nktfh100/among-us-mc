@@ -115,13 +115,13 @@ public class TaskPlayer {
 			}
 			if (allTasksDone) {
 				Main.getConfigManager().executeCommands("completedAllTasks", this.pInfo.getPlayer());
-				Main.getCosmeticsManager().addCoins("completedAllTasks",  this.pInfo.getPlayer());
+				Main.getCosmeticsManager().addCoins("completedAllTasks", this.pInfo.getPlayer());
 			}
 		}
 		this.pInfo.updateUseItemState(this.pInfo.getPlayer().getLocation());
 		Main.getConfigManager().executeCommands("taskCompleted", this.pInfo.getPlayer());
 		this.pInfo.getStatsManager().plusOneStatInt(StatInt.TASKS_COMPLETED);
-		Main.getCosmeticsManager().addCoins("taskCompleted",  this.pInfo.getPlayer());
+		Main.getCosmeticsManager().addCoins("taskCompleted", this.pInfo.getPlayer());
 	}
 
 	public void updateTasksVars() {

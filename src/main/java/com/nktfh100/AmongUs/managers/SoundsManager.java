@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.Set;
 import java.util.logging.Level;
 
-import org.bukkit.Bukkit;
+import com.nktfh100.AmongUs.utils.Logger;
 import org.bukkit.Location;
 import org.bukkit.Sound;
 import org.bukkit.configuration.ConfigurationSection;
@@ -84,13 +84,13 @@ public class SoundsManager {
 
 				} catch (Exception e) {
 					e.printStackTrace();
-					Bukkit.getLogger().log(Level.SEVERE, "Something is wrong with your sounds.yml file! (" + key + ")");
+					Logger.log(Level.SEVERE, "Something is wrong with your sounds.yml file! (" + key + ")");
 					Main.getPlugin().getPluginLoader().disablePlugin(Main.getPlugin());
 				}
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			Bukkit.getLogger().log(Level.SEVERE, "Something is wrong with your sounds.yml file!");
+			Logger.log(Level.SEVERE, "Something is wrong with your sounds.yml file!");
 			Main.getPlugin().getPluginLoader().disablePlugin(Main.getPlugin());
 		}
 	}
@@ -113,7 +113,7 @@ public class SoundsManager {
 	public ArrayList<SoundInfo> getSound(String key) {
 		ArrayList<SoundInfo> out = this.sounds.get(key);
 		if (out == null) {
-			Main.getPlugin().getLogger().warning("Sound '" + key + "' is missing from your sounds.yml file!");
+			Logger.log(Level.WARNING,"Sound '" + key + "' is missing from your sounds.yml file!");
 			return new ArrayList<SoundInfo>();
 		}
 		return out;

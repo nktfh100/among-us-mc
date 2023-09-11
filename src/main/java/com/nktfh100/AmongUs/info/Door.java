@@ -1,8 +1,9 @@
 package com.nktfh100.AmongUs.info;
 
 import java.util.ArrayList;
+import java.util.logging.Level;
 
-import org.bukkit.Bukkit;
+import com.nktfh100.AmongUs.utils.Logger;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -39,7 +40,7 @@ public class Door implements Comparable<Door> {
 						this.blocks_.add(block);
 					}
 				} else {
-					Bukkit.getLogger().info("Door " + doorGroup.getLocName().getName() + " - " + id + " has too many blocks! (> 50)");
+					Logger.log(Level.INFO,"Door " + doorGroup.getLocName().getName() + " - " + id + " has too many blocks! (> 50)");
 				}
 			}
 			this.midPoint = calculateMidPoint();

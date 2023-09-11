@@ -13,6 +13,7 @@ import java.util.StringJoiner;
 import java.util.logging.Level;
 
 import com.nktfh100.AmongUs.enums.*;
+import com.nktfh100.AmongUs.utils.Logger;
 import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -205,12 +206,12 @@ public class ArenaManager {
 		for (File arenaFile : arenasFolder.listFiles()) {
 			if (arenaFile.getName().endsWith(".yml") && arenaFile.length() != 0) {
 				final String arenaName = arenaFile.getName().replaceAll(".yml", "");
-				Bukkit.getLogger().info("Loading arena: " + arenaFile.getName());
+				Logger.log(Level.INFO,"Loading arena: " + arenaFile.getName());
 				try {
 					loadArena(arenaName, YamlConfiguration.loadConfiguration(arenaFile), arenaFile);
 				} catch (Exception e) {
 					e.printStackTrace();
-					Bukkit.getLogger().info("ERROR! Something went wrong loading arena: " + arenaName);
+					Logger.log(Level.SEVERE,"ERROR! Something went wrong loading arena: " + arenaName);
 				}
 			}
 		}
@@ -221,7 +222,7 @@ public class ArenaManager {
 		}
 
 		// Load the old arenas
-		Bukkit.getLogger().info("Moving old arenas to their own files...");
+		Logger.log(Level.INFO,"Moving old arenas to their own files...");
 		Set<String> arenasKeys = arenasSection.getKeys(false);
 		for (String key : arenasKeys) {
 			File file = new File(arenasFolder, key + ".yml");
@@ -230,14 +231,14 @@ public class ArenaManager {
 					file.createNewFile();
 				} catch (IOException e) {
 					e.printStackTrace();
-					Bukkit.getLogger().warning("Something went wrong creating arena file! (" + key + ".yml)");
+					Logger.log(Level.WARNING,"Something went wrong creating arena file! (" + key + ".yml)");
 				}
 			}
 			ConfigurationSection arenaSC = arenasSection.getConfigurationSection(key);
 			YamlConfiguration arenaConfig = YamlConfiguration.loadConfiguration(file);
 			for (String key_ : arenaSC.getKeys(true)) {
 				arenaConfig.set(key_, arenaSC.get(key_));
-				Bukkit.getLogger().info(key_);
+				Logger.log(Level.INFO, key_);
 			}
 			try {
 				arenaConfig.save(file);
@@ -257,7 +258,7 @@ public class ArenaManager {
 		created.setArenaFile(file);
 
 		if (Bukkit.getWorld(arenaSC.getString("world")) == null) {
-			Bukkit.getLogger().log(Level.SEVERE,
+			Logger.log(Level.SEVERE,
 					"World " + arenaSC.getString("world") + " Doesn't exists for arena " + key);
 			return;
 		}
@@ -428,7 +429,7 @@ public class ArenaManager {
 			String[] locs = str.split(",");
 			World world = Bukkit.getServer().getWorld(locs[0]);
 			if (world == null) {
-				Bukkit.getLogger().info("World: " + world + " doesn't exists!");
+				Logger.log(Level.INFO,"World: " + world + " doesn't exists!");
 				continue;
 			}
 			Location loc = new Location(world, Double.valueOf(locs[1]), Double.valueOf(locs[2]),

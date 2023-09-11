@@ -7,7 +7,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.logging.Level;
 
+import com.nktfh100.AmongUs.utils.Logger;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Color;
@@ -28,7 +30,7 @@ public class ConfigManager {
 	private FileConfiguration config;
 
 	private String prefix;
-
+	private boolean hidePlayerSkinNotFoundMessage;
 	private Boolean bungeecord = false;
 	private String bungeecordLobbyServer;
 	private Boolean bungeecordIsLobby;
@@ -101,6 +103,7 @@ public class ConfigManager {
 		this.mainLobby = new Location(mainLobbyWorld, this.config.getDouble("mainLobby.x"), this.config.getDouble("mainLobby.y"), this.config.getDouble("mainLobby.z"), (float) this.config.getDouble("mainLobby.yaw"), (float) this.config.getDouble("mainLobby.pitch"));
 
 		this.prefix = ChatColor.translateAlternateColorCodes('&', this.config.getString("prefix"));
+		this.hidePlayerSkinNotFoundMessage = this.config.getBoolean("hidePlayerSkinNotFoundMessage");
 
 		this.giveLobbyItems = this.config.getBoolean("giveLobbyItems");
 		this.showRunningArenas = this.config.getBoolean("showRunningArenas");
@@ -130,7 +133,7 @@ public class ConfigManager {
 			this.particlesOnTasksType = Particle.valueOf(this.config.getString("particlesOnTasksType", "VILLAGER_HAPPY"));
 		} catch (Exception e) {
 			this.particlesOnTasksType = Particle.VILLAGER_HAPPY;
-			Main.getPlugin().getLogger().warning("particlesOnTasksType: " + this.config.getString("particlesOnTasksType", "-") + " is not a valid particle type!");
+			Logger.log(Level.WARNING,"particlesOnTasksType: " + this.config.getString("particlesOnTasksType", "-") + " is not a valid particle type!");
 		}
 
 		this.hidePlayersOutSideArena = this.config.getBoolean("hidePlayersOutSideArena", true);
@@ -207,7 +210,7 @@ public class ConfigManager {
 
 				String[] colorSplit = colorStr.split(",");
 				if (colorSplit.length != 3) {
-					Main.getPlugin().getLogger().warning("Color '" + key + "' armor color is wrong! (" + colorStr + ")");
+					Logger.log(Level.WARNING,"Color '" + key + "' armor color is wrong! (" + colorStr + ")");
 					continue;
 				}
 				Color armorColor = Color.fromRGB(Integer.parseInt(colorSplit[0]), Integer.parseInt(colorSplit[1]), Integer.parseInt(colorSplit[2]));
@@ -221,7 +224,7 @@ public class ConfigManager {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			Main.getPlugin().getLogger().warning("Something is wrong with your colors section in config.yml");
+			Logger.log(Level.WARNING,"Something is wrong with your colors section in config.yml");
 		}
 	}
 
@@ -244,7 +247,7 @@ public class ConfigManager {
 			this.mysql_connection = DriverManager.getConnection("jdbc:mysql://" + this.mysql_host + ":" + this.mysql_port + "/" + this.mysql_database, this.mysql_username, this.mysql_password);
 			return this.mysql_connection;
 		} catch (Exception e) {
-			Bukkit.getLogger().info("Can't connect to database! Disabling..");
+			Logger.log(Level.WARNING,"Can't connect to database! Disabling..");
 			e.printStackTrace();
 			Bukkit.getServer().getPluginManager().disablePlugin(Main.getPlugin());
 		}
@@ -256,7 +259,7 @@ public class ConfigManager {
 			Boolean status;
 			status = this.mysql_checkConnection();
 			if (!status) {
-				System.out.println("Something is wrong with your MySQL server.");
+				Logger.log(Level.SEVERE, "Something is wrong with your MySQL server.");
 				return null;
 			}
 			return this.mysql_connection;
@@ -312,6 +315,10 @@ public class ConfigManager {
 
 	public String getPrefix() {
 		return prefix;
+	}
+
+	public boolean getHidePlayerSkinNotFoundMessage() {
+		return this.hidePlayerSkinNotFoundMessage;
 	}
 
 	public Boolean getGiveLobbyItems() {

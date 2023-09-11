@@ -3,8 +3,10 @@ package com.nktfh100.AmongUs.info;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.UUID;
+import java.util.logging.Level;
 
 import com.nktfh100.AmongUs.holograms.ImposterHologram;
+import com.nktfh100.AmongUs.utils.Logger;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
@@ -128,7 +130,9 @@ public class PlayerInfo {
 						pInfo.setTextureSignature(textures[1]);
 					}
 				} catch (Exception e) {
-					System.out.println("Could not get skin data for: " + pInfo.getPlayer().getName());
+					if (!Main.getConfigManager().getHidePlayerSkinNotFoundMessage()) {
+						Logger.log(Level.WARNING, "Could not get skin data for: " + pInfo.getPlayer().getName());
+					}
 					e.printStackTrace();
 				}
 			}

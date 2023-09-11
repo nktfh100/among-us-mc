@@ -17,6 +17,7 @@ import com.nktfh100.AmongUs.api.events.*;
 import com.nktfh100.AmongUs.enums.*;
 import com.nktfh100.AmongUs.holograms.HologramClickListener;
 import com.nktfh100.AmongUs.holograms.ImposterHologram;
+import com.nktfh100.AmongUs.utils.Logger;
 import eu.decentsoftware.holograms.event.HologramClickEvent;
 import me.clip.placeholderapi.PlaceholderAPI;
 import me.filoghost.holographicdisplays.api.hologram.line.HologramLineClickEvent;
@@ -618,8 +619,8 @@ public class Arena {
 		}
 		if (loc.getWorld().getName() != this.world.getName()) {
 			this.world = loc.getWorld();
-			Bukkit.getLogger().info("Your config file for arena " + this.getName() + " is wrong!");
-			Bukkit.getLogger().info("You should change world to: " + loc.getWorld().getName());
+			Logger.log(Level.INFO, "Your config file for arena " + this.getName() + " is wrong!");
+			Logger.log(Level.INFO,"You should change world to: " + loc.getWorld().getName());
 		}
 	}
 
@@ -671,13 +672,13 @@ public class Arena {
 				}
 
 				if (this.playersSpawns.size() == 0) {
-					Bukkit.getLogger().log(Level.SEVERE, "Arena " + this.getDisplayName() + " has no spawns!");
+					Logger.log(Level.SEVERE, "Arena " + this.getDisplayName() + " has no spawns!");
 					return;
 				}
 
 				if (this.colors_.size() == 0) {
-					Bukkit.getLogger().log(Level.SEVERE, "There are not enough colors!");
-					Bukkit.getLogger().log(Level.SEVERE,
+					Logger.log(Level.SEVERE, "There are not enough colors!");
+					Logger.log(Level.SEVERE,
 							"Number of colors: " + Main.getConfigManager().getAllColors().size() + ", Number of players in '" + this.getDisplayName() + "': " + this.getMaxPlayers());
 					return;
 				} else {
@@ -1856,7 +1857,7 @@ public class Arena {
 			line = line.replace("@", "");
 			Material mat = Material.getMaterial(line);
 			if (mat == null) {
-				Main.getPlugin().getLogger().warning("Hologram item line 'task': " + line + " is not a valid material!");
+				Logger.log(Level.WARNING, "Hologram item line 'task': " + line + " is not a valid material!");
 				return;
 			}
 			holo.addLineWithItem(Utils.createItem(mat, " "));

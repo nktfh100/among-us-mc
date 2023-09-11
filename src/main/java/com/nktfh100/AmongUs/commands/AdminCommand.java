@@ -4,11 +4,12 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.logging.Level;
 
 import com.nktfh100.AmongUs.enums.GameEndReasons;
 import com.nktfh100.AmongUs.enums.GameEndWinners;
+import com.nktfh100.AmongUs.utils.Logger;
 import org.apache.commons.lang3.StringUtils;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.command.Command;
@@ -427,7 +428,7 @@ public class AdminCommand implements CommandExecutor {
 							sender.sendMessage(Main.getConfigManager().getPrefix() + ChatColor.GREEN + "Created arena successfully!");
 						} catch (Exception e) {
 							e.printStackTrace();
-							Bukkit.getLogger().warning("Something went wrong loading the newly created arena! (" + args[1] + ".yml)");
+							Logger.log(Level.WARNING, "Something went wrong loading the newly created arena! (" + args[1] + ".yml)");
 							sender.sendMessage(Main.getConfigManager().getPrefix() + ChatColor.RED + "Something went wrong loading the newly created arena! (" + args[1] + ".yml)");
 							return true;
 						}
