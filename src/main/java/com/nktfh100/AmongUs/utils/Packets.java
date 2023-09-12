@@ -5,10 +5,7 @@ import java.util.*;
 import com.comphenix.protocol.wrappers.*;
 import com.google.common.collect.Lists;
 import com.nktfh100.AmongUs.main.Main;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.Particle;
-import org.bukkit.Sound;
+import org.bukkit.*;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -37,30 +34,46 @@ public class Packets {
 	}
 
 	public static PacketContainer UPDATE_DISPLAY_NAME(UUID uuid, String orgName, String newName) {
-
-		PacketContainer packet = new PacketContainer(PacketType.Play.Server.PLAYER_INFO);
-		packet.getPlayerInfoActions().write(0, EnumSet.of(EnumWrappers.PlayerInfoAction.UPDATE_DISPLAY_NAME));
-
+        PacketContainer packet = new PacketContainer(PacketType.Play.Server.PLAYER_INFO);
 		WrappedGameProfile wgp = new WrappedGameProfile(uuid, orgName);
-		packet.getPlayerInfoDataLists().write(1,
-			Collections.singletonList(new PlayerInfoData(wgp, 50, NativeGameMode.ADVENTURE, WrappedChatComponent.fromLegacyText(newName)
-		)));
 
-		return packet;
-	}
+        if (Main.getVersion()[0] < 19 || (Main.getVersion()[0] == 19 && Main.getVersion()[1] < 3)) {
+            packet.getPlayerInfoAction().write(0, EnumWrappers.PlayerInfoAction.UPDATE_DISPLAY_NAME);
+			packet.getPlayerInfoDataLists().write(0,
+					Collections.singletonList(
+							new PlayerInfoData(wgp, 50, NativeGameMode.ADVENTURE, WrappedChatComponent.fromLegacyText(newName))
+					)
+			);
+
+        } else {
+            packet.getPlayerInfoActions().write(0, EnumSet.of(EnumWrappers.PlayerInfoAction.UPDATE_DISPLAY_NAME));
+			packet.getPlayerInfoDataLists().write(1,
+					Collections.singletonList(new PlayerInfoData(wgp, 50, NativeGameMode.ADVENTURE, WrappedChatComponent.fromLegacyText(newName)
+					)));
+
+        }
+        return packet;
+    }
 
 	public static PacketContainer ADD_PLAYER(Player player, UUID playerToAdd, String name, String displayName, String textureValue, String textureSignature, boolean... isFakePlayer) {
 		PacketContainer packet = new PacketContainer(PacketType.Play.Server.PLAYER_INFO);
-		packet.getPlayerInfoActions().write(0, EnumSet.of(EnumWrappers.PlayerInfoAction.ADD_PLAYER, EnumWrappers.PlayerInfoAction.UPDATE_DISPLAY_NAME, EnumWrappers.PlayerInfoAction.UPDATE_LISTED));
-
 		WrappedGameProfile wgp = new WrappedGameProfile(playerToAdd, name);
 		PlayerInfoData playerInfoData = new PlayerInfoData(wgp, 50, NativeGameMode.ADVENTURE, WrappedChatComponent.fromText(displayName));
-		packet.getPlayerInfoDataLists().write(1, Collections.singletonList(playerInfoData));
 
-		wgp.getProperties().get("textures").clear();
-		wgp.getProperties().get("textures").add(new WrappedSignedProperty("textures", textureValue, textureSignature));
+		if (Main.getVersion()[0] < 19 || (Main.getVersion()[0] == 19 && Main.getVersion()[1] < 3)) {
+			packet.getPlayerInfoAction().write(0, EnumWrappers.PlayerInfoAction.ADD_PLAYER);
+			packet.getPlayerInfoDataLists().write(0, Collections.singletonList(playerInfoData));
+			// new ArrayList<>(List.of(playerInfoData))
 
-		boolean fakePlayer = isFakePlayer.length >= 1 && isFakePlayer[0];
+        } else {
+			packet.getPlayerInfoActions().write(0, EnumSet.of(EnumWrappers.PlayerInfoAction.ADD_PLAYER, EnumWrappers.PlayerInfoAction.UPDATE_DISPLAY_NAME, EnumWrappers.PlayerInfoAction.UPDATE_LISTED));
+			packet.getPlayerInfoDataLists().write(1, Collections.singletonList(playerInfoData));
+        }
+
+        wgp.getProperties().get("textures").clear();
+        wgp.getProperties().get("textures").add(new WrappedSignedProperty("textures", textureValue, textureSignature));
+
+        boolean fakePlayer = isFakePlayer.length >= 1 && isFakePlayer[0];
 		if (Main.getIsTab() && !fakePlayer) {
 			Main.getTabApi().getNameTagManager().showNameTag(Main.getTabApi().getPlayer(playerToAdd), Main.getTabApi().getPlayer(player.getUniqueId()));
 		}
@@ -69,9 +82,18 @@ public class Packets {
 	}
 
 	public static PacketContainer REMOVE_PLAYER(Player player, UUID playerToHide, boolean... isFakePlayer) {
-		PacketContainer packet = new PacketContainer(PacketType.Play.Server.PLAYER_INFO_REMOVE);
+		PacketContainer packet;
+		if (Main.getVersion()[0] < 19 || (Main.getVersion()[0] == 19 && Main.getVersion()[1] < 3)) {
+			packet = new PacketContainer(PacketType.Play.Server.PLAYER_INFO);
+			packet.getPlayerInfoAction().write(0, EnumWrappers.PlayerInfoAction.REMOVE_PLAYER);
+			packet.getPlayerInfoDataLists().write(0, Collections.singletonList(
+					new PlayerInfoData(new WrappedGameProfile(playerToHide, player.getName()), 50, NativeGameMode.ADVENTURE, WrappedChatComponent.fromText(player.getDisplayName()))
+			));
 
-		packet.getUUIDLists().write(0, Collections.singletonList(playerToHide));
+		} else {
+			packet = new PacketContainer(PacketType.Play.Server.PLAYER_INFO_REMOVE);
+			packet.getUUIDLists().write(0, Collections.singletonList(playerToHide));
+		}
 
 		boolean fakePlayer = isFakePlayer.length >= 1 && isFakePlayer[0];
 		if (Main.getIsTab() && !fakePlayer) {
@@ -169,12 +191,19 @@ public class Packets {
 		Serializer serializer = Registry.get(EnumWrappers.getEntityPoseClass());
 		WrappedDataWatcherObject object = new WrappedDataWatcherObject(6, serializer);
 		watcher.setObject(object, EntityPose.SLEEPING.toNms());
-		final List<WrappedDataValue> wrappedDataValueList = Lists.newArrayList();
-		watcher.getWatchableObjects().stream().filter(Objects::nonNull).forEach(entry -> {
-			final WrappedDataWatcher.WrappedDataWatcherObject dataWatcherObject = entry.getWatcherObject();
-			wrappedDataValueList.add(new WrappedDataValue(dataWatcherObject.getIndex(), dataWatcherObject.getSerializer(), entry.getRawValue()));
-		});
-		packet.getDataValueCollectionModifier().write(0, wrappedDataValueList);
+
+		if (Main.getVersion()[0] < 19 || (Main.getVersion()[0] == 19 && Main.getVersion()[1] < 3)) {
+			packet.getWatchableCollectionModifier().write(0, watcher.getWatchableObjects());
+
+		} else {
+			final List<WrappedDataValue> wrappedDataValueList = Lists.newArrayList();
+			watcher.getWatchableObjects().stream().filter(Objects::nonNull).forEach(entry -> {
+				final WrappedDataWatcher.WrappedDataWatcherObject dataWatcherObject = entry.getWatcherObject();
+				wrappedDataValueList.add(new WrappedDataValue(dataWatcherObject.getIndex(), dataWatcherObject.getSerializer(), entry.getRawValue()));
+			});
+			packet.getDataValueCollectionModifier().write(0, wrappedDataValueList);
+		}
+
 		return packet;
 	}
 
@@ -230,14 +259,18 @@ public class Packets {
 			watcher.setObject(0, serializer, (byte) (0x20));
 		}
 
-		// If <1.19.3 support is planned, make an if statement and this goes in versions under 1.19.3
-		// metadataPacket.getWatchableCollectionModifier().write(0, watcher.getWatchableObjects());
-		final List<WrappedDataValue> wrappedDataValueList = Lists.newArrayList();
-		watcher.getWatchableObjects().stream().filter(Objects::nonNull).forEach(entry -> {
-			final WrappedDataWatcher.WrappedDataWatcherObject dataWatcherObject = entry.getWatcherObject();
-			wrappedDataValueList.add(new WrappedDataValue(dataWatcherObject.getIndex(), dataWatcherObject.getSerializer(), entry.getRawValue()));
-		});
-		packet.getDataValueCollectionModifier().write(0, wrappedDataValueList);
+		if (Main.getVersion()[0] < 19 || (Main.getVersion()[0] == 19 && Main.getVersion()[1] < 3)) {
+			packet.getWatchableCollectionModifier().write(0, watcher.getWatchableObjects());
+
+		} else {
+			final List<WrappedDataValue> wrappedDataValueList = Lists.newArrayList();
+			watcher.getWatchableObjects().stream().filter(Objects::nonNull).forEach(entry -> {
+				final WrappedDataWatcher.WrappedDataWatcherObject dataWatcherObject = entry.getWatcherObject();
+				wrappedDataValueList.add(new WrappedDataValue(dataWatcherObject.getIndex(), dataWatcherObject.getSerializer(), entry.getRawValue()));
+			});
+			packet.getDataValueCollectionModifier().write(0, wrappedDataValueList);
+		}
+
 		return packet;
 	}
 	
