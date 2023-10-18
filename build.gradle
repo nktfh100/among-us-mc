@@ -24,10 +24,10 @@ dependencies {
     compileOnly group: "com.comphenix.protocol", name: "ProtocolLib", version: "5.1.0"
     compileOnly 'me.filoghost.holographicdisplays:holographicdisplays-api:3.0.0'
     compileOnly 'org.black_ixx:playerpoints:3.2.6'
-    compileOnly 'me.clip:placeholderapi:2.11.3'
+    compileOnly 'me.clip:placeholderapi:2.11.4'
     compileOnly 'com.mojang:authlib:2.1.28'
-    compileOnly 'com.github.decentsoftware-eu:decentholograms:2.8.3'
-    compileOnly 'me.neznamy:tab-api:4.0.0'
+    compileOnly 'com.github.decentsoftware-eu:decentholograms:2.8.4'
+    compileOnly 'me.neznamy:tab-api:4.0.2'
 
     compileOnly files('libs/VentureChat.jar') // 3.6.0
     //compileOnly files('libs/CMI-API.jar') // 9.0.0.0
