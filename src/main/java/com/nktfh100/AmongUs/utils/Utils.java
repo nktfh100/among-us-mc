@@ -294,7 +294,7 @@ public class Utils {
 			return head;
 		}
 		SkullMeta headMeta = (SkullMeta) head.getItemMeta();
-		GameProfile profile = new GameProfile(UUID.randomUUID(), null);
+		GameProfile profile = new GameProfile(UUID.randomUUID(), name);
 		profile.getProperties().put("textures", new Property("textures", url));
 
 		try {

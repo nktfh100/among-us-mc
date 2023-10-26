@@ -199,7 +199,7 @@ public class VisibilityManager {
 			Packets.sendPacket(pInfoToShowTo.getPlayer(), Packets.ENTITY_HEAD_ROTATION(playerToShow.getPlayer().getEntityId(), loc));
 
 			if (pInfoToShow.getColor() != null && arena.getGameState() != GameState.FINISHING) {
-				Packets.sendPacket(pInfoToShowTo.getPlayer(), Packets.PLAYER_ARMOR(pInfoToShow.getColor(), playerToShow.getPlayer().getEntityId()));
+				Packets.sendPacket(pInfoToShowTo.getPlayer(), Packets.PLAYER_ARMOR(pInfoToShow.getColor(), pInfoToShow.getPlayer().getEntityId()));
 			}
 		}
 		if (pInfoToShow.getIsImposter() && pInfoToShowTo.getIsImposter()) {

@@ -14,7 +14,7 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 
 public class PlayerJoin implements Listener {
-    private PlayersManager playersManager = Main.getPlayersManager();
+    private final PlayersManager playersManager = Main.getPlayersManager();
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent ev) {
         Player player = ev.getPlayer();
@@ -28,7 +28,7 @@ public class PlayerJoin implements Listener {
         } else {
             playersManager.getPlayerInfo(player).getStatsManager().loadStats();
         }
-        if (Main.getConfigManager().getGiveLobbyItems()) {
+        if (Main.getConfigManager().getGiveLobbyItems() && player.getWorld() == Main.getConfigManager().getMainLobby().getWorld()) {
             player.getInventory().clear();
 
             ItemInfo arenasSelectorItem = Main.getItemsManager().getItem("arenasSelector").getItem();
