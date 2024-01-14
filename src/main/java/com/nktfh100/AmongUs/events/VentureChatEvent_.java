@@ -11,6 +11,8 @@ public class VentureChatEvent_ implements Listener {
 
 	@EventHandler
 	public void ventureChat(VentureChatEvent ev) {
+		if (ev.getMineverseChatPlayer().getPlayer() == null) return;
+
 		if (Main.getPlayersManager().getPlayerInfo(ev.getMineverseChatPlayer().getPlayer()).getIsIngame()) {
 			ev.getRecipients().clear();
 		}

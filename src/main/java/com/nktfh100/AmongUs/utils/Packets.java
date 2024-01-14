@@ -133,7 +133,7 @@ public class Packets {
 	}
 
 	public static PacketContainer SPAWN_PLAYER(Location loc, int entityId, UUID uuid) {
-		PacketContainer packet = new PacketContainer(PacketType.Play.Server.NAMED_ENTITY_SPAWN);
+		PacketContainer packet = new PacketContainer(PacketType.Play.Server.SPAWN_ENTITY);
 		packet.getIntegers().write(0, entityId);
 		packet.getUUIDs().write(0, uuid);
 		packet.getDoubles().write(0, loc.getX()).write(1, loc.getY()).write(2, loc.getZ());

@@ -1,9 +1,9 @@
 package com.nktfh100.AmongUs.utils;
 
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.lang.reflect.Field;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.logging.Level;
 import java.util.regex.Matcher;
@@ -11,6 +11,8 @@ import java.util.regex.Pattern;
 
 import com.nktfh100.AmongUs.enums.SabotageType;
 import com.nktfh100.AmongUs.info.TaskPlayer;
+import org.apache.commons.io.IOUtils;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -265,7 +267,7 @@ public class Utils {
 			return head;
 		}
 		SkullMeta headMeta = (SkullMeta) head.getItemMeta();
-		GameProfile profile = new GameProfile(UUID.randomUUID(), null);
+		GameProfile profile = new GameProfile(UUID.randomUUID(), name);
 		profile.getProperties().put("textures", new Property("textures", url));
 
 		try {
@@ -317,16 +319,15 @@ public class Utils {
 		return head;
 	}
 
-	@SuppressWarnings("deprecation")
 	public static ItemStack getHead(String player) {
 		ItemStack item = new ItemStack(Material.PLAYER_HEAD, 1);
 		try {
 			SkullMeta skull = (SkullMeta) item.getItemMeta();
-			skull.setOwner(player);
+			skull.setOwningPlayer(Bukkit.getPlayer(player));
 			item.setItemMeta(skull);
 			return item;
 		} catch (Exception e) {
-			Logger.log(Level.INFO,"Couldnt get " + player + "'s head");
+			Logger.log(Level.INFO,"Couldn't get " + player + "'s head");
 			e.printStackTrace();
 			return item;
 		}
@@ -465,15 +466,14 @@ public class Utils {
 
 	public static String[] getSkinData(String name) {
 		try {
-			URL url_0 = new URL("https://api.mojang.com/users/profiles/minecraft/" + name);
-			InputStreamReader reader_0 = new InputStreamReader(url_0.openStream());
-			String uuid = new JsonParser().parse(reader_0).getAsJsonObject().get("id").getAsString();
+			String UUIDJson = IOUtils.toString(new URL("https://api.mojang.com/users/profiles/minecraft/" + name), StandardCharsets.UTF_8);
+			JsonObject uuidObject = new JsonParser().parse(UUIDJson).getAsJsonObject();
+			String dashlessUuid = uuidObject.get("id").getAsString();
 
-			URL url_1 = new URL("https://sessionserver.mojang.com/session/minecraft/profile/" + uuid + "?unsigned=false");
-			InputStreamReader reader_1 = new InputStreamReader(url_1.openStream());
-			JsonObject textureProperty = new JsonParser().parse(reader_1).getAsJsonObject().get("properties").getAsJsonArray().get(0).getAsJsonObject();
-			String texture = textureProperty.get("value").getAsString();
-			String signature = textureProperty.get("signature").getAsString();
+			String profileJson = IOUtils.toString(new URL("https://sessionserver.mojang.com/session/minecraft/profile/" + dashlessUuid + "?unsigned=false"), StandardCharsets.UTF_8);
+			JsonObject profileObject = new JsonParser().parse(profileJson).getAsJsonObject();
+			String texture = profileObject.getAsJsonArray("properties").get(0).getAsJsonObject().get("value").getAsString();
+			String signature = profileObject.getAsJsonArray("properties").get(0).getAsJsonObject().get("signature").getAsString();
 
 			return new String[] { texture, signature };
 		} catch (IOException e) {

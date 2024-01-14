@@ -30,6 +30,7 @@ public class UseEntityListener extends PacketAdapter {
         new BukkitRunnable() {
             @Override
             public void run() {
+                event.setReadOnly(false);
                 Player attacker = event.getPlayer();
                 PlayerInfo attackerInfo = Main.getPlayersManager().getPlayerInfo(event.getPlayer());
                 if (attackerInfo == null || attackerInfo.getArena() == null || attackerInfo.getArena().getPlayersInfo() == null) {

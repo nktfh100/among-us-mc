@@ -14,7 +14,7 @@ import org.bukkit.plugin.Plugin;
 
 public class NamedEntitySpawnListener extends PacketAdapter {
     public NamedEntitySpawnListener(Plugin plugin, ListenerPriority priority) {
-        super(plugin, priority, PacketType.Play.Server.NAMED_ENTITY_SPAWN);
+        super(plugin, priority, PacketType.Play.Server.SPAWN_ENTITY);
     }
 
     public void onPacketSending(PacketEvent event) {

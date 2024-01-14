@@ -183,7 +183,7 @@ public class VisibilityManager {
 				}
 			}
 
-			PacketContainer spawnPacket = new PacketContainer(PacketType.Play.Server.NAMED_ENTITY_SPAWN);
+			PacketContainer spawnPacket = new PacketContainer(PacketType.Play.Server.SPAWN_ENTITY);
 			Player playerToShow = pInfoToShow.getPlayer();
 			spawnPacket.getIntegers().write(0, playerToShow.getEntityId());
 			spawnPacket.getUUIDs().write(0, playerToShow.getUniqueId());
