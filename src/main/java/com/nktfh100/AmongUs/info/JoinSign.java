@@ -8,6 +8,7 @@ import org.bukkit.block.data.Directional;
 
 import com.nktfh100.AmongUs.main.Main;
 import com.nktfh100.AmongUs.utils.Utils;
+import org.bukkit.block.data.type.WallSign;
 
 public class JoinSign {
 
@@ -25,9 +26,10 @@ public class JoinSign {
 			sign.setLine(ii, Main.getMessagesManager().getSignLine(ii, this.arena));
 		}
 		sign.update();
+
 		if (this.getBlock().getType().toString().contains("SIGN")) {
 			BlockData data = this.getBlock().getBlockData();
-			if (data instanceof Directional) {
+			if (data instanceof WallSign) {
 				Directional directional = (Directional) data;
 				Block blockBehind = this.getBlock().getRelative(directional.getFacing().getOppositeFace());
 				blockBehind.setType(Utils.getStateBlock(this.arena.getGameState()), true);
