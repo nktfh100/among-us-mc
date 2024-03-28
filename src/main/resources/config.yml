@@ -16,6 +16,8 @@ sneakToVent: false
 damageOnSabotage: false
 # saveInventory: Give the player the items he had before he joined the game (useful for survival servers)
 saveInventory: false
+# Allows player to rotate their head in the camera
+moveInCamera: false
 
 bungeecord:
    enabled: false

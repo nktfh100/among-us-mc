@@ -26,7 +26,13 @@ public class PlayerMove implements Listener {
 			if (pInfo.getIsInCameras()) {
 				ev.getPlayer().setAllowFlight(true);
 				ev.getPlayer().setFlying(true);
-				ev.getPlayer().teleport(pInfo.getActiveCamera().getViewLoc());
+				Location loc = pInfo.getActiveCamera().getViewLoc();
+				if (Main.getConfigManager().getMoveInCamera()) {
+					loc.setYaw(ev.getTo().getYaw());
+					loc.setPitch(ev.getTo().getPitch());
+					ev.getPlayer().teleport(loc);
+				}
+				ev.getPlayer().teleport(loc);
 				return;
 			}
 			if (arena.getIsInMeeting() || pInfo.getIsInVent()) {

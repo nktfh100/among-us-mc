@@ -59,6 +59,7 @@ public class ConfigManager {
 	private Boolean sneakToVent = false;
 	private Boolean damageOnSabotage = false;
 	private Boolean saveInventory = false;
+	private Boolean moveInCamera = false;
 	
 	private HashMap<String, ArrayList<String>> commands = new HashMap<String, ArrayList<String>>();
 
@@ -128,7 +129,8 @@ public class ConfigManager {
 		this.sneakToVent = this.config.getBoolean("sneakToVent", false);
 		this.damageOnSabotage = this.config.getBoolean("damageOnSabotage", false);
 		this.saveInventory = this.config.getBoolean("saveInventory", false);
-		
+		this.moveInCamera = this.config.getBoolean("moveInCamera", false);
+
 		try {
 			this.particlesOnTasksType = Particle.valueOf(this.config.getString("particlesOnTasksType", "VILLAGER_HAPPY"));
 		} catch (Exception e) {
@@ -459,5 +461,9 @@ public class ConfigManager {
 
 	public Boolean getSaveInventory() {
 		return saveInventory;
+	}
+
+	public Boolean getMoveInCamera() {
+		return moveInCamera;
 	}
 }
