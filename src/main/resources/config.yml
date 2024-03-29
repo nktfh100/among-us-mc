@@ -1,5 +1,5 @@
-prefix: '&4&lAmong&c&lUs&9&lMC&7&l► '
-# If a player's name is not found in the Mojang servers (because he is using cracked Minecraft), an error message will appear.
+prefix: "&4&lAmong&c&lUs&9&lMC&7&l► "
+# hidePlayerSkinNotFoundMessage: If a player's name is not found in the Mojang servers (because he is using cracked Minecraft), an error message will appear.
 hidePlayerSkinNotFoundMessage: false
 giveLobbyItems: true
 showRunningArenas: true
@@ -16,7 +16,7 @@ sneakToVent: false
 damageOnSabotage: false
 # saveInventory: Give the player the items he had before he joined the game (useful for survival servers)
 saveInventory: false
-# Allows player to rotate their head in the camera
+# moveInCamera: Allows player to rotate their head in the camera
 moveInCamera: false
 
 bungeecord:
@@ -41,7 +41,7 @@ lobbyItemsSlots:
    cosmeticsSelector: 1
 
 mainLobby:
-   world: 'world'
+   world: "world"
    x: 0
    y: 60
    z: 0
@@ -55,7 +55,6 @@ mysql:
    database: "test"
    username: "user"
    password: "pass"
-
 
 commands: # %player% - Player's name
    taskCompleted: []
@@ -80,7 +79,7 @@ blockedCommands:
    - /tell
 
 asteroidsParticleColor: 255,0,0 # RGB
-asteroidsParticleMaterial: REDSTONE_BLOCK 
+asteroidsParticleMaterial: REDSTONE_BLOCK
 
 # ChatColors: https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/ChatColor.html
 colors:
