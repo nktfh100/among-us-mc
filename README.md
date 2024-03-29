@@ -17,11 +17,11 @@ With a huge list of features this is the best free among us plugin!
 
 ## Default config files
 
-- [config.yml](https://pastebin.com/n1GLEG3Z)
-- [messages.yml](https://pastebin.com/WezWTPkY)
-- [items.yml](https://pastebin.com/RnBdAvyL)
-- [sounds.yml](https://pastebin.com/X3y71a97)
-- [cosmetics.yml](https://pastebin.com/5gJ7Qmq5)
+- [config.yml](https://github.com/nktfh100/among-us-mc/blob/main/src/main/resources/config.yml)
+- [messages.yml](https://github.com/nktfh100/among-us-mc/blob/main/src/main/resources/messages.yml)
+- [items.yml](https://github.com/nktfh100/among-us-mc/blob/main/src/main/resources/items.yml)
+- [sounds.yml](https://github.com/nktfh100/among-us-mc/blob/main/src/main/resources/sounds.yml)
+- [cosmetics.yml](https://github.com/nktfh100/among-us-mc/blob/main/src/main/resources/cosmetics.yml)
 
 ## Links
 
