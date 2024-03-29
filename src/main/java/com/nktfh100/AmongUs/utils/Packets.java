@@ -136,6 +136,7 @@ public class Packets {
 		PacketContainer packet = new PacketContainer(PacketType.Play.Server.SPAWN_ENTITY);
 		packet.getIntegers().write(0, entityId);
 		packet.getUUIDs().write(0, uuid);
+		packet.getEntityTypeModifier().write(0, EntityType.PLAYER);
 		packet.getDoubles().write(0, loc.getX()).write(1, loc.getY()).write(2, loc.getZ());
 		packet.getBytes().write(0, toPackedByte(loc.getYaw())).write(1, toPackedByte(loc.getPitch()));
 		return packet;
@@ -222,14 +223,13 @@ public class Packets {
 
 		packet.getIntegers().write(0, entityId); // entity id
 		packet.getUUIDs().write(0, uuid); // uuid
+		packet.getEntityTypeModifier().write(0, EntityType.ARMOR_STAND);
 
 		packet.getDoubles().write(0, loc.getX());
 		packet.getDoubles().write(1, loc.getY()); // location
 		packet.getDoubles().write(2, loc.getZ());
 		packet.getBytes().write(0, (byte) 0); // yaw & pitch ?
 		packet.getBytes().write(1, (byte) 0);
-
-		packet.getEntityTypeModifier().write(0, EntityType.ARMOR_STAND);
 
 		return packet;
 	}

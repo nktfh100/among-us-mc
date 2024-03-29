@@ -1,6 +1,7 @@
 package com.nktfh100.AmongUs.managers;
 
 import org.bukkit.Location;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 
 import com.comphenix.protocol.PacketType;
@@ -183,10 +184,11 @@ public class VisibilityManager {
 				}
 			}
 
-			PacketContainer spawnPacket = new PacketContainer(PacketType.Play.Server.SPAWN_ENTITY);
 			Player playerToShow = pInfoToShow.getPlayer();
+			PacketContainer spawnPacket = new PacketContainer(PacketType.Play.Server.SPAWN_ENTITY);
 			spawnPacket.getIntegers().write(0, playerToShow.getEntityId());
 			spawnPacket.getUUIDs().write(0, playerToShow.getUniqueId());
+			spawnPacket.getEntityTypeModifier().write(0, EntityType.PLAYER);
 			Location loc = playerToShow.getLocation();
 			spawnPacket.getDoubles().write(0, loc.getX()).write(1, loc.getY()).write(2, loc.getZ());
 			spawnPacket.getBytes().write(0, Packets.toPackedByte(loc.getYaw())).write(1, Packets.toPackedByte(loc.getPitch()));

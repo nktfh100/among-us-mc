@@ -8,4 +8,8 @@ public class Logger {
     public static void log(Level level, String message) {
         Bukkit.getLogger().log(level, "[Among Us] " + message);
     }
+
+    public static void logError(Level level, String message, Throwable error) {
+        Bukkit.getLogger().log(level, "[Among Us] " + message, error);
+    }
 }
