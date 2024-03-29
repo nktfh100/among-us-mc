@@ -1,0 +1,23 @@
+name: tagged-release
+
+on:
+    push:
+        tags:
+            - "v*"
+
+jobs:
+    build:
+        uses: ./.github/workflows/build-jar.yaml
+
+    publish-tagged-release:
+        needs: build
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/download-artifact@v4
+
+            - uses: marvinpinto/action-automatic-releases@v1.2.1
+              with:
+                  repo_token: "${{ secrets.GITHUB_TOKEN }}"
+                  prerelease: false
+                  files: |
+                      **/*.jar
