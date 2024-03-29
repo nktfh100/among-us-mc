@@ -14,16 +14,16 @@ import com.nktfh100.AmongUs.main.Main;
 
 public class DeadBody {
 
-	private Arena arena;
-	private Player player;
-	private PlayerInfo pInfo;
-	private ColorInfo color;
+	private final Arena arena;
+	private final Player player;
+	private final PlayerInfo pInfo;
+	private final ColorInfo color;
 	private ImposterHologram holo;
-	private Location loc;
-	private FakePlayer fakePlayer;
+	private final Location loc;
+	private final FakePlayer fakePlayer;
 
 	private Boolean isDeleted = false;
-	private ArrayList<Player> playersShownTo = new ArrayList<Player>();
+	private final ArrayList<Player> playersShownTo = new ArrayList<>();
 
 	@SuppressWarnings("deprecation")
 	public DeadBody(Arena arena, Player player) {
@@ -52,7 +52,7 @@ public class DeadBody {
 	}
 
 	public void create() {
-		this.holo = ImposterHologram.createHologram(this.loc.clone().add(0, 1.8, 0), "deadBodyHologram");
+		this.holo = ImposterHologram.createHologram(this.loc.clone().add(0, 1.8, 0), "deadBodyHologram_" + this.player.getName());
 		this.holo.addLineWithItem(pInfo.getHead()); // floating head
 		this.arena.getVisibilityManager().resetBodyVis(this);
 	}
