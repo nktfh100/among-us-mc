@@ -12,10 +12,10 @@ public class ItemInfo {
 
 	private Boolean isHead = false;
 	private String texture;
-	private Integer slot;
-	private Material mat;
-	private String title = "";
-	private ArrayList<String> lore = new ArrayList<String>();
+	private final Integer slot;
+	private final Material mat;
+	private final String title;
+	private final ArrayList<String> lore;
 
 	public ItemInfo(Integer slot, Material mat, String title, ArrayList<String> lore) {
 		this.slot = slot;

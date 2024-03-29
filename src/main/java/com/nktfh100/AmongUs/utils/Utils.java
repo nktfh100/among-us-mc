@@ -2,6 +2,7 @@ package com.nktfh100.AmongUs.utils;
 
 import java.io.IOException;
 import java.lang.reflect.Field;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
@@ -9,6 +10,8 @@ import java.util.logging.Level;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import com.mojang.authlib.GameProfile;
+import com.mojang.authlib.properties.Property;
 import com.nktfh100.AmongUs.enums.SabotageType;
 import com.nktfh100.AmongUs.info.TaskPlayer;
 import org.apache.commons.io.IOUtils;
@@ -30,18 +33,16 @@ import org.bukkit.inventory.meta.SkullMeta;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import com.mojang.authlib.GameProfile;
-import com.mojang.authlib.properties.Property;
 import com.nktfh100.AmongUs.enums.GameState;
 import com.nktfh100.AmongUs.info.ColorInfo;
 import com.nktfh100.AmongUs.main.Main;
 
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
+import org.bukkit.profile.PlayerProfile;
+import org.bukkit.profile.PlayerTextures;
 
 public class Utils {
-
-	final public static String ABC = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
 	public static HashMap<String, String> getTaskPlaceholders(TaskPlayer task) {
 		HashMap<String, String> placeholders = new HashMap<>();
@@ -261,62 +262,57 @@ public class Utils {
 
 	}
 
-	public static ItemStack createSkull(String url, String name, int amount, ArrayList<String> lore) {
-		ItemStack head = new ItemStack(Material.PLAYER_HEAD, 1);
-		if (url.isEmpty()) {
-			return head;
-		}
-		SkullMeta headMeta = (SkullMeta) head.getItemMeta();
-		GameProfile profile = new GameProfile(UUID.randomUUID(), name);
-		profile.getProperties().put("textures", new Property("textures", url));
+	public static ItemStack createSkull(String base64, String name, int amount, ArrayList<String> lore) {
+		ItemStack head = new ItemStack(Material.PLAYER_HEAD, amount);
+		if (base64.isEmpty()) return head;
 
-		try {
-			Field profileField = headMeta.getClass().getDeclaredField("profile");
-			profileField.setAccessible(true);
-			profileField.set(headMeta, profile);
+		SkullMeta skullMeta = (SkullMeta) head.getItemMeta();
+		assert skullMeta != null;
 
-		} catch (IllegalArgumentException | NoSuchFieldException | SecurityException | IllegalAccessException error) {
-			error.printStackTrace();
-		}
-		headMeta.setDisplayName(name);
-		head.setAmount(amount);
-		ArrayList<String> metaLore = new ArrayList<String>();
+		if (Main.getVersion()[0] >= 19) {
+			String skinJson = new String(Base64.getDecoder().decode(base64));
+			JsonObject skinObject = JsonParser.parseString(skinJson).getAsJsonObject();
+			String url = skinObject.getAsJsonObject("textures").getAsJsonObject("SKIN").get("url").getAsString();
 
-		for (String lorecomments : lore) {
-			metaLore.add(lorecomments);
+			PlayerProfile profile = Bukkit.createPlayerProfile(UUID.randomUUID());
+			PlayerTextures textures = profile.getTextures();
+
+			try {
+				URL urlObject = new URL(url);
+				textures.setSkin(urlObject);
+				profile.setTextures(textures);
+				skullMeta.setOwnerProfile(profile);
+
+			} catch (MalformedURLException e) {
+				Logger.logError(java.util.logging.Level.WARNING, "An error occurred while parsing a head! Head value: " + base64, e);
+				return null;
+			}
+
+		} else {
+			GameProfile profile = new GameProfile(UUID.randomUUID(), name);
+			profile.getProperties().put("textures", new Property("textures", base64));
+
+			try {
+				Field profileField = skullMeta.getClass().getDeclaredField("profile");
+				profileField.setAccessible(true);
+				profileField.set(skullMeta, profile);
+
+			} catch (IllegalArgumentException | NoSuchFieldException | SecurityException | IllegalAccessException error) {
+				Logger.logError(java.util.logging.Level.WARNING, "An error occurred while parsing a head! Head value: " + base64, error);
+				return null;
+			}
 		}
-		headMeta.setLore(metaLore);
-		head.setItemMeta(headMeta);
+
+		skullMeta.setDisplayName(name);
+        ArrayList<String> metaLore = new ArrayList<>(lore);
+		skullMeta.setLore(metaLore);
+		head.setItemMeta(skullMeta);
 		return head;
 	}
 
 	public static ItemStack createSkull(String url, String name, int amount, String... lore) {
-		ItemStack head = new ItemStack(Material.PLAYER_HEAD, 1);
-		if (url.isEmpty()) {
-			return head;
-		}
-		SkullMeta headMeta = (SkullMeta) head.getItemMeta();
-		GameProfile profile = new GameProfile(UUID.randomUUID(), name);
-		profile.getProperties().put("textures", new Property("textures", url));
-
-		try {
-			Field profileField = headMeta.getClass().getDeclaredField("profile");
-			profileField.setAccessible(true);
-			profileField.set(headMeta, profile);
-
-		} catch (IllegalArgumentException | NoSuchFieldException | SecurityException | IllegalAccessException error) {
-			error.printStackTrace();
-		}
-		headMeta.setDisplayName(name);
-		head.setAmount(amount);
-		ArrayList<String> metaLore = new ArrayList<String>();
-
-		for (String lorecomments : lore) {
-			metaLore.add(lorecomments);
-		}
-		headMeta.setLore(metaLore);
-		head.setItemMeta(headMeta);
-		return head;
+		ArrayList<String> loreArray = new ArrayList<>(Arrays.asList(lore));
+		return createSkull(url, name, amount, loreArray);
 	}
 
 	public static ItemStack getHead(String player) {
