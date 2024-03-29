@@ -9,7 +9,6 @@ import java.util.logging.Level;
 import com.nktfh100.AmongUs.enums.GameEndReasons;
 import com.nktfh100.AmongUs.enums.GameEndWinners;
 import com.nktfh100.AmongUs.utils.Logger;
-import org.apache.commons.lang3.StringUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.command.Command;
@@ -448,7 +447,7 @@ public class AdminCommand implements CommandExecutor {
 					if (arenas.size() == 0) {
 						sender.sendMessage(Main.getConfigManager().getPrefix() + ChatColor.RED + "No arenas found!");
 					} else {
-						sender.sendMessage(Main.getConfigManager().getPrefix() + StringUtils.join(arenas, ", "));
+						sender.sendMessage(Main.getConfigManager().getPrefix() + String.join(", ", arenas));
 					}
 				}
 

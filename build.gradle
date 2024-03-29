@@ -3,7 +3,7 @@ plugins {
 }
 
 group 'spigot.gradle.project'
-version '3.3.1'
+version '3.4'
 
 repositories {
     mavenCentral()
@@ -20,7 +20,8 @@ repositories {
 }
 
 dependencies {
-    compileOnly 'org.spigotmc:spigot-api:1.16.5-R0.1-SNAPSHOT'
+    // This is temporary until the plugin is rewritten...
+    compileOnly 'org.spigotmc:spigot-api:1.19.4-R0.1-SNAPSHOT'
     compileOnly group: "com.comphenix.protocol", name: "ProtocolLib", version: "5.2.0-SNAPSHOT"
     compileOnly 'me.filoghost.holographicdisplays:holographicdisplays-api:3.0.0'
     compileOnly 'org.black_ixx:playerpoints:3.2.6'
