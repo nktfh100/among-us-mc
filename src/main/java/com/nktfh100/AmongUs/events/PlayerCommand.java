@@ -29,8 +29,9 @@ public class PlayerCommand implements Listener {
 				}
 			}
 		}
-		if (ev.getMessage().equalsIgnoreCase("/au test") && player.getName().equals("nktfh100")) {
+		if (ev.getMessage().equalsIgnoreCase("/aua test") && player.hasPermission("aua.test")) {
 			pInfo.getArena()._isTesting = true;
+			pInfo.getArena().testingPlayer = player;
 			player.sendMessage(ChatColor.GREEN + "Enabled testing mode!");
 		}
 	}

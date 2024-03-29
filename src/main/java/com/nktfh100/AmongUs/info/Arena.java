@@ -1269,6 +1269,7 @@ public class Arena {
 	}
 
 	public Boolean _isTesting = false;
+	public Player testingPlayer = null;
 
 	public void startGame() {
 		if (this.gameState != GameState.RUNNING && this.gameState != GameState.FINISHING) {
@@ -1313,9 +1314,9 @@ public class Arena {
 				}
 				_players_ = null;
 			}
-			if (_isTesting && !imposters_.contains("nktfh100")) {
+			if (_isTesting && !imposters_.contains(testingPlayer.getName())) {
 				imposters_.remove(0);
-				imposters_.add("nktfh100");
+				imposters_.add(testingPlayer.getName());
 			}
 
 			for (Camera cam : this.getCamerasManager().getCameras()) {
