@@ -58,7 +58,7 @@ public class ConfigManager {
 	private Boolean enableDoubleImposterChance = false;
 	private Boolean sneakToVent = false;
 	private Boolean damageOnSabotage = false;
-	private Boolean saveInventory = false;
+	private Boolean saveInventory = true;
 	private Boolean moveInCamera = false;
 	
 	private HashMap<String, ArrayList<String>> commands = new HashMap<String, ArrayList<String>>();
@@ -128,7 +128,7 @@ public class ConfigManager {
 		this.enableDoubleImposterChance = this.config.getBoolean("enableDoubleImposterChance", false);
 		this.sneakToVent = this.config.getBoolean("sneakToVent", false);
 		this.damageOnSabotage = this.config.getBoolean("damageOnSabotage", false);
-		this.saveInventory = this.config.getBoolean("saveInventory", false);
+		this.saveInventory = this.config.getBoolean("saveInventory", true);
 		this.moveInCamera = this.config.getBoolean("moveInCamera", false);
 
 		try {

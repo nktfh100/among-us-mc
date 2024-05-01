@@ -11,6 +11,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.scheduler.BukkitRunnable;
 
 public class PlayerJoin implements Listener {
@@ -29,12 +30,15 @@ public class PlayerJoin implements Listener {
             playersManager.getPlayerInfo(player).getStatsManager().loadStats();
         }
         if (Main.getConfigManager().getGiveLobbyItems() && player.getWorld() == Main.getConfigManager().getMainLobby().getWorld()) {
-            player.getInventory().clear();
-
             ItemInfo arenasSelectorItem = Main.getItemsManager().getItem("arenasSelector").getItem();
-            player.getInventory().setItem(Main.getConfigManager().getLobbyItemSlot("arenasSelector"), arenasSelectorItem.getItem());
-            if (Main.getIsPlayerPoints()) {
-                player.getInventory().setItem(Main.getConfigManager().getLobbyItemSlot("cosmeticsSelector"), Main.getItemsManager().getItem("cosmeticsSelector").getItem().getItem());
+            PlayerInventory inventory = player.getInventory();
+
+            if (inventory.getItem(Main.getConfigManager().getLobbyItemSlot("arenasSelector")) == null) {
+                inventory.setItem(Main.getConfigManager().getLobbyItemSlot("arenasSelector"), arenasSelectorItem.getItem());
+            }
+
+            if (Main.getIsPlayerPoints() && inventory.getItem(Main.getConfigManager().getLobbyItemSlot("cosmeticsSelector")) == null) {
+                inventory.setItem(Main.getConfigManager().getLobbyItemSlot("cosmeticsSelector"), Main.getItemsManager().getItem("cosmeticsSelector").getItem().getItem());
             }
         }
         if (Main.getConfigManager().getBungeecord() && !Main.getConfigManager().getBungeecordIsLobby() && Main.getArenaManager().getAllArenas().size() > 0) {

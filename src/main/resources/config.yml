@@ -15,7 +15,7 @@ sneakToVent: false
 # damageOnSabotage: Damage the players every 2 seconds while a sabotage is active
 damageOnSabotage: false
 # saveInventory: Give the player the items he had before he joined the game (useful for survival servers)
-saveInventory: false
+saveInventory: true
 # moveInCamera: Allows player to rotate their head in the camera
 moveInCamera: false
 

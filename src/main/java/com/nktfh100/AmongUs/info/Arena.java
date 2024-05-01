@@ -42,6 +42,7 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Firework;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.inventory.meta.FireworkMeta;
 import org.bukkit.inventory.meta.MapMeta;
 import org.bukkit.map.MapRenderer;
@@ -916,9 +917,9 @@ public class Arena {
 				PlayerInfo pInfo1 = Main.getPlayersManager().getPlayerInfo(p);
 				Packets.sendPacket(p, Packets.ADD_PLAYER(p, pInfo.getPlayer().getUniqueId(), player.getName(), pInfo.getOriginalPlayerListName(), pInfo.getTextureValue(),
 						pInfo.getTextureSignature()));
-				Packets.sendPacket(player, Packets.UPDATE_DISPLAY_NAME(p.getUniqueId(), p.getName(), pInfo1.getOriginalPlayerListName()));
+				Packets.sendPacket(player, Packets.UPDATE_DISPLAY_NAME(p.getUniqueId(), p.getName(), p.getPlayerListName()));
 				Packets.sendPacket(p, Packets.UPDATE_DISPLAY_NAME(player.getUniqueId(), player.getName(), pInfo.getOriginalPlayerListName()));
-				if (pInfo.getPlayer() != null) {
+				if (pInfo.getPlayer() != null && pInfo1 != null) {
 					if (pInfo1.getFakePlayer() != null) {
 						pInfo1.getFakePlayer().hidePlayerFrom(pInfo.getPlayer(), true);
 					}
@@ -948,10 +949,15 @@ public class Arena {
 
 			if (!Main.getConfigManager().getSaveInventory()) {
 				if (Main.getConfigManager().getGiveLobbyItems() && !Main.getConfigManager().getBungeecord()) {
-					ItemInfo item = Main.getItemsManager().getItem("arenasSelector").getItem();
-					pInfo.getPlayer().getInventory().setItem(Main.getConfigManager().getLobbyItemSlot("arenasSelector"), item.getItem());
-					if (Main.getIsPlayerPoints()) {
-						player.getInventory().setItem(Main.getConfigManager().getLobbyItemSlot("cosmeticsSelector"), Main.getItemsManager().getItem("cosmeticsSelector").getItem().getItem());
+					ItemInfo arenasSelectorItem = Main.getItemsManager().getItem("arenasSelector").getItem();
+					PlayerInventory inventory = player.getInventory();
+
+					if (inventory.getItem(Main.getConfigManager().getLobbyItemSlot("arenasSelector")) == null) {
+						inventory.setItem(Main.getConfigManager().getLobbyItemSlot("arenasSelector"), arenasSelectorItem.getItem());
+					}
+
+					if (Main.getIsPlayerPoints() && inventory.getItem(Main.getConfigManager().getLobbyItemSlot("cosmeticsSelector")) == null) {
+						inventory.setItem(Main.getConfigManager().getLobbyItemSlot("cosmeticsSelector"), Main.getItemsManager().getItem("cosmeticsSelector").getItem().getItem());
 					}
 				}
 			}
