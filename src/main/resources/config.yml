@@ -73,10 +73,7 @@ commands: # %player% - Player's name
    gameStartCrewmate: []
 
 allowedCommands:
-   - /msg
-   - /r
-   - /whisper
-   - /tell
+   - /aua
 
 asteroidsParticleColor: 255,0,0 # RGB
 asteroidsParticleMaterial: REDSTONE_BLOCK
