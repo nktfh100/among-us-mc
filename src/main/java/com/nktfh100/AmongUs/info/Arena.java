@@ -2292,8 +2292,8 @@ public class Arena {
 		placeholders.put("display_name", this.getDisplayName());
 		placeholders.put("state", this.gameState.name());
 		placeholders.put("lowercase_state", this.gameState.name().toLowerCase());
-		placeholders.put("players_min", String.valueOf(this.maxPlayers));
-		placeholders.put("players_max", String.valueOf(this.minPlayers));
+		placeholders.put("players_max", String.valueOf(this.maxPlayers));
+		placeholders.put("players_min", String.valueOf(this.minPlayers));
 		placeholders.put("players_count", String.valueOf(this.ingamePlayers.size()));
 		placeholders.put("imposter_count", String.valueOf(this.gameImposters.size()));
 

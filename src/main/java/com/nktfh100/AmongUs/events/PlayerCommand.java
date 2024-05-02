@@ -20,16 +20,15 @@ public class PlayerCommand implements Listener {
 		if (!pInfo.getIsIngame()) {
 			return;
 		}
-		if (pInfo.getArena().getGameState() == GameState.RUNNING && !ev.getMessage().isEmpty()) {
+		if (!ev.getMessage().isEmpty()) {
 			String cmd = ev.getMessage().toLowerCase().split(" ")[0];
-			for (String cmd1 : Main.getConfigManager().getBlockedCommands()) {
-				if (cmd.equalsIgnoreCase(cmd1)) {
-					ev.setCancelled(true);
-					return;
-				}
+			if(!Main.getConfigManager().getAllowedCommands().contains(cmd.toLowerCase())) {
+				ev.setCancelled(true);
+				player.sendMessage(ChatColor.DARK_RED + "You can't execute this command while ingame!");
+				return;
 			}
 		}
-		if (ev.getMessage().equalsIgnoreCase("/aua test") && player.hasPermission("aua.test")) {
+		if (pInfo.getArena().getGameState() == GameState.RUNNING && ev.getMessage().equalsIgnoreCase("/aua test") && player.hasPermission("aua.test")) {
 			pInfo.getArena()._isTesting = true;
 			pInfo.getArena().testingPlayer = player;
 			player.sendMessage(ChatColor.GREEN + "Enabled testing mode!");

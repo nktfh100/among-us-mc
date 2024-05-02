@@ -1,5 +1,6 @@
 package com.nktfh100.AmongUs.events;
 
+import com.nktfh100.AmongUs.inventory.ColorSelectorInv;
 import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
 import org.bukkit.entity.Player;
@@ -66,7 +67,9 @@ public class PlayerRightClick implements Listener {
 					pInfo.getArena().playerLeave(player, false, false, true);
 				} else if (displayName.equals(itemsManager.getItem("colorSelector").getItem().getTitle())) {
 					ev.setCancelled(true);
-					player.openInventory(pInfo.getArena().getColorSelectorInv(player).getInventory());
+					ColorSelectorInv clrSelectorInv = pInfo.getArena().getColorSelectorInv(player);
+					clrSelectorInv.update();
+					player.openInventory(clrSelectorInv.getInventory());
 				} else if (displayName.equals(itemsManager.getItem("use").getItem2().getTitle())) {
 					ev.setCancelled(true);
 					switch (pInfo.getUseItemState()) {

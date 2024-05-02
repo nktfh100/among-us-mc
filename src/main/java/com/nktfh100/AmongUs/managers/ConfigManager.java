@@ -41,7 +41,7 @@ public class ConfigManager {
 	private Boolean giveLobbyItems;
 	private HashMap<String, Integer> lobbyItemsSlots = null;
 	private Boolean showRunningArenas;
-	private List<String> blockedCommands = new ArrayList<String>();
+	private List<String> allowedCommands = new ArrayList<String>();
 	private HashMap<String, ColorInfo> colors = null;
 	private Boolean ghostsFly = true;
 	private Color asteroidsParticleColor = Color.RED;
@@ -82,7 +82,7 @@ public class ConfigManager {
 
 	public void loadConfigVars() {
 		this.lobbyItemsSlots = new HashMap<String, Integer>();
-		this.blockedCommands = new ArrayList<String>();
+		this.allowedCommands = new ArrayList<String>();
 		this.colors = new HashMap<String, ColorInfo>();
 
 		Main.getPlugin().reloadConfig();
@@ -111,7 +111,7 @@ public class ConfigManager {
 
 		this.enableGlassHelmet = this.config.getBoolean("enableGlassHelmet", true);
 
-		this.blockedCommands = this.config.getStringList("blockedCommands");
+		this.allowedCommands = this.config.getStringList("allowedCommands");
 
 		ConfigurationSection lobbyItemsSlotsSC = this.config.getConfigurationSection("lobbyItemsSlots");
 		for (String key : lobbyItemsSlotsSC.getKeys(false)) {
@@ -287,7 +287,7 @@ public class ConfigManager {
 		this.giveLobbyItems = null;
 		this.lobbyItemsSlots = null;
 		this.showRunningArenas = null;
-		this.blockedCommands = null;
+		this.allowedCommands = null;
 		this.colors = null;
 		this.ghostsFly = null;
 		this.asteroidsParticleColor = null;
@@ -347,8 +347,8 @@ public class ConfigManager {
 		return showRunningArenas;
 	}
 
-	public List<String> getBlockedCommands() {
-		return this.blockedCommands;
+	public List<String> getAllowedCommands() {
+		return this.allowedCommands;
 	}
 
 	public Boolean getGhostsFly() {
